@@ -50,6 +50,25 @@
 
 #include "internal.h"
 
+#include <linux/mm.h>
+#include <linux/slab.h>
+#include <linux/string.h>
+#include <linux/compiler.h>
+#include <linux/export.h>
+#include <linux/err.h>
+#include <linux/sched.h>
+#include <linux/security.h>
+#include <linux/swap.h>
+#include <linux/swapops.h>
+#include <linux/mman.h>
+#include <linux/hugetlb.h>
+#include <linux/vmalloc.h>
+
+#include <asm/sections.h>
+#include <asm/uaccess.h>
+
+void kayrebt_FlowNodeMarker(void);
+
 #ifndef arch_mmap_check
 #define arch_mmap_check(addr, len, flags)	(0)
 #endif
@@ -1260,7 +1279,7 @@ static inline int mlock_future_check(struct mm_struct *mm,
 /*
  * The caller must hold down_write(&current->mm->mmap_sem).
  */
-unsigned long do_mmap(struct file *file, unsigned long addr,
+__attribute__((always_inline)) unsigned long do_mmap(struct file *file, unsigned long addr,
 			unsigned long len, unsigned long prot,
 			unsigned long flags, vm_flags_t vm_flags,
 			unsigned long pgoff, unsigned long *populate)
@@ -1407,6 +1426,25 @@ unsigned long do_mmap(struct file *file, unsigned long addr,
 	return addr;
 }
 
+__attribute((always_inline)) unsigned long vm_mmap_pgoff(struct file *file, unsigned long addr,
+	unsigned long len, unsigned long prot,
+	unsigned long flag, unsigned long pgoff)
+{
+	unsigned long ret;
+	struct mm_struct *mm = current->mm;
+	unsigned long populate;
+
+	ret = security_mmap_file(file, prot, flag);
+	if (!ret) {
+		down_write(&mm->mmap_sem);
+		ret = do_mmap_pgoff(file, addr, len, prot, flag, pgoff,
+				    &populate);
+		up_write(&mm->mmap_sem);
+		if (populate)
+			mm_populate(ret, populate);
+	}
+	return ret;
+}
 SYSCALL_DEFINE6(mmap_pgoff, unsigned long, addr, unsigned long, len,
 		unsigned long, prot, unsigned long, flags,
 		unsigned long, fd, unsigned long, pgoff)
@@ -1535,7 +1573,7 @@ static inline int accountable_mapping(struct file *file, vm_flags_t vm_flags)
 	return (vm_flags & (VM_NORESERVE | VM_SHARED | VM_WRITE)) == VM_WRITE;
 }
 
-unsigned long mmap_region(struct file *file, unsigned long addr,
+__attribute__((always_inline)) unsigned long mmap_region(struct file *file, unsigned long addr,
 		unsigned long len, vm_flags_t vm_flags, unsigned long pgoff)
 {
 	struct mm_struct *mm = current->mm;
@@ -1584,8 +1622,10 @@ unsigned long mmap_region(struct file *file, unsigned long addr,
 	 */
 	vma = vma_merge(mm, prev, addr, addr + len, vm_flags,
 			NULL, file, pgoff, NULL, NULL_VM_UFFD_CTX);
-	if (vma)
+	if (vma) {
+		kayrebt_FlowNodeMarker();
 		goto out;
+	}
 
 	/*
 	 * Determine the object being mapped and call the appropriate
@@ -1645,6 +1685,7 @@ unsigned long mmap_region(struct file *file, unsigned long addr,
 			goto free_vma;
 	}
 
+	kayrebt_FlowNodeMarker();
 	vma_link(mm, vma, prev, rb_link, rb_parent);
 	/* Once vma denies write, undo our temporary denial count */
 	if (file) {
@@ -2894,6 +2935,7 @@ int insert_vm_struct(struct mm_struct *mm, struct vm_area_struct *vma)
 		vma->vm_pgoff = vma->vm_start >> PAGE_SHIFT;
 	}
 
+	kayrebt_FlowNodeMarker();
 	vma_link(mm, vma, prev, rb_link, rb_parent);
 	return 0;
 }
@@ -2928,6 +2970,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
 			    vma->anon_vma, vma->vm_file, pgoff, vma_policy(vma),
 			    vma->vm_userfaultfd_ctx);
 	if (new_vma) {
+		kayrebt_FlowNodeMarker();
 		/*
 		 * Source vma may have been merged into new_vma
 		 */
@@ -2966,6 +3009,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
 			get_file(new_vma->vm_file);
 		if (new_vma->vm_ops && new_vma->vm_ops->open)
 			new_vma->vm_ops->open(new_vma);
+		kayrebt_FlowNodeMarker();
 		vma_link(mm, new_vma, prev, rb_link, rb_parent);
 		*need_rmap_locks = false;
 	}
