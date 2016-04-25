@@ -665,6 +665,7 @@ __attribute__((always_inline)) static ssize_t do_iter_readv_writev(struct file *
 	init_sync_kiocb(&kiocb, filp);
 	kiocb.ki_pos = *ppos;
 
+	kayrebt_FlowNodeMarker();
 	ret = fn(&kiocb, iter);
 	BUG_ON(ret == -EIOCBQUEUED);
 	*ppos = kiocb.ki_pos;
@@ -681,6 +682,7 @@ __attribute__((always_inline)) static ssize_t do_loop_readv_writev(struct file *
 		struct iovec iovec = iov_iter_iovec(iter);
 		ssize_t nr;
 
+		kayrebt_FlowNodeMarker();
 		nr = fn(filp, iovec.iov_base, iovec.iov_len, ppos);
 
 		if (nr < 0) {
