@@ -41,6 +41,29 @@
 #include <asm/current.h>
 #include <linux/uaccess.h>
 #include "util.h"
+#include <linux/mm.h>
+#include <linux/shm.h>
+#include <linux/init.h>
+#include <linux/msg.h>
+#include <linux/vmalloc.h>
+#include <linux/slab.h>
+#include <linux/notifier.h>
+#include <linux/capability.h>
+#include <linux/highuid.h>
+#include <linux/security.h>
+#include <linux/rcupdate.h>
+#include <linux/workqueue.h>
+#include <linux/seq_file.h>
+#include <linux/proc_fs.h>
+#include <linux/audit.h>
+#include <linux/nsproxy.h>
+#include <linux/rwsem.h>
+#include <linux/memory.h>
+#include <linux/ipc_namespace.h>
+
+#include <asm/unistd.h>
+
+void kayrebt_FlowNodeMarker(void);
 
 /* one msg_receiver structure for each sleeping receiver */
 struct msg_receiver {
@@ -566,7 +589,7 @@ static int testmsg(struct msg_msg *msg, long type, int mode)
 	return 0;
 }
 
-static inline int pipelined_send(struct msg_queue *msq, struct msg_msg *msg)
+__attribute__((always_inline)) static inline int pipelined_send(struct msg_queue *msq, struct msg_msg *msg)
 {
 	struct msg_receiver *msr, *t;
 
@@ -596,6 +619,7 @@ static inline int pipelined_send(struct msg_queue *msq, struct msg_msg *msg)
 				 * in do_msgrcv(). Barrier (B).
 				 */
 				smp_wmb();
+				kayrebt_FlowNodeMarker();
 				msr->r_msg = msg;
 
 				return 1;
@@ -606,7 +630,7 @@ static inline int pipelined_send(struct msg_queue *msq, struct msg_msg *msg)
 	return 0;
 }
 
-long do_msgsnd(int msqid, long mtype, void __user *mtext,
+__attribute__((always_inline)) long do_msgsnd(int msqid, long mtype, void __user *mtext,
 		size_t msgsz, int msgflg)
 {
 	struct msg_queue *msq;
@@ -700,6 +724,7 @@ long do_msgsnd(int msqid, long mtype, void __user *mtext,
 
 	if (!pipelined_send(msq, msg)) {
 		/* no one is waiting for this message, enqueue it */
+		kayrebt_FlowNodeMarker();
 		list_add_tail(&msg->m_list, &msq->q_messages);
 		msq->q_cbytes += msgsz;
 		msq->q_qnum++;
@@ -798,7 +823,7 @@ static inline void free_copy(struct msg_msg *copy)
 }
 #endif
 
-static struct msg_msg *find_msg(struct msg_queue *msq, long *msgtyp, int mode)
+__attribute__((always_inline)) static struct msg_msg *find_msg(struct msg_queue *msq, long *msgtyp, int mode)
 {
 	struct msg_msg *msg, *found = NULL;
 	long count = 0;
@@ -821,8 +846,39 @@ static struct msg_msg *find_msg(struct msg_queue *msq, long *msgtyp, int mode)
 
 	return found ?: ERR_PTR(-EAGAIN);
 }
+/**
+ * ipcperms - check ipc permissions
+ * @ns: ipc namespace
+ * @ipcp: ipc permission set
+ * @flag: desired permission set
+ *
+ * Check user, group, other permissions for access
+ * to ipc resources. return 0 if allowed
+ *
+ * @flag will most probably be 0 or S_...UGO from <linux/stat.h>
+ */
+__attribute__((always_inline)) int ipcperms(struct ipc_namespace *ns, struct kern_ipc_perm *ipcp, short flag)
+{
+	kuid_t euid = current_euid();
+	int requested_mode, granted_mode;
 
-long do_msgrcv(int msqid, void __user *buf, size_t bufsz, long msgtyp, int msgflg,
+	audit_ipc_obj(ipcp);
+	requested_mode = (flag >> 6) | (flag >> 3) | flag;
+	granted_mode = ipcp->mode;
+	if (uid_eq(euid, ipcp->cuid) ||
+	    uid_eq(euid, ipcp->uid))
+		granted_mode >>= 6;
+	else if (in_group_p(ipcp->cgid) || in_group_p(ipcp->gid))
+		granted_mode >>= 3;
+	/* is there some bit set in requested_mode but not in granted_mode? */
+	if ((requested_mode & ~granted_mode & 0007) &&
+	    !ns_capable(ns->user_ns, CAP_IPC_OWNER))
+		return -1;
+
+	return security_ipc_permission(ipcp, flag);
+}
+
+__attribute__((always_inline)) long do_msgrcv(int msqid, void __user *buf, size_t bufsz, long msgtyp, int msgflg,
 	       long (*msg_handler)(void __user *, struct msg_msg *, size_t))
 {
 	int mode;
