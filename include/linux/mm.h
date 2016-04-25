@@ -1943,7 +1943,7 @@ extern unsigned long do_mmap(struct file *file, unsigned long addr,
 	vm_flags_t vm_flags, unsigned long pgoff, unsigned long *populate);
 extern int do_munmap(struct mm_struct *, unsigned long, size_t);
 
-static inline unsigned long
+__attribute__((always_inline)) static inline unsigned long
 do_mmap_pgoff(struct file *file, unsigned long addr,
 	unsigned long len, unsigned long prot, unsigned long flags,
 	unsigned long pgoff, unsigned long *populate)

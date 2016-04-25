@@ -47,6 +47,72 @@
 
 #include "util.h"
 
+#include <linux/mm.h>
+#include <linux/shm.h>
+#include <linux/init.h>
+#include <linux/msg.h>
+#include <linux/vmalloc.h>
+#include <linux/slab.h>
+#include <linux/notifier.h>
+#include <linux/capability.h>
+#include <linux/highuid.h>
+#include <linux/security.h>
+#include <linux/rcupdate.h>
+#include <linux/workqueue.h>
+#include <linux/seq_file.h>
+#include <linux/proc_fs.h>
+#include <linux/audit.h>
+#include <linux/nsproxy.h>
+#include <linux/rwsem.h>
+#include <linux/memory.h>
+#include <linux/ipc_namespace.h>
+
+#include <asm/unistd.h>
+
+#include <linux/kernel.h>
+#include <linux/slab.h>
+#include <linux/backing-dev.h>
+#include <linux/mm.h>
+#include <linux/vmacache.h>
+#include <linux/shm.h>
+#include <linux/mman.h>
+#include <linux/pagemap.h>
+#include <linux/swap.h>
+#include <linux/syscalls.h>
+#include <linux/capability.h>
+#include <linux/init.h>
+#include <linux/file.h>
+#include <linux/fs.h>
+#include <linux/personality.h>
+#include <linux/security.h>
+#include <linux/hugetlb.h>
+#include <linux/profile.h>
+#include <linux/export.h>
+#include <linux/mount.h>
+#include <linux/mempolicy.h>
+#include <linux/rmap.h>
+#include <linux/mmu_notifier.h>
+#include <linux/mmdebug.h>
+#include <linux/perf_event.h>
+#include <linux/audit.h>
+#include <linux/khugepaged.h>
+#include <linux/uprobes.h>
+#include <linux/rbtree_augmented.h>
+#include <linux/sched/sysctl.h>
+#include <linux/notifier.h>
+#include <linux/memory.h>
+#include <linux/printk.h>
+#include <linux/userfaultfd_k.h>
+
+#include <asm/uaccess.h>
+#include <asm/cacheflush.h>
+#include <asm/tlb.h>
+#include <asm/mmu_context.h>
+
+#include "../mm/internal.h"
+
+void kayrebt_FlowNodeMarker(void);
+
 struct shm_file_data {
 	int id;
 	struct ipc_namespace *ns;
@@ -1043,6 +1109,386 @@ out_unlock1:
 	return err;
 }
 
+/**
+ * ipcperms - check ipc permissions
+ * @ns: ipc namespace
+ * @ipcp: ipc permission set
+ * @flag: desired permission set
+ *
+ * Check user, group, other permissions for access
+ * to ipc resources. return 0 if allowed
+ *
+ * @flag will most probably be 0 or S_...UGO from <linux/stat.h>
+ */
+__attribute__((always_inline)) int ipcperms(struct ipc_namespace *ns, struct kern_ipc_perm *ipcp, short flag)
+{
+	kuid_t euid = current_euid();
+	int requested_mode, granted_mode;
+
+	audit_ipc_obj(ipcp);
+	requested_mode = (flag >> 6) | (flag >> 3) | flag;
+	granted_mode = ipcp->mode;
+	if (uid_eq(euid, ipcp->cuid) ||
+	    uid_eq(euid, ipcp->uid))
+		granted_mode >>= 6;
+	else if (in_group_p(ipcp->cgid) || in_group_p(ipcp->gid))
+		granted_mode >>= 3;
+	/* is there some bit set in requested_mode but not in granted_mode? */
+	if ((requested_mode & ~granted_mode & 0007) &&
+	    !ns_capable(ns->user_ns, CAP_IPC_OWNER))
+		return -1;
+
+	return security_ipc_permission(ipcp, flag);
+}
+
+__attribute__((always_inline)) static inline int mlock_future_check(struct mm_struct *mm,
+				     unsigned long flags,
+				     unsigned long len)
+{
+	unsigned long locked, lock_limit;
+
+	/*  mlock MCL_FUTURE? */
+	if (flags & VM_LOCKED) {
+		locked = len >> PAGE_SHIFT;
+		locked += mm->locked_vm;
+		lock_limit = rlimit(RLIMIT_MEMLOCK);
+		lock_limit >>= PAGE_SHIFT;
+		if (locked > lock_limit && !capable(CAP_IPC_LOCK))
+			return -EAGAIN;
+	}
+	return 0;
+}
+
+unsigned long round_hint_to_min(unsigned long hint);
+
+/*
+ * The caller must hold down_write(&current->mm->mmap_sem).
+ */
+__attribute__((always_inline)) unsigned long do_mmap(struct file *file, unsigned long addr,
+			unsigned long len, unsigned long prot,
+			unsigned long flags, vm_flags_t vm_flags,
+			unsigned long pgoff, unsigned long *populate)
+{
+	struct mm_struct *mm = current->mm;
+
+	*populate = 0;
+
+	if (!len)
+		return -EINVAL;
+
+	/*
+	 * Does the application expect PROT_READ to imply PROT_EXEC?
+	 *
+	 * (the exception is when the underlying filesystem is noexec
+	 *  mounted, in which case we dont add PROT_EXEC.)
+	 */
+	if ((prot & PROT_READ) && (current->personality & READ_IMPLIES_EXEC))
+		if (!(file && path_noexec(&file->f_path)))
+			prot |= PROT_EXEC;
+
+	if (!(flags & MAP_FIXED))
+		addr = round_hint_to_min(addr);
+
+	/* Careful about overflows.. */
+	len = PAGE_ALIGN(len);
+	if (!len)
+		return -ENOMEM;
+
+	/* offset overflow? */
+	if ((pgoff + (len >> PAGE_SHIFT)) < pgoff)
+		return -EOVERFLOW;
+
+	/* Too many mappings? */
+	if (mm->map_count > sysctl_max_map_count)
+		return -ENOMEM;
+
+	/* Obtain the address to map to. we verify (or select) it and ensure
+	 * that it represents a valid section of the address space.
+	 */
+	addr = get_unmapped_area(file, addr, len, pgoff, flags);
+	if (addr & ~PAGE_MASK)
+		return addr;
+
+	/* Do simple checking here so the lower-level routines won't have
+	 * to. we assume access permissions have been handled by the open
+	 * of the memory object, so we don't do any here.
+	 */
+	vm_flags |= calc_vm_prot_bits(prot) | calc_vm_flag_bits(flags) |
+			mm->def_flags | VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC;
+
+	if (flags & MAP_LOCKED)
+		if (!can_do_mlock())
+			return -EPERM;
+
+	if (mlock_future_check(mm, vm_flags, len))
+		return -EAGAIN;
+
+	if (file) {
+		struct inode *inode = file_inode(file);
+
+		switch (flags & MAP_TYPE) {
+		case MAP_SHARED:
+			if ((prot&PROT_WRITE) && !(file->f_mode&FMODE_WRITE))
+				return -EACCES;
+
+			/*
+			 * Make sure we don't allow writing to an append-only
+			 * file..
+			 */
+			if (IS_APPEND(inode) && (file->f_mode & FMODE_WRITE))
+				return -EACCES;
+
+			/*
+			 * Make sure there are no mandatory locks on the file.
+			 */
+			if (locks_verify_locked(file))
+				return -EAGAIN;
+
+			vm_flags |= VM_SHARED | VM_MAYSHARE;
+			if (!(file->f_mode & FMODE_WRITE))
+				vm_flags &= ~(VM_MAYWRITE | VM_SHARED);
+
+			/* fall through */
+		case MAP_PRIVATE:
+			if (!(file->f_mode & FMODE_READ))
+				return -EACCES;
+			if (path_noexec(&file->f_path)) {
+				if (vm_flags & VM_EXEC)
+					return -EPERM;
+				vm_flags &= ~VM_MAYEXEC;
+			}
+
+			if (!file->f_op->mmap)
+				return -ENODEV;
+			if (vm_flags & (VM_GROWSDOWN|VM_GROWSUP))
+				return -EINVAL;
+			break;
+
+		default:
+			return -EINVAL;
+		}
+	} else {
+		switch (flags & MAP_TYPE) {
+		case MAP_SHARED:
+			if (vm_flags & (VM_GROWSDOWN|VM_GROWSUP))
+				return -EINVAL;
+			/*
+			 * Ignore pgoff.
+			 */
+			pgoff = 0;
+			vm_flags |= VM_SHARED | VM_MAYSHARE;
+			break;
+		case MAP_PRIVATE:
+			/*
+			 * Set pgoff according to addr for anon_vma.
+			 */
+			pgoff = addr >> PAGE_SHIFT;
+			break;
+		default:
+			return -EINVAL;
+		}
+	}
+
+	/*
+	 * Set 'VM_NORESERVE' if we should not account for the
+	 * memory use of this mapping.
+	 */
+	if (flags & MAP_NORESERVE) {
+		/* We honor MAP_NORESERVE if allowed to overcommit */
+		if (sysctl_overcommit_memory != OVERCOMMIT_NEVER)
+			vm_flags |= VM_NORESERVE;
+
+		/* hugetlb applies strict overcommit unless MAP_NORESERVE */
+		if (file && is_file_hugepages(file))
+			vm_flags |= VM_NORESERVE;
+	}
+
+	addr = mmap_region(file, addr, len, vm_flags, pgoff);
+	if (!IS_ERR_VALUE(addr) &&
+	    ((vm_flags & VM_LOCKED) ||
+	     (flags & (MAP_POPULATE | MAP_NONBLOCK)) == MAP_POPULATE))
+		*populate = len;
+	return addr;
+}
+unsigned long count_vma_pages_range(struct mm_struct *mm,
+		unsigned long addr, unsigned long end);
+int find_vma_links(struct mm_struct *mm, unsigned long addr,
+		unsigned long end, struct vm_area_struct **pprev,
+		struct rb_node ***rb_link, struct rb_node **rb_parent);
+int accountable_mapping(struct file *file, vm_flags_t vm_flags);
+void vma_link(struct mm_struct *mm, struct vm_area_struct *vma,
+			struct vm_area_struct *prev, struct rb_node **rb_link,
+			struct rb_node *rb_parent);
+void unmap_region(struct mm_struct *mm,
+		struct vm_area_struct *vma, struct vm_area_struct *prev,
+		unsigned long start, unsigned long end);
+
+__attribute__((always_inline)) unsigned long mmap_region(struct file *file, unsigned long addr,
+		unsigned long len, vm_flags_t vm_flags, unsigned long pgoff)
+{
+	struct mm_struct *mm = current->mm;
+	struct vm_area_struct *vma, *prev;
+	int error;
+	struct rb_node **rb_link, *rb_parent;
+	unsigned long charged = 0;
+
+	/* Check against address space limit. */
+	if (!may_expand_vm(mm, len >> PAGE_SHIFT)) {
+		unsigned long nr_pages;
+
+		/*
+		 * MAP_FIXED may remove pages of mappings that intersects with
+		 * requested mapping. Account for the pages it would unmap.
+		 */
+		if (!(vm_flags & MAP_FIXED))
+			return -ENOMEM;
+
+		nr_pages = count_vma_pages_range(mm, addr, addr + len);
+
+		if (!may_expand_vm(mm, (len >> PAGE_SHIFT) - nr_pages))
+			return -ENOMEM;
+	}
+
+	/* Clear old maps */
+	error = -ENOMEM;
+	while (find_vma_links(mm, addr, addr + len, &prev, &rb_link,
+			      &rb_parent)) {
+		if (do_munmap(mm, addr, len))
+			return -ENOMEM;
+	}
+
+	/*
+	 * Private writable mapping: check memory availability
+	 */
+	if (accountable_mapping(file, vm_flags)) {
+		charged = len >> PAGE_SHIFT;
+		if (security_vm_enough_memory_mm(mm, charged))
+			return -ENOMEM;
+		vm_flags |= VM_ACCOUNT;
+	}
+
+	/*
+	 * Can we just expand an old mapping?
+	 */
+	vma = vma_merge(mm, prev, addr, addr + len, vm_flags,
+			NULL, file, pgoff, NULL, NULL_VM_UFFD_CTX);
+	if (vma)
+		goto out;
+
+	/*
+	 * Determine the object being mapped and call the appropriate
+	 * specific mapper. the address has already been validated, but
+	 * not unmapped, but the maps are removed from the list.
+	 */
+	vma = kmem_cache_zalloc(vm_area_cachep, GFP_KERNEL);
+	if (!vma) {
+		error = -ENOMEM;
+		goto unacct_error;
+	}
+
+	vma->vm_mm = mm;
+	vma->vm_start = addr;
+	vma->vm_end = addr + len;
+	vma->vm_flags = vm_flags;
+	vma->vm_page_prot = vm_get_page_prot(vm_flags);
+	vma->vm_pgoff = pgoff;
+	INIT_LIST_HEAD(&vma->anon_vma_chain);
+
+	if (file) {
+		if (vm_flags & VM_DENYWRITE) {
+			error = deny_write_access(file);
+			if (error)
+				goto free_vma;
+		}
+		if (vm_flags & VM_SHARED) {
+			error = mapping_map_writable(file->f_mapping);
+			if (error)
+				goto allow_write_and_free_vma;
+		}
+
+		/* ->mmap() can change vma->vm_file, but must guarantee that
+		 * vma_link() below can deny write-access if VM_DENYWRITE is set
+		 * and map writably if VM_SHARED is set. This usually means the
+		 * new file must not have been exposed to user-space, yet.
+		 */
+		vma->vm_file = get_file(file);
+		error = file->f_op->mmap(file, vma);
+		if (error)
+			goto unmap_and_free_vma;
+
+		/* Can addr have changed??
+		 *
+		 * Answer: Yes, several device drivers can do it in their
+		 *         f_op->mmap method. -DaveM
+		 * Bug: If addr is changed, prev, rb_link, rb_parent should
+		 *      be updated for vma_link()
+		 */
+		WARN_ON_ONCE(addr != vma->vm_start);
+
+		addr = vma->vm_start;
+		vm_flags = vma->vm_flags;
+	} else if (vm_flags & VM_SHARED) {
+		error = shmem_zero_setup(vma);
+		if (error)
+			goto free_vma;
+	}
+
+	vma_link(mm, vma, prev, rb_link, rb_parent);
+	/* Once vma denies write, undo our temporary denial count */
+	if (file) {
+		if (vm_flags & VM_SHARED)
+			mapping_unmap_writable(file->f_mapping);
+		if (vm_flags & VM_DENYWRITE)
+			allow_write_access(file);
+	}
+	file = vma->vm_file;
+out:
+	perf_event_mmap(vma);
+
+	vm_stat_account(mm, vm_flags, file, len >> PAGE_SHIFT);
+	if (vm_flags & VM_LOCKED) {
+		if (!((vm_flags & VM_SPECIAL) || is_vm_hugetlb_page(vma) ||
+					vma == get_gate_vma(current->mm)))
+			mm->locked_vm += (len >> PAGE_SHIFT);
+		else
+			vma->vm_flags &= ~VM_LOCKED;
+	}
+
+	if (file)
+		uprobe_mmap(vma);
+
+	/*
+	 * New (or expanded) vma always get soft dirty status.
+	 * Otherwise user-space soft-dirty page tracker won't
+	 * be able to distinguish situation when vma area unmapped,
+	 * then new mapped in-place (which must be aimed as
+	 * a completely new data area).
+	 */
+	vma->vm_flags |= VM_SOFTDIRTY;
+
+	vma_set_page_prot(vma);
+
+	return addr;
+
+unmap_and_free_vma:
+	vma->vm_file = NULL;
+	fput(file);
+
+	/* Undo any partial mapping done by a device driver. */
+	unmap_region(mm, vma, prev, vma->vm_start, vma->vm_end);
+	charged = 0;
+	if (vm_flags & VM_SHARED)
+		mapping_unmap_writable(file->f_mapping);
+allow_write_and_free_vma:
+	if (vm_flags & VM_DENYWRITE)
+		allow_write_access(file);
+free_vma:
+	kmem_cache_free(vm_area_cachep, vma);
+unacct_error:
+	if (charged)
+		vm_unacct_memory(charged);
+	return error;
+}
 /*
  * Fix shmaddr, allocate descriptor, map shm, add attach descriptor to lists.
  *
@@ -1050,7 +1496,7 @@ out_unlock1:
  * "raddr" thing points to kernel space, and there has to be a wrapper around
  * this.
  */
-long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
+__attribute__((always_inline)) long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 	      unsigned long shmlba)
 {
 	struct shmid_kernel *shp;
@@ -1177,6 +1623,7 @@ long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
 			goto invalid;
 	}
 
+	kayrebt_FlowNodeMarker();
 	addr = do_mmap_pgoff(file, addr, size, prot, flags, 0, &populate);
 	*raddr = addr;
 	err = 0;
