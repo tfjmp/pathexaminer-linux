@@ -21,6 +21,8 @@
 #include <asm/uaccess.h>
 #include <asm/unistd.h>
 
+void kayrebt_FlowNodeMarker(void);
+
 typedef ssize_t (*io_fn_t)(struct file *, char __user *, size_t, loff_t *);
 typedef ssize_t (*iter_fn_t)(struct kiocb *, struct iov_iter *);
 
@@ -374,7 +376,7 @@ EXPORT_SYMBOL(vfs_iter_write);
  * them to something that fits in "int" so that others
  * won't have to do range checks all the time.
  */
-int rw_verify_area(int read_write, struct file *file, const loff_t *ppos, size_t count)
+__attribute__((always_inline)) int rw_verify_area(int read_write, struct file *file, const loff_t *ppos, size_t count)
 {
 	struct inode *inode;
 	loff_t pos;
@@ -408,7 +410,7 @@ int rw_verify_area(int read_write, struct file *file, const loff_t *ppos, size_t
 	return count > MAX_RW_COUNT ? MAX_RW_COUNT : count;
 }
 
-static ssize_t new_sync_read(struct file *filp, char __user *buf, size_t len, loff_t *ppos)
+__attribute__((always_inline)) static ssize_t new_sync_read(struct file *filp, char __user *buf, size_t len, loff_t *ppos)
 {
 	struct iovec iov = { .iov_base = buf, .iov_len = len };
 	struct kiocb kiocb;
@@ -425,7 +427,7 @@ static ssize_t new_sync_read(struct file *filp, char __user *buf, size_t len, lo
 	return ret;
 }
 
-ssize_t __vfs_read(struct file *file, char __user *buf, size_t count,
+__attribute__((always_inline)) ssize_t __vfs_read(struct file *file, char __user *buf, size_t count,
 		   loff_t *pos)
 {
 	if (file->f_op->read)
@@ -437,7 +439,7 @@ ssize_t __vfs_read(struct file *file, char __user *buf, size_t count,
 }
 EXPORT_SYMBOL(__vfs_read);
 
-ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
+__attribute__((always_inline)) ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
 {
 	ssize_t ret;
 
@@ -464,7 +466,7 @@ ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
 
 EXPORT_SYMBOL(vfs_read);
 
-static ssize_t new_sync_write(struct file *filp, const char __user *buf, size_t len, loff_t *ppos)
+__attribute__((always_inline)) static ssize_t new_sync_write(struct file *filp, const char __user *buf, size_t len, loff_t *ppos)
 {
 	struct iovec iov = { .iov_base = (void __user *)buf, .iov_len = len };
 	struct kiocb kiocb;
@@ -482,14 +484,16 @@ static ssize_t new_sync_write(struct file *filp, const char __user *buf, size_t 
 	return ret;
 }
 
-ssize_t __vfs_write(struct file *file, const char __user *p, size_t count,
+__attribute__((always_inline)) ssize_t __vfs_write(struct file *file, const char __user *p, size_t count,
 		    loff_t *pos)
 {
-	if (file->f_op->write)
+	if (file->f_op->write) {
+		kayrebt_FlowNodeMarker();
 		return file->f_op->write(file, p, count, pos);
-	else if (file->f_op->write_iter)
+	} else if (file->f_op->write_iter) {
+		kayrebt_FlowNodeMarker();
 		return new_sync_write(file, p, count, pos);
-	else
+	} else
 		return -EINVAL;
 }
 EXPORT_SYMBOL(__vfs_write);
@@ -520,7 +524,7 @@ ssize_t __kernel_write(struct file *file, const char *buf, size_t count, loff_t 
 
 EXPORT_SYMBOL(__kernel_write);
 
-ssize_t vfs_write(struct file *file, const char __user *buf, size_t count, loff_t *pos)
+__attribute__((always_inline)) ssize_t vfs_write(struct file *file, const char __user *buf, size_t count, loff_t *pos)
 {
 	ssize_t ret;
 
