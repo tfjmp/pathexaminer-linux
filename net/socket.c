@@ -108,6 +108,8 @@
 #include <net/busy_poll.h>
 #include <linux/errqueue.h>
 
+void kayrebt_FlowNodeMarker(void);
+
 #ifdef CONFIG_NET_RX_BUSY_POLL
 unsigned int sysctl_net_busy_read __read_mostly;
 unsigned int sysctl_net_busy_poll __read_mostly;
@@ -605,14 +607,15 @@ void __sock_tx_timestamp(const struct sock *sk, __u8 *tx_flags)
 }
 EXPORT_SYMBOL(__sock_tx_timestamp);
 
-static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
+__attribute__((always_inline)) static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
 {
+	kayrebt_FlowNodeMarker();
 	int ret = sock->ops->sendmsg(sock, msg, msg_data_left(msg));
 	BUG_ON(ret == -EIOCBQUEUED);
 	return ret;
 }
 
-int sock_sendmsg(struct socket *sock, struct msghdr *msg)
+__attribute__((always_inline)) int sock_sendmsg(struct socket *sock, struct msghdr *msg)
 {
 	int err = security_socket_sendmsg(sock, msg,
 					  msg_data_left(msg));
@@ -1622,9 +1625,7 @@ SYSCALL_DEFINE3(getpeername, int, fd, struct sockaddr __user *, usockaddr,
  *	the protocol.
  */
 
-SYSCALL_DEFINE6(sendto, int, fd, void __user *, buff, size_t, len,
-		unsigned int, flags, struct sockaddr __user *, addr,
-		int, addr_len)
+__attribute__((always_inline)) long sys_sendto(int fd, void* buff, size_t len, unsigned int flags, struct sockaddr* addr, int addr_len)
 {
 	struct socket *sock;
 	struct sockaddr_storage address;
@@ -1877,7 +1878,7 @@ static int copy_msghdr_from_user(struct msghdr *kmsg,
 			    UIO_FASTIOV, iov, &kmsg->msg_iter);
 }
 
-static int ___sys_sendmsg(struct socket *sock, struct user_msghdr __user *msg,
+__attribute__((always_inline)) static int ___sys_sendmsg(struct socket *sock, struct user_msghdr __user *msg,
 			 struct msghdr *msg_sys, unsigned int flags,
 			 struct used_address *used_address)
 {
@@ -1973,7 +1974,7 @@ out_freeiov:
  *	BSD sendmsg interface
  */
 
-long __sys_sendmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
+__attribute__((always_inline)) long __sys_sendmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
 {
 	int fput_needed, err;
 	struct msghdr msg_sys;
