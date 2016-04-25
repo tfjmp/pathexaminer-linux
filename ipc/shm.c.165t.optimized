@@ -1,0 +1,6508 @@
+
+;; Function mapping_unmap_writable (mapping_unmap_writable, funcdef_no=1623, decl_uid=17990, cgraph_uid=1623)
+
+mapping_unmap_writable (struct address_space * mapping)
+{
+  struct atomic_t * _2;
+
+  <bb 2>:
+  _2 = &mapping_1(D)->i_mmap_writable;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; decl %0" : "=m" _2->counter : "m" _2->counter);
+  return;
+
+}
+
+
+
+;; Function get_file (get_file, funcdef_no=1636, decl_uid=18146, cgraph_uid=1636)
+
+get_file (struct file * f)
+{
+  struct atomic_long_t * _2;
+
+  <bb 2>:
+  _2 = &f_1(D)->f_count;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; incq %0" : "=m" MEM[(struct atomic64_t *)_2].counter : "m" MEM[(struct atomic64_t *)_2].counter);
+  return f_1(D);
+
+}
+
+
+
+;; Function allow_write_access (allow_write_access, funcdef_no=1674, decl_uid=19449, cgraph_uid=1674)
+
+allow_write_access (struct file * file)
+{
+  struct inode * _4;
+  struct atomic_t * _5;
+
+  <bb 2>:
+  if (file_2(D) != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  _4 = MEM[(const struct file *)file_2(D) + 32B];
+  _5 = &_4->i_writecount;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; incl %0" : "=m" _5->counter : "m" _5->counter);
+
+  <bb 4>:
+  return;
+
+}
+
+
+
+;; Function shm_fault (shm_fault, funcdef_no=2998, decl_uid=40280, cgraph_uid=2998)
+
+shm_fault (struct vm_area_struct * vma, struct vm_fault * vmf)
+{
+  struct shm_file_data * sfd;
+  struct file * file;
+  const struct vm_operations_struct * _5;
+  int (*<T2386>) (struct vm_area_struct *, struct vm_fault *) _6;
+  int _9;
+
+  <bb 2>:
+  file_3 = vma_2(D)->vm_file;
+  sfd_4 = file_3->private_data;
+  _5 = sfd_4->vm_ops;
+  _6 = _5->fault;
+  _9 = _6 (vma_2(D), vmf_7(D));
+  return _9;
+
+}
+
+
+
+;; Function shm_set_policy (shm_set_policy, funcdef_no=2999, decl_uid=40286, cgraph_uid=2999)
+
+shm_set_policy (struct vm_area_struct * vma, struct mempolicy * new)
+{
+  int err;
+  struct shm_file_data * sfd;
+  struct file * file;
+  const struct vm_operations_struct * _7;
+  int (*<T2394>) (struct vm_area_struct *, struct mempolicy *) _8;
+
+  <bb 2>:
+  file_5 = vma_4(D)->vm_file;
+  sfd_6 = file_5->private_data;
+  _7 = sfd_6->vm_ops;
+  _8 = _7->set_policy;
+  if (_8 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  err_11 = _8 (vma_4(D), new_9(D));
+
+  <bb 4>:
+  # err_1 = PHI <0(2), err_11(3)>
+  return err_1;
+
+}
+
+
+
+;; Function shm_get_policy (shm_get_policy, funcdef_no=3000, decl_uid=40293, cgraph_uid=3000)
+
+shm_get_policy (struct vm_area_struct * vma, long unsigned int addr)
+{
+  struct mempolicy * pol;
+  struct shm_file_data * sfd;
+  struct file * file;
+  const struct vm_operations_struct * _7;
+  struct mempolicy * (*<T2396>) (struct vm_area_struct *, long unsigned int) _8;
+
+  <bb 2>:
+  file_5 = vma_4(D)->vm_file;
+  sfd_6 = file_5->private_data;
+  _7 = sfd_6->vm_ops;
+  _8 = _7->get_policy;
+  if (_8 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  pol_11 = _8 (vma_4(D), addr_9(D));
+  goto <bb 5>;
+
+  <bb 4>:
+  pol_12 = vma_4(D)->vm_policy;
+
+  <bb 5>:
+  # pol_1 = PHI <pol_11(3), pol_12(4)>
+  return pol_1;
+
+}
+
+
+
+;; Function shm_fsync (shm_fsync, funcdef_no=3003, decl_uid=40315, cgraph_uid=3003)
+
+shm_fsync (struct file * file, loff_t start, loff_t end, int datasync)
+{
+  struct shm_file_data * sfd;
+  int _1;
+  struct file * _6;
+  const struct file_operations * _7;
+  int (*<T2f93>) (struct file *, loff_t, loff_t, int) _8;
+  int _13;
+
+  <bb 2>:
+  sfd_5 = file_4(D)->private_data;
+  _6 = sfd_5->file;
+  _7 = _6->f_op;
+  _8 = _7->fsync;
+  if (_8 == 0B)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _13 = _8 (_6, start_9(D), end_10(D), datasync_11(D));
+
+  <bb 4>:
+  # _1 = PHI <-22(2), _13(3)>
+  return _1;
+
+}
+
+
+
+;; Function shm_fallocate (shm_fallocate, funcdef_no=3004, decl_uid=40322, cgraph_uid=3004)
+
+shm_fallocate (struct file * file, int mode, loff_t offset, loff_t len)
+{
+  struct shm_file_data * sfd;
+  long int _1;
+  struct file * _6;
+  const struct file_operations * _7;
+  long int (*<T2fae>) (struct file *, int, loff_t, loff_t) _8;
+  long int _13;
+
+  <bb 2>:
+  sfd_5 = file_4(D)->private_data;
+  _6 = sfd_5->file;
+  _7 = _6->f_op;
+  _8 = _7->fallocate;
+  if (_8 == 0B)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _13 = _8 (file_4(D), mode_9(D), offset_10(D), len_11(D));
+
+  <bb 4>:
+  # _1 = PHI <-95(2), _13(3)>
+  return _1;
+
+}
+
+
+
+;; Function shm_get_unmapped_area (shm_get_unmapped_area, funcdef_no=3005, decl_uid=40330, cgraph_uid=3005)
+
+shm_get_unmapped_area (struct file * file, long unsigned int addr, long unsigned int len, long unsigned int pgoff, long unsigned int flags)
+{
+  struct shm_file_data * sfd;
+  struct file * _4;
+  const struct file_operations * _5;
+  long unsigned int (*<T2138>) (struct file *, long unsigned int, long unsigned int, long unsigned int, long unsigned int) _6;
+  long unsigned int _12;
+
+  <bb 2>:
+  sfd_3 = file_2(D)->private_data;
+  _4 = sfd_3->file;
+  _5 = _4->f_op;
+  _6 = _5->get_unmapped_area;
+  _12 = _6 (_4, addr_7(D), len_8(D), pgoff_9(D), flags_10(D));
+  return _12;
+
+}
+
+
+
+;; Function shm_more_checks (shm_more_checks, funcdef_no=3009, decl_uid=40366, cgraph_uid=3009)
+
+shm_more_checks (struct kern_ipc_perm * ipcp, struct ipc_params * params)
+{
+  int _1;
+  long unsigned int _4;
+  long unsigned int _6;
+
+  <bb 2>:
+  _4 = MEM[(struct shmid_kernel *)ipcp_2(D)].shm_segsz;
+  _6 = params_5(D)->u.size;
+  if (_4 < _6)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+
+  <bb 4>:
+  # _1 = PHI <-22(3), 0(2)>
+  return _1;
+
+}
+
+
+
+;; Function ipc_ns_init (ipc_ns_init, funcdef_no=2983, decl_uid=40178, cgraph_uid=2983) (unlikely executed)
+
+ipc_ns_init ()
+{
+  <bb 2>:
+  init_ipc_ns.shm_ctlmax = 18446744073692774399;
+  init_ipc_ns.shm_ctlall = 18446744073692774399;
+  init_ipc_ns.shm_ctlmni = 4096;
+  init_ipc_ns.shm_rmid_forced = 0;
+  init_ipc_ns.shm_tot = 0;
+  ipc_init_ids (&init_ipc_ns.ids[2]);
+  return 0;
+
+}
+
+
+
+;; Function shm_rcu_free (shm_rcu_free, funcdef_no=2989, decl_uid=40211, cgraph_uid=2989)
+
+shm_rcu_free (struct callback_head * head)
+{
+  struct shmid_kernel * shp;
+
+  <bb 2>:
+  shp_2 = head_1(D) + 64;
+  security_shm_free (shp_2);
+  ipc_rcu_free (head_1(D));
+  return;
+
+}
+
+
+
+;; Function shm_release (shm_release, funcdef_no=3002, decl_uid=40308, cgraph_uid=3002)
+
+shm_release (struct inode * ino, struct file * file)
+{
+  struct shm_file_data * sfd;
+  struct ipc_namespace * _4;
+
+  <bb 2>:
+  sfd_3 = file_2(D)->private_data;
+  _4 = sfd_3->ns;
+  put_ipc_ns (_4);
+  MEM[(struct shm_file_data * *)file_2(D) + 208B] = 0B;
+  kfree (sfd_3);
+  return 0;
+
+}
+
+
+
+;; Function deny_write_access (deny_write_access, funcdef_no=1672, decl_uid=19442, cgraph_uid=1672)
+
+deny_write_access (struct file * file)
+{
+  int v;
+  volatile u32 * __ptr;
+  int iftmp.39;
+  struct inode * _4;
+  int _7;
+
+  <bb 2>:
+  _4 = MEM[(const struct file *)file_3(D) + 32B];
+
+  <bb 3>:
+  # v_20 = PHI <v_9(5), 0(2)>
+  _7 = v_20 + -1;
+  __ptr_8 = &MEM[(struct atomic_t *)_4 + 320B].counter;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; cmpxchgl %2,%1" : "=a" v_9, "=m" *__ptr_8 : "r" _7, "0" v_20, "m" *__ptr_8 : "memory");
+  if (v_20 == v_9)
+    goto <bb 6>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  if (v_9 <= 0)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  goto <bb 3>;
+
+  <bb 6>:
+  # iftmp.39_1 = PHI <0(3), -26(4)>
+  return iftmp.39_1;
+
+}
+
+
+
+;; Function mapping_map_writable (mapping_map_writable, funcdef_no=1622, decl_uid=17987, cgraph_uid=1622)
+
+mapping_map_writable (struct address_space * mapping)
+{
+  int v;
+  volatile u32 * __ptr;
+  int iftmp.40;
+  int _6;
+
+  <bb 2>:
+
+  <bb 3>:
+  # v_19 = PHI <v_8(5), 0(2)>
+  _6 = v_19 + 1;
+  __ptr_7 = &MEM[(struct atomic_t *)mapping_2(D) + 28B].counter;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; cmpxchgl %2,%1" : "=a" v_8, "=m" *__ptr_7 : "r" _6, "0" v_19, "m" *__ptr_7 : "memory");
+  if (v_19 == v_8)
+    goto <bb 6>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  if (v_8 >= 0)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  goto <bb 3>;
+
+  <bb 6>:
+  # iftmp.40_1 = PHI <0(3), -1(4)>
+  return iftmp.40_1;
+
+}
+
+
+
+;; Function shm_security (shm_security, funcdef_no=3008, decl_uid=40359, cgraph_uid=3008)
+
+shm_security (struct kern_ipc_perm * ipcp, int shmflg)
+{
+  int _5;
+
+  <bb 2>:
+  _5 = security_shm_associate (ipcp_1(D), shmflg_3(D));
+  return _5;
+
+}
+
+
+
+;; Function locks_verify_locked (locks_verify_locked, funcdef_no=1655, decl_uid=19095, cgraph_uid=1655) (unlikely executed)
+
+locks_verify_locked (struct file * file)
+{
+  int _1;
+  struct inode * _5;
+  int _7;
+  struct super_block * _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  short unsigned int _11;
+  short unsigned int _12;
+
+  <bb 2>:
+  _5 = MEM[(const struct file *)file_4(D) + 32B];
+  _8 = _5->i_sb;
+  _9 = _8->s_flags;
+  _10 = _9 & 64;
+  if (_10 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  _11 = MEM[(struct inode *)_5];
+  _12 = _11 & 1032;
+  if (_12 == 1024)
+    goto <bb 5>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  # _1 = PHI <_7(5), 0(3), 0(2)>
+  return _1;
+
+  <bb 5>:
+  _7 = locks_mandatory_locked (file_4(D));
+  goto <bb 4>;
+
+}
+
+
+
+;; Function vm_unacct_memory (vm_unacct_memory, funcdef_no=2206, decl_uid=27266, cgraph_uid=2206)
+
+vm_unacct_memory (long int pages)
+{
+  int vm_committed_as_batch.41;
+  long int _2;
+
+  <bb 2>:
+  _2 = -pages_1(D);
+  vm_committed_as_batch.41_5 = vm_committed_as_batch;
+  __percpu_counter_add (&vm_committed_as, _2, vm_committed_as_batch.41_5);
+  return;
+
+}
+
+
+
+;; Function copy_shmid_from_user.constprop.26 (copy_shmid_from_user.constprop.26, funcdef_no=3060, decl_uid=43576, cgraph_uid=1546)
+
+copy_shmid_from_user.constprop.26 (struct shmid64_ds * out, void * buf)
+{
+  long unsigned int n;
+  long unsigned int _8;
+
+  <bb 2>:
+  n_3 = _copy_from_user (out_1(D), buf_2(D), 112);
+  if (n_3 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+
+  <bb 4>:
+  # _8 = PHI <0(2), 18446744073709551602(3)>
+  return _8;
+
+}
+
+
+
+;; Function shm_destroy (shm_destroy, funcdef_no=2992, decl_uid=40160, cgraph_uid=2992)
+
+shm_destroy (struct ipc_namespace * ns, struct shmid_kernel * shp)
+{
+  struct file * shm_file;
+  long unsigned int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  long unsigned int _11;
+  const struct file_operations * _15;
+  struct user_struct * _16;
+  struct user_struct * _18;
+  struct inode * _19;
+  long long int _20;
+  long unsigned int _21;
+  struct list_head * _25;
+  struct list_head * _26;
+  struct kern_ipc_perm * _27;
+  struct ipc_ids * _28;
+
+  <bb 2>:
+  shm_file_4 = shp_3(D)->shm_file;
+  shp_3(D)->shm_file = 0B;
+  _7 = ns_6(D)->shm_tot;
+  _8 = shp_3(D)->shm_segsz;
+  _9 = _8 + 4095;
+  _10 = _9 >> 12;
+  _11 = _7 - _10;
+  ns_6(D)->shm_tot = _11;
+  _25 = MEM[(struct list_head *)shp_3(D) + 128B].next;
+  _26 = MEM[(struct list_head *)shp_3(D) + 128B].prev;
+  _25->prev = _26;
+  _26->next = _25;
+  MEM[(struct list_head *)shp_3(D) + 128B].next = -2401263026318606080B;
+  MEM[(struct list_head *)shp_3(D) + 128B].prev = -2401263026318605824B;
+  _27 = &shp_3(D)->shm_perm;
+  _28 = &ns_6(D)->ids[2];
+  ipc_rmid (_28, _27);
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_3(D)] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  _15 = MEM[(struct file *)shm_file_4 + 40B];
+  if (_15 == &hugetlbfs_file_operations)
+    goto <bb 6>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  if (_15 == &shm_file_operations_huge)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 4>:
+  _19 = MEM[(const struct file *)shm_file_4 + 32B];
+  _20 = MEM[(const struct inode *)_19 + 80B];
+  _21 = (long unsigned int) _20;
+  user_shm_unlock (_21, _18);
+
+  <bb 5>:
+  fput (shm_file_4);
+  ipc_rcu_putref (shp_3(D), shm_rcu_free);
+  return;
+
+  <bb 6>:
+  _18 = shp_3(D)->mlock_user;
+  if (_18 != 0B)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 7>:
+  _16 = shp_3(D)->mlock_user;
+  shmem_lock (shm_file_4, 0, _16);
+  goto <bb 5>;
+
+}
+
+
+
+;; Function shm_try_destroy_orphaned (shm_try_destroy_orphaned, funcdef_no=2995, decl_uid=40246, cgraph_uid=2995)
+
+shm_try_destroy_orphaned (int id, void * p, void * data)
+{
+  struct task_struct * _5;
+  short unsigned int _6;
+  long unsigned int _7;
+  int _9;
+  short unsigned int _10;
+  struct raw_spinlock * _15;
+
+  <bb 2>:
+  _5 = MEM[(struct shmid_kernel *)p_3(D)].shm_creator;
+  if (_5 != 0B)
+    goto <bb 6>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _6 = MEM[(struct shmid_kernel *)p_3(D) + 32B];
+  _7 = MEM[(struct shmid_kernel *)p_3(D) + 64B];
+  if (_7 == 0)
+    goto <bb 4>;
+  else
+    goto <bb 6>;
+
+  <bb 4>:
+  _9 = MEM[(int *)data_2(D) + 364B];
+  if (_9 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  _10 = _6 & 512;
+  if (_10 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  return 0;
+
+  <bb 7>:
+  __asm__ __volatile__("" :  :  : "memory");
+  _15 = &MEM[(struct spinlock_t *)p_3(D)].D.5408.rlock;
+  _raw_spin_lock (_15);
+  shm_destroy (data_2(D), p_3(D));
+  goto <bb 6>;
+
+}
+
+
+
+;; Function do_shm_rmid (do_shm_rmid, funcdef_no=2981, decl_uid=40169, cgraph_uid=2981)
+
+do_shm_rmid (struct ipc_namespace * ns, struct kern_ipc_perm * ipcp)
+{
+  long unsigned int _3;
+  short unsigned int _9;
+  short unsigned int _10;
+
+  <bb 2>:
+  _3 = MEM[(struct shmid_kernel *)ipcp_1(D)].shm_nattch;
+  if (_3 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  _9 = MEM[(struct shmid_kernel *)ipcp_1(D)].shm_perm.mode;
+  _10 = _9 | 512;
+  MEM[(struct shmid_kernel *)ipcp_1(D)].shm_perm.mode = _10;
+  MEM[(struct shmid_kernel *)ipcp_1(D)].shm_perm.key = 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)ipcp_1(D)] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 5>;
+
+  <bb 4>:
+  shm_destroy (ns_7(D), ipcp_1(D));
+
+  <bb 5>:
+  return;
+
+}
+
+
+
+;; Function shmctl_down.constprop.24 (shmctl_down.constprop.24, funcdef_no=3062, decl_uid=43574, cgraph_uid=1524)
+
+shmctl_down.constprop.24 (struct ipc_namespace * ns, int shmid, int cmd, struct shmid_ds * buf)
+{
+  struct shmid64_ds shmid64;
+  struct shmid_kernel * shp;
+  int err;
+  long unsigned int ptr.13;
+  long unsigned int _3;
+  struct rw_semaphore * _5;
+  struct ipc_ids * _6;
+  long int _13;
+  struct raw_spinlock * _16;
+  struct raw_spinlock * _17;
+  long unsigned int _19;
+  long int _20;
+  int _21;
+
+  <bb 2>:
+  if (cmd_1(D) == 1)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _5 = &ns_4(D)->ids[2].rwsem;
+  down_write (_5);
+  __asm__ __volatile__("" :  :  : "memory");
+  _6 = &ns_4(D)->ids[2];
+  shp_8 = ipcctl_pre_down_nolock (ns_4(D), _6, shmid_7(D), cmd_1(D), &shmid64.shm_perm, 0);
+  ptr.13_9 = (long unsigned int) shp_8;
+  if (ptr.13_9 > 18446744073709547520)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 4>:
+  _3 = copy_shmid_from_user.constprop.26 (&shmid64, buf_2(D));
+  if (_3 != 0)
+    goto <bb 14>;
+  else
+    goto <bb 3>;
+
+  <bb 5>:
+  _13 = (long int) shp_8;
+  err_14 = (int) _13;
+  goto <bb 12> (out_unlock1);
+
+  <bb 6>:
+  err_15 = security_shm_shmctl (shp_8, cmd_1(D));
+  if (err_15 != 0)
+    goto <bb 12> (out_unlock1);
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  switch (cmd_1(D)) <default: out_unlock1, case 0: <L0>, case 1: <L1>>
+
+<L0>:
+  _16 = &MEM[(struct spinlock_t *)shp_8].D.5408.rlock;
+  _raw_spin_lock (_16);
+  do_shm_rmid (ns_4(D), shp_8);
+  goto <bb 13> (out_up);
+
+<L1>:
+  _17 = &MEM[(struct spinlock_t *)shp_8].D.5408.rlock;
+  _raw_spin_lock (_17);
+  err_18 = ipc_update_perm (&shmid64.shm_perm, shp_8);
+  if (err_18 != 0)
+    goto <bb 11> (out_unlock0);
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  _19 = get_seconds ();
+  _20 = (long int) _19;
+  shp_8->shm_ctim = _20;
+
+out_unlock0:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_8] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # err_22 = PHI <err_14(5), err_15(6), -22(7), err_18(11)>
+out_unlock1:
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # err_23 = PHI <err_15(8), err_22(12)>
+out_up:
+  up_write (_5);
+
+  <bb 14>:
+  # _21 = PHI <-14(4), err_23(13)>
+  shmid64 ={v} {CLOBBER};
+  return _21;
+
+}
+
+
+
+;; Function shm_add_rss_swap.isra.22 (shm_add_rss_swap.isra.22, funcdef_no=3053, decl_uid=43156, cgraph_uid=530)
+
+shm_add_rss_swap.isra.22 (struct file * ISRA.266, long unsigned int * rss_add, long unsigned int * swp_add)
+{
+  struct address_space * mapping;
+  struct inode * _3;
+  const struct file_operations * _4;
+  struct super_block * _7;
+  void * _8;
+  struct hstate * _9;
+  long unsigned int _11;
+  unsigned int _12;
+  int _13;
+  int _14;
+  unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  struct raw_spinlock * _20;
+  long unsigned int _21;
+  struct address_space * _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _26;
+  long unsigned int _27;
+  long unsigned int _28;
+
+  <bb 2>:
+  _3 = MEM[(const struct file *)ISRA.266_36(D) + 32B];
+  _4 = MEM[(struct file *)ISRA.266_36(D) + 40B];
+  if (_4 == &hugetlbfs_file_operations)
+    goto <bb 6>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  if (_4 == &shm_file_operations_huge)
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  return;
+
+  <bb 5>:
+  _20 = &MEM[(struct spinlock_t *)_3 + -88B].D.5408.rlock;
+  _raw_spin_lock (_20);
+  _21 = *rss_add_10(D);
+  _22 = _3->i_mapping;
+  _23 = _22->nrpages;
+  _24 = _21 + _23;
+  *rss_add_10(D) = _24;
+  _26 = *swp_add_25(D);
+  _27 = MEM[(struct shmem_inode_info *)_3 + -88B].D.29732.swapped;
+  _28 = _26 + _27;
+  *swp_add_25(D) = _28;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)_3 + -88B] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 4>;
+
+  <bb 6>:
+  mapping_6 = _3->i_mapping;
+  _7 = MEM[(struct inode *)_3 + 40B];
+  _8 = MEM[(struct super_block *)_7 + 944B];
+  _9 = MEM[(struct hugetlbfs_sb_info *)_8].hstate;
+  _11 = *rss_add_10(D);
+  _12 = MEM[(struct hstate *)_9 + 8B];
+  _13 = (int) _12;
+  _14 = 1 << _13;
+  _15 = (unsigned int) _14;
+  _16 = (long unsigned int) _15;
+  _17 = mapping_6->nrpages;
+  _18 = _16 * _17;
+  _19 = _18 + _11;
+  *rss_add_10(D) = _19;
+  goto <bb 4>;
+
+}
+
+
+
+;; Function sysvipc_shm_proc_show (sysvipc_shm_proc_show, funcdef_no=3030, decl_uid=40163, cgraph_uid=3034)
+
+sysvipc_shm_proc_show (struct seq_file * s, void * it)
+{
+  uid_t kuid;
+  gid_t kgid;
+  uid_t kuid;
+  gid_t kgid;
+  int overflowuid.5;
+  int overflowgid.4;
+  int overflowuid.5;
+  int overflowgid.4;
+  long unsigned int swp;
+  long unsigned int rss;
+  long unsigned int rss.3;
+  long unsigned int swp.2;
+  struct file * _5;
+  long unsigned int _8;
+  long unsigned int _10;
+  long int _11;
+  long int _12;
+  long int _13;
+  long unsigned int _14;
+  int _15;
+  int _16;
+  long unsigned int _17;
+  short unsigned int _18;
+  int _19;
+  int _20;
+  int _21;
+
+  <bb 2>:
+  rss = 0;
+  swp = 0;
+  _5 = MEM[(struct shmid_kernel *)it_1(D) + 56B];
+  shm_add_rss_swap.isra.22 (_5, &rss, &swp);
+  swp.2_7 = swp;
+  _8 = swp.2_7 * 4096;
+  rss.3_9 = rss;
+  _10 = rss.3_9 * 4096;
+  _11 = MEM[(struct shmid_kernel *)it_1(D)].shm_ctim;
+  _12 = MEM[(struct shmid_kernel *)it_1(D)].shm_dtim;
+  _13 = MEM[(struct shmid_kernel *)it_1(D)].shm_atim;
+  kgid_41 = MEM[(struct shmid_kernel *)it_1(D) + 28B];
+  if (kgid_41 == 4294967295)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  overflowgid.4_26 = overflowgid;
+  kgid_27 = (gid_t) overflowgid.4_26;
+
+  <bb 4>:
+  # kgid_28 = PHI <kgid_41(2), kgid_27(3)>
+  kuid_40 = MEM[(struct shmid_kernel *)it_1(D) + 24B];
+  if (kuid_40 == 4294967295)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  overflowuid.5_29 = overflowuid;
+  kuid_30 = (uid_t) overflowuid.5_29;
+
+  <bb 6>:
+  # kuid_31 = PHI <kuid_40(4), kuid_30(5)>
+  kgid_39 = MEM[(struct shmid_kernel *)it_1(D) + 20B];
+  if (kgid_39 == 4294967295)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  overflowgid.4_32 = overflowgid;
+  kgid_33 = (gid_t) overflowgid.4_32;
+
+  <bb 8>:
+  # kgid_34 = PHI <kgid_39(6), kgid_33(7)>
+  kuid_38 = MEM[(struct shmid_kernel *)it_1(D) + 16B];
+  if (kuid_38 == 4294967295)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  overflowuid.5_35 = overflowuid;
+  kuid_36 = (uid_t) overflowuid.5_35;
+
+  <bb 10>:
+  # kuid_37 = PHI <kuid_38(8), kuid_36(9)>
+  _14 = MEM[(struct shmid_kernel *)it_1(D)].shm_nattch;
+  _15 = MEM[(struct shmid_kernel *)it_1(D)].shm_lprid;
+  _16 = MEM[(struct shmid_kernel *)it_1(D)].shm_cprid;
+  _17 = MEM[(struct shmid_kernel *)it_1(D)].shm_segsz;
+  _18 = MEM[(struct shmid_kernel *)it_1(D)].shm_perm.mode;
+  _19 = (int) _18;
+  _20 = MEM[(struct shmid_kernel *)it_1(D)].shm_perm.id;
+  _21 = MEM[(struct shmid_kernel *)it_1(D)].shm_perm.key;
+  seq_printf (s_22(D), "%10d %10d  %4o %21lu %5u %5u  %5lu %5u %5u %5u %5u %10lu %10lu %10lu %21lu %21lu\n", _21, _20, _19, _17, _16, _15, _14, kuid_37, kgid_34, kuid_31, kgid_28, _13, _12, _11, _10, _8);
+  rss ={v} {CLOBBER};
+  swp ={v} {CLOBBER};
+  return 0;
+
+}
+
+
+
+;; Function shmctl_nolock.constprop.23 (shmctl_nolock.constprop.23, funcdef_no=3063, decl_uid=43573, cgraph_uid=1037)
+
+shmctl_nolock.constprop.23 (struct ipc_namespace * ns, int shmid, int cmd, void * buf)
+{
+  uid_t right;
+  uid_t left;
+  uid_t right;
+  long unsigned int n;
+  struct task_struct * pfo_ret__;
+  void * p;
+  struct idr_layer * hint;
+  struct idr_layer * ________p1;
+  int next_id;
+  int total;
+  long unsigned int n;
+  int err;
+  struct shmid_kernel * shp;
+  struct shminfo64 shminfo;
+  struct shm_info shm_info;
+  struct shmid64_ds tbuf;
+  long unsigned int n;
+  long unsigned int ptr.13;
+  long unsigned int ptr.13;
+  struct task_struct * pfo_ret__;
+  int granted_mode;
+  _Bool _2;
+  _Bool _3;
+  _Bool _4;
+  int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  long unsigned int _10;
+  struct rw_semaphore * _13;
+  struct ipc_ids * _14;
+  struct rw_semaphore * _16;
+  int _17;
+  long unsigned int _18;
+  struct ipc_ids * _19;
+  struct ipc_ids * _23;
+  long int _30;
+  struct ipc_ids * _33;
+  long int _39;
+  struct kern_ipc_perm * _42;
+  const struct cred * _44;
+  short unsigned int _45;
+  int _50;
+  int _51;
+  int _54;
+  int _55;
+  struct user_namespace * _56;
+  _Bool _57;
+  int _58;
+  long unsigned int _61;
+  long int _62;
+  long int _63;
+  long int _64;
+  int _65;
+  int _66;
+  long unsigned int _67;
+  int _69;
+  struct file * _152;
+  long long unsigned int _157;
+  int _159;
+  int _160;
+  int _161;
+  struct idr_layer * * _162;
+  long long unsigned int _163;
+  void * _165;
+  void * _166;
+  int _169;
+  struct idr * pretmp_178;
+
+  <bb 2>:
+  _2 = cmd_1(D) == 3;
+  _3 = cmd_1(D) == 14;
+  _4 = _3 | _2;
+  if (_4 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  switch (cmd_1(D)) <default: <L4>, case 2: <L2>, case 3: <L0>, case 13: <L2>, case 14: <L1>>
+
+  <bb 4>:
+  err_5 = security_shm_shmctl (0B, cmd_1(D));
+  if (err_5 != 0)
+    goto <bb 44> (<L4>);
+  else
+    goto <bb 3>;
+
+<L0>:
+  memset (&shminfo, 0, 72);
+  _7 = ns_6(D)->shm_ctlmni;
+  _8 = (long unsigned int) _7;
+  shminfo.shmseg = _8;
+  shminfo.shmmni = _8;
+  _9 = ns_6(D)->shm_ctlmax;
+  shminfo.shmmax = _9;
+  _10 = ns_6(D)->shm_ctlall;
+  shminfo.shmall = _10;
+  shminfo.shmmin = 1;
+  n_135 = _copy_to_user (buf_11(D), &shminfo, 72);
+  if (n_135 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  shminfo ={v} {CLOBBER};
+  goto <bb 44> (<L4>);
+
+  <bb 7>:
+  _13 = &ns_6(D)->ids[2].rwsem;
+  down_read (_13);
+  _14 = &ns_6(D)->ids[2];
+  err_15 = ipc_get_maxid (_14);
+  up_read (_13);
+  err_59 = MAX_EXPR <err_15, 0>;
+  shminfo ={v} {CLOBBER};
+  goto <bb 44> (<L4>);
+
+<L1>:
+  memset (&shm_info, 0, 48);
+  _16 = &ns_6(D)->ids[2].rwsem;
+  down_read (_16);
+  _17 = ns_6(D)->ids[2].in_use;
+  shm_info.used_ids = _17;
+  MEM[(long unsigned int *)&shm_info + 16B] = 0;
+  MEM[(long unsigned int *)&shm_info + 24B] = 0;
+  if (_17 > 0)
+    goto <bb 10>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  _18 = ns_6(D)->shm_tot;
+  shm_info.shm_tot = _18;
+  shm_info.swap_attempts = 0;
+  shm_info.swap_successes = 0;
+  _19 = &ns_6(D)->ids[2];
+  err_20 = ipc_get_maxid (_19);
+  up_read (_16);
+  n_21 = _copy_to_user (buf_11(D), &shm_info, 48);
+  if (n_21 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 19>;
+
+  <bb 10>:
+  pretmp_178 = &ns_6(D)->ids[2].ipcs_idr;
+
+  <bb 11>:
+  # next_id_172 = PHI <next_id_155(18), 0(10)>
+  # total_176 = PHI <total_156(18), 0(10)>
+  _157 ={v} MEM[(volatile __u64 *)ns_6(D) + 248B];
+  hint_158 = (struct idr_layer *) _157;
+  if (hint_158 != 0B)
+    goto <bb 12>;
+  else
+    goto <bb 14>;
+
+  <bb 12>:
+  _159 = next_id_172 & -256;
+  _160 = hint_158->prefix;
+  if (_159 == _160)
+    goto <bb 13>;
+  else
+    goto <bb 14>;
+
+  <bb 13>:
+  _161 = next_id_172 & 255;
+  _162 = &hint_158->ary[_161];
+  _163 ={v} MEM[(volatile __u64 *)_162];
+  ________p1_164 = (struct idr_layer *) _163;
+  goto <bb 15>;
+
+  <bb 14>:
+  _165 = idr_find_slowpath (pretmp_178, next_id_172);
+
+  <bb 15>:
+  # _166 = PHI <________p1_164(13), _165(14)>
+  if (_166 == 0B)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+  _152 = MEM[(struct shmid_kernel *)_166 + 56B];
+  shm_add_rss_swap.isra.22 (_152, &shm_info.shm_rss, &shm_info.shm_swp);
+  total_154 = total_176 + 1;
+
+  <bb 17>:
+  # total_156 = PHI <total_176(15), total_154(16)>
+  next_id_155 = next_id_172 + 1;
+  if (_17 > total_156)
+    goto <bb 18>;
+  else
+    goto <bb 9>;
+
+  <bb 18>:
+  goto <bb 11>;
+
+  <bb 19>:
+  err_22 = MAX_EXPR <err_20, 0>;
+
+  <bb 20>:
+  # err_71 = PHI <-14(9), err_22(19)>
+  shm_info ={v} {CLOBBER};
+  goto <bb 44> (<L4>);
+
+<L2>:
+  __asm__ __volatile__("" :  :  : "memory");
+  if (cmd_1(D) == 13)
+    goto <bb 22>;
+  else
+    goto <bb 25>;
+
+  <bb 22>:
+  _23 = &ns_6(D)->ids[2];
+  shp_25 = ipc_obtain_object_idr (_23, shmid_24(D));
+  ptr.13_26 = (long unsigned int) shp_25;
+  if (ptr.13_26 > 18446744073709547520)
+    goto <bb 23>;
+  else
+    goto <bb 24>;
+
+  <bb 23>:
+  _30 = (long int) shp_25;
+  err_31 = (int) _30;
+  goto <bb 41>;
+
+  <bb 24>:
+  err_32 = shp_25->shm_perm.id;
+  goto <bb 27>;
+
+  <bb 25>:
+  _33 = &ns_6(D)->ids[2];
+  shp_34 = ipc_obtain_object_check (_33, shmid_24(D));
+  ptr.13_35 = (long unsigned int) shp_34;
+  if (ptr.13_35 > 18446744073709547520)
+    goto <bb 26>;
+  else
+    goto <bb 27>;
+
+  <bb 26>:
+  _39 = (long int) shp_34;
+  err_40 = (int) _39;
+  goto <bb 41>;
+
+  <bb 27>:
+  # shp_41 = PHI <shp_25(24), shp_34(25)>
+  # err_72 = PHI <err_32(24), 0(25)>
+  _42 = &shp_41->shm_perm;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___43 : "p" &current_task);
+  _44 = pfo_ret___43->cred;
+  left_68 = MEM[(const struct cred *)_44 + 20B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___167 : "p" &current_task);
+  p_168 = pfo_ret___167->audit_context;
+  if (p_168 == 0B)
+    goto <bb 29>;
+  else
+    goto <bb 28>;
+
+  <bb 28>:
+  _169 = MEM[(int *)p_168];
+  if (_169 != 0)
+    goto <bb 29>;
+  else
+    goto <bb 45>;
+
+  <bb 29>:
+  _45 = MEM[(struct kern_ipc_perm *)shp_41].mode;
+  granted_mode_46 = (int) _45;
+  right_141 = MEM[(struct kern_ipc_perm *)shp_41 + 24B];
+  if (left_68 == right_141)
+    goto <bb 31>;
+  else
+    goto <bb 30>;
+
+  <bb 30>:
+  right_138 = MEM[(struct kern_ipc_perm *)shp_41 + 16B];
+  if (left_68 == right_138)
+    goto <bb 31>;
+  else
+    goto <bb 32>;
+
+  <bb 31>:
+  granted_mode_49 = granted_mode_46 >> 6;
+  goto <bb 35>;
+
+  <bb 32>:
+  _50 = in_group_p (_42->cgid);
+  if (_50 != 0)
+    goto <bb 33>;
+  else
+    goto <bb 34>;
+
+  <bb 33>:
+  granted_mode_52 = granted_mode_46 >> 3;
+  goto <bb 35>;
+
+  <bb 34>:
+  _51 = in_group_p (_42->gid);
+  if (_51 != 0)
+    goto <bb 33>;
+  else
+    goto <bb 35>;
+
+  <bb 35>:
+  # granted_mode_53 = PHI <granted_mode_49(31), granted_mode_46(34), granted_mode_52(33)>
+  _54 = ~granted_mode_53;
+  _55 = _54 & 4;
+  if (_55 != 0)
+    goto <bb 37>;
+  else
+    goto <bb 36>;
+
+  <bb 36>:
+  _58 = security_ipc_permission (_42, 292);
+  if (_58 != 0)
+    goto <bb 40>;
+  else
+    goto <bb 38>;
+
+  <bb 37>:
+  _56 = ns_6(D)->user_ns;
+  _57 = ns_capable (_56, 15);
+  if (_57 != 0)
+    goto <bb 36>;
+  else
+    goto <bb 40>;
+
+  <bb 38>:
+  err_60 = security_shm_shmctl (shp_41, cmd_1(D));
+  if (err_60 != 0)
+    goto <bb 41>;
+  else
+    goto <bb 39>;
+
+  <bb 39>:
+  memset (&tbuf, 0, 112);
+  kernel_to_ipc64_perm (_42, &tbuf.shm_perm);
+  _61 = shp_41->shm_segsz;
+  tbuf.shm_segsz = _61;
+  _62 = shp_41->shm_atim;
+  tbuf.shm_atime = _62;
+  _63 = shp_41->shm_dtim;
+  tbuf.shm_dtime = _63;
+  _64 = shp_41->shm_ctim;
+  tbuf.shm_ctime = _64;
+  _65 = shp_41->shm_cprid;
+  tbuf.shm_cpid = _65;
+  _66 = shp_41->shm_lprid;
+  tbuf.shm_lpid = _66;
+  _67 = shp_41->shm_nattch;
+  tbuf.shm_nattch = _67;
+  __asm__ __volatile__("" :  :  : "memory");
+  n_180 = _copy_to_user (buf_11(D), &tbuf, 112);
+  if (n_180 != 0)
+    goto <bb 42>;
+  else
+    goto <bb 43>;
+
+  <bb 40>:
+
+  <bb 41>:
+  # err_73 = PHI <err_31(23), err_40(26), -13(40), err_60(38)>
+  tbuf ={v} {CLOBBER};
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 44> (<L4>);
+
+  <bb 42>:
+
+  <bb 43>:
+  # err_74 = PHI <-14(42), err_72(39)>
+  tbuf ={v} {CLOBBER};
+
+  # _69 = PHI <err_5(4), -22(3), -14(6), err_71(20), err_59(7), err_74(43), err_73(41)>
+<L4>:
+  return _69;
+
+  <bb 45>:
+  __audit_ipc_obj (_42);
+  goto <bb 29>;
+
+}
+
+
+
+;; Function newseg (newseg, funcdef_no=3007, decl_uid=40153, cgraph_uid=3007)
+
+newseg (struct ipc_namespace * ns, struct ipc_params * params)
+{
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.13;
+  unsigned int default_hstate_idx.20;
+  size_t hugesize;
+  vm_flags_t acctflag;
+  char name[13];
+  struct file * file;
+  size_t numpages;
+  struct shmid_kernel * shp;
+  int error;
+  size_t size;
+  int shmflg;
+  key_t key;
+  long long int size.19;
+  int sysctl_overcommit_memory.18;
+  unsigned int shmflg.17;
+  int _5;
+  long unsigned int _15;
+  long unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  short unsigned int _26;
+  short unsigned int _27;
+  int _35;
+  unsigned int _37;
+  int _38;
+  unsigned int _40;
+  long unsigned int _41;
+  long unsigned int _42;
+  long unsigned int _43;
+  int _45;
+  struct user_struct * * _46;
+  int _49;
+  long unsigned int _61;
+  long int _62;
+  int _68;
+  struct kern_ipc_perm * _69;
+  struct ipc_ids * _70;
+  const struct file_operations * _73;
+  struct user_struct * _74;
+  struct list_head * _77;
+  struct list_head * _78;
+  struct inode * _80;
+  int _81;
+  long unsigned int _82;
+  long unsigned int _84;
+  long unsigned int _85;
+  struct hstate * _93;
+  long unsigned int _94;
+  struct hstate * _95;
+  struct hstate * _96;
+  int _97;
+  long unsigned int _98;
+  long int _99;
+  struct task_struct * _105;
+  struct pid * _106;
+  pid_t _107;
+  struct list_head * _111;
+
+  <bb 2>:
+  key_12 = params_11(D)->key;
+  shmflg_13 = params_11(D)->flg;
+  size_14 = params_11(D)->u.size;
+  _15 = size_14 + 4095;
+  numpages_16 = _15 >> 12;
+  if (size_14 == 0)
+    goto <bb 31>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _18 = ns_17(D)->shm_ctlmax;
+  if (size_14 > _18)
+    goto <bb 31>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _19 = numpages_16 << 12;
+  if (size_14 > _19)
+    goto <bb 31>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  _20 = ns_17(D)->shm_tot;
+  _21 = numpages_16 + _20;
+  if (_20 > _21)
+    goto <bb 31>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _22 = ns_17(D)->shm_ctlall;
+  if (_21 > _22)
+    goto <bb 31>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  shp_24 = ipc_rcu_alloc (144);
+  if (shp_24 == 0B)
+    goto <bb 31>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  shp_24->shm_perm.key = key_12;
+  _26 = (short unsigned int) shmflg_13;
+  _27 = _26 & 511;
+  shp_24->shm_perm.mode = _27;
+  shp_24->mlock_user = 0B;
+  shp_24->shm_perm.security = 0B;
+  error_32 = security_shm_alloc (shp_24);
+  if (error_32 != 0)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  ipc_rcu_putref (shp_24, ipc_rcu_free);
+  goto <bb 31>;
+
+  <bb 10>:
+  sprintf (&name, "SYSV%08x", key_12);
+  _35 = shmflg_13 & 2048;
+  if (_35 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 18>;
+
+  <bb 11>:
+  shmflg.17_36 = (unsigned int) shmflg_13;
+  _37 = shmflg.17_36 >> 26;
+  _38 = (int) _37;
+  if (_38 == 0)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+  default_hstate_idx.20_92 = default_hstate_idx;
+  _93 = &hstates[default_hstate_idx.20_92];
+  goto <bb 14>;
+
+  <bb 13>:
+  _94 = 1 << _38;
+  _95 = size_to_hstate (_94);
+
+  <bb 14>:
+  # _96 = PHI <_93(12), _95(13)>
+  if (_96 == 0B)
+    goto <bb 30> (no_file);
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _40 = MEM[(struct hstate *)_96 + 8B];
+  _97 = (int) _40;
+  _98 = 4096 << _97;
+  _41 = size_14 + 18446744073709551615;
+  _42 = _41 + _98;
+  _43 = -_98;
+  hugesize_44 = _43 & _42;
+  _45 = shmflg_13 & 4096;
+  if (_45 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+
+  <bb 17>:
+  # acctflag_3 = PHI <0(16), 2097152(15)>
+  _46 = &shp_24->mlock_user;
+  file_48 = hugetlb_file_setup (&name, hugesize_44, acctflag_3, _46, 1, _38);
+  goto <bb 22>;
+
+  <bb 18>:
+  _49 = shmflg_13 & 4096;
+  if (_49 != 0)
+    goto <bb 19>;
+  else
+    goto <bb 21>;
+
+  <bb 19>:
+  sysctl_overcommit_memory.18_50 = sysctl_overcommit_memory;
+  if (sysctl_overcommit_memory.18_50 != 2)
+    goto <bb 21>;
+  else
+    goto <bb 20>;
+
+  <bb 20>:
+
+  <bb 21>:
+  # acctflag_4 = PHI <0(20), 2097152(19), 0(18)>
+  size.19_51 = (long long int) size_14;
+  file_53 = shmem_kernel_file_setup (&name, size.19_51, acctflag_4);
+
+  <bb 22>:
+  # file_2 = PHI <file_48(17), file_53(21)>
+  ptr.13_100 = (long unsigned int) file_2;
+  if (ptr.13_100 > 18446744073709547520)
+    goto <bb 23>;
+  else
+    goto <bb 24>;
+
+  <bb 23>:
+  _99 = (long int) file_2;
+  error_54 = (int) _99;
+  goto <bb 30> (no_file);
+
+  <bb 24>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___104 : "p" &current_task);
+  _105 = pfo_ret___104->group_leader;
+  _106 = _105->pids[0].pid;
+  _107 = pid_vnr (_106);
+  shp_24->shm_cprid = _107;
+  shp_24->shm_lprid = 0;
+  shp_24->shm_dtim = 0;
+  shp_24->shm_atim = 0;
+  _61 = get_seconds ();
+  _62 = (long int) _61;
+  shp_24->shm_ctim = _62;
+  shp_24->shm_segsz = size_14;
+  shp_24->shm_nattch = 0;
+  shp_24->shm_file = file_2;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___108 : "p" &current_task);
+  shp_24->shm_creator = pfo_ret___108;
+  _68 = ns_17(D)->shm_ctlmni;
+  _69 = &shp_24->shm_perm;
+  _70 = &ns_17(D)->ids[2];
+  error_72 = ipc_addid (_70, _69, _68);
+  if (error_72 < 0)
+    goto <bb 25>;
+  else
+    goto <bb 27>;
+
+  <bb 25>:
+  _73 = MEM[(struct file *)file_2 + 40B];
+  if (_73 == &hugetlbfs_file_operations)
+    goto <bb 32>;
+  else
+    goto <bb 26>;
+
+  <bb 26>:
+  if (_73 == &shm_file_operations_huge)
+    goto <bb 32>;
+  else
+    goto <bb 29>;
+
+  <bb 27>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___110 : "p" &current_task);
+  _77 = &pfo_ret___110->sysvshm.shm_clist;
+  _78 = &shp_24->shm_clist;
+  _111 = MEM[(struct list_head *)pfo_ret___110 + 1488B].next;
+  _111->prev = _78;
+  MEM[(struct list_head *)shp_24 + 128B].next = _111;
+  MEM[(struct list_head *)shp_24 + 128B].prev = _77;
+  MEM[(struct list_head *)pfo_ret___110 + 1488B].next = _78;
+  _80 = MEM[(const struct file *)file_2 + 32B];
+  _81 = shp_24->shm_perm.id;
+  _82 = (long unsigned int) _81;
+  _80->i_ino = _82;
+  _84 = ns_17(D)->shm_tot;
+  _85 = numpages_16 + _84;
+  ns_17(D)->shm_tot = _85;
+  error_87 = shp_24->shm_perm.id;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_24] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 31>;
+
+  <bb 28>:
+  user_shm_unlock (size_14, _74);
+
+  <bb 29>:
+  fput (file_2);
+
+  # error_1 = PHI <-22(14), error_54(23), error_72(29)>
+no_file:
+  ipc_rcu_putref (shp_24, shm_rcu_free);
+
+  <bb 31>:
+  # _5 = PHI <-22(3), -28(5), error_1(30), -12(7), error_32(9), error_87(27), -22(2), -28(4), -28(6)>
+  name ={v} {CLOBBER};
+  return _5;
+
+  <bb 32>:
+  _74 = shp_24->mlock_user;
+  if (_74 != 0B)
+    goto <bb 28>;
+  else
+    goto <bb 29>;
+
+}
+
+
+
+;; Function shm_open (shm_open, funcdef_no=2991, decl_uid=40155, cgraph_uid=2991)
+
+shm_open (struct vm_area_struct * vma)
+{
+  long unsigned int ptr.13;
+  struct task_struct * pfo_ret__;
+  struct shmid_kernel * shp;
+  struct shm_file_data * sfd;
+  struct file * file;
+  int _5;
+  struct ipc_namespace * _6;
+  long unsigned int _10;
+  long int _11;
+  long unsigned int _15;
+  long unsigned int _16;
+  struct task_struct * _20;
+  struct pid * _21;
+  pid_t _22;
+  struct ipc_ids * _27;
+
+  <bb 2>:
+  file_3 = vma_2(D)->vm_file;
+  sfd_4 = file_3->private_data;
+  _5 = sfd_4->id;
+  _6 = sfd_4->ns;
+  _27 = &_6->ids[2];
+  shp_28 = ipc_lock (_27, _5);
+  ptr.13_29 = (long unsigned int) shp_28;
+  if (ptr.13_29 > 18446744073709547520)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  warn_slowpath_null ("ipc/shm.c", 226);
+
+  <bb 4>:
+  _10 = get_seconds ();
+  _11 = (long int) _10;
+  shp_28->shm_atim = _11;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___19 : "p" &current_task);
+  _20 = pfo_ret___19->group_leader;
+  _21 = _20->pids[0].pid;
+  _22 = pid_vnr (_21);
+  shp_28->shm_lprid = _22;
+  _15 = shp_28->shm_nattch;
+  _16 = _15 + 1;
+  shp_28->shm_nattch = _16;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_28] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  return;
+
+}
+
+
+
+;; Function shm_mmap (shm_mmap, funcdef_no=3001, decl_uid=40300, cgraph_uid=3001)
+
+shm_mmap (struct file * file, struct vm_area_struct * vma)
+{
+  int ret;
+  struct shm_file_data * sfd;
+  struct file * _6;
+  const struct file_operations * _7;
+  int (*<T2f89>) (struct file *, struct vm_area_struct *) _8;
+  const struct vm_operations_struct * _12;
+  int (*<T2386>) (struct vm_area_struct *, struct vm_fault *) _14;
+
+  <bb 2>:
+  sfd_5 = file_4(D)->private_data;
+  _6 = sfd_5->file;
+  _7 = _6->f_op;
+  _8 = _7->mmap;
+  ret_11 = _8 (_6, vma_9(D));
+  if (ret_11 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _12 = vma_9(D)->vm_ops;
+  sfd_5->vm_ops = _12;
+  _14 = _12->fault;
+  if (_14 == 0B)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  warn_slowpath_null ("ipc/shm.c", 460);
+
+  <bb 5>:
+  vma_9(D)->vm_ops = &shm_vm_ops;
+  shm_open (vma_9(D));
+
+  <bb 6>:
+  return ret_11;
+
+}
+
+
+
+;; Function shm_close (shm_close, funcdef_no=2994, decl_uid=40157, cgraph_uid=2994)
+
+shm_close (struct vm_area_struct * vma)
+{
+  long unsigned int ptr.13;
+  struct task_struct * pfo_ret__;
+  struct ipc_namespace * ns;
+  struct shmid_kernel * shp;
+  struct shm_file_data * sfd;
+  struct file * file;
+  struct rw_semaphore * _7;
+  int _9;
+  long unsigned int _15;
+  long int _16;
+  long unsigned int _18;
+  long unsigned int _19;
+  short unsigned int _21;
+  struct task_struct * _26;
+  struct pid * _27;
+  pid_t _28;
+  int _29;
+  short unsigned int _30;
+  struct ipc_ids * _37;
+
+  <bb 2>:
+  file_4 = vma_3(D)->vm_file;
+  sfd_5 = file_4->private_data;
+  ns_6 = sfd_5->ns;
+  _7 = &ns_6->ids[2].rwsem;
+  down_write (_7);
+  _9 = sfd_5->id;
+  _37 = &ns_6->ids[2];
+  shp_38 = ipc_lock (_37, _9);
+  ptr.13_39 = (long unsigned int) shp_38;
+  if (ptr.13_39 > 18446744073709547520)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  warn_slowpath_null ("ipc/shm.c", 226);
+
+  <bb 4>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___25 : "p" &current_task);
+  _26 = pfo_ret___25->group_leader;
+  _27 = _26->pids[0].pid;
+  _28 = pid_vnr (_27);
+  shp_38->shm_lprid = _28;
+  _15 = get_seconds ();
+  _16 = (long int) _15;
+  shp_38->shm_dtim = _16;
+  _18 = shp_38->shm_nattch;
+  _19 = _18 + 18446744073709551615;
+  shp_38->shm_nattch = _19;
+  _21 = MEM[(struct shmid_kernel *)shp_38 + 32B];
+  if (_19 == 0)
+    goto <bb 5>;
+  else
+    goto <bb 9>;
+
+  <bb 5>:
+  _29 = MEM[(int *)ns_6 + 364B];
+  if (_29 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _30 = _21 & 512;
+  if (_30 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 7>:
+  up_write (_7);
+  return;
+
+  <bb 8>:
+  shm_destroy (ns_6, shp_38);
+  goto <bb 7>;
+
+  <bb 9>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_38] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 7>;
+
+}
+
+
+
+;; Function shm_init_ns (shm_init_ns, funcdef_no=2980, decl_uid=35152, cgraph_uid=2980)
+
+shm_init_ns (struct ipc_namespace * ns)
+{
+  struct ipc_ids * _8;
+
+  <bb 2>:
+  ns_2(D)->shm_ctlmax = 18446744073692774399;
+  ns_2(D)->shm_ctlall = 18446744073692774399;
+  ns_2(D)->shm_ctlmni = 4096;
+  ns_2(D)->shm_rmid_forced = 0;
+  ns_2(D)->shm_tot = 0;
+  _8 = &ns_2(D)->ids[2];
+  ipc_init_ids (_8);
+  return;
+
+}
+
+
+
+;; Function shm_exit_ns (shm_exit_ns, funcdef_no=2982, decl_uid=35158, cgraph_uid=2982)
+
+shm_exit_ns (struct ipc_namespace * ns)
+{
+  struct ipc_ids * _2;
+  struct idr * _5;
+
+  <bb 2>:
+  _2 = &ns_1(D)->ids[2];
+  free_ipcs (ns_1(D), _2, do_shm_rmid);
+  _5 = &ns_1(D)->ids[2].ipcs_idr;
+  idr_destroy (_5);
+  return;
+
+}
+
+
+
+;; Function shm_init (shm_init, funcdef_no=2984, decl_uid=35142, cgraph_uid=2984) (unlikely executed)
+
+shm_init ()
+{
+  <bb 2>:
+  ipc_init_proc_interface ("sysvipc/shm", "       key      shmid perms                  size  cpid  lpid nattch   uid   gid  cuid  cgid      atime      dtime      ctime                   rss                  swap\n", 2, sysvipc_shm_proc_show);
+  return;
+
+}
+
+
+
+;; Function shm_destroy_orphaned (shm_destroy_orphaned, funcdef_no=2996, decl_uid=35123, cgraph_uid=2996)
+
+shm_destroy_orphaned (struct ipc_namespace * ns)
+{
+  struct rw_semaphore * _3;
+  int _6;
+  struct idr * _7;
+
+  <bb 2>:
+  _3 = &ns_2(D)->ids[2].rwsem;
+  down_write (_3);
+  _6 = ns_2(D)->ids[2].in_use;
+  if (_6 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  _7 = &ns_2(D)->ids[2].ipcs_idr;
+  idr_for_each (_7, shm_try_destroy_orphaned, ns_2(D));
+
+  <bb 4>:
+  up_write (_3);
+  return;
+
+}
+
+
+
+;; Function exit_shm (exit_shm, funcdef_no=2997, decl_uid=20389, cgraph_uid=2997)
+
+exit_shm (struct task_struct * task)
+{
+  const struct list_head * __mptr;
+  const struct list_head * __mptr;
+  const struct list_head * __mptr;
+  const struct list_head * __mptr;
+  const struct list_head * __mptr;
+  struct shmid_kernel * shp;
+  struct ipc_namespace * ns;
+  struct list_head * prephitmp_1;
+  struct list_head * pretmp_4;
+  struct nsproxy * _10;
+  struct list_head * _12;
+  int _13;
+  struct rw_semaphore * _14;
+  struct list_head * _18;
+  struct rw_semaphore * _24;
+  struct list_head * _30;
+  short unsigned int _32;
+  long unsigned int _33;
+  struct list_head * _40;
+  struct list_head * _42;
+  int _43;
+  short unsigned int _44;
+  struct list_head * pretmp_46;
+  struct raw_spinlock * _47;
+  struct list_head * _49;
+  struct list_head * prephitmp_61;
+  struct list_head * _63;
+  struct list_head * _64;
+
+  <bb 2>:
+  _10 = task_9(D)->nsproxy;
+  ns_11 = _10->ipc_ns;
+  _12 = &task_9(D)->sysvshm.shm_clist;
+  _40 = MEM[(const struct list_head *)task_9(D) + 1488B].next;
+  if (_12 == _40)
+    goto <bb 19>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _13 = ns_11->shm_rmid_forced;
+  if (_13 == 0)
+    goto <bb 4>;
+  else
+    goto <bb 10>;
+
+  <bb 4>:
+  _14 = &ns_11->ids[2].rwsem;
+  down_read (_14);
+  __mptr_16 = task_9(D)->sysvshm.shm_clist.next;
+  shp_17 = &MEM[(void *)__mptr_16 + -128B];
+  _63 = &MEM[(struct shmid_kernel *)__mptr_16 + -128B].shm_clist;
+  if (_12 != _63)
+    goto <bb 5>;
+  else
+    goto <bb 9>;
+
+  <bb 5>:
+
+  <bb 6>:
+  # shp_65 = PHI <shp_21(7), shp_17(5)>
+  shp_65->shm_creator = 0B;
+  __mptr_20 = shp_65->shm_clist.next;
+  shp_21 = &MEM[(void *)__mptr_20 + -128B];
+  _18 = &MEM[(struct shmid_kernel *)__mptr_20 + -128B].shm_clist;
+  if (_12 != _18)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  goto <bb 6>;
+
+  <bb 8>:
+  pretmp_4 = MEM[(struct list_head *)task_9(D) + 1488B].next;
+
+  <bb 9>:
+  # prephitmp_1 = PHI <pretmp_4(8), __mptr_16(4)>
+  _42 = MEM[(struct list_head *)task_9(D) + 1488B].prev;
+  prephitmp_1->prev = _42;
+  _42->next = prephitmp_1;
+  MEM[(struct list_head *)task_9(D) + 1488B].next = -2401263026318606080B;
+  MEM[(struct list_head *)task_9(D) + 1488B].prev = -2401263026318605824B;
+  up_read (_14);
+  goto <bb 19>;
+
+  <bb 10>:
+  _24 = &ns_11->ids[2].rwsem;
+  down_write (_24);
+  __mptr_26 = task_9(D)->sysvshm.shm_clist.next;
+  shp_27 = &MEM[(void *)__mptr_26 + -128B];
+  __mptr_28 = MEM[(struct shmid_kernel *)__mptr_26 + -128B].shm_clist.next;
+  shp_29 = &MEM[(void *)__mptr_28 + -128B];
+  _64 = &MEM[(struct shmid_kernel *)__mptr_26 + -128B].shm_clist;
+  if (_12 != _64)
+    goto <bb 11>;
+  else
+    goto <bb 18>;
+
+  <bb 11>:
+
+  <bb 12>:
+  # shp_66 = PHI <shp_67(16), shp_27(11)>
+  # shp_67 = PHI <shp_37(16), shp_29(11)>
+  shp_66->shm_creator = 0B;
+  _32 = MEM[(struct shmid_kernel *)shp_66 + 32B];
+  _33 = MEM[(struct shmid_kernel *)shp_66 + 64B];
+  if (_33 == 0)
+    goto <bb 13>;
+  else
+    goto <bb 15>;
+
+  <bb 13>:
+  _43 = MEM[(int *)ns_11 + 364B];
+  if (_43 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  _44 = _32 & 512;
+  if (_44 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  __mptr_36 = shp_67->shm_clist.next;
+  shp_37 = &MEM[(void *)__mptr_36 + -128B];
+  _30 = &shp_67->shm_clist;
+  if (_12 != _30)
+    goto <bb 16>;
+  else
+    goto <bb 17>;
+
+  <bb 16>:
+  goto <bb 12>;
+
+  <bb 17>:
+  pretmp_46 = MEM[(struct list_head *)task_9(D) + 1488B].next;
+
+  <bb 18>:
+  # prephitmp_61 = PHI <pretmp_46(17), __mptr_26(10)>
+  _49 = MEM[(struct list_head *)task_9(D) + 1488B].prev;
+  prephitmp_61->prev = _49;
+  _49->next = prephitmp_61;
+  MEM[(struct list_head *)task_9(D) + 1488B].next = -2401263026318606080B;
+  MEM[(struct list_head *)task_9(D) + 1488B].prev = -2401263026318605824B;
+  up_write (_24);
+
+  <bb 19>:
+  return;
+
+  <bb 20>:
+  __asm__ __volatile__("" :  :  : "memory");
+  _47 = &MEM[(struct spinlock_t *)shp_66].D.5408.rlock;
+  _raw_spin_lock (_47);
+  shm_destroy (ns_11, shp_66);
+  goto <bb 15>;
+
+}
+
+
+
+;; Function is_file_shm_hugepages (is_file_shm_hugepages, funcdef_no=3006, decl_uid=20387, cgraph_uid=3006)
+
+is_file_shm_hugepages (struct file * file)
+{
+  const struct file_operations * _3;
+  _Bool _4;
+  int _5;
+
+  <bb 2>:
+  _3 = file_2(D)->f_op;
+  _4 = _3 == &shm_file_operations_huge;
+  _5 = (int) _4;
+  return _5;
+
+}
+
+
+
+;; Function SyS_shmget (SyS_shmget, funcdef_no=3010, decl_uid=40382, cgraph_uid=3011)
+
+SyS_shmget (long int key, long int size, long int shmflg)
+{
+  struct ipc_namespace * ns;
+  struct ipc_params shm_params;
+  struct task_struct * pfo_ret__;
+  static const struct ipc_ops shm_ops = {.getnew=newseg, .associate=shm_security, .more_checks=shm_more_checks};
+  long unsigned int size.14;
+  int _2;
+  int _6;
+  struct nsproxy * _11;
+  struct ipc_ids * _13;
+  int _14;
+  long int _15;
+
+  <bb 2>:
+  _2 = (int) shmflg_1(D);
+  size.14_4 = (long unsigned int) size_3(D);
+  _6 = (int) key_5(D);
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___10 : "p" &current_task);
+  _11 = pfo_ret___10->nsproxy;
+  ns_12 = _11->ipc_ns;
+  shm_params.key = _6;
+  shm_params.flg = _2;
+  shm_params.u.size = size.14_4;
+  _13 = &ns_12->ids[2];
+  _14 = ipcget (ns_12, _13, &shm_ops, &shm_params);
+  _15 = (long int) _14;
+  shm_params ={v} {CLOBBER};
+  return _15;
+
+}
+
+
+
+;; Function SyS_shmctl (SyS_shmctl, funcdef_no=3019, decl_uid=40509, cgraph_uid=3021)
+
+SyS_shmctl (long int shmid, long int cmd, long int buf)
+{
+  struct task_struct * pfo_ret__;
+  void * p;
+  struct shmid_kernel * shp;
+  int err;
+  struct ipc_namespace * ns;
+  struct file * shm_file;
+  struct user_struct * user;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.13;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  uid_t euid$val;
+  uid_t right;
+  uid_t right;
+  struct shmid_ds * buf.21;
+  int _4;
+  int _6;
+  _Bool _10;
+  _Bool _11;
+  _Bool _12;
+  struct nsproxy * _14;
+  unsigned int _16;
+  long int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _22;
+  long unsigned int _24;
+  int _26;
+  long int _27;
+  int _28;
+  long int _29;
+  struct ipc_ids * _30;
+  long int _36;
+  struct kern_ipc_perm * _38;
+  _Bool _41;
+  struct user_namespace * _42;
+  _Bool _43;
+  const struct cred * _45;
+  struct signal_struct * _50;
+  long long unsigned int _51;
+  const struct file_operations * _53;
+  const struct cred * _56;
+  short unsigned int _59;
+  short unsigned int _60;
+  short unsigned int _61;
+  short unsigned int _62;
+  short unsigned int _63;
+  struct user_struct * _64;
+  short unsigned int _65;
+  short unsigned int _66;
+  struct atomic_long_t * _67;
+  struct address_space * _68;
+  long int prephitmp_69;
+  long int _72;
+  int _76;
+  long int pretmp_113;
+  long int pretmp_114;
+  long int pretmp_115;
+  long int prephitmp_116;
+
+  <bb 2>:
+  buf.21_2 = (struct shmid_ds *) buf_1(D);
+  _4 = (int) cmd_3(D);
+  _6 = (int) shmid_5(D);
+  _10 = _4 < 0;
+  _11 = _6 < 0;
+  _12 = _10 | _11;
+  if (_12 != 0)
+    goto <bb 32>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___13 : "p" &current_task);
+  _14 = pfo_ret___13->nsproxy;
+  ns_15 = _14->ipc_ns;
+  _16 = (unsigned int) cmd_3(D);
+  if (_16 > 14)
+    goto <bb 32>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _17 = cmd_3(D) & 4294967295;
+  _18 = (long unsigned int) _17;
+  _19 = 1 << _18;
+  _20 = _19 & 24588;
+  if (_20 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  _22 = _19 & 6144;
+  if (_22 != 0)
+    goto <bb 9>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _24 = _19 & 3;
+  if (_24 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 32>;
+
+  <bb 7>:
+  _26 = shmctl_nolock.constprop.23 (ns_15, _6, _4, buf.21_2);
+  _27 = (long int) _26;
+  goto <bb 32>;
+
+  <bb 8>:
+  _28 = shmctl_down.constprop.24 (ns_15, _6, _4, buf.21_2);
+  _29 = (long int) _28;
+  goto <bb 32>;
+
+  <bb 9>:
+  __asm__ __volatile__("" :  :  : "memory");
+  _30 = &ns_15->ids[2];
+  shp_31 = ipc_obtain_object_check (_30, _6);
+  ptr.13_32 = (long unsigned int) shp_31;
+  if (ptr.13_32 > 18446744073709547520)
+    goto <bb 10>;
+  else
+    goto <bb 11>;
+
+  <bb 10>:
+  _36 = (long int) shp_31;
+  err_37 = (int) _36;
+  pretmp_115 = (long int) err_37;
+  goto <bb 31> (out_unlock1);
+
+  <bb 11>:
+  _38 = &shp_31->shm_perm;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___74 : "p" &current_task);
+  p_75 = pfo_ret___74->audit_context;
+  if (p_75 == 0B)
+    goto <bb 13>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  _76 = MEM[(int *)p_75];
+  if (_76 != 0)
+    goto <bb 13>;
+  else
+    goto <bb 33>;
+
+  <bb 13>:
+  err_39 = security_shm_shmctl (shp_31, _4);
+  if (err_39 != 0)
+    goto <bb 14>;
+  else
+    goto <bb 15>;
+
+  <bb 14>:
+  pretmp_114 = (long int) err_39;
+  goto <bb 31> (out_unlock1);
+
+  <bb 15>:
+  _raw_spin_lock (_38);
+  _41 = MEM[(struct kern_ipc_perm *)shp_31 + 4B];
+  if (_41 != 0)
+    goto <bb 30> (out_unlock0);
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+  _42 = ns_15->user_ns;
+  _43 = ns_capable (_42, 14);
+  if (_43 != 0)
+    goto <bb 21>;
+  else
+    goto <bb 17>;
+
+  <bb 17>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___44 : "p" &current_task);
+  _45 = pfo_ret___44->cred;
+  euid$val_46 = MEM[(const struct cred *)_45 + 20B];
+  right_47 = MEM[(struct shmid_kernel *)shp_31 + 16B];
+  if (euid$val_46 != right_47)
+    goto <bb 18>;
+  else
+    goto <bb 19>;
+
+  <bb 18>:
+  right_48 = MEM[(struct shmid_kernel *)shp_31 + 24B];
+  if (euid$val_46 != right_48)
+    goto <bb 30> (out_unlock0);
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  if (_4 == 11)
+    goto <bb 20>;
+  else
+    goto <bb 21>;
+
+  <bb 20>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___49 : "p" &current_task);
+  _50 = MEM[(const struct task_struct *)pfo_ret___49].signal;
+  _51 ={v} MEM[(volatile __u64 *)_50].rlim[8].rlim_cur;
+  if (_51 == 0)
+    goto <bb 30> (out_unlock0);
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+  shm_file_52 = shp_31->shm_file;
+  _53 = MEM[(struct file *)shm_file_52 + 40B];
+  if (_53 == &hugetlbfs_file_operations)
+    goto <bb 22>;
+  else
+    goto <bb 23>;
+
+  <bb 22>:
+  goto <bb 30> (out_unlock0);
+
+  <bb 23>:
+  if (_53 == &shm_file_operations_huge)
+    goto <bb 22>;
+  else
+    goto <bb 34>;
+
+  <bb 24>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___55 : "p" &current_task);
+  _56 = pfo_ret___55->cred;
+  user_57 = _56->user;
+  err_58 = shmem_lock (shm_file_52, 1, user_57);
+  if (err_58 == 0)
+    goto <bb 26>;
+  else
+    goto <bb 25>;
+
+  <bb 25>:
+  pretmp_113 = (long int) err_58;
+  goto <bb 30> (out_unlock0);
+
+  <bb 26>:
+  _59 = shp_31->shm_perm.mode;
+  _60 = _59 & 1024;
+  if (_60 == 0)
+    goto <bb 27>;
+  else
+    goto <bb 22>;
+
+  <bb 27>:
+  _61 = _59 | 1024;
+  shp_31->shm_perm.mode = _61;
+  shp_31->mlock_user = user_57;
+  goto <bb 30> (out_unlock0);
+
+  <bb 28>:
+  _62 = shp_31->shm_perm.mode;
+  _63 = _62 & 1024;
+  if (_63 == 0)
+    goto <bb 22>;
+  else
+    goto <bb 29>;
+
+  <bb 29>:
+  _64 = shp_31->mlock_user;
+  shmem_lock (shm_file_52, 0, _64);
+  _65 = shp_31->shm_perm.mode;
+  _66 = _65 & 64511;
+  shp_31->shm_perm.mode = _66;
+  shp_31->mlock_user = 0B;
+  _67 = &shm_file_52->f_count;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; incq %0" : "=m" MEM[(struct atomic64_t *)_67].counter : "m" MEM[(struct atomic64_t *)_67].counter);
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_31] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  _68 = shm_file_52->f_mapping;
+  shmem_unlock_mapping (_68);
+  fput (shm_file_52);
+  goto <bb 32>;
+
+  # prephitmp_116 = PHI <-43(15), -1(20), 0(27), 0(22), pretmp_113(25), -1(18)>
+out_unlock0:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_31] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # prephitmp_69 = PHI <pretmp_115(10), pretmp_114(14), prephitmp_116(30)>
+out_unlock1:
+  __asm__ __volatile__("" :  :  : "memory");
+
+  <bb 32>:
+  # _72 = PHI <-22(3), prephitmp_69(31), 0(29), _27(7), _29(8), -22(2), -22(6)>
+  return _72;
+
+  <bb 33>:
+  __audit_ipc_obj (_38);
+  goto <bb 13>;
+
+  <bb 34>:
+  if (_4 == 11)
+    goto <bb 24>;
+  else
+    goto <bb 28>;
+
+}
+
+
+
+;; Function ipcperms (ipcperms, funcdef_no=3021, decl_uid=35200, cgraph_uid=3023)
+
+ipcperms (struct ipc_namespace * ns, struct kern_ipc_perm * ipcp, short int flag)
+{
+  uid_t right;
+  uid_t left;
+  uid_t right;
+  struct task_struct * pfo_ret__;
+  void * p;
+  struct task_struct * pfo_ret__;
+  int granted_mode;
+  int _2;
+  const struct cred * _8;
+  short int _13;
+  short int _14;
+  short int _15;
+  short int _16;
+  short unsigned int _18;
+  int _23;
+  int _25;
+  int _28;
+  int _29;
+  int _30;
+  struct user_namespace * _32;
+  _Bool _34;
+  int _35;
+  int _37;
+  int _42;
+  short int _60;
+
+  <bb 2>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___39 : "p" &current_task);
+  _8 = pfo_ret___39->cred;
+  left_38 = MEM[(const struct cred *)_8 + 20B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___40 : "p" &current_task);
+  p_41 = pfo_ret___40->audit_context;
+  if (p_41 == 0B)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _42 = MEM[(int *)p_41];
+  if (_42 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 14>;
+
+  <bb 4>:
+  _13 = flag_12(D) >> 6;
+  _14 = flag_12(D) >> 3;
+  _15 = _13 | _14;
+  _16 = _15 | flag_12(D);
+  _18 = ipcp_10(D)->mode;
+  granted_mode_19 = (int) _18;
+  right_59 = MEM[(struct kern_ipc_perm *)ipcp_10(D) + 24B];
+  if (left_38 == right_59)
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  right_56 = MEM[(struct kern_ipc_perm *)ipcp_10(D) + 16B];
+  if (left_38 == right_56)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  granted_mode_27 = granted_mode_19 >> 6;
+  goto <bb 10>;
+
+  <bb 7>:
+  _23 = in_group_p (ipcp_10(D)->cgid);
+  if (_23 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  granted_mode_26 = granted_mode_19 >> 3;
+  goto <bb 10>;
+
+  <bb 9>:
+  _25 = in_group_p (ipcp_10(D)->gid);
+  if (_25 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  # granted_mode_1 = PHI <granted_mode_27(6), granted_mode_19(9), granted_mode_26(8)>
+  _28 = ~granted_mode_1;
+  _60 = _16 & 7;
+  _29 = (int) _60;
+  _30 = _28 & _29;
+  if (_30 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 11>;
+
+  <bb 11>:
+  _35 = (int) flag_12(D);
+  _37 = security_ipc_permission (ipcp_10(D), _35);
+  goto <bb 13>;
+
+  <bb 12>:
+  _32 = ns_31(D)->user_ns;
+  _34 = ns_capable (_32, 15);
+  if (_34 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  # _2 = PHI <-1(12), _37(11)>
+  return _2;
+
+  <bb 14>:
+  __audit_ipc_obj (ipcp_10(D));
+  goto <bb 4>;
+
+}
+
+
+
+;; Function do_mmap (do_mmap, funcdef_no=3023, decl_uid=15481, cgraph_uid=3025)
+
+do_mmap (struct file * file, long unsigned int addr, long unsigned int len, long unsigned int prot, long unsigned int flags, vm_flags_t vm_flags, long unsigned int pgoff, long unsigned int * populate)
+{
+  struct task_struct * pfo_ret__;
+  long int charged.33;
+  struct vm_userfaultfd_ctx D.43374;
+  struct vm_area_struct * prev.34;
+  struct kmem_cache * vm_area_cachep.35;
+  _Bool __warned.36;
+  struct rb_node * rb_parent.37;
+  struct rb_node * * rb_link.38;
+  struct mm_struct * mm;
+  struct vm_area_struct * vma;
+  struct vm_area_struct * prev;
+  int error;
+  struct rb_node * * rb_link;
+  struct rb_node * rb_parent;
+  long unsigned int charged;
+  long unsigned int nr_pages;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  static bool __warned;
+  long unsigned int lock_limit;
+  long unsigned int locked;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct mm_struct * mm;
+  int sysctl_overcommit_memory.31;
+  int sysctl_max_map_count.30;
+  long unsigned int _9;
+  long unsigned int _24;
+  unsigned int _25;
+  unsigned int _26;
+  struct path * _28;
+  _Bool _30;
+  long unsigned int _33;
+  long unsigned int _37;
+  long unsigned int _41;
+  int _42;
+  long unsigned int _46;
+  long unsigned int _49;
+  long unsigned int _50;
+  long unsigned int _51;
+  long unsigned int _53;
+  long unsigned int _55;
+  int _57;
+  vm_flags_t _58;
+  struct inode * _60;
+  long unsigned int _62;
+  long unsigned int _63;
+  unsigned int _64;
+  unsigned int _65;
+  unsigned int _66;
+  unsigned int _67;
+  unsigned int _68;
+  unsigned int _69;
+  int _71;
+  unsigned int _73;
+  unsigned int _74;
+  unsigned int _76;
+  unsigned int _77;
+  struct path * _78;
+  _Bool _80;
+  long unsigned int _81;
+  const struct file_operations * _83;
+  int (*<T2f89>) (struct file *, struct vm_area_struct *) _84;
+  long unsigned int _85;
+  long unsigned int _86;
+  long unsigned int _87;
+  long unsigned int _90;
+  const struct file_operations * _93;
+  long unsigned int _100;
+  long unsigned int _101;
+  long unsigned int _105;
+  long unsigned int _106;
+  _Bool _110;
+  int _114;
+  long unsigned int _115;
+  long unsigned int _117;
+  int _118;
+  int _119;
+  long unsigned int _120;
+  int _121;
+  int _122;
+  int _124;
+  struct list_head * _131;
+  long unsigned int _132;
+  long unsigned int _134;
+  struct address_space * _135;
+  struct file * _137;
+  const struct file_operations * _138;
+  int (*<T2f89>) (struct file *, struct vm_area_struct *) _139;
+  long unsigned int _141;
+  long unsigned int _151;
+  long unsigned int _157;
+  struct address_space * _158;
+  long unsigned int _159;
+  long int _162;
+  long unsigned int _165;
+  long unsigned int _166;
+  long unsigned int _167;
+  struct mm_struct * _170;
+  struct vm_area_struct * _171;
+  long unsigned int _172;
+  long unsigned int _173;
+  long unsigned int _174;
+  long unsigned int _175;
+  long unsigned int _176;
+  long unsigned int _177;
+  struct address_space * _179;
+  long unsigned int _184;
+  long unsigned int _185;
+  long unsigned int _257;
+  long unsigned int _258;
+  struct signal_struct * _260;
+  long long unsigned int _261;
+  long unsigned int _268;
+  long unsigned int _343;
+
+  <bb 2>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___103 : "p" &current_task);
+  mm_19 = pfo_ret___103->mm;
+  *populate_20(D) = 0;
+  if (len_22(D) == 0)
+    goto <bb 94> (<L79>);
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _24 = prot_23(D) & 1;
+  if (_24 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  goto <bb 9>;
+
+  <bb 5>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___104 : "p" &current_task);
+  _25 = pfo_ret___104->personality;
+  _26 = _25 & 4194304;
+  if (_26 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 4>;
+
+  <bb 6>:
+  if (file_27(D) == 0B)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  prot_31 = prot_23(D) | 4;
+  goto <bb 9>;
+
+  <bb 8>:
+  _28 = &file_27(D)->f_path;
+  _30 = path_noexec (_28);
+  if (_30 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 7>;
+
+  <bb 9>:
+  # prot_2 = PHI <prot_23(D)(4), prot_31(7)>
+  _33 = flags_32(D) & 16;
+  if (_33 == 0)
+    goto <bb 10>;
+  else
+    goto <bb 11>;
+
+  <bb 10>:
+  addr_36 = round_hint_to_min (addr_34(D));
+
+  <bb 11>:
+  # addr_1 = PHI <addr_34(D)(9), addr_36(10)>
+  _37 = len_22(D) + 4095;
+  len_38 = _37 & 18446744073709547520;
+  if (len_38 == 0)
+    goto <bb 94> (<L79>);
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  charged_39 = len_38 >> 12;
+  _41 = charged_39 + pgoff_40(D);
+  if (pgoff_40(D) > _41)
+    goto <bb 94> (<L79>);
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  _42 = mm_19->map_count;
+  sysctl_max_map_count.30_43 = sysctl_max_map_count;
+  if (_42 > sysctl_max_map_count.30_43)
+    goto <bb 94> (<L79>);
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  addr_45 = get_unmapped_area (file_27(D), addr_1, len_38, pgoff_40(D), flags_32(D));
+  _46 = addr_45 & 4095;
+  if (_46 != 0)
+    goto <bb 94> (<L79>);
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _257 = prot_2 & 7;
+  _258 = flags_32(D) & 10496;
+  _50 = mm_19->def_flags;
+  _49 = vm_flags_52(D) | _50;
+  _51 = _49 | _258;
+  _53 = _51 | _257;
+  vm_flags_54 = _53 | 112;
+  _55 = flags_32(D) & 8192;
+  if (_55 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+  _105 = _53 & 8192;
+  if (_105 != 0)
+    goto <bb 19>;
+  else
+    goto <bb 95>;
+
+  <bb 17>:
+  _57 = can_do_mlock ();
+  if (_57 == 0)
+    goto <bb 18>;
+  else
+    goto <bb 16>;
+
+  <bb 18>:
+  goto <bb 94> (<L79>);
+
+  <bb 19>:
+  _106 = MEM[(long unsigned int *)mm_19 + 184B];
+  locked_107 = charged_39 + _106;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___259 : "p" &current_task);
+  _260 = MEM[(const struct task_struct *)pfo_ret___259].signal;
+  _261 ={v} MEM[(volatile __u64 *)_260].rlim[8].rlim_cur;
+  lock_limit_109 = _261 >> 12;
+  if (locked_107 > lock_limit_109)
+    goto <bb 20>;
+  else
+    goto <bb 95>;
+
+  <bb 20>:
+  _110 = capable (14);
+  if (_110 != 0)
+    goto <bb 95>;
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+  goto <bb 94> (<L79>);
+
+  <bb 22>:
+  _60 = MEM[(const struct file *)file_27(D) + 32B];
+  _62 = flags_32(D) & 15;
+  switch (_62) <default: <L79>, case 1: <L26>, case 2: <L38>>
+
+<L26>:
+  _63 = prot_2 & 2;
+  if (_63 != 0)
+    goto <bb 24>;
+  else
+    goto <bb 26>;
+
+  <bb 24>:
+  _64 = file_27(D)->f_mode;
+  _65 = _64 & 2;
+  if (_65 == 0)
+    goto <bb 25>;
+  else
+    goto <bb 26>;
+
+  <bb 25>:
+  goto <bb 94> (<L79>);
+
+  <bb 26>:
+  _66 = _60->i_flags;
+  _67 = _66 & 4;
+  if (_67 != 0)
+    goto <bb 27>;
+  else
+    goto <bb 28>;
+
+  <bb 27>:
+  _68 = file_27(D)->f_mode;
+  _69 = _68 & 2;
+  if (_69 != 0)
+    goto <bb 25>;
+  else
+    goto <bb 28>;
+
+  <bb 28>:
+  _71 = locks_verify_locked (file_27(D));
+  if (_71 != 0)
+    goto <bb 21>;
+  else
+    goto <bb 29>;
+
+  <bb 29>:
+  vm_flags_72 = _53 | 248;
+  _73 = file_27(D)->f_mode;
+  _74 = _73 & 2;
+  if (_74 == 0)
+    goto <bb 30>;
+  else
+    goto <bb 31> (<L38>);
+
+  <bb 30>:
+  _58 = _53 & 18446744073709551575;
+  vm_flags_75 = _58 | 208;
+
+  # vm_flags_3 = PHI <vm_flags_54(22), vm_flags_72(29), vm_flags_75(30)>
+<L38>:
+  _76 = file_27(D)->f_mode;
+  _77 = _76 & 1;
+  if (_77 == 0)
+    goto <bb 25>;
+  else
+    goto <bb 32>;
+
+  <bb 32>:
+  _78 = &file_27(D)->f_path;
+  _80 = path_noexec (_78);
+  if (_80 != 0)
+    goto <bb 33>;
+  else
+    goto <bb 35>;
+
+  <bb 33>:
+  _81 = vm_flags_3 & 4;
+  if (_81 != 0)
+    goto <bb 18>;
+  else
+    goto <bb 34>;
+
+  <bb 34>:
+  vm_flags_82 = vm_flags_3 & 18446744073709551551;
+
+  <bb 35>:
+  # vm_flags_4 = PHI <vm_flags_3(32), vm_flags_82(34)>
+  _83 = file_27(D)->f_op;
+  _84 = _83->mmap;
+  if (_84 == 0B)
+    goto <bb 94> (<L79>);
+  else
+    goto <bb 36>;
+
+  <bb 36>:
+  _85 = vm_flags_4 & 256;
+  if (_85 != 0)
+    goto <bb 37>;
+  else
+    goto <bb 42>;
+
+  <bb 37>:
+  goto <bb 94> (<L79>);
+
+  <bb 38>:
+  _86 = flags_32(D) & 15;
+  switch (_86) <default: <L79>, case 1: <L53>, case 2: <L56>>
+
+<L53>:
+  _87 = _53 & 256;
+  if (_87 != 0)
+    goto <bb 37>;
+  else
+    goto <bb 40>;
+
+  <bb 40>:
+  vm_flags_88 = _53 | 248;
+  goto <bb 42>;
+
+<L56>:
+  pgoff_89 = addr_45 >> 12;
+
+  <bb 42>:
+  # vm_flags_5 = PHI <vm_flags_4(36), vm_flags_88(40), vm_flags_54(41)>
+  # pgoff_8 = PHI <pgoff_40(D)(36), 0(40), pgoff_89(41)>
+  _90 = flags_32(D) & 16384;
+  if (_90 != 0)
+    goto <bb 43>;
+  else
+    goto <bb 48>;
+
+  <bb 43>:
+  sysctl_overcommit_memory.31_91 = sysctl_overcommit_memory;
+  if (sysctl_overcommit_memory.31_91 != 2)
+    goto <bb 44>;
+  else
+    goto <bb 45>;
+
+  <bb 44>:
+  vm_flags_92 = vm_flags_5 | 2097152;
+
+  <bb 45>:
+  # vm_flags_6 = PHI <vm_flags_5(43), vm_flags_92(44)>
+  if (file_27(D) != 0B)
+    goto <bb 46>;
+  else
+    goto <bb 48>;
+
+  <bb 46>:
+  _93 = MEM[(struct file *)file_27(D) + 40B];
+  if (_93 == &hugetlbfs_file_operations)
+    goto <bb 96>;
+  else
+    goto <bb 47>;
+
+  <bb 47>:
+  if (_93 == &shm_file_operations_huge)
+    goto <bb 96>;
+  else
+    goto <bb 48>;
+
+  <bb 48>:
+  # vm_flags_7 = PHI <vm_flags_5(42), vm_flags_6(45), vm_flags_6(47), vm_flags_95(96)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___112 : "p" &current_task);
+  mm_113 = pfo_ret___112->mm;
+  _114 = may_expand_vm (mm_113, charged_39);
+  if (_114 == 0)
+    goto <bb 49>;
+  else
+    goto <bb 52>;
+
+  <bb 49>:
+  _115 = addr_45 + len_38;
+  nr_pages_116 = count_vma_pages_range (mm_113, addr_45, _115);
+  _117 = charged_39 - nr_pages_116;
+  _118 = may_expand_vm (mm_113, _117);
+  if (_118 == 0)
+    goto <bb 98>;
+  else
+    goto <bb 52>;
+
+  <bb 50>:
+  _119 = do_munmap (mm_113, addr_45, len_38);
+  if (_119 != 0)
+    goto <bb 98>;
+  else
+    goto <bb 51>;
+
+  <bb 51>:
+  goto <bb 53>;
+
+  <bb 52>:
+
+  <bb 53>:
+  _120 = addr_45 + len_38;
+  _121 = find_vma_links (mm_113, addr_45, _120, &prev, &rb_link, &rb_parent);
+  if (_121 != 0)
+    goto <bb 50>;
+  else
+    goto <bb 54>;
+
+  <bb 54>:
+  # _343 = PHI <_120(53)>
+  _122 = accountable_mapping (file_27(D), vm_flags_7);
+  if (_122 != 0)
+    goto <bb 55>;
+  else
+    goto <bb 57>;
+
+  <bb 55>:
+  charged.33_123 = (long int) charged_39;
+  _124 = security_vm_enough_memory_mm (mm_113, charged.33_123);
+  if (_124 != 0)
+    goto <bb 98>;
+  else
+    goto <bb 56>;
+
+  <bb 56>:
+  vm_flags_125 = vm_flags_7 | 1048576;
+
+  <bb 57>:
+  # vm_flags_127 = PHI <vm_flags_7(54), vm_flags_125(56)>
+  # charged_186 = PHI <0(54), charged_39(56)>
+  prev.34_126 = prev;
+  vma_128 = vma_merge (mm_113, prev.34_126, addr_45, _343, vm_flags_127, 0B, file_27(D), pgoff_8, 0B, D.43374);
+  if (vma_128 != 0B)
+    goto <bb 75> (out);
+  else
+    goto <bb 58>;
+
+  <bb 58>:
+  vm_area_cachep.35_129 = vm_area_cachep;
+  vma_266 = kmem_cache_alloc (vm_area_cachep.35_129, 32976);
+  if (vma_266 == 0B)
+    goto <bb 87> (unacct_error);
+  else
+    goto <bb 59>;
+
+  <bb 59>:
+  vma_266->vm_mm = mm_113;
+  vma_266->vm_start = addr_45;
+  vma_266->vm_end = _343;
+  vma_266->vm_flags = vm_flags_127;
+  vma_266->vm_page_prot = vm_get_page_prot (vm_flags_127);
+  vma_266->vm_pgoff = pgoff_8;
+  _131 = &vma_266->anon_vma_chain;
+  MEM[(struct list_head *)vma_266 + 120B].next = _131;
+  MEM[(struct list_head *)vma_266 + 120B].prev = _131;
+  if (file_27(D) != 0B)
+    goto <bb 60>;
+  else
+    goto <bb 69>;
+
+  <bb 60>:
+  _132 = vm_flags_127 & 2048;
+  if (_132 != 0)
+    goto <bb 62>;
+  else
+    goto <bb 61>;
+
+  <bb 61>:
+  _134 = vm_flags_127 & 8;
+  if (_134 != 0)
+    goto <bb 64>;
+  else
+    goto <bb 63>;
+
+  <bb 62>:
+  error_133 = deny_write_access (file_27(D));
+  if (error_133 != 0)
+    goto <bb 86> (free_vma);
+  else
+    goto <bb 61>;
+
+  <bb 63>:
+  _137 = get_file (file_27(D));
+  vma_266->vm_file = _137;
+  _138 = file_27(D)->f_op;
+  _139 = _138->mmap;
+  error_140 = _139 (file_27(D), vma_266);
+  if (error_140 != 0)
+    goto <bb 82> (unmap_and_free_vma);
+  else
+    goto <bb 65>;
+
+  <bb 64>:
+  _135 = file_27(D)->f_mapping;
+  error_136 = mapping_map_writable (_135);
+  if (error_136 != 0)
+    goto <bb 84> (allow_write_and_free_vma);
+  else
+    goto <bb 63>;
+
+  <bb 65>:
+  _141 = vma_266->vm_start;
+  if (addr_45 != _141)
+    goto <bb 66>;
+  else
+    goto <bb 68>;
+
+  <bb 66>:
+  __warned.36_145 = __warned;
+  if (__warned.36_145 != 0)
+    goto <bb 68>;
+  else
+    goto <bb 67>;
+
+  <bb 67>:
+  warn_slowpath_null ("ipc/shm.c", 1424);
+  __warned = 1;
+
+  <bb 68>:
+  addr_149 = vma_266->vm_start;
+  vm_flags_150 = vma_266->vm_flags;
+  rb_parent.37_48 = rb_parent;
+  rb_link.38_330 = rb_link;
+  prev.34_315 = prev;
+  vma_link (mm_113, vma_266, prev.34_315, rb_link.38_330, rb_parent.37_48);
+  _157 = vm_flags_150 & 8;
+  if (_157 != 0)
+    goto <bb 71>;
+  else
+    goto <bb 72>;
+
+  <bb 69>:
+  _151 = vm_flags_127 & 8;
+  if (_151 != 0)
+    goto <bb 70>;
+  else
+    goto <bb 97>;
+
+  <bb 70>:
+  error_152 = shmem_zero_setup (vma_266);
+  if (error_152 != 0)
+    goto <bb 86> (free_vma);
+  else
+    goto <bb 97>;
+
+  <bb 71>:
+  _158 = file_27(D)->f_mapping;
+  mapping_unmap_writable (_158);
+
+  <bb 72>:
+  _159 = vm_flags_150 & 2048;
+  if (_159 != 0)
+    goto <bb 73>;
+  else
+    goto <bb 74>;
+
+  <bb 73>:
+  allow_write_access (file_27(D));
+
+  <bb 74>:
+  # vm_flags_296 = PHI <vm_flags_127(97), vm_flags_150(72), vm_flags_150(73)>
+  # addr_326 = PHI <addr_45(97), addr_149(72), addr_149(73)>
+  file_160 = vma_266->vm_file;
+
+  # file_164 = PHI <file_27(D)(57), file_160(74)>
+  # addr_188 = PHI <addr_45(57), addr_326(74)>
+  # vm_flags_163 = PHI <vm_flags_127(57), vm_flags_296(74)>
+  # vma_161 = PHI <vma_128(57), vma_266(74)>
+out:
+  perf_event_mmap (vma_161);
+  _162 = (long int) charged_39;
+  vm_stat_account (mm_113, vm_flags_163, file_164, _162);
+  _165 = vm_flags_163 & 8192;
+  if (_165 != 0)
+    goto <bb 76>;
+  else
+    goto <bb 81>;
+
+  <bb 76>:
+  _166 = vm_flags_163 & 268715008;
+  if (_166 == 0)
+    goto <bb 77>;
+  else
+    goto <bb 80>;
+
+  <bb 77>:
+  _167 = MEM[(struct vm_area_struct *)vma_161 + 80B];
+  _268 = _167 & 4194304;
+  if (_268 == 0)
+    goto <bb 78>;
+  else
+    goto <bb 80>;
+
+  <bb 78>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___169 : "p" &current_task);
+  _170 = pfo_ret___169->mm;
+  _171 = get_gate_vma (_170);
+  if (vma_161 != _171)
+    goto <bb 79>;
+  else
+    goto <bb 80>;
+
+  <bb 79>:
+  _172 = mm_113->locked_vm;
+  _173 = charged_39 + _172;
+  mm_113->locked_vm = _173;
+  goto <bb 81>;
+
+  <bb 80>:
+  _174 = vma_161->vm_flags;
+  _175 = _174 & 18446744073709543423;
+  vma_161->vm_flags = _175;
+
+  <bb 81>:
+  vma_set_page_prot (vma_161);
+  goto <bb 90>;
+
+unmap_and_free_vma:
+  vma_266->vm_file = 0B;
+  fput (file_27(D));
+  _176 = vma_266->vm_end;
+  _177 = vma_266->vm_start;
+  prev.34_178 = prev;
+  unmap_region (mm_113, vma_266, prev.34_178, _177, _176);
+  if (_134 != 0)
+    goto <bb 83>;
+  else
+    goto <bb 84> (allow_write_and_free_vma);
+
+  <bb 83>:
+  _179 = file_27(D)->f_mapping;
+  mapping_unmap_writable (_179);
+
+  # error_189 = PHI <error_136(64), error_140(82), error_140(83)>
+  # charged_190 = PHI <charged_186(64), 0(82), 0(83)>
+allow_write_and_free_vma:
+  if (_132 != 0)
+    goto <bb 85>;
+  else
+    goto <bb 86> (free_vma);
+
+  <bb 85>:
+  allow_write_access (file_27(D));
+
+  # error_191 = PHI <error_133(62), error_152(70), error_189(84), error_189(85)>
+  # charged_192 = PHI <charged_186(62), charged_186(70), charged_190(84), charged_190(85)>
+free_vma:
+  vm_area_cachep.35_180 = vm_area_cachep;
+  kmem_cache_free (vm_area_cachep.35_180, vma_266);
+
+  # error_183 = PHI <-12(58), error_191(86)>
+  # charged_181 = PHI <charged_186(58), charged_192(86)>
+unacct_error:
+  if (charged_181 != 0)
+    goto <bb 88>;
+  else
+    goto <bb 89>;
+
+  <bb 88>:
+  charged.33_182 = (long int) charged_181;
+  vm_unacct_memory (charged.33_182);
+
+  <bb 89>:
+  _184 = (long unsigned int) error_183;
+
+  <bb 90>:
+  # _185 = PHI <_184(89), addr_188(81)>
+  prev ={v} {CLOBBER};
+  rb_link ={v} {CLOBBER};
+  rb_parent ={v} {CLOBBER};
+  if (_185 <= 18446744073709547520)
+    goto <bb 91>;
+  else
+    goto <bb 94> (<L79>);
+
+  <bb 91>:
+  _100 = vm_flags_7 & 8192;
+  if (_100 != 0)
+    goto <bb 93>;
+  else
+    goto <bb 92>;
+
+  <bb 92>:
+  _101 = flags_32(D) & 98304;
+  if (_101 == 32768)
+    goto <bb 93>;
+  else
+    goto <bb 94> (<L79>);
+
+  <bb 93>:
+  *populate_20(D) = len_38;
+
+  # _9 = PHI <18446744073709551594(2), 18446744073709551604(13), 18446744073709551541(12), _185(90), addr_45(14), 18446744073709551615(18), 18446744073709551605(21), 18446744073709551603(25), _185(92), 18446744073709551604(98), 18446744073709551594(38), _185(93), 18446744073709551597(35), 18446744073709551594(37), 18446744073709551594(22), 18446744073709551604(11)>
+<L79>:
+  return _9;
+
+  <bb 95>:
+  if (file_27(D) != 0B)
+    goto <bb 22>;
+  else
+    goto <bb 38>;
+
+  <bb 96>:
+  vm_flags_95 = vm_flags_6 | 2097152;
+  goto <bb 48>;
+
+  <bb 97>:
+  rb_parent.37_332 = rb_parent;
+  rb_link.38_331 = rb_link;
+  prev.34_333 = prev;
+  vma_link (mm_113, vma_266, prev.34_333, rb_link.38_331, rb_parent.37_332);
+  goto <bb 74>;
+
+  <bb 98>:
+  prev ={v} {CLOBBER};
+  rb_link ={v} {CLOBBER};
+  rb_parent ={v} {CLOBBER};
+  goto <bb 94> (<L79>);
+
+}
+
+
+
+;; Function mmap_region (mmap_region, funcdef_no=3024, decl_uid=15472, cgraph_uid=3026)
+
+mmap_region (struct file * file, long unsigned int addr, long unsigned int len, vm_flags_t vm_flags, long unsigned int pgoff)
+{
+  int vm_committed_as_batch.41;
+  int v;
+  volatile u32 * __ptr;
+  int v;
+  volatile u32 * __ptr;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  static bool __warned;
+  long unsigned int nr_pages;
+  long unsigned int charged;
+  struct rb_node * rb_parent;
+  struct rb_node * * rb_link;
+  int error;
+  struct vm_area_struct * prev;
+  struct vm_area_struct * vma;
+  struct mm_struct * mm;
+  struct rb_node * * rb_link.38;
+  struct rb_node * rb_parent.37;
+  _Bool __warned.36;
+  struct kmem_cache * vm_area_cachep.35;
+  struct vm_area_struct * prev.34;
+  struct vm_userfaultfd_ctx D.40632;
+  long int charged.33;
+  long unsigned int _15;
+  int _39;
+  long unsigned int _41;
+  long unsigned int _43;
+  long unsigned int _46;
+  int _48;
+  int _51;
+  int _53;
+  int _56;
+  int _59;
+  struct list_head * _74;
+  long unsigned int _76;
+  long unsigned int _79;
+  struct address_space * _80;
+  const struct file_operations * _86;
+  int (*<T2f89>) (struct file *, struct vm_area_struct *) _87;
+  long unsigned int _90;
+  long unsigned int prephitmp_91;
+  long unsigned int _104;
+  long unsigned int _105;
+  struct address_space * _108;
+  long unsigned int _111;
+  long unsigned int _118;
+  struct address_space * _119;
+  long unsigned int _121;
+  long int _130;
+  long unsigned int _132;
+  long unsigned int _133;
+  long unsigned int _134;
+  long unsigned int pretmp_135;
+  struct mm_struct * _136;
+  struct vm_area_struct * _138;
+  long unsigned int _139;
+  long unsigned int _140;
+  long unsigned int _143;
+  struct inode * _153;
+  long unsigned int pretmp_154;
+  int _155;
+  int _164;
+  struct atomic_long_t * _172;
+  struct atomic_t * _173;
+  struct inode * _174;
+  struct atomic_t * _175;
+  long unsigned int prephitmp_176;
+  long unsigned int _177;
+  long int _180;
+  long unsigned int pretmp_206;
+  long unsigned int pretmp_217;
+  long unsigned int pretmp_228;
+
+  <bb 2>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___149 : "p" &current_task);
+  mm_35 = pfo_ret___149->mm;
+  charged_37 = len_36(D) >> 12;
+  _39 = may_expand_vm (mm_35, charged_37);
+  if (_39 == 0)
+    goto <bb 3>;
+  else
+    goto <bb 8>;
+
+  <bb 3>:
+  _41 = vm_flags_40(D) & 16;
+  if (_41 == 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  goto <bb 54>;
+
+  <bb 5>:
+  _43 = len_36(D) + addr_42(D);
+  nr_pages_45 = count_vma_pages_range (mm_35, addr_42(D), _43);
+  _46 = charged_37 - nr_pages_45;
+  _48 = may_expand_vm (mm_35, _46);
+  if (_48 == 0)
+    goto <bb 4>;
+  else
+    goto <bb 8>;
+
+  <bb 6>:
+  _53 = do_munmap (mm_35, addr_42(D), len_36(D));
+  if (_53 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  goto <bb 9>;
+
+  <bb 8>:
+  pretmp_154 = len_36(D) + addr_42(D);
+
+  <bb 9>:
+  _51 = find_vma_links (mm_35, addr_42(D), pretmp_154, &prev, &rb_link, &rb_parent);
+  if (_51 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  _56 = accountable_mapping (file_54(D), vm_flags_40(D));
+  if (_56 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 13>;
+
+  <bb 11>:
+  charged.33_57 = (long int) charged_37;
+  _59 = security_vm_enough_memory_mm (mm_35, charged.33_57);
+  if (_59 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  vm_flags_60 = vm_flags_40(D) | 1048576;
+
+  <bb 13>:
+  # vm_flags_4 = PHI <vm_flags_40(D)(10), vm_flags_60(12)>
+  # charged_11 = PHI <0(10), charged_37(12)>
+  prev.34_61 = prev;
+  vma_64 = vma_merge (mm_35, prev.34_61, addr_42(D), pretmp_154, vm_flags_4, 0B, file_54(D), pgoff_62(D), 0B, D.40632);
+  if (vma_64 != 0B)
+    goto <bb 37> (out);
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  vm_area_cachep.35_65 = vm_area_cachep;
+  vma_152 = kmem_cache_alloc (vm_area_cachep.35_65, 32976);
+  if (vma_152 == 0B)
+    goto <bb 51> (unacct_error);
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  vma_152->vm_mm = mm_35;
+  vma_152->vm_start = addr_42(D);
+  vma_152->vm_end = pretmp_154;
+  vma_152->vm_flags = vm_flags_4;
+  vma_152->vm_page_prot = vm_get_page_prot (vm_flags_4);
+  vma_152->vm_pgoff = pgoff_62(D);
+  _74 = &vma_152->anon_vma_chain;
+  MEM[(struct list_head *)vma_152 + 120B].next = _74;
+  MEM[(struct list_head *)vma_152 + 120B].prev = _74;
+  if (file_54(D) != 0B)
+    goto <bb 16>;
+  else
+    goto <bb 31>;
+
+  <bb 16>:
+  _76 = vm_flags_4 & 2048;
+  if (_76 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 21>;
+
+  <bb 17>:
+  _153 = MEM[(const struct file *)file_54(D) + 32B];
+
+  <bb 18>:
+  # v_179 = PHI <v_157(20), 0(17)>
+  _155 = v_179 + -1;
+  __ptr_156 = &MEM[(struct atomic_t *)_153 + 320B].counter;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; cmpxchgl %2,%1" : "=a" v_157, "=m" *__ptr_156 : "r" _155, "0" v_179, "m" *__ptr_156 : "memory");
+  if (v_179 == v_157)
+    goto <bb 21>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  if (v_157 <= 0)
+    goto <bb 20>;
+  else
+    goto <bb 50> (free_vma);
+
+  <bb 20>:
+  goto <bb 18>;
+
+  <bb 21>:
+  _79 = vm_flags_4 & 8;
+  if (_79 != 0)
+    goto <bb 22>;
+  else
+    goto <bb 26>;
+
+  <bb 22>:
+  _80 = file_54(D)->f_mapping;
+
+  <bb 23>:
+  # v_178 = PHI <v_166(25), 0(22)>
+  _164 = v_178 + 1;
+  __ptr_165 = &MEM[(struct atomic_t *)_80 + 28B].counter;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; cmpxchgl %2,%1" : "=a" v_166, "=m" *__ptr_165 : "r" _164, "0" v_178, "m" *__ptr_165 : "memory");
+  if (v_178 == v_166)
+    goto <bb 26>;
+  else
+    goto <bb 24>;
+
+  <bb 24>:
+  if (v_166 >= 0)
+    goto <bb 25>;
+  else
+    goto <bb 48> (allow_write_and_free_vma);
+
+  <bb 25>:
+  goto <bb 23>;
+
+  <bb 26>:
+  _172 = &file_54(D)->f_count;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; incq %0" : "=m" MEM[(struct atomic64_t *)_172].counter : "m" MEM[(struct atomic64_t *)_172].counter);
+  vma_152->vm_file = file_54(D);
+  _86 = file_54(D)->f_op;
+  _87 = _86->mmap;
+  error_89 = _87 (file_54(D), vma_152);
+  if (error_89 != 0)
+    goto <bb 46> (unmap_and_free_vma);
+  else
+    goto <bb 27>;
+
+  <bb 27>:
+  _90 = vma_152->vm_start;
+  if (addr_42(D) != _90)
+    goto <bb 28>;
+  else
+    goto <bb 30>;
+
+  <bb 28>:
+  __warned.36_94 = __warned;
+  if (__warned.36_94 != 0)
+    goto <bb 30>;
+  else
+    goto <bb 29>;
+
+  <bb 29>:
+  warn_slowpath_null ("ipc/shm.c", 1424);
+  __warned = 1;
+  pretmp_217 = vma_152->vm_start;
+
+  <bb 30>:
+  # addr_225 = PHI <addr_42(D)(27), _90(28), pretmp_217(29)>
+  vm_flags_101 = vma_152->vm_flags;
+  rb_parent.37_211 = rb_parent;
+  rb_link.38_219 = rb_link;
+  prev.34_220 = prev;
+  vma_link (mm_35, vma_152, prev.34_220, rb_link.38_219, rb_parent.37_211);
+  _118 = vm_flags_101 & 8;
+  if (_118 != 0)
+    goto <bb 33>;
+  else
+    goto <bb 34>;
+
+  <bb 31>:
+  _111 = vm_flags_4 & 8;
+  if (_111 != 0)
+    goto <bb 32>;
+  else
+    goto <bb 55>;
+
+  <bb 32>:
+  error_113 = shmem_zero_setup (vma_152);
+  if (error_113 != 0)
+    goto <bb 50> (free_vma);
+  else
+    goto <bb 55>;
+
+  <bb 33>:
+  _119 = file_54(D)->f_mapping;
+  _173 = &_119->i_mmap_writable;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; decl %0" : "=m" _173->counter : "m" _173->counter);
+
+  <bb 34>:
+  _121 = vm_flags_101 & 2048;
+  if (_121 != 0)
+    goto <bb 35>;
+  else
+    goto <bb 36>;
+
+  <bb 35>:
+  _174 = MEM[(const struct file *)file_54(D) + 32B];
+  _175 = &_174->i_writecount;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; incl %0" : "=m" _175->counter : "m" _175->counter);
+
+  <bb 36>:
+  # addr_223 = PHI <addr_42(D)(55), addr_225(34), addr_225(35)>
+  # vm_flags_214 = PHI <vm_flags_4(55), vm_flags_101(34), vm_flags_101(35)>
+  file_123 = vma_152->vm_file;
+
+  # file_1 = PHI <file_54(D)(13), file_123(36)>
+  # addr_3 = PHI <addr_42(D)(13), addr_223(36)>
+  # vm_flags_6 = PHI <vm_flags_4(13), vm_flags_214(36)>
+  # vma_7 = PHI <vma_64(13), vma_152(36)>
+out:
+  perf_event_mmap (vma_7);
+  _130 = (long int) charged_37;
+  vm_stat_account (mm_35, vm_flags_6, file_1, _130);
+  _132 = vm_flags_6 & 8192;
+  if (_132 != 0)
+    goto <bb 38>;
+  else
+    goto <bb 45>;
+
+  <bb 38>:
+  _133 = vm_flags_6 & 268715008;
+  if (_133 == 0)
+    goto <bb 39>;
+  else
+    goto <bb 43>;
+
+  <bb 39>:
+  _134 = MEM[(struct vm_area_struct *)vma_7 + 80B];
+  _177 = _134 & 4194304;
+  if (_177 == 0)
+    goto <bb 40>;
+  else
+    goto <bb 44>;
+
+  <bb 40>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___150 : "p" &current_task);
+  _136 = pfo_ret___150->mm;
+  _138 = get_gate_vma (_136);
+  if (_138 != vma_7)
+    goto <bb 42>;
+  else
+    goto <bb 41>;
+
+  <bb 41>:
+  pretmp_206 = _138->vm_flags;
+  goto <bb 44>;
+
+  <bb 42>:
+  _139 = mm_35->locked_vm;
+  _140 = charged_37 + _139;
+  mm_35->locked_vm = _140;
+  goto <bb 45>;
+
+  <bb 43>:
+  pretmp_228 = MEM[(struct vm_area_struct *)vma_7 + 80B];
+
+  <bb 44>:
+  # prephitmp_176 = PHI <pretmp_228(43), _134(39), pretmp_206(41)>
+  _143 = prephitmp_176 & 18446744073709543423;
+  vma_7->vm_flags = _143;
+
+  <bb 45>:
+  vma_set_page_prot (vma_7);
+  goto <bb 54>;
+
+unmap_and_free_vma:
+  vma_152->vm_file = 0B;
+  fput (file_54(D));
+  _104 = vma_152->vm_end;
+  _105 = vma_152->vm_start;
+  prev.34_106 = prev;
+  unmap_region (mm_35, vma_152, prev.34_106, _105, _104);
+  if (_79 != 0)
+    goto <bb 47>;
+  else
+    goto <bb 48> (allow_write_and_free_vma);
+
+  <bb 47>:
+  _108 = file_54(D)->f_mapping;
+  mapping_unmap_writable (_108);
+
+  # error_8 = PHI <-1(24), error_89(46), error_89(47)>
+  # charged_12 = PHI <charged_11(24), 0(46), 0(47)>
+allow_write_and_free_vma:
+  if (_76 != 0)
+    goto <bb 49>;
+  else
+    goto <bb 50> (free_vma);
+
+  <bb 49>:
+  allow_write_access (file_54(D));
+
+  # error_9 = PHI <-26(19), error_113(32), error_8(48), error_8(49)>
+  # charged_13 = PHI <charged_11(19), charged_11(32), charged_12(48), charged_12(49)>
+free_vma:
+  vm_area_cachep.35_124 = vm_area_cachep;
+  kmem_cache_free (vm_area_cachep.35_124, vma_152);
+  pretmp_135 = (long unsigned int) error_9;
+
+  # charged_14 = PHI <charged_11(14), charged_13(50)>
+  # prephitmp_91 = PHI <18446744073709551604(14), pretmp_135(50)>
+unacct_error:
+  if (charged_14 != 0)
+    goto <bb 52>;
+  else
+    goto <bb 53>;
+
+  <bb 52>:
+  charged.33_126 = (long int) charged_14;
+  _180 = -charged.33_126;
+  vm_committed_as_batch.41_181 = vm_committed_as_batch;
+  __percpu_counter_add (&vm_committed_as, _180, vm_committed_as_batch.41_181);
+
+  <bb 53>:
+
+  <bb 54>:
+  # _15 = PHI <18446744073709551604(4), prephitmp_91(53), addr_3(45)>
+  prev ={v} {CLOBBER};
+  rb_link ={v} {CLOBBER};
+  rb_parent ={v} {CLOBBER};
+  return _15;
+
+  <bb 55>:
+  rb_parent.37_226 = rb_parent;
+  rb_link.38_216 = rb_link;
+  prev.34_191 = prev;
+  vma_link (mm_35, vma_152, prev.34_191, rb_link.38_216, rb_parent.37_226);
+  goto <bb 36>;
+
+}
+
+
+
+;; Function do_shmat (do_shmat, funcdef_no=3025, decl_uid=20385, cgraph_uid=3027)
+
+do_shmat (int shmid, char * shmaddr, int shmflg, ulong * raddr, long unsigned int shmlba)
+{
+  uid_t right;
+  uid_t left;
+  uid_t right;
+  long unsigned int ptr.13;
+  struct task_struct * pfo_ret__;
+  struct vm_area_struct * vma;
+  struct task_struct * pfo_ret__;
+  void * p;
+  struct task_struct * pfo_ret__;
+  vm_flags_t vm_flags;
+  long int charged.33;
+  struct vm_userfaultfd_ctx D.43488;
+  struct vm_area_struct * prev.34;
+  struct kmem_cache * vm_area_cachep.35;
+  _Bool __warned.36;
+  struct rb_node * rb_parent.37;
+  struct rb_node * * rb_link.38;
+  struct mm_struct * mm;
+  struct vm_area_struct * vma;
+  struct vm_area_struct * prev;
+  int error;
+  struct rb_node * * rb_link;
+  struct rb_node * rb_parent;
+  long unsigned int charged;
+  long unsigned int nr_pages;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  long unsigned int lock_limit;
+  long unsigned int locked;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct mm_struct * mm;
+  int sysctl_max_map_count.30;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.13;
+  int granted_mode;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.13;
+  struct task_struct * pfo_ret__;
+  long unsigned int populate;
+  fmode_t f_mode;
+  struct path path;
+  struct ipc_namespace * ns;
+  int acc_mode;
+  long unsigned int prot;
+  long unsigned int flags;
+  int err;
+  struct file * file;
+  long unsigned int size;
+  long unsigned int addr;
+  struct shmid_kernel * shp;
+  const struct file_operations * iftmp.42;
+  long int prephitmp_3;
+  long int pretmp_4;
+  long int _16;
+  long int pretmp_18;
+  long unsigned int _30;
+  long unsigned int _31;
+  int _33;
+  long unsigned int _34;
+  long unsigned int _36;
+  int _37;
+  int _38;
+  int _39;
+  struct nsproxy * _42;
+  short int _48;
+  struct kern_ipc_perm * _49;
+  _Bool _54;
+  struct file * _57;
+  long unsigned int _60;
+  long unsigned int _61;
+  struct dentry * _63;
+  struct inode * _64;
+  long long int _66;
+  struct file * _74;
+  const struct file_operations * _75;
+  struct file * _83;
+  struct address_space * _84;
+  int _86;
+  struct file * _91;
+  struct mm_struct * _96;
+  struct rw_semaphore * _97;
+  int _99;
+  long unsigned int _100;
+  struct mm_struct * _101;
+  struct mm_struct * _103;
+  struct rw_semaphore * _116;
+  long unsigned int _120;
+  long unsigned int _121;
+  short unsigned int _124;
+  long int pretmp_134;
+  long int _140;
+  const struct cred * _142;
+  short int _143;
+  short int _144;
+  short int _145;
+  short int _146;
+  short unsigned int _148;
+  int _153;
+  int _154;
+  int _157;
+  int _158;
+  int _159;
+  struct user_namespace * _160;
+  _Bool _161;
+  int _163;
+  long int _165;
+  unsigned int _175;
+  unsigned int _176;
+  struct path * _177;
+  _Bool _178;
+  long unsigned int _180;
+  long unsigned int _182;
+  int _185;
+  long unsigned int _189;
+  long unsigned int _194;
+  long unsigned int _195;
+  long unsigned int _196;
+  long unsigned int _197;
+  _Bool _201;
+  struct inode * _203;
+  long unsigned int _205;
+  unsigned int _206;
+  unsigned int _207;
+  unsigned int _208;
+  unsigned int _209;
+  unsigned int _210;
+  unsigned int _211;
+  int _212;
+  unsigned int _214;
+  unsigned int _215;
+  vm_flags_t _216;
+  unsigned int _218;
+  struct path * _219;
+  _Bool _220;
+  long unsigned int _222;
+  const struct file_operations * _224;
+  int (*<T2f89>) (struct file *, struct vm_area_struct *) _225;
+  long unsigned int _227;
+  long unsigned int _228;
+  int _233;
+  long unsigned int _234;
+  long unsigned int _236;
+  int _237;
+  int _238;
+  long unsigned int _239;
+  int _240;
+  int _241;
+  int _243;
+  struct list_head * _250;
+  long unsigned int _251;
+  long unsigned int _253;
+  struct address_space * _254;
+  struct file * _256;
+  const struct file_operations * _257;
+  int (*<T2f89>) (struct file *, struct vm_area_struct *) _258;
+  long unsigned int _260;
+  long unsigned int _270;
+  long unsigned int _276;
+  struct address_space * _277;
+  long unsigned int _278;
+  long int _281;
+  long unsigned int _284;
+  long unsigned int _285;
+  long unsigned int _286;
+  struct rw_semaphore * _287;
+  struct mm_struct * _289;
+  struct vm_area_struct * _290;
+  long unsigned int _291;
+  long unsigned int _292;
+  long unsigned int _293;
+  long unsigned int _294;
+  long unsigned int _295;
+  long unsigned int _296;
+  struct address_space * _298;
+  long unsigned int _308;
+  long int pretmp_309;
+  short int _351;
+  long int prephitmp_402;
+  struct ipc_ids * _403;
+  int _407;
+  long unsigned int _410;
+  long int prephitmp_420;
+  struct mm_struct * _443;
+  long int pretmp_445;
+  long int prephitmp_466;
+  int prephitmp_469;
+  struct mm_struct * _488;
+  struct rw_semaphore * _503;
+  struct kmem_cache * _504;
+  void * _505;
+  struct rw_semaphore * _507;
+  int pretmp_508;
+  struct rw_semaphore * _515;
+  struct atomic_t * _517;
+  long unsigned int _519;
+  struct signal_struct * _524;
+  long long unsigned int _525;
+  int pretmp_527;
+  long unsigned int _530;
+  struct mm_struct * _536;
+  int _543;
+  short unsigned int _545;
+
+  <bb 2>:
+  if (shmid_26(D) < 0)
+    goto <bb 133> (out);
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  addr_28 = (long unsigned int) shmaddr_27(D);
+  if (addr_28 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 8>;
+
+  <bb 4>:
+  _30 = shmlba_29(D) + 18446744073709551615;
+  _31 = addr_28 & _30;
+  if (_31 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 9>;
+
+  <bb 5>:
+  _33 = shmflg_32(D) & 8192;
+  if (_33 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _34 = -shmlba_29(D);
+  addr_35 = addr_28 & _34;
+  goto <bb 9>;
+
+  <bb 7>:
+  _36 = addr_28 & 4095;
+  if (_36 != 0)
+    goto <bb 133> (out);
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  _37 = shmflg_32(D) & 16384;
+  if (_37 != 0)
+    goto <bb 133> (out);
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  # addr_2 = PHI <addr_35(6), addr_28(8), addr_28(4), addr_28(7)>
+  # flags_9 = PHI <17(6), 1(8), 17(4), 17(7)>
+  _38 = shmflg_32(D) & 4096;
+  if (_38 != 0)
+    goto <bb 10>;
+  else
+    goto <bb 11>;
+
+  <bb 10>:
+
+  <bb 11>:
+  # prot_10 = PHI <1(10), 3(9)>
+  # acc_mode_12 = PHI <292(10), 438(9)>
+  # f_mode_14 = PHI <1(10), 3(9)>
+  _39 = shmflg_32(D) & 32768;
+  if (_39 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+  prot_40 = prot_10 | 4;
+  acc_mode_41 = acc_mode_12 | 73;
+
+  <bb 13>:
+  # prot_11 = PHI <prot_10(11), prot_40(12)>
+  # acc_mode_13 = PHI <acc_mode_12(11), acc_mode_41(12)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___135 : "p" &current_task);
+  _42 = pfo_ret___135->nsproxy;
+  ns_43 = _42->ipc_ns;
+  __asm__ __volatile__("" :  :  : "memory");
+  _403 = &ns_43->ids[2];
+  shp_404 = ipc_obtain_object_check (_403, shmid_26(D));
+  ptr.13_136 = (long unsigned int) shp_404;
+  if (ptr.13_136 > 18446744073709547520)
+    goto <bb 14>;
+  else
+    goto <bb 15>;
+
+  <bb 14>:
+  _140 = (long int) shp_404;
+  err_47 = (int) _140;
+  pretmp_18 = (long int) err_47;
+  goto <bb 132> (out_unlock);
+
+  <bb 15>:
+  _48 = (short int) acc_mode_13;
+  _49 = &shp_404->shm_perm;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___141 : "p" &current_task);
+  _142 = pfo_ret___141->cred;
+  left_417 = MEM[(const struct cred *)_142 + 20B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___405 : "p" &current_task);
+  p_406 = pfo_ret___405->audit_context;
+  if (p_406 == 0B)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+  _407 = MEM[(int *)p_406];
+  if (_407 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 135>;
+
+  <bb 17>:
+  _143 = _48 >> 6;
+  _144 = _48 >> 3;
+  _145 = _143 | _144;
+  _146 = _145 | _48;
+  _148 = MEM[(struct kern_ipc_perm *)shp_404].mode;
+  granted_mode_149 = (int) _148;
+  right_510 = MEM[(struct kern_ipc_perm *)shp_404 + 24B];
+  if (left_417 == right_510)
+    goto <bb 19>;
+  else
+    goto <bb 18>;
+
+  <bb 18>:
+  right_429 = MEM[(struct kern_ipc_perm *)shp_404 + 16B];
+  if (left_417 == right_429)
+    goto <bb 19>;
+  else
+    goto <bb 20>;
+
+  <bb 19>:
+  granted_mode_152 = granted_mode_149 >> 6;
+  goto <bb 23>;
+
+  <bb 20>:
+  _153 = in_group_p (_49->cgid);
+  if (_153 != 0)
+    goto <bb 21>;
+  else
+    goto <bb 22>;
+
+  <bb 21>:
+  granted_mode_155 = granted_mode_149 >> 3;
+  goto <bb 23>;
+
+  <bb 22>:
+  _154 = in_group_p (_49->gid);
+  if (_154 != 0)
+    goto <bb 21>;
+  else
+    goto <bb 23>;
+
+  <bb 23>:
+  # granted_mode_156 = PHI <granted_mode_152(19), granted_mode_149(22), granted_mode_155(21)>
+  _157 = ~granted_mode_156;
+  _351 = _146 & 7;
+  _158 = (int) _351;
+  _159 = _157 & _158;
+  if (_159 != 0)
+    goto <bb 25>;
+  else
+    goto <bb 24>;
+
+  <bb 24>:
+  _163 = security_ipc_permission (_49, acc_mode_13);
+  if (_163 != 0)
+    goto <bb 131>;
+  else
+    goto <bb 26>;
+
+  <bb 25>:
+  _160 = ns_43->user_ns;
+  _161 = ns_capable (_160, 15);
+  if (_161 != 0)
+    goto <bb 24>;
+  else
+    goto <bb 131>;
+
+  <bb 26>:
+  err_52 = security_shm_shmat (shp_404, shmaddr_27(D), shmflg_32(D));
+  if (err_52 != 0)
+    goto <bb 27>;
+  else
+    goto <bb 28>;
+
+  <bb 27>:
+  pretmp_4 = (long int) err_52;
+  goto <bb 132> (out_unlock);
+
+  <bb 28>:
+  _raw_spin_lock (_49);
+  _54 = MEM[(struct kern_ipc_perm *)shp_404 + 4B];
+  if (_54 != 0)
+    goto <bb 29>;
+  else
+    goto <bb 30>;
+
+  <bb 29>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_404] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 132> (out_unlock);
+
+  <bb 30>:
+  _57 = shp_404->shm_file;
+  path = _57->f_path;
+  path_get (&path);
+  _60 = shp_404->shm_nattch;
+  _61 = _60 + 1;
+  shp_404->shm_nattch = _61;
+  _63 = path.dentry;
+  _64 = MEM[(const struct dentry *)_63 + 48B];
+  _66 = MEM[(const struct inode *)_64 + 80B];
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_404] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  _504 = kmalloc_caches[5];
+  _505 = kmem_cache_alloc_trace (_504, 32976, 32);
+  if (_505 == 0B)
+    goto <bb 31>;
+  else
+    goto <bb 32>;
+
+  <bb 31>:
+  path_put (&path);
+  goto <bb 125> (out_nattch);
+
+  <bb 32>:
+  _74 = shp_404->shm_file;
+  _75 = MEM[(struct file *)_74 + 40B];
+  if (_75 == &hugetlbfs_file_operations)
+    goto <bb 35>;
+  else
+    goto <bb 33>;
+
+  <bb 33>:
+  if (_75 == &shm_file_operations_huge)
+    goto <bb 34>;
+  else
+    goto <bb 35>;
+
+  <bb 34>:
+
+  <bb 35>:
+  # iftmp.42_15 = PHI <&shm_file_operations_huge(34), &shm_file_operations(33), &shm_file_operations_huge(32)>
+  file_78 = alloc_file (&path, f_mode_14, iftmp.42_15);
+  ptr.13_166 = (long unsigned int) file_78;
+  if (ptr.13_166 > 18446744073709547520)
+    goto <bb 36>;
+  else
+    goto <bb 37>;
+
+  <bb 36>:
+  _165 = (long int) file_78;
+  err_79 = (int) _165;
+  kfree (_505);
+  path_put (&path);
+  pretmp_445 = (long int) err_79;
+  goto <bb 125> (out_nattch);
+
+  <bb 37>:
+  file_78->private_data = _505;
+  _83 = shp_404->shm_file;
+  _84 = _83->f_mapping;
+  file_78->f_mapping = _84;
+  _86 = shp_404->shm_perm.id;
+  MEM[(struct shm_file_data *)_505].id = _86;
+  if (ns_43 != 0B)
+    goto <bb 38>;
+  else
+    goto <bb 39>;
+
+  <bb 38>:
+  _517 = &ns_43->count;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; incl %0" : "=m" _517->counter : "m" _517->counter);
+
+  <bb 39>:
+  MEM[(struct shm_file_data *)_505].ns = ns_43;
+  _91 = shp_404->shm_file;
+  MEM[(struct shm_file_data *)_505].file = _91;
+  MEM[(struct shm_file_data *)_505].vm_ops = 0B;
+  err_95 = security_mmap_file (file_78, prot_11, flags_9);
+  if (err_95 != 0)
+    goto <bb 40>;
+  else
+    goto <bb 41>;
+
+  <bb 40>:
+  pretmp_134 = (long int) err_95;
+  goto <bb 124> (out_fput);
+
+  <bb 41>:
+  size_68 = (long unsigned int) _66;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___170 : "p" &current_task);
+  _96 = pfo_ret___170->mm;
+  _97 = &_96->mmap_sem;
+  down_write (_97);
+  if (addr_2 != 0)
+    goto <bb 43>;
+  else
+    goto <bb 42>;
+
+  <bb 42>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___172 : "p" &current_task);
+  mm_173 = pfo_ret___172->mm;
+  if (size_68 == 0)
+    goto <bb 139>;
+  else
+    goto <bb 47>;
+
+  <bb 43>:
+  _99 = shmflg_32(D) & 16384;
+  if (_99 == 0)
+    goto <bb 44>;
+  else
+    goto <bb 42>;
+
+  <bb 44>:
+  _100 = addr_2 + size_68;
+  if (addr_2 > _100)
+    goto <bb 141>;
+  else
+    goto <bb 45>;
+
+  <bb 45>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___171 : "p" &current_task);
+  _101 = pfo_ret___171->mm;
+  vma_518 = find_vma (_101, addr_2);
+  if (vma_518 != 0B)
+    goto <bb 46>;
+  else
+    goto <bb 42>;
+
+  <bb 46>:
+  _519 = vma_518->vm_start;
+  if (_100 <= _519)
+    goto <bb 42>;
+  else
+    goto <bb 141>;
+
+  <bb 47>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___174 : "p" &current_task);
+  _175 = pfo_ret___174->personality;
+  _176 = _175 & 4194304;
+  if (_176 != 0)
+    goto <bb 48>;
+  else
+    goto <bb 51>;
+
+  <bb 48>:
+  if (file_78 == 0B)
+    goto <bb 49>;
+  else
+    goto <bb 50>;
+
+  <bb 49>:
+  prot_179 = prot_11 | 4;
+  goto <bb 51>;
+
+  <bb 50>:
+  _177 = &file_78->f_path;
+  _178 = path_noexec (_177);
+  if (_178 != 0)
+    goto <bb 51>;
+  else
+    goto <bb 49>;
+
+  <bb 51>:
+  # prot_190 = PHI <prot_179(49), prot_11(47), prot_11(50)>
+  _180 = flags_9 & 16;
+  if (_180 == 0)
+    goto <bb 52>;
+  else
+    goto <bb 53>;
+
+  <bb 52>:
+  addr_181 = round_hint_to_min (addr_2);
+
+  <bb 53>:
+  # addr_187 = PHI <addr_2(51), addr_181(52)>
+  _182 = size_68 + 4095;
+  populate_183 = _182 & 18446744073709547520;
+  if (populate_183 == 0)
+    goto <bb 140>;
+  else
+    goto <bb 54>;
+
+  <bb 54>:
+  _185 = mm_173->map_count;
+  sysctl_max_map_count.30_186 = sysctl_max_map_count;
+  if (_185 > sysctl_max_map_count.30_186)
+    goto <bb 140>;
+  else
+    goto <bb 55>;
+
+  <bb 55>:
+  addr_188 = get_unmapped_area (file_78, addr_187, populate_183, 0, flags_9);
+  _189 = addr_188 & 4095;
+  if (_189 != 0)
+    goto <bb 121>;
+  else
+    goto <bb 56>;
+
+  <bb 56>:
+  charged_184 = populate_183 >> 12;
+  _194 = mm_173->def_flags;
+  _195 = prot_190 | _194;
+  _196 = _195 & 8192;
+  if (_196 != 0)
+    goto <bb 57>;
+  else
+    goto <bb 136>;
+
+  <bb 57>:
+  _197 = MEM[(long unsigned int *)mm_173 + 184B];
+  locked_198 = charged_184 + _197;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___523 : "p" &current_task);
+  _524 = MEM[(const struct task_struct *)pfo_ret___523].signal;
+  _525 ={v} MEM[(volatile __u64 *)_524].rlim[8].rlim_cur;
+  lock_limit_200 = _525 >> 12;
+  if (locked_198 > lock_limit_200)
+    goto <bb 58>;
+  else
+    goto <bb 136>;
+
+  <bb 58>:
+  _201 = capable (14);
+  if (_201 != 0)
+    goto <bb 136>;
+  else
+    goto <bb 59>;
+
+  <bb 59>:
+  goto <bb 140>;
+
+  <bb 60>:
+  _203 = MEM[(const struct file *)file_78 + 32B];
+  _205 = prot_190 & 2;
+  if (_205 != 0)
+    goto <bb 61>;
+  else
+    goto <bb 63>;
+
+  <bb 61>:
+  _206 = file_78->f_mode;
+  _207 = _206 & 2;
+  if (_207 == 0)
+    goto <bb 62>;
+  else
+    goto <bb 63>;
+
+  <bb 62>:
+  goto <bb 140>;
+
+  <bb 63>:
+  _208 = _203->i_flags;
+  _209 = _208 & 4;
+  if (_209 != 0)
+    goto <bb 64>;
+  else
+    goto <bb 65>;
+
+  <bb 64>:
+  _210 = file_78->f_mode;
+  _211 = _210 & 2;
+  if (_211 != 0)
+    goto <bb 62>;
+  else
+    goto <bb 65>;
+
+  <bb 65>:
+  _212 = locks_verify_locked (file_78);
+  if (_212 != 0)
+    goto <bb 59>;
+  else
+    goto <bb 66>;
+
+  <bb 66>:
+  vm_flags_213 = _195 | 248;
+  _214 = file_78->f_mode;
+  _215 = _214 & 2;
+  if (_215 == 0)
+    goto <bb 67>;
+  else
+    goto <bb 68>;
+
+  <bb 67>:
+  _216 = _195 & 18446744073709551575;
+  vm_flags_217 = _216 | 208;
+
+  <bb 68>:
+  # vm_flags_221 = PHI <vm_flags_217(67), vm_flags_213(66)>
+  _218 = _214 & 1;
+  if (_218 == 0)
+    goto <bb 62>;
+  else
+    goto <bb 69>;
+
+  <bb 69>:
+  _219 = &file_78->f_path;
+  _220 = path_noexec (_219);
+  if (_220 != 0)
+    goto <bb 70>;
+  else
+    goto <bb 72>;
+
+  <bb 70>:
+  _222 = vm_flags_221 & 4;
+  if (_222 != 0)
+    goto <bb 140>;
+  else
+    goto <bb 71>;
+
+  <bb 71>:
+  vm_flags_223 = vm_flags_221 & 18446744073709551551;
+
+  <bb 72>:
+  # vm_flags_226 = PHI <vm_flags_221(69), vm_flags_223(71)>
+  _224 = file_78->f_op;
+  _225 = _224->mmap;
+  if (_225 == 0B)
+    goto <bb 140>;
+  else
+    goto <bb 73>;
+
+  <bb 73>:
+  _227 = vm_flags_226 & 256;
+  if (_227 != 0)
+    goto <bb 139>;
+  else
+    goto <bb 76>;
+
+  <bb 74>:
+  _228 = _195 & 256;
+  if (_228 != 0)
+    goto <bb 139>;
+  else
+    goto <bb 75>;
+
+  <bb 75>:
+  vm_flags_229 = _195 | 248;
+
+  <bb 76>:
+  # vm_flags_230 = PHI <vm_flags_226(73), vm_flags_229(75)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___231 : "p" &current_task);
+  mm_232 = pfo_ret___231->mm;
+  _233 = may_expand_vm (mm_232, charged_184);
+  if (_233 == 0)
+    goto <bb 77>;
+  else
+    goto <bb 80>;
+
+  <bb 77>:
+  _234 = addr_188 + populate_183;
+  nr_pages_235 = count_vma_pages_range (mm_232, addr_188, _234);
+  _236 = charged_184 - nr_pages_235;
+  _237 = may_expand_vm (mm_232, _236);
+  if (_237 == 0)
+    goto <bb 138>;
+  else
+    goto <bb 80>;
+
+  <bb 78>:
+  _238 = do_munmap (mm_232, addr_188, populate_183);
+  if (_238 != 0)
+    goto <bb 138>;
+  else
+    goto <bb 79>;
+
+  <bb 79>:
+  goto <bb 81>;
+
+  <bb 80>:
+
+  <bb 81>:
+  _239 = addr_188 + populate_183;
+  _240 = find_vma_links (mm_232, addr_188, _239, &prev, &rb_link, &rb_parent);
+  if (_240 != 0)
+    goto <bb 78>;
+  else
+    goto <bb 82>;
+
+  <bb 82>:
+  # _410 = PHI <_239(81)>
+  _241 = accountable_mapping (file_78, vm_flags_230);
+  if (_241 != 0)
+    goto <bb 83>;
+  else
+    goto <bb 85>;
+
+  <bb 83>:
+  charged.33_242 = (long int) charged_184;
+  _243 = security_vm_enough_memory_mm (mm_232, charged.33_242);
+  if (_243 != 0)
+    goto <bb 138>;
+  else
+    goto <bb 84>;
+
+  <bb 84>:
+  vm_flags_244 = vm_flags_230 | 1048576;
+
+  <bb 85>:
+  # vm_flags_246 = PHI <vm_flags_230(82), vm_flags_244(84)>
+  # charged_310 = PHI <0(82), charged_184(84)>
+  prev.34_245 = prev;
+  vma_247 = vma_merge (mm_232, prev.34_245, addr_188, _410, vm_flags_246, 0B, file_78, 0, 0B, D.43488);
+  if (vma_247 != 0B)
+    goto <bb 103> (out);
+  else
+    goto <bb 86>;
+
+  <bb 86>:
+  vm_area_cachep.35_248 = vm_area_cachep;
+  vma_528 = kmem_cache_alloc (vm_area_cachep.35_248, 32976);
+  if (vma_528 == 0B)
+    goto <bb 115> (unacct_error);
+  else
+    goto <bb 87>;
+
+  <bb 87>:
+  vma_528->vm_mm = mm_232;
+  vma_528->vm_start = addr_188;
+  vma_528->vm_end = _410;
+  vma_528->vm_flags = vm_flags_246;
+  vma_528->vm_page_prot = vm_get_page_prot (vm_flags_246);
+  vma_528->vm_pgoff = 0;
+  _250 = &vma_528->anon_vma_chain;
+  MEM[(struct list_head *)vma_528 + 120B].next = _250;
+  MEM[(struct list_head *)vma_528 + 120B].prev = _250;
+  if (file_78 != 0B)
+    goto <bb 88>;
+  else
+    goto <bb 97>;
+
+  <bb 88>:
+  _251 = vm_flags_246 & 2048;
+  if (_251 != 0)
+    goto <bb 90>;
+  else
+    goto <bb 89>;
+
+  <bb 89>:
+  _253 = vm_flags_246 & 8;
+  if (_253 != 0)
+    goto <bb 92>;
+  else
+    goto <bb 91>;
+
+  <bb 90>:
+  error_252 = deny_write_access (file_78);
+  if (error_252 != 0)
+    goto <bb 114> (free_vma);
+  else
+    goto <bb 89>;
+
+  <bb 91>:
+  _256 = get_file (file_78);
+  vma_528->vm_file = _256;
+  _257 = file_78->f_op;
+  _258 = _257->mmap;
+  error_259 = _258 (file_78, vma_528);
+  if (error_259 != 0)
+    goto <bb 110> (unmap_and_free_vma);
+  else
+    goto <bb 93>;
+
+  <bb 92>:
+  _254 = file_78->f_mapping;
+  error_255 = mapping_map_writable (_254);
+  if (error_255 != 0)
+    goto <bb 112> (allow_write_and_free_vma);
+  else
+    goto <bb 91>;
+
+  <bb 93>:
+  _260 = vma_528->vm_start;
+  if (addr_188 != _260)
+    goto <bb 94>;
+  else
+    goto <bb 96>;
+
+  <bb 94>:
+  __warned.36_264 = __warned;
+  if (__warned.36_264 != 0)
+    goto <bb 96>;
+  else
+    goto <bb 95>;
+
+  <bb 95>:
+  warn_slowpath_null ("ipc/shm.c", 1424);
+  __warned = 1;
+
+  <bb 96>:
+  addr_268 = vma_528->vm_start;
+  vm_flags_269 = vma_528->vm_flags;
+  rb_parent.37_472 = rb_parent;
+  rb_link.38_471 = rb_link;
+  prev.34_473 = prev;
+  vma_link (mm_232, vma_528, prev.34_473, rb_link.38_471, rb_parent.37_472);
+  _276 = vm_flags_269 & 8;
+  if (_276 != 0)
+    goto <bb 99>;
+  else
+    goto <bb 100>;
+
+  <bb 97>:
+  _270 = vm_flags_246 & 8;
+  if (_270 != 0)
+    goto <bb 98>;
+  else
+    goto <bb 137>;
+
+  <bb 98>:
+  error_271 = shmem_zero_setup (vma_528);
+  if (error_271 != 0)
+    goto <bb 114> (free_vma);
+  else
+    goto <bb 137>;
+
+  <bb 99>:
+  _277 = file_78->f_mapping;
+  mapping_unmap_writable (_277);
+
+  <bb 100>:
+  _278 = vm_flags_269 & 2048;
+  if (_278 != 0)
+    goto <bb 101>;
+  else
+    goto <bb 102>;
+
+  <bb 101>:
+  allow_write_access (file_78);
+
+  <bb 102>:
+  # vm_flags_421 = PHI <vm_flags_246(137), vm_flags_269(100), vm_flags_269(101)>
+  # addr_168 = PHI <addr_188(137), addr_268(100), addr_268(101)>
+  file_279 = vma_528->vm_file;
+
+  # file_283 = PHI <file_78(85), file_279(102)>
+  # addr_312 = PHI <addr_188(85), addr_168(102)>
+  # vm_flags_282 = PHI <vm_flags_246(85), vm_flags_421(102)>
+  # vma_280 = PHI <vma_247(85), vma_528(102)>
+out:
+  perf_event_mmap (vma_280);
+  _281 = (long int) charged_184;
+  vm_stat_account (mm_232, vm_flags_282, file_283, _281);
+  _284 = vm_flags_282 & 8192;
+  if (_284 != 0)
+    goto <bb 104>;
+  else
+    goto <bb 109>;
+
+  <bb 104>:
+  _285 = vm_flags_282 & 268715008;
+  if (_285 == 0)
+    goto <bb 105>;
+  else
+    goto <bb 108>;
+
+  <bb 105>:
+  _286 = MEM[(struct vm_area_struct *)vma_280 + 80B];
+  _530 = _286 & 4194304;
+  if (_530 == 0)
+    goto <bb 106>;
+  else
+    goto <bb 108>;
+
+  <bb 106>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___288 : "p" &current_task);
+  _289 = pfo_ret___288->mm;
+  _290 = get_gate_vma (_289);
+  if (vma_280 != _290)
+    goto <bb 107>;
+  else
+    goto <bb 108>;
+
+  <bb 107>:
+  _291 = mm_232->locked_vm;
+  _292 = charged_184 + _291;
+  mm_232->locked_vm = _292;
+  goto <bb 109>;
+
+  <bb 108>:
+  _293 = vma_280->vm_flags;
+  _294 = _293 & 18446744073709543423;
+  vma_280->vm_flags = _294;
+
+  <bb 109>:
+  vma_set_page_prot (vma_280);
+  goto <bb 118>;
+
+unmap_and_free_vma:
+  vma_528->vm_file = 0B;
+  fput (file_78);
+  _295 = vma_528->vm_end;
+  _296 = vma_528->vm_start;
+  prev.34_297 = prev;
+  unmap_region (mm_232, vma_528, prev.34_297, _296, _295);
+  if (_253 != 0)
+    goto <bb 111>;
+  else
+    goto <bb 112> (allow_write_and_free_vma);
+
+  <bb 111>:
+  _298 = file_78->f_mapping;
+  mapping_unmap_writable (_298);
+
+  # error_313 = PHI <error_255(92), error_259(110), error_259(111)>
+  # charged_314 = PHI <charged_310(92), 0(110), 0(111)>
+allow_write_and_free_vma:
+  if (_251 != 0)
+    goto <bb 113>;
+  else
+    goto <bb 114> (free_vma);
+
+  <bb 113>:
+  allow_write_access (file_78);
+
+  # error_315 = PHI <error_252(90), error_271(98), error_313(112), error_313(113)>
+  # charged_316 = PHI <charged_310(90), charged_310(98), charged_314(112), charged_314(113)>
+free_vma:
+  vm_area_cachep.35_299 = vm_area_cachep;
+  kmem_cache_free (vm_area_cachep.35_299, vma_528);
+
+  # error_302 = PHI <-12(86), error_315(114)>
+  # charged_300 = PHI <charged_310(86), charged_316(114)>
+unacct_error:
+  if (charged_300 != 0)
+    goto <bb 116>;
+  else
+    goto <bb 117>;
+
+  <bb 116>:
+  charged.33_301 = (long int) charged_300;
+  vm_unacct_memory (charged.33_301);
+
+  <bb 117>:
+  addr_303 = (long unsigned int) error_302;
+
+  <bb 118>:
+  # addr_304 = PHI <addr_303(117), addr_312(109)>
+  prev ={v} {CLOBBER};
+  rb_link ={v} {CLOBBER};
+  rb_parent ={v} {CLOBBER};
+  if (addr_304 <= 18446744073709547520)
+    goto <bb 120>;
+  else
+    goto <bb 119>;
+
+  <bb 119>:
+  pretmp_527 = (int) addr_304;
+  goto <bb 140>;
+
+  <bb 120>:
+  _308 = vm_flags_230 & 8192;
+  if (_308 != 0)
+    goto <bb 145>;
+  else
+    goto <bb 146>;
+
+  <bb 121>:
+  *raddr_105(D) = addr_188;
+  if (addr_188 > 18446744073709547520)
+    goto <bb 122>;
+  else
+    goto <bb 144>;
+
+  <bb 122>:
+  pretmp_508 = (int) addr_188;
+
+  <bb 123>:
+  # err_470 = PHI <pretmp_508(122), prephitmp_469(140)>
+  goto <bb 144>;
+
+  # prephitmp_420 = PHI <pretmp_134(40), 0(146), 0(145), -22(141), pretmp_309(144)>
+out_fput:
+  fput (file_78);
+
+  # prephitmp_466 = PHI <-12(31), pretmp_445(36), prephitmp_420(124)>
+out_nattch:
+  _116 = &ns_43->ids[2].rwsem;
+  down_write (_116);
+  shp_534 = ipc_lock (_403, shmid_26(D));
+  ptr.13_535 = (long unsigned int) shp_534;
+  if (ptr.13_535 > 18446744073709547520)
+    goto <bb 126>;
+  else
+    goto <bb 127>;
+
+  <bb 126>:
+  warn_slowpath_null ("ipc/shm.c", 226);
+
+  <bb 127>:
+  _120 = shp_534->shm_nattch;
+  _121 = _120 + 18446744073709551615;
+  shp_534->shm_nattch = _121;
+  _124 = MEM[(struct shmid_kernel *)shp_534 + 32B];
+  if (_121 == 0)
+    goto <bb 128>;
+  else
+    goto <bb 143>;
+
+  <bb 128>:
+  _543 = MEM[(int *)ns_43 + 364B];
+  if (_543 != 0)
+    goto <bb 142>;
+  else
+    goto <bb 129>;
+
+  <bb 129>:
+  _545 = _124 & 512;
+  if (_545 != 0)
+    goto <bb 142>;
+  else
+    goto <bb 143>;
+
+  <bb 130>:
+  up_write (_116);
+  goto <bb 134>;
+
+  <bb 131>:
+
+  # prephitmp_3 = PHI <pretmp_18(14), -13(131), pretmp_4(27), -43(29)>
+out_unlock:
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # prephitmp_402 = PHI <-22(7), prephitmp_3(132), -22(2), -22(8)>
+out:
+
+  <bb 134>:
+  # _16 = PHI <prephitmp_466(130), prephitmp_402(133)>
+  path ={v} {CLOBBER};
+  return _16;
+
+  <bb 135>:
+  __audit_ipc_obj (_49);
+  goto <bb 17>;
+
+  <bb 136>:
+  if (file_78 != 0B)
+    goto <bb 60>;
+  else
+    goto <bb 74>;
+
+  <bb 137>:
+  rb_parent.37_137 = rb_parent;
+  rb_link.38_139 = rb_link;
+  prev.34_127 = prev;
+  vma_link (mm_232, vma_528, prev.34_127, rb_link.38_139, rb_parent.37_137);
+  goto <bb 102>;
+
+  <bb 138>:
+  prev ={v} {CLOBBER};
+  rb_link ={v} {CLOBBER};
+  rb_parent ={v} {CLOBBER};
+  goto <bb 140>;
+
+  <bb 139>:
+
+  <bb 140>:
+  # addr_150 = PHI <18446744073709551605(59), 18446744073709551604(54), addr_304(119), 18446744073709551597(72), 18446744073709551615(70), 18446744073709551603(62), 18446744073709551594(139), 18446744073709551604(138), 18446744073709551604(53)>
+  # prephitmp_469 = PHI <-11(59), -12(54), pretmp_527(119), -19(72), -1(70), -13(62), -22(139), -12(138), -12(53)>
+  *raddr_105(D) = addr_150;
+  goto <bb 123>;
+
+  <bb 141>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___548 : "p" &current_task);
+  _488 = pfo_ret___548->mm;
+  _507 = &_488->mmap_sem;
+  up_write (_507);
+  goto <bb 124> (out_fput);
+
+  <bb 142>:
+  shm_destroy (ns_43, shp_534);
+  goto <bb 130>;
+
+  <bb 143>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_534] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 130>;
+
+  <bb 144>:
+  # err_345 = PHI <err_95(121), err_470(123)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___164 : "p" &current_task);
+  _536 = pfo_ret___164->mm;
+  _287 = &_536->mmap_sem;
+  up_write (_287);
+  pretmp_309 = (long int) err_345;
+  goto <bb 124> (out_fput);
+
+  <bb 145>:
+  *raddr_105(D) = addr_304;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___408 : "p" &current_task);
+  _103 = pfo_ret___408->mm;
+  _515 = &_103->mmap_sem;
+  up_write (_515);
+  __mm_populate (addr_304, populate_183, 1);
+  goto <bb 124> (out_fput);
+
+  <bb 146>:
+  *raddr_105(D) = addr_304;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___484 : "p" &current_task);
+  _443 = pfo_ret___484->mm;
+  _503 = &_443->mmap_sem;
+  up_write (_503);
+  goto <bb 124> (out_fput);
+
+}
+
+
+
+;; Function SyS_shmat (SyS_shmat, funcdef_no=3026, decl_uid=40679, cgraph_uid=3029)
+
+SyS_shmat (long int shmid, long int shmaddr, long int shmflg)
+{
+  uid_t right;
+  uid_t left;
+  uid_t right;
+  long unsigned int ptr.13;
+  struct task_struct * pfo_ret__;
+  struct vm_area_struct * vma;
+  struct task_struct * pfo_ret__;
+  void * p;
+  long unsigned int ret;
+  struct task_struct * pfo_ret__;
+  vm_flags_t vm_flags;
+  long int charged.33;
+  struct vm_userfaultfd_ctx D.44448;
+  struct vm_area_struct * prev.34;
+  struct kmem_cache * vm_area_cachep.35;
+  _Bool __warned.36;
+  struct rb_node * rb_parent.37;
+  struct rb_node * * rb_link.38;
+  struct mm_struct * mm;
+  struct vm_area_struct * vma;
+  struct vm_area_struct * prev;
+  int error;
+  struct rb_node * * rb_link;
+  struct rb_node * rb_parent;
+  long unsigned int charged;
+  long unsigned int nr_pages;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  long unsigned int lock_limit;
+  long unsigned int locked;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct mm_struct * mm;
+  int sysctl_max_map_count.30;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.13;
+  int granted_mode;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.13;
+  struct task_struct * pfo_ret__;
+  long unsigned int populate;
+  fmode_t f_mode;
+  struct path path;
+  struct ipc_namespace * ns;
+  int acc_mode;
+  long unsigned int prot;
+  long unsigned int flags;
+  int err;
+  struct file * file;
+  long unsigned int size;
+  struct shmid_kernel * shp;
+  const struct file_operations * iftmp.42;
+  char * shmaddr.113;
+  int _2;
+  int _6;
+  long unsigned int _11;
+  int _12;
+  int _14;
+  int _15;
+  int _16;
+  struct nsproxy * _22;
+  struct rw_semaphore * _28;
+  long int _29;
+  short int _32;
+  struct kern_ipc_perm * _33;
+  const struct cred * _35;
+  short int _36;
+  short int _37;
+  short int _38;
+  short int _39;
+  short unsigned int _41;
+  int prephitmp_44;
+  int _46;
+  int _47;
+  int _50;
+  int _51;
+  int _52;
+  struct user_namespace * _53;
+  _Bool _54;
+  int _56;
+  _Bool _59;
+  struct file * _61;
+  long unsigned int _62;
+  long unsigned int _63;
+  struct dentry * _64;
+  struct inode * _65;
+  long long int _67;
+  struct file * _71;
+  const struct file_operations * _72;
+  long int _77;
+  struct file * _83;
+  struct address_space * _84;
+  int _85;
+  struct file * _87;
+  struct mm_struct * _92;
+  struct rw_semaphore * _93;
+  int _95;
+  long unsigned int _96;
+  struct mm_struct * _98;
+  unsigned int _103;
+  unsigned int _104;
+  struct path * _105;
+  _Bool _106;
+  long unsigned int _108;
+  long unsigned int _110;
+  int _113;
+  long unsigned int _117;
+  struct rw_semaphore * _120;
+  long unsigned int _122;
+  long unsigned int _123;
+  long unsigned int _124;
+  long unsigned int _125;
+  _Bool _129;
+  struct inode * _131;
+  long unsigned int _133;
+  unsigned int _134;
+  unsigned int _135;
+  unsigned int _136;
+  unsigned int _137;
+  unsigned int _138;
+  unsigned int _139;
+  int _140;
+  unsigned int _142;
+  unsigned int _143;
+  vm_flags_t _144;
+  unsigned int _146;
+  struct path * _147;
+  _Bool _148;
+  long unsigned int _150;
+  const struct file_operations * _152;
+  int (*<T2f89>) (struct file *, struct vm_area_struct *) _153;
+  long unsigned int _155;
+  long unsigned int _156;
+  int _160;
+  long unsigned int _161;
+  long unsigned int _163;
+  int _164;
+  int _165;
+  long unsigned int _166;
+  int _167;
+  int _169;
+  int _171;
+  struct list_head * _178;
+  long unsigned int _179;
+  long unsigned int _181;
+  struct address_space * _182;
+  struct file * _184;
+  const struct file_operations * _185;
+  int (*<T2f89>) (struct file *, struct vm_area_struct *) _186;
+  long unsigned int _188;
+  struct mm_struct * _191;
+  long unsigned int _198;
+  long unsigned int _204;
+  struct address_space * _205;
+  long unsigned int _206;
+  long int _209;
+  long unsigned int _212;
+  long unsigned int _213;
+  long unsigned int _214;
+  struct mm_struct * _217;
+  struct vm_area_struct * _218;
+  long unsigned int _219;
+  long unsigned int _220;
+  long unsigned int _221;
+  long unsigned int _222;
+  long unsigned int _223;
+  long unsigned int _224;
+  struct address_space * _226;
+  long unsigned int _236;
+  int pretmp_237;
+  long int prephitmp_245;
+  struct rw_semaphore * _247;
+  long unsigned int _249;
+  long unsigned int _250;
+  short unsigned int _252;
+  long int _259;
+  long int _261;
+  long int _262;
+  long int prephitmp_270;
+  long int pretmp_271;
+  long int pretmp_272;
+  struct ipc_ids * _278;
+  int _282;
+  long unsigned int _284;
+  long int pretmp_293;
+  struct rw_semaphore * _306;
+  long int pretmp_320;
+  short int _343;
+  struct kmem_cache * _379;
+  void * _380;
+  struct atomic_t * _392;
+  long unsigned int _394;
+  struct signal_struct * _399;
+  long long unsigned int _400;
+  long unsigned int _405;
+  struct mm_struct * _407;
+  int _418;
+  short unsigned int _420;
+  struct mm_struct * _435;
+  struct rw_semaphore * _473;
+  long int pretmp_508;
+  long int prephitmp_510;
+  long int prephitmp_520;
+  int pretmp_523;
+  struct mm_struct * _537;
+
+  <bb 2>:
+  _6 = (int) shmid_5(D);
+  if (_6 < 0)
+    goto <bb 132> (out);
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _2 = (int) shmflg_1(D);
+  ret_10 = (long unsigned int) shmaddr_3(D);
+  if (ret_10 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 7>;
+
+  <bb 4>:
+  _11 = ret_10 & 4095;
+  if (_11 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 8>;
+
+  <bb 5>:
+  _12 = _2 & 8192;
+  if (_12 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 132> (out);
+
+  <bb 6>:
+  ret_13 = ret_10 & 18446744073709547520;
+  goto <bb 8>;
+
+  <bb 7>:
+  _14 = _2 & 16384;
+  if (_14 != 0)
+    goto <bb 132> (out);
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  # ret_94 = PHI <ret_10(4), ret_13(6), ret_10(7)>
+  # flags_89 = PHI <17(4), 17(6), 1(7)>
+  _15 = _2 & 4096;
+  if (_15 != 0)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+
+  <bb 10>:
+  # prot_17 = PHI <1(9), 3(8)>
+  # acc_mode_19 = PHI <292(9), 438(8)>
+  # f_mode_74 = PHI <1(9), 3(8)>
+  _16 = _2 & 32768;
+  if (_16 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  prot_18 = prot_17 | 4;
+  acc_mode_20 = acc_mode_19 | 73;
+
+  <bb 12>:
+  # prot_88 = PHI <prot_17(10), prot_18(11)>
+  # acc_mode_31 = PHI <acc_mode_19(10), acc_mode_20(11)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___21 : "p" &current_task);
+  _22 = pfo_ret___21->nsproxy;
+  ns_23 = _22->ipc_ns;
+  __asm__ __volatile__("" :  :  : "memory");
+  _278 = &ns_23->ids[2];
+  shp_279 = ipc_obtain_object_check (_278, _6);
+  ptr.13_25 = (long unsigned int) shp_279;
+  if (ptr.13_25 > 18446744073709547520)
+    goto <bb 13>;
+  else
+    goto <bb 14>;
+
+  <bb 13>:
+  _29 = (long int) shp_279;
+  err_30 = (int) _29;
+  pretmp_320 = (long int) err_30;
+  goto <bb 131> (out_unlock);
+
+  <bb 14>:
+  _32 = (short int) acc_mode_31;
+  _33 = &shp_279->shm_perm;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___34 : "p" &current_task);
+  _35 = pfo_ret___34->cred;
+  left_528 = MEM[(const struct cred *)_35 + 20B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___280 : "p" &current_task);
+  p_281 = pfo_ret___280->audit_context;
+  if (p_281 == 0B)
+    goto <bb 16>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _282 = MEM[(int *)p_281];
+  if (_282 != 0)
+    goto <bb 16>;
+  else
+    goto <bb 136>;
+
+  <bb 16>:
+  _36 = _32 >> 6;
+  _37 = _32 >> 3;
+  _38 = _36 | _37;
+  _39 = _38 | _32;
+  _41 = MEM[(struct kern_ipc_perm *)shp_279].mode;
+  granted_mode_42 = (int) _41;
+  right_337 = MEM[(struct kern_ipc_perm *)shp_279 + 24B];
+  if (right_337 == left_528)
+    goto <bb 18>;
+  else
+    goto <bb 17>;
+
+  <bb 17>:
+  right_334 = MEM[(struct kern_ipc_perm *)shp_279 + 16B];
+  if (right_334 == left_528)
+    goto <bb 18>;
+  else
+    goto <bb 19>;
+
+  <bb 18>:
+  granted_mode_45 = granted_mode_42 >> 6;
+  goto <bb 22>;
+
+  <bb 19>:
+  _46 = in_group_p (_33->cgid);
+  if (_46 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 21>;
+
+  <bb 20>:
+  granted_mode_48 = granted_mode_42 >> 3;
+  goto <bb 22>;
+
+  <bb 21>:
+  _47 = in_group_p (_33->gid);
+  if (_47 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  # granted_mode_49 = PHI <granted_mode_45(18), granted_mode_42(21), granted_mode_48(20)>
+  _50 = ~granted_mode_49;
+  _343 = _39 & 7;
+  _51 = (int) _343;
+  _52 = _50 & _51;
+  if (_52 != 0)
+    goto <bb 24>;
+  else
+    goto <bb 23>;
+
+  <bb 23>:
+  _56 = security_ipc_permission (_33, acc_mode_31);
+  if (_56 != 0)
+    goto <bb 130>;
+  else
+    goto <bb 25>;
+
+  <bb 24>:
+  _53 = ns_23->user_ns;
+  _54 = ns_capable (_53, 15);
+  if (_54 != 0)
+    goto <bb 23>;
+  else
+    goto <bb 130>;
+
+  <bb 25>:
+  shmaddr.113_4 = (char *) shmaddr_3(D);
+  err_58 = security_shm_shmat (shp_279, shmaddr.113_4, _2);
+  if (err_58 != 0)
+    goto <bb 26>;
+  else
+    goto <bb 27>;
+
+  <bb 26>:
+  pretmp_272 = (long int) err_58;
+  goto <bb 131> (out_unlock);
+
+  <bb 27>:
+  _raw_spin_lock (_33);
+  _59 = MEM[(struct kern_ipc_perm *)shp_279 + 4B];
+  if (_59 != 0)
+    goto <bb 28>;
+  else
+    goto <bb 29>;
+
+  <bb 28>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_279] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 131> (out_unlock);
+
+  <bb 29>:
+  _61 = shp_279->shm_file;
+  path = _61->f_path;
+  path_get (&path);
+  _62 = shp_279->shm_nattch;
+  _63 = _62 + 1;
+  shp_279->shm_nattch = _63;
+  _64 = path.dentry;
+  _65 = MEM[(const struct dentry *)_64 + 48B];
+  _67 = MEM[(const struct inode *)_65 + 80B];
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_279] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  _379 = kmalloc_caches[5];
+  _380 = kmem_cache_alloc_trace (_379, 32976, 32);
+  if (_380 == 0B)
+    goto <bb 30>;
+  else
+    goto <bb 31>;
+
+  <bb 30>:
+  path_put (&path);
+  goto <bb 124> (out_nattch);
+
+  <bb 31>:
+  _71 = shp_279->shm_file;
+  _72 = MEM[(struct file *)_71 + 40B];
+  if (_72 == &hugetlbfs_file_operations)
+    goto <bb 34>;
+  else
+    goto <bb 32>;
+
+  <bb 32>:
+  if (_72 == &shm_file_operations_huge)
+    goto <bb 33>;
+  else
+    goto <bb 34>;
+
+  <bb 33>:
+
+  <bb 34>:
+  # iftmp.42_75 = PHI <&shm_file_operations_huge(33), &shm_file_operations(32), &shm_file_operations_huge(31)>
+  file_76 = alloc_file (&path, f_mode_74, iftmp.42_75);
+  ptr.13_79 = (long unsigned int) file_76;
+  if (ptr.13_79 > 18446744073709547520)
+    goto <bb 35>;
+  else
+    goto <bb 36>;
+
+  <bb 35>:
+  _77 = (long int) file_76;
+  err_78 = (int) _77;
+  kfree (_380);
+  path_put (&path);
+  pretmp_271 = (long int) err_78;
+  goto <bb 124> (out_nattch);
+
+  <bb 36>:
+  file_76->private_data = _380;
+  _83 = shp_279->shm_file;
+  _84 = _83->f_mapping;
+  file_76->f_mapping = _84;
+  _85 = shp_279->shm_perm.id;
+  MEM[(struct shm_file_data *)_380].id = _85;
+  if (ns_23 != 0B)
+    goto <bb 37>;
+  else
+    goto <bb 38>;
+
+  <bb 37>:
+  _392 = &ns_23->count;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; incl %0" : "=m" _392->counter : "m" _392->counter);
+
+  <bb 38>:
+  MEM[(struct shm_file_data *)_380].ns = ns_23;
+  _87 = shp_279->shm_file;
+  MEM[(struct shm_file_data *)_380].file = _87;
+  MEM[(struct shm_file_data *)_380].vm_ops = 0B;
+  err_90 = security_mmap_file (file_76, prot_88, flags_89);
+  if (err_90 != 0)
+    goto <bb 39>;
+  else
+    goto <bb 40>;
+
+  <bb 39>:
+  pretmp_508 = (long int) err_90;
+  goto <bb 123> (out_fput);
+
+  <bb 40>:
+  size_69 = (long unsigned int) _67;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___91 : "p" &current_task);
+  _92 = pfo_ret___91->mm;
+  _93 = &_92->mmap_sem;
+  down_write (_93);
+  if (ret_94 != 0)
+    goto <bb 42>;
+  else
+    goto <bb 41>;
+
+  <bb 41>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___100 : "p" &current_task);
+  mm_101 = pfo_ret___100->mm;
+  if (size_69 == 0)
+    goto <bb 140>;
+  else
+    goto <bb 46>;
+
+  <bb 42>:
+  _95 = _2 & 16384;
+  if (_95 == 0)
+    goto <bb 43>;
+  else
+    goto <bb 41>;
+
+  <bb 43>:
+  _96 = ret_94 + size_69;
+  if (ret_94 > _96)
+    goto <bb 142>;
+  else
+    goto <bb 44>;
+
+  <bb 44>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___97 : "p" &current_task);
+  _98 = pfo_ret___97->mm;
+  vma_393 = find_vma (_98, ret_94);
+  if (vma_393 != 0B)
+    goto <bb 45>;
+  else
+    goto <bb 41>;
+
+  <bb 45>:
+  _394 = vma_393->vm_start;
+  if (_96 <= _394)
+    goto <bb 41>;
+  else
+    goto <bb 142>;
+
+  <bb 46>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___102 : "p" &current_task);
+  _103 = pfo_ret___102->personality;
+  _104 = _103 & 4194304;
+  if (_104 != 0)
+    goto <bb 47>;
+  else
+    goto <bb 50>;
+
+  <bb 47>:
+  if (file_76 == 0B)
+    goto <bb 48>;
+  else
+    goto <bb 49>;
+
+  <bb 48>:
+  prot_107 = prot_88 | 4;
+  goto <bb 50>;
+
+  <bb 49>:
+  _105 = &file_76->f_path;
+  _106 = path_noexec (_105);
+  if (_106 != 0)
+    goto <bb 50>;
+  else
+    goto <bb 48>;
+
+  <bb 50>:
+  # prot_118 = PHI <prot_88(46), prot_88(49), prot_107(48)>
+  _108 = flags_89 & 16;
+  if (_108 == 0)
+    goto <bb 51>;
+  else
+    goto <bb 52>;
+
+  <bb 51>:
+  ret_109 = round_hint_to_min (ret_94);
+
+  <bb 52>:
+  # ret_115 = PHI <ret_94(50), ret_109(51)>
+  _110 = size_69 + 4095;
+  populate_111 = _110 & 18446744073709547520;
+  if (populate_111 == 0)
+    goto <bb 141>;
+  else
+    goto <bb 53>;
+
+  <bb 53>:
+  _113 = mm_101->map_count;
+  sysctl_max_map_count.30_114 = sysctl_max_map_count;
+  if (_113 > sysctl_max_map_count.30_114)
+    goto <bb 141>;
+  else
+    goto <bb 54>;
+
+  <bb 54>:
+  ret_116 = get_unmapped_area (file_76, ret_115, populate_111, 0, flags_89);
+  _117 = ret_116 & 4095;
+  if (_117 != 0)
+    goto <bb 120>;
+  else
+    goto <bb 55>;
+
+  <bb 55>:
+  charged_112 = populate_111 >> 12;
+  _122 = mm_101->def_flags;
+  _123 = prot_118 | _122;
+  _124 = _123 & 8192;
+  if (_124 != 0)
+    goto <bb 56>;
+  else
+    goto <bb 137>;
+
+  <bb 56>:
+  _125 = MEM[(long unsigned int *)mm_101 + 184B];
+  locked_126 = charged_112 + _125;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___398 : "p" &current_task);
+  _399 = MEM[(const struct task_struct *)pfo_ret___398].signal;
+  _400 ={v} MEM[(volatile __u64 *)_399].rlim[8].rlim_cur;
+  lock_limit_128 = _400 >> 12;
+  if (locked_126 > lock_limit_128)
+    goto <bb 57>;
+  else
+    goto <bb 137>;
+
+  <bb 57>:
+  _129 = capable (14);
+  if (_129 != 0)
+    goto <bb 137>;
+  else
+    goto <bb 58>;
+
+  <bb 58>:
+  goto <bb 141>;
+
+  <bb 59>:
+  _131 = MEM[(const struct file *)file_76 + 32B];
+  _133 = prot_118 & 2;
+  if (_133 != 0)
+    goto <bb 60>;
+  else
+    goto <bb 62>;
+
+  <bb 60>:
+  _134 = file_76->f_mode;
+  _135 = _134 & 2;
+  if (_135 == 0)
+    goto <bb 61>;
+  else
+    goto <bb 62>;
+
+  <bb 61>:
+  goto <bb 141>;
+
+  <bb 62>:
+  _136 = _131->i_flags;
+  _137 = _136 & 4;
+  if (_137 != 0)
+    goto <bb 63>;
+  else
+    goto <bb 64>;
+
+  <bb 63>:
+  _138 = file_76->f_mode;
+  _139 = _138 & 2;
+  if (_139 != 0)
+    goto <bb 61>;
+  else
+    goto <bb 64>;
+
+  <bb 64>:
+  _140 = locks_verify_locked (file_76);
+  if (_140 != 0)
+    goto <bb 58>;
+  else
+    goto <bb 65>;
+
+  <bb 65>:
+  vm_flags_141 = _123 | 248;
+  _142 = file_76->f_mode;
+  _143 = _142 & 2;
+  if (_143 == 0)
+    goto <bb 66>;
+  else
+    goto <bb 67>;
+
+  <bb 66>:
+  _144 = _123 & 18446744073709551575;
+  vm_flags_145 = _144 | 208;
+
+  <bb 67>:
+  # vm_flags_149 = PHI <vm_flags_141(65), vm_flags_145(66)>
+  _146 = _142 & 1;
+  if (_146 == 0)
+    goto <bb 61>;
+  else
+    goto <bb 68>;
+
+  <bb 68>:
+  _147 = &file_76->f_path;
+  _148 = path_noexec (_147);
+  if (_148 != 0)
+    goto <bb 69>;
+  else
+    goto <bb 71>;
+
+  <bb 69>:
+  _150 = vm_flags_149 & 4;
+  if (_150 != 0)
+    goto <bb 141>;
+  else
+    goto <bb 70>;
+
+  <bb 70>:
+  vm_flags_151 = vm_flags_149 & 18446744073709551551;
+
+  <bb 71>:
+  # vm_flags_154 = PHI <vm_flags_149(68), vm_flags_151(70)>
+  _152 = file_76->f_op;
+  _153 = _152->mmap;
+  if (_153 == 0B)
+    goto <bb 141>;
+  else
+    goto <bb 72>;
+
+  <bb 72>:
+  _155 = vm_flags_154 & 256;
+  if (_155 != 0)
+    goto <bb 140>;
+  else
+    goto <bb 75>;
+
+  <bb 73>:
+  _156 = _123 & 256;
+  if (_156 != 0)
+    goto <bb 140>;
+  else
+    goto <bb 74>;
+
+  <bb 74>:
+  vm_flags_157 = _123 | 248;
+
+  <bb 75>:
+  # vm_flags_168 = PHI <vm_flags_154(72), vm_flags_157(74)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___158 : "p" &current_task);
+  mm_159 = pfo_ret___158->mm;
+  _160 = may_expand_vm (mm_159, charged_112);
+  if (_160 == 0)
+    goto <bb 76>;
+  else
+    goto <bb 79>;
+
+  <bb 76>:
+  _161 = ret_116 + populate_111;
+  nr_pages_162 = count_vma_pages_range (mm_159, ret_116, _161);
+  _163 = charged_112 - nr_pages_162;
+  _164 = may_expand_vm (mm_159, _163);
+  if (_164 == 0)
+    goto <bb 139>;
+  else
+    goto <bb 79>;
+
+  <bb 77>:
+  _165 = do_munmap (mm_159, ret_116, populate_111);
+  if (_165 != 0)
+    goto <bb 139>;
+  else
+    goto <bb 78>;
+
+  <bb 78>:
+  goto <bb 80>;
+
+  <bb 79>:
+
+  <bb 80>:
+  _166 = ret_116 + populate_111;
+  _167 = find_vma_links (mm_159, ret_116, _166, &prev, &rb_link, &rb_parent);
+  if (_167 != 0)
+    goto <bb 77>;
+  else
+    goto <bb 81>;
+
+  <bb 81>:
+  # _284 = PHI <_166(80)>
+  _169 = accountable_mapping (file_76, vm_flags_168);
+  if (_169 != 0)
+    goto <bb 82>;
+  else
+    goto <bb 84>;
+
+  <bb 82>:
+  charged.33_170 = (long int) charged_112;
+  _171 = security_vm_enough_memory_mm (mm_159, charged.33_170);
+  if (_171 != 0)
+    goto <bb 139>;
+  else
+    goto <bb 83>;
+
+  <bb 83>:
+  vm_flags_172 = vm_flags_168 | 1048576;
+
+  <bb 84>:
+  # vm_flags_174 = PHI <vm_flags_168(81), vm_flags_172(83)>
+  # charged_263 = PHI <0(81), charged_112(83)>
+  prev.34_173 = prev;
+  vma_175 = vma_merge (mm_159, prev.34_173, ret_116, _284, vm_flags_174, 0B, file_76, 0, 0B, D.44448);
+  if (vma_175 != 0B)
+    goto <bb 102> (out);
+  else
+    goto <bb 85>;
+
+  <bb 85>:
+  vm_area_cachep.35_176 = vm_area_cachep;
+  vma_403 = kmem_cache_alloc (vm_area_cachep.35_176, 32976);
+  if (vma_403 == 0B)
+    goto <bb 114> (unacct_error);
+  else
+    goto <bb 86>;
+
+  <bb 86>:
+  vma_403->vm_mm = mm_159;
+  vma_403->vm_start = ret_116;
+  vma_403->vm_end = _284;
+  vma_403->vm_flags = vm_flags_174;
+  vma_403->vm_page_prot = vm_get_page_prot (vm_flags_174);
+  vma_403->vm_pgoff = 0;
+  _178 = &vma_403->anon_vma_chain;
+  MEM[(struct list_head *)vma_403 + 120B].next = _178;
+  MEM[(struct list_head *)vma_403 + 120B].prev = _178;
+  if (file_76 != 0B)
+    goto <bb 87>;
+  else
+    goto <bb 96>;
+
+  <bb 87>:
+  _179 = vm_flags_174 & 2048;
+  if (_179 != 0)
+    goto <bb 89>;
+  else
+    goto <bb 88>;
+
+  <bb 88>:
+  _181 = vm_flags_174 & 8;
+  if (_181 != 0)
+    goto <bb 91>;
+  else
+    goto <bb 90>;
+
+  <bb 89>:
+  error_180 = deny_write_access (file_76);
+  if (error_180 != 0)
+    goto <bb 113> (free_vma);
+  else
+    goto <bb 88>;
+
+  <bb 90>:
+  _184 = get_file (file_76);
+  vma_403->vm_file = _184;
+  _185 = file_76->f_op;
+  _186 = _185->mmap;
+  error_187 = _186 (file_76, vma_403);
+  if (error_187 != 0)
+    goto <bb 109> (unmap_and_free_vma);
+  else
+    goto <bb 92>;
+
+  <bb 91>:
+  _182 = file_76->f_mapping;
+  error_183 = mapping_map_writable (_182);
+  if (error_183 != 0)
+    goto <bb 111> (allow_write_and_free_vma);
+  else
+    goto <bb 90>;
+
+  <bb 92>:
+  _188 = vma_403->vm_start;
+  if (ret_116 != _188)
+    goto <bb 93>;
+  else
+    goto <bb 95>;
+
+  <bb 93>:
+  __warned.36_192 = __warned;
+  if (__warned.36_192 != 0)
+    goto <bb 95>;
+  else
+    goto <bb 94>;
+
+  <bb 94>:
+  warn_slowpath_null ("ipc/shm.c", 1424);
+  __warned = 1;
+
+  <bb 95>:
+  ret_196 = vma_403->vm_start;
+  vm_flags_197 = vma_403->vm_flags;
+  rb_parent.37_515 = rb_parent;
+  rb_link.38_517 = rb_link;
+  prev.34_519 = prev;
+  vma_link (mm_159, vma_403, prev.34_519, rb_link.38_517, rb_parent.37_515);
+  _204 = vm_flags_197 & 8;
+  if (_204 != 0)
+    goto <bb 98>;
+  else
+    goto <bb 99>;
+
+  <bb 96>:
+  _198 = vm_flags_174 & 8;
+  if (_198 != 0)
+    goto <bb 97>;
+  else
+    goto <bb 138>;
+
+  <bb 97>:
+  error_199 = shmem_zero_setup (vma_403);
+  if (error_199 != 0)
+    goto <bb 113> (free_vma);
+  else
+    goto <bb 138>;
+
+  <bb 98>:
+  _205 = file_76->f_mapping;
+  mapping_unmap_writable (_205);
+
+  <bb 99>:
+  _206 = vm_flags_197 & 2048;
+  if (_206 != 0)
+    goto <bb 100>;
+  else
+    goto <bb 101>;
+
+  <bb 100>:
+  allow_write_access (file_76);
+
+  <bb 101>:
+  # vm_flags_190 = PHI <vm_flags_174(138), vm_flags_197(99), vm_flags_197(100)>
+  # ret_338 = PHI <ret_116(138), ret_196(99), ret_196(100)>
+  file_207 = vma_403->vm_file;
+
+  # file_211 = PHI <file_76(84), file_207(101)>
+  # ret_265 = PHI <ret_116(84), ret_338(101)>
+  # vm_flags_210 = PHI <vm_flags_174(84), vm_flags_190(101)>
+  # vma_208 = PHI <vma_175(84), vma_403(101)>
+out:
+  perf_event_mmap (vma_208);
+  _209 = (long int) charged_112;
+  vm_stat_account (mm_159, vm_flags_210, file_211, _209);
+  _212 = vm_flags_210 & 8192;
+  if (_212 != 0)
+    goto <bb 103>;
+  else
+    goto <bb 108>;
+
+  <bb 103>:
+  _213 = vm_flags_210 & 268715008;
+  if (_213 == 0)
+    goto <bb 104>;
+  else
+    goto <bb 107>;
+
+  <bb 104>:
+  _214 = MEM[(struct vm_area_struct *)vma_208 + 80B];
+  _405 = _214 & 4194304;
+  if (_405 == 0)
+    goto <bb 105>;
+  else
+    goto <bb 107>;
+
+  <bb 105>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___216 : "p" &current_task);
+  _217 = pfo_ret___216->mm;
+  _218 = get_gate_vma (_217);
+  if (vma_208 != _218)
+    goto <bb 106>;
+  else
+    goto <bb 107>;
+
+  <bb 106>:
+  _219 = mm_159->locked_vm;
+  _220 = charged_112 + _219;
+  mm_159->locked_vm = _220;
+  goto <bb 108>;
+
+  <bb 107>:
+  _221 = vma_208->vm_flags;
+  _222 = _221 & 18446744073709543423;
+  vma_208->vm_flags = _222;
+
+  <bb 108>:
+  vma_set_page_prot (vma_208);
+  goto <bb 117>;
+
+unmap_and_free_vma:
+  vma_403->vm_file = 0B;
+  fput (file_76);
+  _223 = vma_403->vm_end;
+  _224 = vma_403->vm_start;
+  prev.34_225 = prev;
+  unmap_region (mm_159, vma_403, prev.34_225, _224, _223);
+  if (_181 != 0)
+    goto <bb 110>;
+  else
+    goto <bb 111> (allow_write_and_free_vma);
+
+  <bb 110>:
+  _226 = file_76->f_mapping;
+  mapping_unmap_writable (_226);
+
+  # error_266 = PHI <error_183(91), error_187(109), error_187(110)>
+  # charged_267 = PHI <charged_263(91), 0(109), 0(110)>
+allow_write_and_free_vma:
+  if (_179 != 0)
+    goto <bb 112>;
+  else
+    goto <bb 113> (free_vma);
+
+  <bb 112>:
+  allow_write_access (file_76);
+
+  # error_268 = PHI <error_180(89), error_199(97), error_266(111), error_266(112)>
+  # charged_269 = PHI <charged_263(89), charged_263(97), charged_267(111), charged_267(112)>
+free_vma:
+  vm_area_cachep.35_227 = vm_area_cachep;
+  kmem_cache_free (vm_area_cachep.35_227, vma_403);
+
+  # error_230 = PHI <-12(85), error_268(113)>
+  # charged_228 = PHI <charged_263(85), charged_269(113)>
+unacct_error:
+  if (charged_228 != 0)
+    goto <bb 115>;
+  else
+    goto <bb 116>;
+
+  <bb 115>:
+  charged.33_229 = (long int) charged_228;
+  vm_unacct_memory (charged.33_229);
+
+  <bb 116>:
+  ret_231 = (long unsigned int) error_230;
+
+  <bb 117>:
+  # ret_232 = PHI <ret_231(116), ret_265(108)>
+  prev ={v} {CLOBBER};
+  rb_link ={v} {CLOBBER};
+  rb_parent ={v} {CLOBBER};
+  if (ret_232 <= 18446744073709547520)
+    goto <bb 119>;
+  else
+    goto <bb 118>;
+
+  <bb 118>:
+  pretmp_237 = (int) ret_232;
+  goto <bb 141>;
+
+  <bb 119>:
+  _236 = vm_flags_168 & 8192;
+  if (_236 != 0)
+    goto <bb 146>;
+  else
+    goto <bb 147>;
+
+  <bb 120>:
+  if (ret_116 > 18446744073709547520)
+    goto <bb 121>;
+  else
+    goto <bb 145>;
+
+  <bb 121>:
+  pretmp_523 = (int) ret_116;
+
+  <bb 122>:
+  # ret_330 = PHI <ret_116(121), ret_285(141)>
+  # err_376 = PHI <pretmp_523(121), prephitmp_44(141)>
+  goto <bb 145>;
+
+  # ret_275 = PHI <ret_273(D)(39), ret_232(147), ret_232(146), ret_273(D)(142), ret_333(145)>
+  # prephitmp_270 = PHI <pretmp_508(39), 0(147), 0(146), -22(142), pretmp_293(145)>
+out_fput:
+  fput (file_76);
+
+  # ret_276 = PHI <ret_273(D)(30), ret_273(D)(35), ret_275(123)>
+  # prephitmp_510 = PHI <-12(30), pretmp_271(35), prephitmp_270(123)>
+out_nattch:
+  _247 = &ns_23->ids[2].rwsem;
+  down_write (_247);
+  shp_409 = ipc_lock (_278, _6);
+  ptr.13_410 = (long unsigned int) shp_409;
+  if (ptr.13_410 > 18446744073709547520)
+    goto <bb 125>;
+  else
+    goto <bb 126>;
+
+  <bb 125>:
+  warn_slowpath_null ("ipc/shm.c", 226);
+
+  <bb 126>:
+  _249 = shp_409->shm_nattch;
+  _250 = _249 + 18446744073709551615;
+  shp_409->shm_nattch = _250;
+  _252 = MEM[(struct shmid_kernel *)shp_409 + 32B];
+  if (_250 == 0)
+    goto <bb 127>;
+  else
+    goto <bb 144>;
+
+  <bb 127>:
+  _418 = MEM[(int *)ns_23 + 364B];
+  if (_418 != 0)
+    goto <bb 143>;
+  else
+    goto <bb 128>;
+
+  <bb 128>:
+  _420 = _252 & 512;
+  if (_420 != 0)
+    goto <bb 143>;
+  else
+    goto <bb 144>;
+
+  <bb 129>:
+  up_write (_247);
+  goto <bb 133>;
+
+  <bb 130>:
+
+  # prephitmp_245 = PHI <pretmp_320(13), -13(130), pretmp_272(26), -43(28)>
+out_unlock:
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # prephitmp_520 = PHI <-22(5), prephitmp_245(131), -22(2), -22(7)>
+out:
+
+  <bb 133>:
+  # _259 = PHI <prephitmp_510(129), prephitmp_520(132)>
+  # ret_260 = PHI <ret_276(129), ret_273(D)(132)>
+  path ={v} {CLOBBER};
+  if (_259 != 0)
+    goto <bb 135>;
+  else
+    goto <bb 134>;
+
+  <bb 134>:
+  _261 = (long int) ret_260;
+
+  <bb 135>:
+  # _262 = PHI <_259(133), _261(134)>
+  return _262;
+
+  <bb 136>:
+  __audit_ipc_obj (_33);
+  goto <bb 16>;
+
+  <bb 137>:
+  if (file_76 != 0B)
+    goto <bb 59>;
+  else
+    goto <bb 73>;
+
+  <bb 138>:
+  rb_parent.37_514 = rb_parent;
+  rb_link.38_382 = rb_link;
+  prev.34_302 = prev;
+  vma_link (mm_159, vma_403, prev.34_302, rb_link.38_382, rb_parent.37_514);
+  goto <bb 101>;
+
+  <bb 139>:
+  prev ={v} {CLOBBER};
+  rb_link ={v} {CLOBBER};
+  rb_parent ={v} {CLOBBER};
+  goto <bb 141>;
+
+  <bb 140>:
+
+  <bb 141>:
+  # ret_285 = PHI <18446744073709551605(58), 18446744073709551604(139), 18446744073709551604(53), ret_232(118), 18446744073709551597(71), 18446744073709551615(69), 18446744073709551603(61), 18446744073709551594(140), 18446744073709551604(52)>
+  # prephitmp_44 = PHI <-11(58), -12(139), -12(53), pretmp_237(118), -19(71), -1(69), -13(61), -22(140), -12(52)>
+  goto <bb 122>;
+
+  <bb 142>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___26 : "p" &current_task);
+  _435 = pfo_ret___26->mm;
+  _28 = &_435->mmap_sem;
+  up_write (_28);
+  goto <bb 123> (out_fput);
+
+  <bb 143>:
+  shm_destroy (ns_23, shp_409);
+  goto <bb 129>;
+
+  <bb 144>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)shp_409] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 129>;
+
+  <bb 145>:
+  # ret_333 = PHI <ret_116(120), ret_330(122)>
+  # err_331 = PHI <err_90(120), err_376(122)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___357 : "p" &current_task);
+  _537 = pfo_ret___357->mm;
+  _120 = &_537->mmap_sem;
+  up_write (_120);
+  pretmp_293 = (long int) err_331;
+  goto <bb 123> (out_fput);
+
+  <bb 146>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___130 : "p" &current_task);
+  _407 = pfo_ret___130->mm;
+  _306 = &_407->mmap_sem;
+  up_write (_306);
+  __mm_populate (ret_232, populate_111, 1);
+  goto <bb 123> (out_fput);
+
+  <bb 147>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___417 : "p" &current_task);
+  _191 = pfo_ret___417->mm;
+  _473 = &_191->mmap_sem;
+  up_write (_473);
+  goto <bb 123> (out_fput);
+
+}
+
+
+
+;; Function SyS_shmdt (SyS_shmdt, funcdef_no=3028, decl_uid=40707, cgraph_uid=3032)
+
+SyS_shmdt (long int shmaddr)
+{
+  struct mm_struct * mm;
+  struct vm_area_struct * vma;
+  long unsigned int addr;
+  loff_t size;
+  struct file * file;
+  struct task_struct * pfo_ret__;
+  long unsigned int _9;
+  struct rw_semaphore * _10;
+  const struct vm_operations_struct * _14;
+  long unsigned int _15;
+  long unsigned int _16;
+  long unsigned int _17;
+  long unsigned int _18;
+  struct inode * _20;
+  long unsigned int _22;
+  long unsigned int _23;
+  long long int _25;
+  const struct vm_operations_struct * _29;
+  long unsigned int _30;
+  long unsigned int _31;
+  long unsigned int _32;
+  long unsigned int _33;
+  struct file * _34;
+  long unsigned int _36;
+  long unsigned int _37;
+  long unsigned int _38;
+  long long int _39;
+  long int _42;
+  long long int _57;
+  long unsigned int _58;
+  long unsigned int _59;
+  long int prephitmp_60;
+  long unsigned int _61;
+  long unsigned int _65;
+
+  <bb 2>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___6 : "p" &current_task);
+  mm_7 = pfo_ret___6->mm;
+  addr_8 = (long unsigned int) shmaddr_1(D);
+  _9 = addr_8 & 4095;
+  if (_9 != 0)
+    goto <bb 21>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _10 = &mm_7->mmap_sem;
+  down_write (_10);
+  vma_11 = find_vma (mm_7, addr_8);
+  if (vma_11 != 0B)
+    goto <bb 4>;
+  else
+    goto <bb 20>;
+
+  <bb 4>:
+
+  <bb 5>:
+  # vma_63 = PHI <vma_13(10), vma_11(4)>
+  vma_13 = vma_63->vm_next;
+  _14 = vma_63->vm_ops;
+  if (_14 == &shm_vm_ops)
+    goto <bb 6>;
+  else
+    goto <bb 9>;
+
+  <bb 6>:
+  _15 = vma_63->vm_start;
+  _16 = _15 - addr_8;
+  _17 = _16 >> 12;
+  _18 = vma_63->vm_pgoff;
+  if (_17 == _18)
+    goto <bb 7>;
+  else
+    goto <bb 9>;
+
+  <bb 7>:
+  # vma_62 = PHI <vma_13(6)>
+  # _61 = PHI <_15(6)>
+  # vma_56 = PHI <vma_63(6)>
+  file_19 = vma_56->vm_file;
+  _20 = MEM[(const struct file *)file_19 + 32B];
+  size_21 = MEM[(const struct inode *)_20 + 80B];
+  _22 = vma_56->vm_end;
+  _23 = _22 - _61;
+  do_munmap (mm_7, _61, _23);
+  _25 = size_21 + 4095;
+  size_26 = _25 & -4096;
+  if (vma_62 != 0B)
+    goto <bb 11>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  goto <bb 20>;
+
+  <bb 9>:
+  if (vma_13 != 0B)
+    goto <bb 10>;
+  else
+    goto <bb 20>;
+
+  <bb 10>:
+  goto <bb 5>;
+
+  <bb 11>:
+  _59 = vma_62->vm_end;
+  _58 = _59 - addr_8;
+  _57 = (long long int) _58;
+  if (size_26 >= _57)
+    goto <bb 12>;
+  else
+    goto <bb 8>;
+
+  <bb 12>:
+
+  <bb 13>:
+  # vma_64 = PHI <vma_28(19), vma_13(12)>
+  # _65 = PHI <_36(19), _59(12)>
+  vma_28 = vma_64->vm_next;
+  _29 = vma_64->vm_ops;
+  if (_29 == &shm_vm_ops)
+    goto <bb 14>;
+  else
+    goto <bb 17>;
+
+  <bb 14>:
+  _30 = vma_64->vm_start;
+  _31 = _30 - addr_8;
+  _32 = _31 >> 12;
+  _33 = vma_64->vm_pgoff;
+  if (_32 == _33)
+    goto <bb 15>;
+  else
+    goto <bb 17>;
+
+  <bb 15>:
+  _34 = vma_64->vm_file;
+  if (file_19 == _34)
+    goto <bb 16>;
+  else
+    goto <bb 17>;
+
+  <bb 16>:
+  _37 = _65 - _30;
+  do_munmap (mm_7, _30, _37);
+
+  <bb 17>:
+  if (vma_28 != 0B)
+    goto <bb 18>;
+  else
+    goto <bb 8>;
+
+  <bb 18>:
+  _36 = vma_28->vm_end;
+  _38 = _36 - addr_8;
+  _39 = (long long int) _38;
+  if (size_26 >= _39)
+    goto <bb 19>;
+  else
+    goto <bb 8>;
+
+  <bb 19>:
+  goto <bb 13>;
+
+  <bb 20>:
+  # prephitmp_60 = PHI <-22(9), 0(8), -22(3)>
+  up_write (_10);
+
+  <bb 21>:
+  # _42 = PHI <-22(2), prephitmp_60(20)>
+  return _42;
+
+}
+
+

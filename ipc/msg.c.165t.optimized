@@ -1,0 +1,3423 @@
+
+;; Function msg_security (msg_security, funcdef_no=2348, decl_uid=32894, cgraph_uid=2348)
+
+msg_security (struct kern_ipc_perm * ipcp, int msgflg)
+{
+  int _5;
+
+  <bb 2>:
+  _5 = security_msg_queue_associate (ipcp_1(D), msgflg_3(D));
+  return _5;
+
+}
+
+
+
+;; Function msg_rcu_free (msg_rcu_free, funcdef_no=2341, decl_uid=32822, cgraph_uid=2341)
+
+msg_rcu_free (struct callback_head * head)
+{
+  struct msg_queue * msq;
+
+  <bb 2>:
+  msq_2 = head_1(D) + 64;
+  security_msg_queue_free (msq_2);
+  ipc_rcu_free (head_1(D));
+  return;
+
+}
+
+
+
+;; Function expunge_all (expunge_all, funcdef_no=2346, decl_uid=32861, cgraph_uid=2346)
+
+expunge_all (struct msg_queue * msq, int res)
+{
+  struct msg_receiver * msr;
+  void * pretmp_3;
+  struct list_head * _8;
+  long int pretmp_9;
+  struct task_struct * _11;
+  struct list_head * _22;
+  struct list_head * _23;
+
+  <bb 2>:
+  msr_6 = msq_5(D)->q_receivers.next;
+  msr_7 = msr_6->r_list.next;
+  _22 = &msr_6->r_list;
+  _23 = &msq_5(D)->q_receivers;
+  if (_22 != _23)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  return;
+
+  <bb 4>:
+  pretmp_9 = (long int) res_14(D);
+  pretmp_3 = (void *) pretmp_9;
+
+  <bb 5>:
+  # msr_24 = PHI <msr_25(6), msr_6(4)>
+  # msr_25 = PHI <msr_17(6), msr_7(4)>
+  msr_24->r_msg ={v} 0B;
+  _11 = msr_24->r_tsk;
+  wake_up_process (_11);
+  __asm__ __volatile__("" :  :  : "memory");
+  msr_24->r_msg ={v} pretmp_3;
+  msr_17 = msr_25->r_list.next;
+  _8 = &msr_25->r_list;
+  if (_8 != _23)
+    goto <bb 6>;
+  else
+    goto <bb 3>;
+
+  <bb 6>:
+  goto <bb 5>;
+
+}
+
+
+
+;; Function ss_wakeup (ss_wakeup, funcdef_no=2345, decl_uid=32846, cgraph_uid=2345)
+
+ss_wakeup (struct list_head * h, int kill)
+{
+  struct msg_sender * mss;
+  struct list_head * _9;
+  struct task_struct * _12;
+  struct list_head * _18;
+
+  <bb 2>:
+  mss_7 = h_6(D)->next;
+  mss_8 = mss_7->list.next;
+  _18 = &mss_7->list;
+  if (_18 != h_6(D))
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  return;
+
+  <bb 4>:
+
+  <bb 5>:
+  # mss_19 = PHI <mss_20(8), mss_7(4)>
+  # mss_20 = PHI <mss_14(8), mss_8(4)>
+  if (kill_10(D) != 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  mss_19->list.next = 0B;
+
+  <bb 7>:
+  _12 = mss_19->tsk;
+  wake_up_process (_12);
+  mss_14 = mss_20->list.next;
+  _9 = &mss_20->list;
+  if (_9 != h_6(D))
+    goto <bb 8>;
+  else
+    goto <bb 3>;
+
+  <bb 8>:
+  goto <bb 5>;
+
+}
+
+
+
+;; Function freeque (freeque, funcdef_no=2347, decl_uid=32876, cgraph_uid=2347)
+
+freeque (struct ipc_namespace * ns, struct kern_ipc_perm * ipcp)
+{
+  struct msg_msg * msg;
+  struct atomic_t * pretmp_2;
+  struct list_head * _7;
+  struct list_head * _15;
+  struct atomic_t * _21;
+  long unsigned int _22;
+  int _23;
+  struct kern_ipc_perm * _26;
+  struct ipc_ids * _27;
+  struct list_head * _39;
+  struct list_head * _40;
+
+  <bb 2>:
+  expunge_all (ipcp_4(D), -43);
+  _7 = &MEM[(struct msg_queue *)ipcp_4(D)].q_senders;
+  ss_wakeup (_7, 1);
+  _26 = &MEM[(struct msg_queue *)ipcp_4(D)].q_perm;
+  _27 = &ns_9(D)->ids[1];
+  ipc_rmid (_27, _26);
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)ipcp_4(D)] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  msg_13 = MEM[(struct msg_queue *)ipcp_4(D)].q_messages.next;
+  msg_14 = msg_13->m_list.next;
+  _39 = &msg_13->m_list;
+  _40 = &MEM[(struct msg_queue *)ipcp_4(D)].q_messages;
+  if (_39 != _40)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _21 = &ns_9(D)->msg_bytes;
+  _22 = MEM[(struct msg_queue *)ipcp_4(D)].q_cbytes;
+  _23 = (int) _22;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; subl %1,%0" : "=m" _21->counter : "ir" _23, "m" _21->counter);
+  ipc_rcu_putref (ipcp_4(D), msg_rcu_free);
+  return;
+
+  <bb 4>:
+  pretmp_2 = &ns_9(D)->msg_hdrs;
+
+  <bb 5>:
+  # msg_41 = PHI <msg_42(6), msg_13(4)>
+  # msg_42 = PHI <msg_20(6), msg_14(4)>
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; decl %0" : "=m" pretmp_2->counter : "m" pretmp_2->counter);
+  free_msg (msg_41);
+  msg_20 = msg_42->m_list.next;
+  _15 = &msg_42->m_list;
+  if (_15 != _40)
+    goto <bb 6>;
+  else
+    goto <bb 3>;
+
+  <bb 6>:
+  goto <bb 5>;
+
+}
+
+
+
+;; Function sysvipc_msg_proc_show (sysvipc_msg_proc_show, funcdef_no=2373, decl_uid=33242, cgraph_uid=2377)
+
+sysvipc_msg_proc_show (struct seq_file * s, void * it)
+{
+  uid_t kuid;
+  gid_t kgid;
+  uid_t kuid;
+  gid_t kgid;
+  int overflowuid.34;
+  int overflowgid.33;
+  int overflowuid.34;
+  int overflowgid.33;
+  long int _3;
+  long int _4;
+  long int _5;
+  int _6;
+  int _7;
+  long unsigned int _8;
+  long unsigned int _9;
+  short unsigned int _10;
+  int _11;
+  int _12;
+  int _13;
+
+  <bb 2>:
+  _3 = MEM[(struct msg_queue *)it_1(D)].q_ctime;
+  _4 = MEM[(struct msg_queue *)it_1(D)].q_rtime;
+  _5 = MEM[(struct msg_queue *)it_1(D)].q_stime;
+  kgid_31 = MEM[(struct msg_queue *)it_1(D) + 28B];
+  if (kgid_31 == 4294967295)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  overflowgid.33_16 = overflowgid;
+  kgid_17 = (gid_t) overflowgid.33_16;
+
+  <bb 4>:
+  # kgid_18 = PHI <kgid_31(2), kgid_17(3)>
+  kuid_30 = MEM[(struct msg_queue *)it_1(D) + 24B];
+  if (kuid_30 == 4294967295)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  overflowuid.34_19 = overflowuid;
+  kuid_20 = (uid_t) overflowuid.34_19;
+
+  <bb 6>:
+  # kuid_21 = PHI <kuid_30(4), kuid_20(5)>
+  kgid_29 = MEM[(struct msg_queue *)it_1(D) + 20B];
+  if (kgid_29 == 4294967295)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  overflowgid.33_22 = overflowgid;
+  kgid_23 = (gid_t) overflowgid.33_22;
+
+  <bb 8>:
+  # kgid_24 = PHI <kgid_29(6), kgid_23(7)>
+  kuid_28 = MEM[(struct msg_queue *)it_1(D) + 16B];
+  if (kuid_28 == 4294967295)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  overflowuid.34_25 = overflowuid;
+  kuid_26 = (uid_t) overflowuid.34_25;
+
+  <bb 10>:
+  # kuid_27 = PHI <kuid_28(8), kuid_26(9)>
+  _6 = MEM[(struct msg_queue *)it_1(D)].q_lrpid;
+  _7 = MEM[(struct msg_queue *)it_1(D)].q_lspid;
+  _8 = MEM[(struct msg_queue *)it_1(D)].q_qnum;
+  _9 = MEM[(struct msg_queue *)it_1(D)].q_cbytes;
+  _10 = MEM[(struct msg_queue *)it_1(D)].q_perm.mode;
+  _11 = (int) _10;
+  _12 = MEM[(struct msg_queue *)it_1(D)].q_perm.id;
+  _13 = MEM[(struct msg_queue *)it_1(D)].q_perm.key;
+  seq_printf (s_14(D), "%10d %10d  %4o  %10lu %10lu %5u %5u %5u %5u %5u %5u %10lu %10lu %10lu\n", _13, _12, _11, _9, _8, _7, _6, kuid_27, kgid_24, kuid_21, kgid_18, _5, _4, _3);
+  return 0;
+
+}
+
+
+
+;; Function testmsg.isra.6 (testmsg.isra.6, funcdef_no=2381, decl_uid=34126, cgraph_uid=366)
+
+testmsg.isra.6 (long int * ISRA.86, long int type, int mode)
+{
+  long int _3;
+  long int _5;
+  long int _6;
+  int _7;
+  _Bool _10;
+  int _11;
+  _Bool _12;
+  int _13;
+  _Bool _14;
+  int _15;
+
+  <bb 2>:
+  switch (mode_1(D)) <default: <L4>, case 1: <L6>, case 2: <L1>, case 3: <L2>, case 4: <L0>, case 5: <L6>>
+
+<L6>:
+  goto <bb 7> (<L4>);
+
+<L0>:
+  _3 = *ISRA.86_9(D);
+  _14 = _3 <= type_4(D);
+  _15 = (int) _14;
+  goto <bb 7> (<L4>);
+
+<L1>:
+  _5 = *ISRA.86_9(D);
+  _12 = type_4(D) == _5;
+  _13 = (int) _12;
+  goto <bb 7> (<L4>);
+
+<L2>:
+  _6 = *ISRA.86_9(D);
+  _10 = type_4(D) != _6;
+  _11 = (int) _10;
+
+  # _7 = PHI <1(3), _13(5), _11(6), 0(2), _15(4)>
+<L4>:
+  return _7;
+
+}
+
+
+
+;; Function copy_msqid_from_user.constprop.11 (copy_msqid_from_user.constprop.11, funcdef_no=2385, decl_uid=34575, cgraph_uid=569)
+
+copy_msqid_from_user.constprop.11 (struct msqid64_ds * out, void * buf)
+{
+  long unsigned int n;
+  long unsigned int _11;
+
+  <bb 2>:
+  n_3 = _copy_from_user (out_1(D), buf_2(D), 120);
+  if (n_3 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+
+  <bb 4>:
+  # _11 = PHI <0(2), 18446744073709551602(3)>
+  return _11;
+
+}
+
+
+
+;; Function copy_msqid_to_user.constprop.12 (copy_msqid_to_user.constprop.12, funcdef_no=2384, decl_uid=34576, cgraph_uid=570)
+
+copy_msqid_to_user.constprop.12 (void * buf, struct msqid64_ds * in)
+{
+  long unsigned int n;
+
+  <bb 2>:
+  n_3 = _copy_to_user (buf_1(D), in_2(D), 120);
+  return n_3;
+
+}
+
+
+
+;; Function msgctl_down.constprop.10 (msgctl_down.constprop.10, funcdef_no=2386, decl_uid=34574, cgraph_uid=568)
+
+msgctl_down.constprop.10 (struct ipc_namespace * ns, int msqid, int cmd, struct msqid_ds * buf)
+{
+  struct msqid64_ds msqid64;
+  struct msg_queue * msq;
+  int err;
+  long unsigned int ptr.3;
+  long unsigned int _3;
+  struct rw_semaphore * _5;
+  long unsigned int _6;
+  int _7;
+  struct ipc_ids * _8;
+  long int _15;
+  struct raw_spinlock * _18;
+  long unsigned int _19;
+  unsigned int _20;
+  long unsigned int _21;
+  _Bool _22;
+  struct raw_spinlock * _23;
+  long unsigned int _25;
+  long unsigned int _26;
+  long int _27;
+  struct list_head * _28;
+  int _29;
+
+  <bb 2>:
+  msqid64 = msqid64;
+  if (cmd_1(D) == 1)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _5 = &ns_4(D)->ids[1].rwsem;
+  down_write (_5);
+  __asm__ __volatile__("" :  :  : "memory");
+  _6 = msqid64.msg_qbytes;
+  _7 = (int) _6;
+  _8 = &ns_4(D)->ids[1];
+  msq_10 = ipcctl_pre_down_nolock (ns_4(D), _8, msqid_9(D), cmd_1(D), &msqid64.msg_perm, _7);
+  ptr.3_11 = (long unsigned int) msq_10;
+  if (ptr.3_11 > 18446744073709547520)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 4>:
+  _3 = copy_msqid_from_user.constprop.11 (&msqid64, buf_2(D));
+  if (_3 != 0)
+    goto <bb 16>;
+  else
+    goto <bb 3>;
+
+  <bb 5>:
+  _15 = (long int) msq_10;
+  err_16 = (int) _15;
+  goto <bb 14> (out_unlock1);
+
+  <bb 6>:
+  err_17 = security_msg_queue_msgctl (msq_10, cmd_1(D));
+  if (err_17 != 0)
+    goto <bb 14> (out_unlock1);
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  switch (cmd_1(D)) <default: out_unlock1, case 0: <L0>, case 1: <L1>>
+
+<L0>:
+  _18 = &MEM[(struct spinlock_t *)msq_10].D.5529.rlock;
+  _raw_spin_lock (_18);
+  freeque (ns_4(D), msq_10);
+  goto <bb 15> (out_up);
+
+<L1>:
+  _19 = msqid64.msg_qbytes;
+  _20 = ns_4(D)->msg_ctlmnb;
+  _21 = (long unsigned int) _20;
+  if (_19 > _21)
+    goto <bb 11>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  _23 = &MEM[(struct spinlock_t *)msq_10].D.5529.rlock;
+  _raw_spin_lock (_23);
+  err_24 = ipc_update_perm (&msqid64.msg_perm, msq_10);
+  if (err_24 != 0)
+    goto <bb 13> (out_unlock0);
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  _22 = capable (24);
+  if (_22 != 0)
+    goto <bb 10>;
+  else
+    goto <bb 14> (out_unlock1);
+
+  <bb 12>:
+  _25 = msqid64.msg_qbytes;
+  msq_10->q_qbytes = _25;
+  _26 = get_seconds ();
+  _27 = (long int) _26;
+  msq_10->q_ctime = _27;
+  expunge_all (msq_10, -11);
+  _28 = &msq_10->q_senders;
+  ss_wakeup (_28, 0);
+
+out_unlock0:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_10] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # err_30 = PHI <err_16(5), err_17(6), -22(7), -1(11), err_24(13)>
+out_unlock1:
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # err_31 = PHI <err_17(8), err_30(14)>
+out_up:
+  up_write (_5);
+
+  <bb 16>:
+  # _29 = PHI <-14(4), err_31(15)>
+  msqid64 ={v} {CLOBBER};
+  return _29;
+
+}
+
+
+
+;; Function newque (newque, funcdef_no=2342, decl_uid=32830, cgraph_uid=2342)
+
+newque (struct ipc_namespace * ns, struct ipc_params * params)
+{
+  int msgflg;
+  key_t key;
+  int retval;
+  int id;
+  struct msg_queue * msq;
+  int _1;
+  short unsigned int _9;
+  short unsigned int _10;
+  long unsigned int _20;
+  long int _21;
+  unsigned int _26;
+  long unsigned int _27;
+  struct list_head * _31;
+  struct list_head * _33;
+  struct list_head * _35;
+  unsigned int _37;
+  int _38;
+  struct kern_ipc_perm * _39;
+  struct ipc_ids * _40;
+  int _46;
+
+  <bb 2>:
+  key_5 = params_4(D)->key;
+  msgflg_6 = params_4(D)->flg;
+  msq_8 = ipc_rcu_alloc (160);
+  if (msq_8 == 0B)
+    goto <bb 8>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _9 = (short unsigned int) msgflg_6;
+  _10 = _9 & 511;
+  msq_8->q_perm.mode = _10;
+  msq_8->q_perm.key = key_5;
+  msq_8->q_perm.security = 0B;
+  retval_15 = security_msg_queue_alloc (msq_8);
+  if (retval_15 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  ipc_rcu_putref (msq_8, ipc_rcu_free);
+  goto <bb 8>;
+
+  <bb 5>:
+  msq_8->q_rtime = 0;
+  msq_8->q_stime = 0;
+  _20 = get_seconds ();
+  _21 = (long int) _20;
+  msq_8->q_ctime = _21;
+  msq_8->q_qnum = 0;
+  msq_8->q_cbytes = 0;
+  _26 = ns_25(D)->msg_ctlmnb;
+  _27 = (long unsigned int) _26;
+  msq_8->q_qbytes = _27;
+  msq_8->q_lrpid = 0;
+  msq_8->q_lspid = 0;
+  _31 = &msq_8->q_messages;
+  MEM[(struct list_head *)msq_8 + 112B].next = _31;
+  MEM[(struct list_head *)msq_8 + 112B].prev = _31;
+  _33 = &msq_8->q_receivers;
+  MEM[(struct list_head *)msq_8 + 128B].next = _33;
+  MEM[(struct list_head *)msq_8 + 128B].prev = _33;
+  _35 = &msq_8->q_senders;
+  MEM[(struct list_head *)msq_8 + 144B].next = _35;
+  MEM[(struct list_head *)msq_8 + 144B].prev = _35;
+  _37 = ns_25(D)->msg_ctlmni;
+  _38 = (int) _37;
+  _39 = &msq_8->q_perm;
+  _40 = &ns_25(D)->ids[1];
+  id_42 = ipc_addid (_40, _39, _38);
+  if (id_42 < 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  ipc_rcu_putref (msq_8, msg_rcu_free);
+  goto <bb 8>;
+
+  <bb 7>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_8] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  _46 = msq_8->q_perm.id;
+
+  <bb 8>:
+  # _1 = PHI <-12(2), retval_15(4), id_42(6), _46(7)>
+  return _1;
+
+}
+
+
+
+;; Function msgctl_nolock.constprop.9 (msgctl_nolock.constprop.9, funcdef_no=2387, decl_uid=34573, cgraph_uid=567)
+
+msgctl_nolock.constprop.9 (struct ipc_namespace * ns, int msqid, int cmd, void * buf)
+{
+  uid_t right;
+  uid_t left;
+  uid_t right;
+  struct task_struct * pfo_ret__;
+  void * p;
+  int err;
+  struct msg_queue * msq;
+  struct msginfo msginfo;
+  int max_id;
+  struct msqid64_ds tbuf;
+  int success_return;
+  long unsigned int n;
+  long unsigned int ptr.3;
+  long unsigned int ptr.3;
+  struct task_struct * pfo_ret__;
+  int granted_mode;
+  unsigned int _5;
+  int _6;
+  unsigned int _7;
+  int _8;
+  unsigned int _9;
+  int _10;
+  struct rw_semaphore * _11;
+  int _12;
+  int _13;
+  int _14;
+  struct ipc_ids * _15;
+  int _18;
+  struct ipc_ids * _19;
+  long int _26;
+  struct ipc_ids * _29;
+  long int _35;
+  struct kern_ipc_perm * _38;
+  const struct cred * _40;
+  short unsigned int _41;
+  int _46;
+  int _47;
+  int _50;
+  int _51;
+  struct user_namespace * _52;
+  _Bool _53;
+  int _54;
+  long int _57;
+  long int _58;
+  long int _59;
+  long unsigned int _60;
+  long unsigned int _61;
+  long unsigned int _62;
+  int _63;
+  int _64;
+  long unsigned int _65;
+  int _66;
+  int _67;
+  int _69;
+  int _128;
+
+  <bb 2>:
+  switch (cmd_1(D)) <default: <L2>, case 2: <L1>, case 3: <L0>, case 11: <L1>, case 12: <L0>>
+
+<L0>:
+  if (buf_2(D) == 0B)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  goto <bb 11>;
+
+  <bb 5>:
+  err_3 = security_msg_queue_msgctl (0B, cmd_1(D));
+  if (err_3 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  memset (&msginfo, 0, 32);
+  _5 = ns_4(D)->msg_ctlmni;
+  _6 = (int) _5;
+  msginfo.msgmni = _6;
+  _7 = ns_4(D)->msg_ctlmax;
+  _8 = (int) _7;
+  msginfo.msgmax = _8;
+  _9 = ns_4(D)->msg_ctlmnb;
+  _10 = (int) _9;
+  msginfo.msgmnb = _10;
+  msginfo.msgssz = 16;
+  msginfo.msgseg = 65535;
+  _11 = &ns_4(D)->ids[1].rwsem;
+  down_read (_11);
+  if (cmd_1(D) == 12)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  _12 = ns_4(D)->ids[1].in_use;
+  msginfo.msgpool = _12;
+  _13 ={v} MEM[(const int *)ns_4(D) + 332B];
+  msginfo.msgmap = _13;
+  _14 ={v} MEM[(const int *)ns_4(D) + 328B];
+  msginfo.msgtql = _14;
+  goto <bb 9>;
+
+  <bb 8>:
+  msginfo.msgmap = 16384;
+  msginfo.msgpool = 512000;
+  msginfo.msgtql = 16384;
+
+  <bb 9>:
+  _15 = &ns_4(D)->ids[1];
+  max_id_16 = ipc_get_maxid (_15);
+  up_read (_11);
+  n_17 = _copy_to_user (buf_2(D), &msginfo, 32);
+  if (n_17 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  _18 = MAX_EXPR <max_id_16, 0>;
+
+  <bb 11>:
+  # _67 = PHI <-14(4), err_3(5), _18(10)>
+  msginfo ={v} {CLOBBER};
+  goto <bb 36> (<L2>);
+
+<L1>:
+  if (buf_2(D) == 0B)
+    goto <bb 13>;
+  else
+    goto <bb 14>;
+
+  <bb 13>:
+  goto <bb 33>;
+
+  <bb 14>:
+  memset (&tbuf, 0, 120);
+  __asm__ __volatile__("" :  :  : "memory");
+  if (cmd_1(D) == 11)
+    goto <bb 15>;
+  else
+    goto <bb 18>;
+
+  <bb 15>:
+  _19 = &ns_4(D)->ids[1];
+  msq_21 = ipc_obtain_object_idr (_19, msqid_20(D));
+  ptr.3_22 = (long unsigned int) msq_21;
+  if (ptr.3_22 > 18446744073709547520)
+    goto <bb 16>;
+  else
+    goto <bb 17>;
+
+  <bb 16>:
+  _26 = (long int) msq_21;
+  err_27 = (int) _26;
+  goto <bb 35>;
+
+  <bb 17>:
+  success_return_28 = msq_21->q_perm.id;
+  goto <bb 20>;
+
+  <bb 18>:
+  _29 = &ns_4(D)->ids[1];
+  msq_30 = ipc_obtain_object_check (_29, msqid_20(D));
+  ptr.3_31 = (long unsigned int) msq_30;
+  if (ptr.3_31 > 18446744073709547520)
+    goto <bb 19>;
+  else
+    goto <bb 20>;
+
+  <bb 19>:
+  _35 = (long int) msq_30;
+  err_36 = (int) _35;
+  goto <bb 35>;
+
+  <bb 20>:
+  # msq_37 = PHI <msq_21(17), msq_30(18)>
+  # success_return_68 = PHI <success_return_28(17), 0(18)>
+  _38 = &msq_37->q_perm;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___39 : "p" &current_task);
+  _40 = pfo_ret___39->cred;
+  left_130 = MEM[(const struct cred *)_40 + 20B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___126 : "p" &current_task);
+  p_127 = pfo_ret___126->audit_context;
+  if (p_127 == 0B)
+    goto <bb 22>;
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+  _128 = MEM[(int *)p_127];
+  if (_128 != 0)
+    goto <bb 22>;
+  else
+    goto <bb 37>;
+
+  <bb 22>:
+  _41 = MEM[(struct kern_ipc_perm *)msq_37].mode;
+  granted_mode_42 = (int) _41;
+  right_146 = MEM[(struct kern_ipc_perm *)msq_37 + 24B];
+  if (left_130 == right_146)
+    goto <bb 24>;
+  else
+    goto <bb 23>;
+
+  <bb 23>:
+  right_143 = MEM[(struct kern_ipc_perm *)msq_37 + 16B];
+  if (left_130 == right_143)
+    goto <bb 24>;
+  else
+    goto <bb 25>;
+
+  <bb 24>:
+  granted_mode_45 = granted_mode_42 >> 6;
+  goto <bb 28>;
+
+  <bb 25>:
+  _46 = in_group_p (_38->cgid);
+  if (_46 != 0)
+    goto <bb 26>;
+  else
+    goto <bb 27>;
+
+  <bb 26>:
+  granted_mode_48 = granted_mode_42 >> 3;
+  goto <bb 28>;
+
+  <bb 27>:
+  _47 = in_group_p (_38->gid);
+  if (_47 != 0)
+    goto <bb 26>;
+  else
+    goto <bb 28>;
+
+  <bb 28>:
+  # granted_mode_49 = PHI <granted_mode_45(24), granted_mode_42(27), granted_mode_48(26)>
+  _50 = ~granted_mode_49;
+  _51 = _50 & 4;
+  if (_51 != 0)
+    goto <bb 30>;
+  else
+    goto <bb 29>;
+
+  <bb 29>:
+  _54 = security_ipc_permission (_38, 292);
+  if (_54 != 0)
+    goto <bb 34>;
+  else
+    goto <bb 31>;
+
+  <bb 30>:
+  _52 = ns_4(D)->user_ns;
+  _53 = ns_capable (_52, 15);
+  if (_53 != 0)
+    goto <bb 29>;
+  else
+    goto <bb 34>;
+
+  <bb 31>:
+  err_56 = security_msg_queue_msgctl (msq_37, cmd_1(D));
+  if (err_56 != 0)
+    goto <bb 35>;
+  else
+    goto <bb 32>;
+
+  <bb 32>:
+  kernel_to_ipc64_perm (_38, &tbuf.msg_perm);
+  _57 = msq_37->q_stime;
+  tbuf.msg_stime = _57;
+  _58 = msq_37->q_rtime;
+  tbuf.msg_rtime = _58;
+  _59 = msq_37->q_ctime;
+  tbuf.msg_ctime = _59;
+  _60 = msq_37->q_cbytes;
+  tbuf.msg_cbytes = _60;
+  _61 = msq_37->q_qnum;
+  tbuf.msg_qnum = _61;
+  _62 = msq_37->q_qbytes;
+  tbuf.msg_qbytes = _62;
+  _63 = msq_37->q_lspid;
+  tbuf.msg_lspid = _63;
+  _64 = msq_37->q_lrpid;
+  tbuf.msg_lrpid = _64;
+  __asm__ __volatile__("" :  :  : "memory");
+  _65 = copy_msqid_to_user.constprop.12 (buf_2(D), &tbuf);
+  if (_65 != 0)
+    goto <bb 13>;
+  else
+    goto <bb 33>;
+
+  <bb 33>:
+  # _69 = PHI <-14(13), success_return_68(32)>
+  tbuf ={v} {CLOBBER};
+  goto <bb 36> (<L2>);
+
+  <bb 34>:
+
+  <bb 35>:
+  # err_70 = PHI <err_27(16), err_36(19), -13(34), err_56(31)>
+  tbuf ={v} {CLOBBER};
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # _66 = PHI <-22(2), _67(11), _69(33), err_70(35)>
+<L2>:
+  return _66;
+
+  <bb 37>:
+  __audit_ipc_obj (_38);
+  goto <bb 22>;
+
+}
+
+
+
+;; Function SyS_msgget (SyS_msgget, funcdef_no=2349, decl_uid=32907, cgraph_uid=2350)
+
+SyS_msgget (long int key, long int msgflg)
+{
+  struct ipc_namespace * ns;
+  struct ipc_params msg_params;
+  struct task_struct * pfo_ret__;
+  static const struct ipc_ops msg_ops = {.getnew=newque, .associate=msg_security};
+  int _2;
+  int _4;
+  struct nsproxy * _9;
+  struct ipc_ids * _11;
+  int _12;
+  long int _13;
+
+  <bb 2>:
+  _2 = (int) msgflg_1(D);
+  _4 = (int) key_3(D);
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___8 : "p" &current_task);
+  _9 = pfo_ret___8->nsproxy;
+  ns_10 = _9->ipc_ns;
+  msg_params.key = _4;
+  msg_params.flg = _2;
+  _11 = &ns_10->ids[1];
+  _12 = ipcget (ns_10, _11, &msg_ops, &msg_params);
+  _13 = (long int) _12;
+  msg_params ={v} {CLOBBER};
+  return _13;
+
+}
+
+
+
+;; Function SyS_msgctl (SyS_msgctl, funcdef_no=2355, decl_uid=32994, cgraph_uid=2357)
+
+SyS_msgctl (long int msqid, long int cmd, long int buf)
+{
+  struct ipc_namespace * ns;
+  struct task_struct * pfo_ret__;
+  struct msqid_ds * buf.2;
+  int _4;
+  int _6;
+  _Bool _10;
+  _Bool _11;
+  _Bool _12;
+  struct nsproxy * _14;
+  unsigned int _16;
+  long int _17;
+  long unsigned int _18;
+  long unsigned int _19;
+  long unsigned int _20;
+  long unsigned int _22;
+  int _24;
+  long int _25;
+  int _26;
+  long int _27;
+  long int _28;
+
+  <bb 2>:
+  buf.2_2 = (struct msqid_ds *) buf_1(D);
+  _4 = (int) cmd_3(D);
+  _6 = (int) msqid_5(D);
+  _10 = _6 < 0;
+  _11 = _4 < 0;
+  _12 = _11 | _10;
+  if (_12 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___13 : "p" &current_task);
+  _14 = pfo_ret___13->nsproxy;
+  ns_15 = _14->ipc_ns;
+  _16 = (unsigned int) cmd_3(D);
+  if (_16 > 12)
+    goto <bb 8>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _17 = cmd_3(D) & 4294967295;
+  _18 = (long unsigned int) _17;
+  _19 = 1 << _18;
+  _20 = _19 & 6156;
+  if (_20 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  _22 = _19 & 3;
+  if (_22 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 6>:
+  _24 = msgctl_nolock.constprop.9 (ns_15, _6, _4, buf.2_2);
+  _25 = (long int) _24;
+  goto <bb 8>;
+
+  <bb 7>:
+  _26 = msgctl_down.constprop.10 (ns_15, _6, _4, buf.2_2);
+  _27 = (long int) _26;
+
+  <bb 8>:
+  # _28 = PHI <-22(3), _27(7), _25(6), -22(2), -22(5)>
+  return _28;
+
+}
+
+
+
+;; Function do_msgsnd (do_msgsnd, funcdef_no=2359, decl_uid=6162, cgraph_uid=2361)
+
+do_msgsnd (int msqid, long int mtype, void * mtext, size_t msgsz, int msgflg)
+{
+  uid_t right;
+  uid_t left;
+  uid_t right;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  void * p;
+  struct msg_receiver * msr;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  int granted_mode;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.3;
+  long unsigned int ptr.3;
+  struct task_struct * pfo_ret__;
+  struct msg_sender s;
+  struct ipc_namespace * ns;
+  int err;
+  struct msg_msg * msg;
+  struct msg_queue * msq;
+  long int _6;
+  struct nsproxy * _14;
+  unsigned int _16;
+  long unsigned int _17;
+  struct kern_ipc_perm * _34;
+  _Bool _37;
+  long unsigned int _42;
+  long unsigned int _43;
+  long unsigned int _44;
+  long unsigned int _45;
+  long unsigned int _46;
+  long unsigned int _52;
+  long int _53;
+  struct list_head * _56;
+  struct list_head * _57;
+  long unsigned int _59;
+  long unsigned int _60;
+  long unsigned int _62;
+  long unsigned int _63;
+  struct atomic_t * _65;
+  int _66;
+  struct atomic_t * _68;
+  int _70;
+  int _73;
+  _Bool _80;
+  long int _96;
+  long int _101;
+  const struct cred * _103;
+  short unsigned int _104;
+  int _109;
+  int _110;
+  int _113;
+  int _114;
+  struct user_namespace * _115;
+  _Bool _116;
+  int _117;
+  long int pretmp_123;
+  int _124;
+  long int _125;
+  int _127;
+  struct task_struct * _128;
+  int _129;
+  struct list_head * _130;
+  long int _131;
+  long unsigned int _132;
+  long unsigned int _133;
+  struct task_struct * _134;
+  struct task_struct * _135;
+  long unsigned int _137;
+  long int _138;
+  struct task_struct * _139;
+  long int * pretmp_149;
+  long int prephitmp_151;
+  struct ipc_ids * _174;
+  struct list_head * _176;
+  int _179;
+  struct list_head * _194;
+  struct list_head * _196;
+  struct list_head * _199;
+  struct list_head * _201;
+  struct list_head * _202;
+  void * _203;
+  long unsigned int _204;
+  long unsigned int _205;
+  long unsigned int _206;
+  int _210;
+  struct task_struct * _211;
+  struct pid * _212;
+  pid_t _213;
+  struct list_head * _214;
+  struct list_head * _215;
+  pid_t _216;
+  struct list_head * _217;
+  long int pretmp_227;
+  long int prephitmp_241;
+  long int prephitmp_263;
+
+  <bb 2>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___91 : "p" &current_task);
+  _14 = pfo_ret___91->nsproxy;
+  ns_15 = _14->ipc_ns;
+  _16 = ns_15->msg_ctlmax;
+  _17 = (long unsigned int) _16;
+  if (_17 < msgsz_18(D))
+    goto <bb 50>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  if (msqid_21(D) < 0)
+    goto <bb 50>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  if (mtype_24(D) <= 0)
+    goto <bb 50>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  msg_27 = load_msg (mtext_25(D), msgsz_18(D));
+  ptr.3_92 = (long unsigned int) msg_27;
+  if (ptr.3_92 > 18446744073709547520)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _96 = (long int) msg_27;
+  goto <bb 50>;
+
+  <bb 7>:
+  msg_27->m_type = mtype_24(D);
+  msg_27->m_ts = msgsz_18(D);
+  __asm__ __volatile__("" :  :  : "memory");
+  _174 = &ns_15->ids[1];
+  msq_175 = ipc_obtain_object_check (_174, msqid_21(D));
+  ptr.3_97 = (long unsigned int) msq_175;
+  if (ptr.3_97 > 18446744073709547520)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  _101 = (long int) msq_175;
+  err_33 = (int) _101;
+  pretmp_123 = (long int) err_33;
+  goto <bb 47> (out_unlock1);
+
+  <bb 9>:
+  _34 = &msq_175->q_perm;
+  _raw_spin_lock (_34);
+
+  <bb 10>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___102 : "p" &current_task);
+  _103 = pfo_ret___102->cred;
+  left_190 = MEM[(const struct cred *)_103 + 20B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___177 : "p" &current_task);
+  p_178 = pfo_ret___177->audit_context;
+  if (p_178 == 0B)
+    goto <bb 12>;
+  else
+    goto <bb 11>;
+
+  <bb 11>:
+  _179 = MEM[(int *)p_178];
+  if (_179 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 51>;
+
+  <bb 12>:
+  _104 = MEM[(struct kern_ipc_perm *)msq_175].mode;
+  granted_mode_105 = (int) _104;
+  right_231 = MEM[(struct kern_ipc_perm *)msq_175 + 24B];
+  if (left_190 == right_231)
+    goto <bb 14>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  right_228 = MEM[(struct kern_ipc_perm *)msq_175 + 16B];
+  if (left_190 == right_228)
+    goto <bb 14>;
+  else
+    goto <bb 15>;
+
+  <bb 14>:
+  granted_mode_108 = granted_mode_105 >> 6;
+  goto <bb 18>;
+
+  <bb 15>:
+  _109 = in_group_p (_34->cgid);
+  if (_109 != 0)
+    goto <bb 16>;
+  else
+    goto <bb 17>;
+
+  <bb 16>:
+  granted_mode_111 = granted_mode_105 >> 3;
+  goto <bb 18>;
+
+  <bb 17>:
+  _110 = in_group_p (_34->gid);
+  if (_110 != 0)
+    goto <bb 16>;
+  else
+    goto <bb 18>;
+
+  <bb 18>:
+  # granted_mode_112 = PHI <granted_mode_108(14), granted_mode_105(17), granted_mode_111(16)>
+  _113 = ~granted_mode_112;
+  _114 = _113 & 2;
+  if (_114 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  _117 = security_ipc_permission (_34, 146);
+  if (_117 != 0)
+    goto <bb 34>;
+  else
+    goto <bb 21>;
+
+  <bb 20>:
+  _115 = ns_15->user_ns;
+  _116 = ns_capable (_115, 15);
+  if (_116 != 0)
+    goto <bb 19>;
+  else
+    goto <bb 34>;
+
+  <bb 21>:
+  _37 = MEM[(struct kern_ipc_perm *)msq_175 + 4B];
+  if (_37 != 0)
+    goto <bb 22>;
+  else
+    goto <bb 23>;
+
+  <bb 22>:
+  goto <bb 35>;
+
+  <bb 23>:
+  err_41 = security_msg_queue_msgsnd (msq_175, msg_27, msgflg_39(D));
+  if (err_41 != 0)
+    goto <bb 24>;
+  else
+    goto <bb 25>;
+
+  <bb 24>:
+  # err_142 = PHI <err_41(23)>
+  pretmp_227 = (long int) err_142;
+  goto <bb 35>;
+
+  <bb 25>:
+  _42 = msq_175->q_cbytes;
+  _43 = msgsz_18(D) + _42;
+  _44 = msq_175->q_qbytes;
+  if (_43 <= _44)
+    goto <bb 26>;
+  else
+    goto <bb 27>;
+
+  <bb 26>:
+  _45 = msq_175->q_qnum;
+  _46 = _45 + 1;
+  if (_44 >= _46)
+    goto <bb 36>;
+  else
+    goto <bb 27>;
+
+  <bb 27>:
+  _70 = msgflg_39(D) & 2048;
+  if (_70 != 0)
+    goto <bb 35>;
+  else
+    goto <bb 28>;
+
+  <bb 28>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___192 : "p" &current_task);
+  s.tsk = pfo_ret___192;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___193 : "p" &current_task);
+  pfo_ret___193->state ={v} 1;
+  _194 = &msq_175->q_senders;
+  _196 = MEM[(struct list_head *)msq_175 + 144B].prev;
+  MEM[(struct list_head *)msq_175 + 144B].prev = &s.list;
+  MEM[(struct list_head *)&s].next = _194;
+  MEM[(struct list_head *)&s].prev = _196;
+  _196->next = &s.list;
+  _73 = ipc_rcu_getref (msq_175);
+  if (_73 == 0)
+    goto <bb 22>;
+  else
+    goto <bb 29>;
+
+  <bb 29>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_175] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  schedule ();
+  __asm__ __volatile__("" :  :  : "memory");
+  _raw_spin_lock (_34);
+  ipc_rcu_putref (msq_175, ipc_rcu_free);
+  _80 = MEM[(struct kern_ipc_perm *)msq_175 + 4B];
+  if (_80 != 0)
+    goto <bb 22>;
+  else
+    goto <bb 30>;
+
+  <bb 30>:
+  _201 = s.list.next;
+  if (_201 != 0B)
+    goto <bb 31>;
+  else
+    goto <bb 32>;
+
+  <bb 31>:
+  _202 = MEM[(struct list_head *)&s].prev;
+  _201->prev = _202;
+  _202->next = _201;
+  MEM[(struct list_head *)&s].next = -2401263026318606080B;
+  MEM[(struct list_head *)&s].prev = -2401263026318605824B;
+
+  <bb 32>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___119 : "p" &current_task);
+  _203 = pfo_ret___119->stack;
+  _204 ={v} MEM[(const long unsigned int *)_203 + 8B];
+  _205 = _204 >> 2;
+  _206 = _205 & 1;
+  _210 = (int) _206;
+  if (_210 != 0)
+    goto <bb 35>;
+  else
+    goto <bb 33>;
+
+  <bb 33>:
+  s ={v} {CLOBBER};
+  goto <bb 10>;
+
+  <bb 34>:
+
+  <bb 35>:
+  # prephitmp_151 = PHI <-13(34), -43(22), pretmp_227(24), -11(27), -514(32)>
+  s ={v} {CLOBBER};
+  goto <bb 46> (out_unlock0);
+
+  <bb 36>:
+  s ={v} {CLOBBER};
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___120 : "p" &current_task);
+  _211 = pfo_ret___120->group_leader;
+  _212 = _211->pids[0].pid;
+  _213 = pid_vnr (_212);
+  msq_175->q_lspid = _213;
+  _52 = get_seconds ();
+  _53 = (long int) _52;
+  msq_175->q_stime = _53;
+  msr_121 = msq_175->q_receivers.next;
+  msr_122 = msr_121->r_list.next;
+  _176 = &msr_121->r_list;
+  _199 = &msq_175->q_receivers;
+  if (_176 != _199)
+    goto <bb 37>;
+  else
+    goto <bb 52>;
+
+  <bb 37>:
+  pretmp_149 = &MEM[(struct msg_msg *)msg_27 + 16B];
+
+  <bb 38>:
+  # msr_84 = PHI <msr_224(45), msr_121(37)>
+  # msr_224 = PHI <msr_141(45), msr_122(37)>
+  _124 = msr_84->r_mode;
+  _125 = msr_84->r_msgtype;
+  _127 = testmsg.isra.6 (pretmp_149, _125, _124);
+  if (_127 != 0)
+    goto <bb 39>;
+  else
+    goto <bb 43>;
+
+  <bb 39>:
+  _128 = msr_84->r_tsk;
+  _129 = security_msg_queue_msgrcv (msq_175, msg_27, _128, _125, _124);
+  if (_129 == 0)
+    goto <bb 40>;
+  else
+    goto <bb 43>;
+
+  <bb 40>:
+  _214 = MEM[(struct list_head *)msr_84].next;
+  _215 = MEM[(struct list_head *)msr_84].prev;
+  _214->prev = _215;
+  _215->next = _214;
+  MEM[(struct list_head *)msr_84].next = -2401263026318606080B;
+  MEM[(struct list_head *)msr_84].prev = -2401263026318605824B;
+  _131 = msr_84->r_maxsize;
+  _132 = (long unsigned int) _131;
+  _133 = msg_27->m_ts;
+  if (_132 < _133)
+    goto <bb 41>;
+  else
+    goto <bb 42>;
+
+  <bb 41>:
+  msr_84->r_msg ={v} 0B;
+  _134 = msr_84->r_tsk;
+  wake_up_process (_134);
+  __asm__ __volatile__("" :  :  : "memory");
+  msr_84->r_msg ={v} -7B;
+  goto <bb 44>;
+
+  <bb 42>:
+  # msr_23 = PHI <msr_84(40)>
+  msr_23->r_msg ={v} 0B;
+  _135 = msr_23->r_tsk;
+  _216 = __task_pid_nr_ns (_135, 0, 0B);
+  msq_175->q_lrpid = _216;
+  _137 = get_seconds ();
+  _138 = (long int) _137;
+  msq_175->q_rtime = _138;
+  _139 = msr_23->r_tsk;
+  wake_up_process (_139);
+  __asm__ __volatile__("" :  :  : "memory");
+  msr_23->r_msg ={v} msg_27;
+  goto <bb 46> (out_unlock0);
+
+  <bb 43>:
+
+  <bb 44>:
+  msr_141 = msr_224->r_list.next;
+  _130 = &msr_224->r_list;
+  if (_130 != _199)
+    goto <bb 45>;
+  else
+    goto <bb 52>;
+
+  <bb 45>:
+  goto <bb 38>;
+
+  # msg_1 = PHI <msg_27(35), 0B(52), 0B(42)>
+  # prephitmp_241 = PHI <prephitmp_151(35), 0(52), 0(42)>
+out_unlock0:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_175] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # msg_2 = PHI <msg_27(8), msg_1(46)>
+  # prephitmp_263 = PHI <pretmp_123(8), prephitmp_241(46)>
+out_unlock1:
+  __asm__ __volatile__("" :  :  : "memory");
+  if (msg_2 != 0B)
+    goto <bb 48>;
+  else
+    goto <bb 49>;
+
+  <bb 48>:
+  free_msg (msg_2);
+
+  <bb 49>:
+
+  <bb 50>:
+  # _6 = PHI <-22(3), prephitmp_263(49), _96(6), -22(2), -22(4)>
+  return _6;
+
+  <bb 51>:
+  __audit_ipc_obj (_34);
+  goto <bb 12>;
+
+  <bb 52>:
+  _56 = &msq_175->q_messages;
+  _57 = &msg_27->m_list;
+  _217 = MEM[(struct list_head *)msq_175 + 112B].prev;
+  MEM[(struct list_head *)msq_175 + 112B].prev = _57;
+  MEM[(struct list_head *)msg_27].next = _56;
+  MEM[(struct list_head *)msg_27].prev = _217;
+  _217->next = _57;
+  _59 = msq_175->q_cbytes;
+  _60 = msgsz_18(D) + _59;
+  msq_175->q_cbytes = _60;
+  _62 = msq_175->q_qnum;
+  _63 = _62 + 1;
+  msq_175->q_qnum = _63;
+  _65 = &ns_15->msg_bytes;
+  _66 = (int) msgsz_18(D);
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; addl %1,%0" : "=m" _65->counter : "ir" _66, "m" _65->counter);
+  _68 = &ns_15->msg_hdrs;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; incl %0" : "=m" _68->counter : "m" _68->counter);
+  goto <bb 46> (out_unlock0);
+
+}
+
+
+
+;; Function SyS_msgsnd (SyS_msgsnd, funcdef_no=2360, decl_uid=33080, cgraph_uid=2363)
+
+SyS_msgsnd (long int msqid, long int msgp, long int msgsz, long int msgflg)
+{
+  uid_t right;
+  uid_t left;
+  uid_t right;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  void * p;
+  long unsigned int __val_gu.22;
+  long int mtype;
+  int __ret_gu;
+  register long unsigned int __val_gu __asm__ (*%rdx);
+  struct msg_receiver * msr;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  int granted_mode;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.3;
+  long unsigned int ptr.3;
+  struct task_struct * pfo_ret__;
+  struct msg_sender s;
+  struct ipc_namespace * ns;
+  int err;
+  struct msg_msg * msg;
+  struct msg_queue * msq;
+  struct msgbuf * msgp.21;
+  long unsigned int msgsz.20;
+  int _2;
+  int _8;
+  __kernel_long_t * _12;
+  char[1] * _16;
+  struct nsproxy * _18;
+  unsigned int _20;
+  long unsigned int _21;
+  _Bool _23;
+  _Bool _24;
+  _Bool _25;
+  long int _31;
+  long int _37;
+  struct kern_ipc_perm * _39;
+  const struct cred * _41;
+  short unsigned int _42;
+  int _47;
+  int _48;
+  int _51;
+  int _52;
+  struct user_namespace * _53;
+  _Bool _54;
+  int _55;
+  long int prephitmp_56;
+  _Bool _57;
+  long unsigned int _60;
+  long unsigned int _61;
+  long unsigned int _62;
+  long unsigned int _63;
+  long unsigned int _64;
+  int _65;
+  int _66;
+  _Bool _67;
+  struct list_head * _70;
+  struct list_head * _72;
+  long unsigned int _73;
+  long int _74;
+  long int * pretmp_77;
+  int _78;
+  long int _79;
+  int _81;
+  struct task_struct * _82;
+  int _83;
+  struct list_head * _84;
+  long int _85;
+  long unsigned int _86;
+  long unsigned int _87;
+  struct task_struct * _88;
+  struct task_struct * _89;
+  long unsigned int _91;
+  long int _92;
+  struct task_struct * _93;
+  long int prephitmp_94;
+  struct list_head * _98;
+  struct list_head * _99;
+  long unsigned int _100;
+  long unsigned int _101;
+  long unsigned int _102;
+  long unsigned int _103;
+  struct atomic_t * _104;
+  int _105;
+  struct atomic_t * _106;
+  long int _110;
+  struct ipc_ids * _115;
+  int _120;
+  struct list_head * _135;
+  struct list_head * _137;
+  struct list_head * _142;
+  struct list_head * _143;
+  void * _144;
+  long unsigned int _145;
+  long unsigned int _146;
+  long unsigned int _147;
+  int _151;
+  struct task_struct * _152;
+  struct pid * _153;
+  pid_t _154;
+  struct list_head * _155;
+  struct list_head * _156;
+  pid_t _157;
+  struct list_head * _158;
+  long int pretmp_170;
+  long int prephitmp_185;
+  long int pretmp_213;
+
+  <bb 2>:
+  msgsz.20_4 = (long unsigned int) msgsz_3(D);
+  msgp.21_6 = (struct msgbuf *) msgp_5(D);
+  _12 = &msgp.21_6->mtype;
+  __asm__ __volatile__("call __get_user_%P3" : "=a" __ret_gu_13, "=r" __val_gu : "0" _12, "i" 8);
+  __val_gu.22_14 = __val_gu;
+  if (__ret_gu_13 != 0)
+    goto <bb 51>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___17 : "p" &current_task);
+  _18 = pfo_ret___17->nsproxy;
+  ns_19 = _18->ipc_ns;
+  _20 = ns_19->msg_ctlmax;
+  _21 = (long unsigned int) _20;
+  if (msgsz.20_4 > _21)
+    goto <bb 51>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _8 = (int) msqid_7(D);
+  _23 = msgsz_3(D) < 0;
+  _24 = _8 < 0;
+  _25 = _23 | _24;
+  if (_25 != 0)
+    goto <bb 51>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  mtype_15 = (long int) __val_gu.22_14;
+  if (mtype_15 <= 0)
+    goto <bb 51>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _16 = &msgp.21_6->mtext;
+  msg_26 = load_msg (_16, msgsz.20_4);
+  ptr.3_27 = (long unsigned int) msg_26;
+  if (ptr.3_27 > 18446744073709547520)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  _31 = (long int) msg_26;
+  goto <bb 51>;
+
+  <bb 8>:
+  msg_26->m_type = mtype_15;
+  msg_26->m_ts = msgsz.20_4;
+  __asm__ __volatile__("" :  :  : "memory");
+  _115 = &ns_19->ids[1];
+  msq_116 = ipc_obtain_object_check (_115, _8);
+  ptr.3_33 = (long unsigned int) msq_116;
+  if (ptr.3_33 > 18446744073709547520)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  _37 = (long int) msq_116;
+  err_38 = (int) _37;
+  pretmp_213 = (long int) err_38;
+  goto <bb 48> (out_unlock1);
+
+  <bb 10>:
+  _2 = (int) msgflg_1(D);
+  _39 = &msq_116->q_perm;
+  _raw_spin_lock (_39);
+
+  <bb 11>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___40 : "p" &current_task);
+  _41 = pfo_ret___40->cred;
+  left_150 = MEM[(const struct cred *)_41 + 20B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___118 : "p" &current_task);
+  p_119 = pfo_ret___118->audit_context;
+  if (p_119 == 0B)
+    goto <bb 13>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  _120 = MEM[(int *)p_119];
+  if (_120 != 0)
+    goto <bb 13>;
+  else
+    goto <bb 52>;
+
+  <bb 13>:
+  _42 = MEM[(struct kern_ipc_perm *)msq_116].mode;
+  granted_mode_43 = (int) _42;
+  right_191 = MEM[(struct kern_ipc_perm *)msq_116 + 24B];
+  if (left_150 == right_191)
+    goto <bb 15>;
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  right_188 = MEM[(struct kern_ipc_perm *)msq_116 + 16B];
+  if (left_150 == right_188)
+    goto <bb 15>;
+  else
+    goto <bb 16>;
+
+  <bb 15>:
+  granted_mode_46 = granted_mode_43 >> 6;
+  goto <bb 19>;
+
+  <bb 16>:
+  _47 = in_group_p (_39->cgid);
+  if (_47 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 18>;
+
+  <bb 17>:
+  granted_mode_49 = granted_mode_43 >> 3;
+  goto <bb 19>;
+
+  <bb 18>:
+  _48 = in_group_p (_39->gid);
+  if (_48 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  # granted_mode_50 = PHI <granted_mode_46(15), granted_mode_43(18), granted_mode_49(17)>
+  _51 = ~granted_mode_50;
+  _52 = _51 & 2;
+  if (_52 != 0)
+    goto <bb 21>;
+  else
+    goto <bb 20>;
+
+  <bb 20>:
+  _55 = security_ipc_permission (_39, 146);
+  if (_55 != 0)
+    goto <bb 35>;
+  else
+    goto <bb 22>;
+
+  <bb 21>:
+  _53 = ns_19->user_ns;
+  _54 = ns_capable (_53, 15);
+  if (_54 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 35>;
+
+  <bb 22>:
+  _57 = MEM[(struct kern_ipc_perm *)msq_116 + 4B];
+  if (_57 != 0)
+    goto <bb 23>;
+  else
+    goto <bb 24>;
+
+  <bb 23>:
+  goto <bb 36>;
+
+  <bb 24>:
+  err_59 = security_msg_queue_msgsnd (msq_116, msg_26, _2);
+  if (err_59 != 0)
+    goto <bb 25>;
+  else
+    goto <bb 26>;
+
+  <bb 25>:
+  # err_126 = PHI <err_59(24)>
+  pretmp_170 = (long int) err_126;
+  goto <bb 36>;
+
+  <bb 26>:
+  _60 = msq_116->q_cbytes;
+  _61 = msgsz.20_4 + _60;
+  _62 = msq_116->q_qbytes;
+  if (_61 <= _62)
+    goto <bb 27>;
+  else
+    goto <bb 28>;
+
+  <bb 27>:
+  _63 = msq_116->q_qnum;
+  _64 = _63 + 1;
+  if (_62 >= _64)
+    goto <bb 37>;
+  else
+    goto <bb 28>;
+
+  <bb 28>:
+  _65 = _2 & 2048;
+  if (_65 != 0)
+    goto <bb 36>;
+  else
+    goto <bb 29>;
+
+  <bb 29>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___133 : "p" &current_task);
+  s.tsk = pfo_ret___133;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___134 : "p" &current_task);
+  pfo_ret___134->state ={v} 1;
+  _135 = &msq_116->q_senders;
+  _137 = MEM[(struct list_head *)msq_116 + 144B].prev;
+  MEM[(struct list_head *)msq_116 + 144B].prev = &s.list;
+  MEM[(struct list_head *)&s].next = _135;
+  MEM[(struct list_head *)&s].prev = _137;
+  _137->next = &s.list;
+  _66 = ipc_rcu_getref (msq_116);
+  if (_66 == 0)
+    goto <bb 23>;
+  else
+    goto <bb 30>;
+
+  <bb 30>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_116] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  schedule ();
+  __asm__ __volatile__("" :  :  : "memory");
+  _raw_spin_lock (_39);
+  ipc_rcu_putref (msq_116, ipc_rcu_free);
+  _67 = MEM[(struct kern_ipc_perm *)msq_116 + 4B];
+  if (_67 != 0)
+    goto <bb 23>;
+  else
+    goto <bb 31>;
+
+  <bb 31>:
+  _142 = s.list.next;
+  if (_142 != 0B)
+    goto <bb 32>;
+  else
+    goto <bb 33>;
+
+  <bb 32>:
+  _143 = MEM[(struct list_head *)&s].prev;
+  _142->prev = _143;
+  _143->next = _142;
+  MEM[(struct list_head *)&s].next = -2401263026318606080B;
+  MEM[(struct list_head *)&s].prev = -2401263026318605824B;
+
+  <bb 33>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___69 : "p" &current_task);
+  _144 = pfo_ret___69->stack;
+  _145 ={v} MEM[(const long unsigned int *)_144 + 8B];
+  _146 = _145 >> 2;
+  _147 = _146 & 1;
+  _151 = (int) _147;
+  if (_151 != 0)
+    goto <bb 36>;
+  else
+    goto <bb 34>;
+
+  <bb 34>:
+  s ={v} {CLOBBER};
+  goto <bb 11>;
+
+  <bb 35>:
+
+  <bb 36>:
+  # prephitmp_94 = PHI <-13(35), -43(23), pretmp_170(25), -11(28), -514(33)>
+  s ={v} {CLOBBER};
+  goto <bb 47> (out_unlock0);
+
+  <bb 37>:
+  s ={v} {CLOBBER};
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___71 : "p" &current_task);
+  _152 = pfo_ret___71->group_leader;
+  _153 = _152->pids[0].pid;
+  _154 = pid_vnr (_153);
+  msq_116->q_lspid = _154;
+  _73 = get_seconds ();
+  _74 = (long int) _73;
+  msq_116->q_stime = _74;
+  msr_75 = msq_116->q_receivers.next;
+  msr_76 = msr_75->r_list.next;
+  _70 = &msr_75->r_list;
+  _72 = &msq_116->q_receivers;
+  if (_70 != _72)
+    goto <bb 38>;
+  else
+    goto <bb 53>;
+
+  <bb 38>:
+  pretmp_77 = &MEM[(struct msg_msg *)msg_26 + 16B];
+
+  <bb 39>:
+  # msr_114 = PHI <msr_139(46), msr_75(38)>
+  # msr_139 = PHI <msr_95(46), msr_76(38)>
+  _78 = msr_114->r_mode;
+  _79 = msr_114->r_msgtype;
+  _81 = testmsg.isra.6 (pretmp_77, _79, _78);
+  if (_81 != 0)
+    goto <bb 40>;
+  else
+    goto <bb 44>;
+
+  <bb 40>:
+  _82 = msr_114->r_tsk;
+  _83 = security_msg_queue_msgrcv (msq_116, msg_26, _82, _79, _78);
+  if (_83 == 0)
+    goto <bb 41>;
+  else
+    goto <bb 44>;
+
+  <bb 41>:
+  _155 = MEM[(struct list_head *)msr_114].next;
+  _156 = MEM[(struct list_head *)msr_114].prev;
+  _155->prev = _156;
+  _156->next = _155;
+  MEM[(struct list_head *)msr_114].next = -2401263026318606080B;
+  MEM[(struct list_head *)msr_114].prev = -2401263026318605824B;
+  _85 = msr_114->r_maxsize;
+  _86 = (long unsigned int) _85;
+  _87 = msg_26->m_ts;
+  if (_86 < _87)
+    goto <bb 42>;
+  else
+    goto <bb 43>;
+
+  <bb 42>:
+  msr_114->r_msg ={v} 0B;
+  _88 = msr_114->r_tsk;
+  wake_up_process (_88);
+  __asm__ __volatile__("" :  :  : "memory");
+  msr_114->r_msg ={v} -7B;
+  goto <bb 45>;
+
+  <bb 43>:
+  # msr_125 = PHI <msr_114(41)>
+  msr_125->r_msg ={v} 0B;
+  _89 = msr_125->r_tsk;
+  _157 = __task_pid_nr_ns (_89, 0, 0B);
+  msq_116->q_lrpid = _157;
+  _91 = get_seconds ();
+  _92 = (long int) _91;
+  msq_116->q_rtime = _92;
+  _93 = msr_125->r_tsk;
+  wake_up_process (_93);
+  __asm__ __volatile__("" :  :  : "memory");
+  msr_125->r_msg ={v} msg_26;
+  goto <bb 47> (out_unlock0);
+
+  <bb 44>:
+
+  <bb 45>:
+  msr_95 = msr_139->r_list.next;
+  _84 = &msr_139->r_list;
+  if (_72 != _84)
+    goto <bb 46>;
+  else
+    goto <bb 53>;
+
+  <bb 46>:
+  goto <bb 39>;
+
+  # msg_112 = PHI <msg_26(36), 0B(43), 0B(53)>
+  # prephitmp_185 = PHI <prephitmp_94(36), 0(43), 0(53)>
+out_unlock0:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_116] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # msg_107 = PHI <msg_26(9), msg_112(47)>
+  # prephitmp_56 = PHI <pretmp_213(9), prephitmp_185(47)>
+out_unlock1:
+  __asm__ __volatile__("" :  :  : "memory");
+  if (msg_107 != 0B)
+    goto <bb 49>;
+  else
+    goto <bb 50>;
+
+  <bb 49>:
+  free_msg (msg_107);
+
+  <bb 50>:
+
+  <bb 51>:
+  # _110 = PHI <-14(2), _31(7), -22(4), prephitmp_56(50), -22(3), -22(5)>
+  return _110;
+
+  <bb 52>:
+  __audit_ipc_obj (_39);
+  goto <bb 13>;
+
+  <bb 53>:
+  _98 = &msq_116->q_messages;
+  _99 = &msg_26->m_list;
+  _158 = MEM[(struct list_head *)msq_116 + 112B].prev;
+  MEM[(struct list_head *)msq_116 + 112B].prev = _99;
+  MEM[(struct list_head *)msg_26].next = _98;
+  MEM[(struct list_head *)msg_26].prev = _158;
+  _158->next = _99;
+  _100 = msq_116->q_cbytes;
+  _101 = msgsz.20_4 + _100;
+  msq_116->q_cbytes = _101;
+  _102 = msq_116->q_qnum;
+  _103 = _102 + 1;
+  msq_116->q_qnum = _103;
+  _104 = &ns_19->msg_bytes;
+  _105 = (int) msgsz_3(D);
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; addl %1,%0" : "=m" _104->counter : "ir" _105, "m" _104->counter);
+  _106 = &ns_19->msg_hdrs;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; incl %0" : "=m" _106->counter : "m" _106->counter);
+  goto <bb 47> (out_unlock0);
+
+}
+
+
+
+;; Function ipcperms (ipcperms, funcdef_no=2367, decl_uid=32492, cgraph_uid=2370)
+
+ipcperms (struct ipc_namespace * ns, struct kern_ipc_perm * ipcp, short int flag)
+{
+  uid_t right;
+  uid_t left;
+  uid_t right;
+  struct task_struct * pfo_ret__;
+  void * p;
+  struct task_struct * pfo_ret__;
+  int granted_mode;
+  int _2;
+  const struct cred * _8;
+  short int _13;
+  short int _14;
+  short int _15;
+  short int _16;
+  short unsigned int _18;
+  int _23;
+  int _25;
+  int _28;
+  int _29;
+  int _30;
+  struct user_namespace * _32;
+  _Bool _34;
+  int _35;
+  int _37;
+  int _42;
+  short int _60;
+
+  <bb 2>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___39 : "p" &current_task);
+  _8 = pfo_ret___39->cred;
+  left_38 = MEM[(const struct cred *)_8 + 20B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___40 : "p" &current_task);
+  p_41 = pfo_ret___40->audit_context;
+  if (p_41 == 0B)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _42 = MEM[(int *)p_41];
+  if (_42 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 14>;
+
+  <bb 4>:
+  _13 = flag_12(D) >> 6;
+  _14 = flag_12(D) >> 3;
+  _15 = _13 | _14;
+  _16 = _15 | flag_12(D);
+  _18 = ipcp_10(D)->mode;
+  granted_mode_19 = (int) _18;
+  right_59 = MEM[(struct kern_ipc_perm *)ipcp_10(D) + 24B];
+  if (left_38 == right_59)
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  right_56 = MEM[(struct kern_ipc_perm *)ipcp_10(D) + 16B];
+  if (left_38 == right_56)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  granted_mode_27 = granted_mode_19 >> 6;
+  goto <bb 10>;
+
+  <bb 7>:
+  _23 = in_group_p (ipcp_10(D)->cgid);
+  if (_23 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  granted_mode_26 = granted_mode_19 >> 3;
+  goto <bb 10>;
+
+  <bb 9>:
+  _25 = in_group_p (ipcp_10(D)->gid);
+  if (_25 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  # granted_mode_1 = PHI <granted_mode_27(6), granted_mode_19(9), granted_mode_26(8)>
+  _28 = ~granted_mode_1;
+  _60 = _16 & 7;
+  _29 = (int) _60;
+  _30 = _28 & _29;
+  if (_30 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 11>;
+
+  <bb 11>:
+  _35 = (int) flag_12(D);
+  _37 = security_ipc_permission (ipcp_10(D), _35);
+  goto <bb 13>;
+
+  <bb 12>:
+  _32 = ns_31(D)->user_ns;
+  _34 = ns_capable (_32, 15);
+  if (_34 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  # _2 = PHI <-1(12), _37(11)>
+  return _2;
+
+  <bb 14>:
+  __audit_ipc_obj (ipcp_10(D));
+  goto <bb 4>;
+
+}
+
+
+
+;; Function do_msgrcv (do_msgrcv, funcdef_no=2368, decl_uid=6172, cgraph_uid=2371)
+
+do_msgrcv (int msqid, void * buf, size_t bufsz, long int msgtyp, int msgflg, long int (*<T12c0>) (void *, struct msg_msg *, size_t) msg_handler)
+{
+  uid_t right;
+  uid_t left;
+  uid_t right;
+  struct task_struct * pfo_ret__;
+  void * p;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.3;
+  struct task_struct * pfo_ret__;
+  int granted_mode;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.3;
+  struct task_struct * pfo_ret__;
+  struct msg_receiver msr_d;
+  struct msg_msg * msg;
+  struct ipc_namespace * ns;
+  struct msg_queue * msq;
+  unsigned int msgflg.25;
+  long int bufsz.24;
+  long int _5;
+  long unsigned int pretmp_8;
+  struct nsproxy * _14;
+  _Bool _17;
+  _Bool _20;
+  _Bool _21;
+  int _23;
+  unsigned int _25;
+  _Bool _36;
+  long unsigned int _39;
+  int _40;
+  long unsigned int _45;
+  long unsigned int _46;
+  long unsigned int _49;
+  long int _50;
+  long unsigned int _55;
+  long unsigned int _56;
+  long unsigned int _57;
+  struct atomic_t * _59;
+  long unsigned int _60;
+  int _61;
+  struct atomic_t * _63;
+  struct list_head * _65;
+  int _67;
+  struct list_head * _68;
+  struct kern_ipc_perm * pretmp_71;
+  int _74;
+  long int _100;
+  struct list_head * _110;
+  long int _112;
+  const struct cred * _114;
+  short unsigned int _115;
+  int _120;
+  int _121;
+  int _124;
+  int _125;
+  struct user_namespace * _126;
+  _Bool _127;
+  int _128;
+  long int * _133;
+  int _134;
+  int _136;
+  long int _137;
+  struct list_head * _143;
+  long int _163;
+  long unsigned int prephitmp_172;
+  struct list_head * _183;
+  int _186;
+  int _187;
+  struct ipc_ids * _188;
+  int _192;
+  struct list_head * _206;
+  struct list_head * _207;
+  struct task_struct * _208;
+  struct pid * _209;
+  pid_t _210;
+  struct list_head * _211;
+  long unsigned int pretmp_213;
+  struct list_head * _214;
+  struct list_head * _215;
+  void * _216;
+  long unsigned int _217;
+  long unsigned int _218;
+  long unsigned int _219;
+  int _223;
+  long unsigned int prephitmp_231;
+  long unsigned int prephitmp_236;
+
+  <bb 2>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___102 : "p" &current_task);
+  _14 = pfo_ret___102->nsproxy;
+  ns_15 = _14->ipc_ns;
+  _17 = msqid_16(D) < 0;
+  bufsz.24_19 = (long int) bufsz_18(D);
+  _20 = bufsz.24_19 < 0;
+  _21 = _20 | _17;
+  if (_21 != 0)
+    goto <bb 60>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _23 = msgflg_22(D) & 16384;
+  if (_23 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 6>;
+
+  <bb 4>:
+  msgflg.25_24 = (unsigned int) msgflg_22(D);
+  _25 = msgflg.25_24 & 10240;
+  if (_25 != 2048)
+    goto <bb 5>;
+  else
+    goto <bb 60>;
+
+  <bb 5>:
+  goto <bb 60>;
+
+  <bb 6>:
+  if (msgtyp_277(D) == 0)
+    goto <bb 11>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  if (msgtyp_277(D) < 0)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  msgtyp_185 = -msgtyp_277(D);
+  goto <bb 11>;
+
+  <bb 9>:
+  _186 = msgflg_22(D) & 8192;
+  if (_186 != 0)
+    goto <bb 10>;
+  else
+    goto <bb 11>;
+
+  <bb 10>:
+
+  <bb 11>:
+  # _187 = PHI <2(9), 1(6), 4(8), 3(10)>
+  # msgtyp_180 = PHI <msgtyp_277(D)(9), msgtyp_277(D)(6), msgtyp_185(8), msgtyp_277(D)(10)>
+  __asm__ __volatile__("" :  :  : "memory");
+  _188 = &ns_15->ids[1];
+  msq_189 = ipc_obtain_object_check (_188, msqid_16(D));
+  ptr.3_108 = (long unsigned int) msq_189;
+  if (ptr.3_108 > 18446744073709547520)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+  __asm__ __volatile__("" :  :  : "memory");
+  _112 = (long int) msq_189;
+  goto <bb 60>;
+
+  <bb 13>:
+  pretmp_71 = &msq_189->q_perm;
+
+  <bb 14>:
+  # msgtyp_230 = PHI <msgtyp_180(13), msgtyp_42(53)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___113 : "p" &current_task);
+  _114 = pfo_ret___113->cred;
+  left_243 = MEM[(const struct cred *)_114 + 20B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___190 : "p" &current_task);
+  p_191 = pfo_ret___190->audit_context;
+  if (p_191 == 0B)
+    goto <bb 16>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _192 = MEM[(int *)p_191];
+  if (_192 != 0)
+    goto <bb 16>;
+  else
+    goto <bb 61>;
+
+  <bb 16>:
+  _115 = MEM[(struct kern_ipc_perm *)msq_189].mode;
+  granted_mode_116 = (int) _115;
+  right_240 = MEM[(struct kern_ipc_perm *)msq_189 + 24B];
+  if (right_240 == left_243)
+    goto <bb 18>;
+  else
+    goto <bb 17>;
+
+  <bb 17>:
+  right_237 = MEM[(struct kern_ipc_perm *)msq_189 + 16B];
+  if (right_237 == left_243)
+    goto <bb 18>;
+  else
+    goto <bb 19>;
+
+  <bb 18>:
+  granted_mode_119 = granted_mode_116 >> 6;
+  goto <bb 22>;
+
+  <bb 19>:
+  _120 = in_group_p (pretmp_71->cgid);
+  if (_120 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 21>;
+
+  <bb 20>:
+  granted_mode_122 = granted_mode_116 >> 3;
+  goto <bb 22>;
+
+  <bb 21>:
+  _121 = in_group_p (pretmp_71->gid);
+  if (_121 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  # granted_mode_123 = PHI <granted_mode_119(18), granted_mode_116(21), granted_mode_122(20)>
+  _124 = ~granted_mode_123;
+  _125 = _124 & 4;
+  if (_125 != 0)
+    goto <bb 24>;
+  else
+    goto <bb 23>;
+
+  <bb 23>:
+  _128 = security_ipc_permission (pretmp_71, 292);
+  if (_128 != 0)
+    goto <bb 54>;
+  else
+    goto <bb 25>;
+
+  <bb 24>:
+  _126 = ns_15->user_ns;
+  _127 = ns_capable (_126, 15);
+  if (_127 != 0)
+    goto <bb 23>;
+  else
+    goto <bb 54>;
+
+  <bb 25>:
+  _raw_spin_lock (pretmp_71);
+  _36 = MEM[(struct kern_ipc_perm *)msq_189 + 4B];
+  if (_36 != 0)
+    goto <bb 56>;
+  else
+    goto <bb 26>;
+
+  <bb 26>:
+  msg_130 = msq_189->q_messages.next;
+  _110 = &msg_130->m_list;
+  _183 = &msq_189->q_messages;
+  if (_110 != _183)
+    goto <bb 27>;
+  else
+    goto <bb 62>;
+
+  <bb 27>:
+
+  <bb 28>:
+  # msg_168 = PHI <msg_142(34), msg_130(27)>
+  # msg_167 = PHI <msg_148(34), 0B(27)>
+  # msgtyp_184 = PHI <msgtyp_275(34), msgtyp_230(27)>
+  _133 = &MEM[(struct msg_msg *)msg_168 + 16B];
+  _134 = testmsg.isra.6 (_133, msgtyp_184, _187);
+  if (_134 != 0)
+    goto <bb 29>;
+  else
+    goto <bb 33>;
+
+  <bb 29>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___135 : "p" &current_task);
+  _136 = security_msg_queue_msgrcv (msq_189, msg_168, pfo_ret___135, msgtyp_184, _187);
+  if (_136 == 0)
+    goto <bb 30>;
+  else
+    goto <bb 33>;
+
+  <bb 30>:
+  if (_187 == 4)
+    goto <bb 31>;
+  else
+    goto <bb 36>;
+
+  <bb 31>:
+  _137 = msg_168->m_type;
+  if (_137 != 1)
+    goto <bb 32>;
+  else
+    goto <bb 36>;
+
+  <bb 32>:
+  msgtyp_138 = _137 + -1;
+
+  <bb 33>:
+  # msg_148 = PHI <msg_167(28), msg_167(29), msg_168(32)>
+  # msgtyp_275 = PHI <msgtyp_184(28), msgtyp_184(29), msgtyp_138(32)>
+  msg_142 = msg_168->m_list.next;
+  _143 = &msg_142->m_list;
+  if (_143 != _183)
+    goto <bb 34>;
+  else
+    goto <bb 35>;
+
+  <bb 34>:
+  goto <bb 28>;
+
+  <bb 35>:
+  # msg_144 = PHI <msg_148(33)>
+  if (msg_144 != 0B)
+    goto <bb 36>;
+  else
+    goto <bb 62>;
+
+  <bb 36>:
+  # msg_146 = PHI <msg_168(30), msg_148(35), msg_168(31)>
+  # msgtyp_43 = PHI <msgtyp_184(30), msgtyp_275(35), msgtyp_184(31)>
+  ptr.3_151 = (long unsigned int) msg_146;
+  if (ptr.3_151 <= 18446744073709547520)
+    goto <bb 37>;
+  else
+    goto <bb 40>;
+
+  <bb 37>:
+  # msg_178 = PHI <msg_146(36)>
+  _39 = msg_178->m_ts;
+  if (bufsz_18(D) < _39)
+    goto <bb 38>;
+  else
+    goto <bb 39>;
+
+  <bb 38>:
+  _40 = msgflg_22(D) & 4096;
+  if (_40 == 0)
+    goto <bb 56>;
+  else
+    goto <bb 39>;
+
+  <bb 39>:
+  _206 = MEM[(struct list_head *)msg_178].next;
+  _207 = MEM[(struct list_head *)msg_178].prev;
+  _206->prev = _207;
+  _207->next = _206;
+  MEM[(struct list_head *)msg_178].next = -2401263026318606080B;
+  MEM[(struct list_head *)msg_178].prev = -2401263026318605824B;
+  _45 = msq_189->q_qnum;
+  _46 = _45 + 18446744073709551615;
+  msq_189->q_qnum = _46;
+  _49 = get_seconds ();
+  _50 = (long int) _49;
+  msq_189->q_rtime = _50;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___155 : "p" &current_task);
+  _208 = pfo_ret___155->group_leader;
+  _209 = _208->pids[0].pid;
+  _210 = pid_vnr (_209);
+  msq_189->q_lrpid = _210;
+  _55 = msq_189->q_cbytes;
+  _56 = msg_178->m_ts;
+  _57 = _55 - _56;
+  msq_189->q_cbytes = _57;
+  _59 = &ns_15->msg_bytes;
+  _60 = msg_178->m_ts;
+  _61 = (int) _60;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; subl %1,%0" : "=m" _59->counter : "ir" _61, "m" _59->counter);
+  _63 = &ns_15->msg_hdrs;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; decl %0" : "=m" _63->counter : "m" _63->counter);
+  _65 = &msq_189->q_senders;
+  ss_wakeup (_65, 0);
+  goto <bb 56>;
+
+  <bb 40>:
+  # msgtyp_42 = PHI <msgtyp_43(36), msgtyp_274(62)>
+  _67 = msgflg_22(D) & 2048;
+  if (_67 != 0)
+    goto <bb 56>;
+  else
+    goto <bb 41>;
+
+  <bb 41>:
+  _68 = &msq_189->q_receivers;
+  _211 = MEM[(struct list_head *)msq_189 + 128B].prev;
+  MEM[(struct list_head *)msq_189 + 128B].prev = &msr_d.r_list;
+  MEM[(struct list_head *)&msr_d].next = _68;
+  MEM[(struct list_head *)&msr_d].prev = _211;
+  _211->next = &msr_d.r_list;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___156 : "p" &current_task);
+  msr_d.r_tsk = pfo_ret___156;
+  msr_d.r_msgtype = msgtyp_42;
+  msr_d.r_mode = _187;
+  _74 = msgflg_22(D) & 4096;
+  if (_74 != 0)
+    goto <bb 42>;
+  else
+    goto <bb 43>;
+
+  <bb 42>:
+  msr_d.r_maxsize = 2147483647;
+  goto <bb 44>;
+
+  <bb 43>:
+  msr_d.r_maxsize = bufsz.24_19;
+
+  <bb 44>:
+  msr_d.r_msg ={v} -11B;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___157 : "p" &current_task);
+  pfo_ret___157->state ={v} 1;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_189] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  schedule ();
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  msg_129 ={v} msr_d.r_msg;
+  if (msg_129 != 0B)
+    goto <bb 48>;
+  else
+    goto <bb 45>;
+
+  <bb 45>:
+
+  <bb 46>:
+  __asm__ __volatile__("rep; nop" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  msg_84 ={v} msr_d.r_msg;
+  if (msg_84 != 0B)
+    goto <bb 48>;
+  else
+    goto <bb 47>;
+
+  <bb 47>:
+  goto <bb 46>;
+
+  <bb 48>:
+  # msg_264 = PHI <msg_84(46), msg_129(44)>
+  if (msg_264 != -11B)
+    goto <bb 49>;
+  else
+    goto <bb 50>;
+
+  <bb 49>:
+  # msg_202 = PHI <msg_264(48)>
+  pretmp_213 = (long unsigned int) msg_202;
+  goto <bb 55>;
+
+  <bb 50>:
+  _raw_spin_lock (pretmp_71);
+  msg_87 ={v} msr_d.r_msg;
+  if (msg_87 != -11B)
+    goto <bb 51>;
+  else
+    goto <bb 52>;
+
+  <bb 51>:
+  # msg_197 = PHI <msg_87(50)>
+  pretmp_8 = (long unsigned int) msg_197;
+  goto <bb 56>;
+
+  <bb 52>:
+  _214 = MEM[(struct list_head *)&msr_d].next;
+  _215 = MEM[(struct list_head *)&msr_d].prev;
+  _214->prev = _215;
+  _215->next = _214;
+  MEM[(struct list_head *)&msr_d].next = -2401263026318606080B;
+  MEM[(struct list_head *)&msr_d].prev = -2401263026318605824B;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___158 : "p" &current_task);
+  _216 = pfo_ret___158->stack;
+  _217 ={v} MEM[(const long unsigned int *)_216 + 8B];
+  _218 = _217 >> 2;
+  _219 = _218 & 1;
+  _223 = (int) _219;
+  if (_223 != 0)
+    goto <bb 56>;
+  else
+    goto <bb 53>;
+
+  <bb 53>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_189] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  msr_d ={v} {CLOBBER};
+  goto <bb 14>;
+
+  <bb 54>:
+
+  <bb 55>:
+  # msg_1 = PHI <-13B(54), msg_264(49)>
+  # prephitmp_231 = PHI <18446744073709551603(54), pretmp_213(49)>
+  msr_d ={v} {CLOBBER};
+  goto <bb 57> (out_unlock1);
+
+  <bb 56>:
+  # msg_2 = PHI <-43B(25), -7B(38), -514B(52), msg_146(39), -42B(40), msg_87(51)>
+  # prephitmp_172 = PHI <18446744073709551573(25), 18446744073709551609(38), 18446744073709551102(52), ptr.3_151(39), 18446744073709551574(40), pretmp_8(51)>
+  msr_d ={v} {CLOBBER};
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_189] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # msg_3 = PHI <msg_1(55), msg_2(56)>
+  # prephitmp_236 = PHI <prephitmp_231(55), prephitmp_172(56)>
+out_unlock1:
+  __asm__ __volatile__("" :  :  : "memory");
+  if (prephitmp_236 > 18446744073709547520)
+    goto <bb 58>;
+  else
+    goto <bb 59>;
+
+  <bb 58>:
+  _163 = (long int) msg_3;
+  goto <bb 60>;
+
+  <bb 59>:
+  _100 = msg_handler_97(D) (buf_98(D), msg_3, bufsz_18(D));
+  free_msg (msg_3);
+
+  <bb 60>:
+  # _5 = PHI <-22(5), _100(59), -38(4), _112(12), _163(58), -22(2)>
+  return _5;
+
+  <bb 61>:
+  __audit_ipc_obj (pretmp_71);
+  goto <bb 16>;
+
+  <bb 62>:
+  # msgtyp_274 = PHI <msgtyp_275(35), msgtyp_230(26)>
+  goto <bb 40>;
+
+}
+
+
+
+;; Function SyS_msgrcv (SyS_msgrcv, funcdef_no=2369, decl_uid=33203, cgraph_uid=2373)
+
+SyS_msgrcv (long int msqid, long int msgp, long int msgsz, long int msgtyp, long int msgflg)
+{
+  uid_t right;
+  uid_t left;
+  uid_t right;
+  size_t msgsz;
+  int __ret_pu;
+  __kernel_long_t __pu_val;
+  struct task_struct * pfo_ret__;
+  void * p;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.3;
+  struct task_struct * pfo_ret__;
+  int granted_mode;
+  struct task_struct * pfo_ret__;
+  long unsigned int ptr.3;
+  struct task_struct * pfo_ret__;
+  struct msg_receiver msr_d;
+  struct msg_msg * msg;
+  struct ipc_namespace * ns;
+  struct msg_queue * msq;
+  unsigned int msgflg.25;
+  struct msgbuf * msgp.32;
+  long unsigned int msgsz.31;
+  int _2;
+  int _8;
+  long unsigned int pretmp_12;
+  struct nsproxy * _14;
+  _Bool _16;
+  _Bool _18;
+  _Bool _19;
+  int _20;
+  unsigned int _22;
+  long int _35;
+  const struct cred * _38;
+  short unsigned int _39;
+  int _44;
+  int _45;
+  int _48;
+  int _49;
+  struct user_namespace * _50;
+  _Bool _51;
+  int _52;
+  _Bool _54;
+  long int * _59;
+  int _60;
+  int _62;
+  long int _63;
+  struct list_head * _66;
+  struct list_head * _69;
+  long unsigned int _77;
+  int _78;
+  long unsigned int _82;
+  long unsigned int _83;
+  long unsigned int _84;
+  long int _85;
+  long unsigned int _88;
+  long unsigned int _89;
+  long unsigned int _90;
+  struct atomic_t * _91;
+  long unsigned int _92;
+  int _93;
+  struct atomic_t * _94;
+  struct list_head * _95;
+  int _96;
+  struct list_head * _97;
+  int _100;
+  long unsigned int prephitmp_105;
+  long int _111;
+  long int _113;
+  struct list_head * _116;
+  int _122;
+  int _123;
+  struct ipc_ids * _124;
+  int _128;
+  struct list_head * _142;
+  struct list_head * _143;
+  struct task_struct * _144;
+  struct pid * _145;
+  pid_t _146;
+  struct list_head * _147;
+  struct list_head * _150;
+  struct list_head * _151;
+  void * _152;
+  long unsigned int _153;
+  long unsigned int _154;
+  long unsigned int _155;
+  struct kern_ipc_perm * pretmp_158;
+  int _159;
+  __kernel_long_t * _163;
+  long unsigned int _165;
+  char[1] * _167;
+  int _168;
+  long int _169;
+  long int _170;
+  long unsigned int pretmp_184;
+  long unsigned int prephitmp_197;
+  long unsigned int prephitmp_199;
+
+  <bb 2>:
+  _2 = (int) msgflg_1(D);
+  msgsz.31_4 = (long unsigned int) msgsz_3(D);
+  msgp.32_6 = (struct msgbuf *) msgp_5(D);
+  _8 = (int) msqid_7(D);
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___13 : "p" &current_task);
+  _14 = pfo_ret___13->nsproxy;
+  ns_15 = _14->ipc_ns;
+  _16 = _8 < 0;
+  _18 = msgsz_3(D) < 0;
+  _19 = _18 | _16;
+  if (_19 != 0)
+    goto <bb 64>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _20 = _2 & 16384;
+  if (_20 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 6>;
+
+  <bb 4>:
+  msgflg.25_21 = (unsigned int) msgflg_1(D);
+  _22 = msgflg.25_21 & 10240;
+  if (_22 != 2048)
+    goto <bb 5>;
+  else
+    goto <bb 64>;
+
+  <bb 5>:
+  goto <bb 64>;
+
+  <bb 6>:
+  if (msgtyp_10(D) == 0)
+    goto <bb 11>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  if (msgtyp_10(D) < 0)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  msgtyp_121 = -msgtyp_10(D);
+  goto <bb 11>;
+
+  <bb 9>:
+  _122 = _2 & 8192;
+  if (_122 != 0)
+    goto <bb 10>;
+  else
+    goto <bb 11>;
+
+  <bb 10>:
+
+  <bb 11>:
+  # _123 = PHI <2(9), 1(6), 4(8), 3(10)>
+  # msgtyp_213 = PHI <msgtyp_10(D)(9), msgtyp_10(D)(6), msgtyp_121(8), msgtyp_10(D)(10)>
+  __asm__ __volatile__("" :  :  : "memory");
+  _124 = &ns_15->ids[1];
+  msq_125 = ipc_obtain_object_check (_124, _8);
+  ptr.3_31 = (long unsigned int) msq_125;
+  if (ptr.3_31 > 18446744073709547520)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+  __asm__ __volatile__("" :  :  : "memory");
+  _35 = (long int) msq_125;
+  goto <bb 64>;
+
+  <bb 13>:
+  pretmp_158 = &msq_125->q_perm;
+
+  <bb 14>:
+  # msgtyp_192 = PHI <msgtyp_213(13), msgtyp_214(53)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___37 : "p" &current_task);
+  _38 = pfo_ret___37->cred;
+  left_211 = MEM[(const struct cred *)_38 + 20B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___126 : "p" &current_task);
+  p_127 = pfo_ret___126->audit_context;
+  if (p_127 == 0B)
+    goto <bb 16>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _128 = MEM[(int *)p_127];
+  if (_128 != 0)
+    goto <bb 16>;
+  else
+    goto <bb 65>;
+
+  <bb 16>:
+  _39 = MEM[(struct kern_ipc_perm *)msq_125].mode;
+  granted_mode_40 = (int) _39;
+  right_203 = MEM[(struct kern_ipc_perm *)msq_125 + 24B];
+  if (right_203 == left_211)
+    goto <bb 18>;
+  else
+    goto <bb 17>;
+
+  <bb 17>:
+  right_200 = MEM[(struct kern_ipc_perm *)msq_125 + 16B];
+  if (right_200 == left_211)
+    goto <bb 18>;
+  else
+    goto <bb 19>;
+
+  <bb 18>:
+  granted_mode_43 = granted_mode_40 >> 6;
+  goto <bb 22>;
+
+  <bb 19>:
+  _44 = in_group_p (pretmp_158->cgid);
+  if (_44 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 21>;
+
+  <bb 20>:
+  granted_mode_46 = granted_mode_40 >> 3;
+  goto <bb 22>;
+
+  <bb 21>:
+  _45 = in_group_p (pretmp_158->gid);
+  if (_45 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  # granted_mode_47 = PHI <granted_mode_43(18), granted_mode_40(21), granted_mode_46(20)>
+  _48 = ~granted_mode_47;
+  _49 = _48 & 4;
+  if (_49 != 0)
+    goto <bb 24>;
+  else
+    goto <bb 23>;
+
+  <bb 23>:
+  _52 = security_ipc_permission (pretmp_158, 292);
+  if (_52 != 0)
+    goto <bb 54>;
+  else
+    goto <bb 25>;
+
+  <bb 24>:
+  _50 = ns_15->user_ns;
+  _51 = ns_capable (_50, 15);
+  if (_51 != 0)
+    goto <bb 23>;
+  else
+    goto <bb 54>;
+
+  <bb 25>:
+  _raw_spin_lock (pretmp_158);
+  _54 = MEM[(struct kern_ipc_perm *)msq_125 + 4B];
+  if (_54 != 0)
+    goto <bb 56>;
+  else
+    goto <bb 26>;
+
+  <bb 26>:
+  msg_56 = msq_125->q_messages.next;
+  _66 = &msg_56->m_list;
+  _116 = &msq_125->q_messages;
+  if (_66 != _116)
+    goto <bb 27>;
+  else
+    goto <bb 66>;
+
+  <bb 27>:
+
+  <bb 28>:
+  # msg_179 = PHI <msg_68(34), msg_56(27)>
+  # msg_178 = PHI <msg_115(34), 0B(27)>
+  # msgtyp_120 = PHI <msgtyp_269(34), msgtyp_192(27)>
+  _59 = &MEM[(struct msg_msg *)msg_179 + 16B];
+  _60 = testmsg.isra.6 (_59, msgtyp_120, _123);
+  if (_60 != 0)
+    goto <bb 29>;
+  else
+    goto <bb 33>;
+
+  <bb 29>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___61 : "p" &current_task);
+  _62 = security_msg_queue_msgrcv (msq_125, msg_179, pfo_ret___61, msgtyp_120, _123);
+  if (_62 == 0)
+    goto <bb 30>;
+  else
+    goto <bb 33>;
+
+  <bb 30>:
+  if (_123 == 4)
+    goto <bb 31>;
+  else
+    goto <bb 36>;
+
+  <bb 31>:
+  _63 = msg_179->m_type;
+  if (_63 != 1)
+    goto <bb 32>;
+  else
+    goto <bb 36>;
+
+  <bb 32>:
+  msgtyp_64 = _63 + -1;
+
+  <bb 33>:
+  # msg_115 = PHI <msg_178(28), msg_178(29), msg_179(32)>
+  # msgtyp_269 = PHI <msgtyp_120(28), msgtyp_120(29), msgtyp_64(32)>
+  msg_68 = msg_179->m_list.next;
+  _69 = &msg_68->m_list;
+  if (_69 != _116)
+    goto <bb 34>;
+  else
+    goto <bb 35>;
+
+  <bb 34>:
+  goto <bb 28>;
+
+  <bb 35>:
+  # msg_114 = PHI <msg_115(33)>
+  if (msg_114 != 0B)
+    goto <bb 36>;
+  else
+    goto <bb 66>;
+
+  <bb 36>:
+  # msg_72 = PHI <msg_179(30), msg_115(35), msg_179(31)>
+  # msgtyp_252 = PHI <msgtyp_120(30), msgtyp_269(35), msgtyp_120(31)>
+  ptr.3_73 = (long unsigned int) msg_72;
+  if (ptr.3_73 <= 18446744073709547520)
+    goto <bb 37>;
+  else
+    goto <bb 40>;
+
+  <bb 37>:
+  # msg_134 = PHI <msg_72(36)>
+  _77 = msg_134->m_ts;
+  if (msgsz.31_4 < _77)
+    goto <bb 38>;
+  else
+    goto <bb 39>;
+
+  <bb 38>:
+  _78 = _2 & 4096;
+  if (_78 == 0)
+    goto <bb 56>;
+  else
+    goto <bb 39>;
+
+  <bb 39>:
+  _142 = MEM[(struct list_head *)msg_134].next;
+  _143 = MEM[(struct list_head *)msg_134].prev;
+  _142->prev = _143;
+  _143->next = _142;
+  MEM[(struct list_head *)msg_134].next = -2401263026318606080B;
+  MEM[(struct list_head *)msg_134].prev = -2401263026318605824B;
+  _82 = msq_125->q_qnum;
+  _83 = _82 + 18446744073709551615;
+  msq_125->q_qnum = _83;
+  _84 = get_seconds ();
+  _85 = (long int) _84;
+  msq_125->q_rtime = _85;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___86 : "p" &current_task);
+  _144 = pfo_ret___86->group_leader;
+  _145 = _144->pids[0].pid;
+  _146 = pid_vnr (_145);
+  msq_125->q_lrpid = _146;
+  _88 = msq_125->q_cbytes;
+  _89 = msg_134->m_ts;
+  _90 = _88 - _89;
+  msq_125->q_cbytes = _90;
+  _91 = &ns_15->msg_bytes;
+  _92 = msg_134->m_ts;
+  _93 = (int) _92;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; subl %1,%0" : "=m" _91->counter : "ir" _93, "m" _91->counter);
+  _94 = &ns_15->msg_hdrs;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; decl %0" : "=m" _94->counter : "m" _94->counter);
+  _95 = &msq_125->q_senders;
+  ss_wakeup (_95, 0);
+  goto <bb 56>;
+
+  <bb 40>:
+  # msgtyp_214 = PHI <msgtyp_252(36), msgtyp_53(66)>
+  _96 = _2 & 2048;
+  if (_96 != 0)
+    goto <bb 56>;
+  else
+    goto <bb 41>;
+
+  <bb 41>:
+  _97 = &msq_125->q_receivers;
+  _147 = MEM[(struct list_head *)msq_125 + 128B].prev;
+  MEM[(struct list_head *)msq_125 + 128B].prev = &msr_d.r_list;
+  MEM[(struct list_head *)&msr_d].next = _97;
+  MEM[(struct list_head *)&msr_d].prev = _147;
+  _147->next = &msr_d.r_list;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___98 : "p" &current_task);
+  msr_d.r_tsk = pfo_ret___98;
+  msr_d.r_msgtype = msgtyp_214;
+  msr_d.r_mode = _123;
+  _100 = _2 & 4096;
+  if (_100 != 0)
+    goto <bb 42>;
+  else
+    goto <bb 43>;
+
+  <bb 42>:
+  msr_d.r_maxsize = 2147483647;
+  goto <bb 44>;
+
+  <bb 43>:
+  msr_d.r_maxsize = msgsz_3(D);
+
+  <bb 44>:
+  msr_d.r_msg ={v} -11B;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___101 : "p" &current_task);
+  pfo_ret___101->state ={v} 1;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_125] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  schedule ();
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  msg_99 ={v} msr_d.r_msg;
+  if (msg_99 != 0B)
+    goto <bb 48>;
+  else
+    goto <bb 45>;
+
+  <bb 45>:
+
+  <bb 46>:
+  __asm__ __volatile__("rep; nop" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  msg_102 ={v} msr_d.r_msg;
+  if (msg_102 != 0B)
+    goto <bb 48>;
+  else
+    goto <bb 47>;
+
+  <bb 47>:
+  goto <bb 46>;
+
+  <bb 48>:
+  # msg_265 = PHI <msg_102(46), msg_99(44)>
+  if (msg_265 != -11B)
+    goto <bb 49>;
+  else
+    goto <bb 50>;
+
+  <bb 49>:
+  # msg_81 = PHI <msg_265(48)>
+  pretmp_12 = (long unsigned int) msg_81;
+  goto <bb 55>;
+
+  <bb 50>:
+  _raw_spin_lock (pretmp_158);
+  msg_103 ={v} msr_d.r_msg;
+  if (msg_103 != -11B)
+    goto <bb 51>;
+  else
+    goto <bb 52>;
+
+  <bb 51>:
+  # msg_268 = PHI <msg_103(50)>
+  pretmp_184 = (long unsigned int) msg_268;
+  goto <bb 56>;
+
+  <bb 52>:
+  _150 = MEM[(struct list_head *)&msr_d].next;
+  _151 = MEM[(struct list_head *)&msr_d].prev;
+  _150->prev = _151;
+  _151->next = _150;
+  MEM[(struct list_head *)&msr_d].next = -2401263026318606080B;
+  MEM[(struct list_head *)&msr_d].prev = -2401263026318605824B;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___104 : "p" &current_task);
+  _152 = pfo_ret___104->stack;
+  _153 ={v} MEM[(const long unsigned int *)_152 + 8B];
+  _154 = _153 >> 2;
+  _155 = _154 & 1;
+  _159 = (int) _155;
+  if (_159 != 0)
+    goto <bb 56>;
+  else
+    goto <bb 53>;
+
+  <bb 53>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_125] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  msr_d ={v} {CLOBBER};
+  goto <bb 14>;
+
+  <bb 54>:
+
+  <bb 55>:
+  # msg_117 = PHI <-13B(54), msg_265(49)>
+  # prephitmp_105 = PHI <18446744073709551603(54), pretmp_12(49)>
+  msr_d ={v} {CLOBBER};
+  goto <bb 57> (out_unlock1);
+
+  <bb 56>:
+  # msg_118 = PHI <-43B(25), -7B(38), -514B(52), msg_72(39), -42B(40), msg_103(51)>
+  # prephitmp_197 = PHI <18446744073709551573(25), 18446744073709551609(38), 18446744073709551102(52), ptr.3_73(39), 18446744073709551574(40), pretmp_184(51)>
+  msr_d ={v} {CLOBBER};
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)msq_125] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # msg_106 = PHI <msg_117(55), msg_118(56)>
+  # prephitmp_199 = PHI <prephitmp_105(55), prephitmp_197(56)>
+out_unlock1:
+  __asm__ __volatile__("" :  :  : "memory");
+  if (prephitmp_199 > 18446744073709547520)
+    goto <bb 58>;
+  else
+    goto <bb 59>;
+
+  <bb 58>:
+  _111 = (long int) msg_106;
+  goto <bb 64>;
+
+  <bb 59>:
+  __pu_val_162 = msg_106->m_type;
+  _163 = &msgp.32_6->mtype;
+  __asm__ __volatile__("call __put_user_8" : "=a" __ret_pu_164 : "0" __pu_val_162, "c" _163 : "ebx");
+  if (__ret_pu_164 != 0)
+    goto <bb 60>;
+  else
+    goto <bb 61>;
+
+  <bb 60>:
+  goto <bb 63>;
+
+  <bb 61>:
+  _165 = msg_106->m_ts;
+  msgsz_166 = MIN_EXPR <msgsz.31_4, _165>;
+  _167 = &msgp.32_6->mtext;
+  _168 = store_msg (_167, msg_106, msgsz_166);
+  if (_168 != 0)
+    goto <bb 60>;
+  else
+    goto <bb 62>;
+
+  <bb 62>:
+  _169 = (long int) msgsz_166;
+
+  <bb 63>:
+  # _170 = PHI <-14(60), _169(62)>
+  free_msg (msg_106);
+
+  <bb 64>:
+  # _113 = PHI <-22(5), _170(63), -38(4), _35(12), _111(58), -22(2)>
+  return _113;
+
+  <bb 65>:
+  __audit_ipc_obj (pretmp_158);
+  goto <bb 16>;
+
+  <bb 66>:
+  # msgtyp_53 = PHI <msgtyp_269(35), msgtyp_192(26)>
+  goto <bb 40>;
+
+}
+
+
+
+;; Function msg_init_ns (msg_init_ns, funcdef_no=2371, decl_uid=32442, cgraph_uid=2375)
+
+msg_init_ns (struct ipc_namespace * ns)
+{
+  struct ipc_ids * _8;
+
+  <bb 2>:
+  ns_2(D)->msg_ctlmax = 8192;
+  ns_2(D)->msg_ctlmnb = 16384;
+  ns_2(D)->msg_ctlmni = 32000;
+  MEM[(struct atomic_t *)ns_2(D) + 328B].counter = 0;
+  MEM[(struct atomic_t *)ns_2(D) + 332B].counter = 0;
+  _8 = &ns_2(D)->ids[1];
+  ipc_init_ids (_8);
+  return;
+
+}
+
+
+
+;; Function msg_exit_ns (msg_exit_ns, funcdef_no=2372, decl_uid=32448, cgraph_uid=2376)
+
+msg_exit_ns (struct ipc_namespace * ns)
+{
+  struct ipc_ids * _2;
+  struct idr * _5;
+
+  <bb 2>:
+  _2 = &ns_1(D)->ids[1];
+  free_ipcs (ns_1(D), _2, freeque);
+  _5 = &ns_1(D)->ids[1].ipcs_idr;
+  idr_destroy (_5);
+  return;
+
+}
+
+
+
+;; Function msg_init (msg_init, funcdef_no=2374, decl_uid=32432, cgraph_uid=2378) (unlikely executed)
+
+msg_init ()
+{
+  <bb 2>:
+  init_ipc_ns.msg_ctlmax = 8192;
+  init_ipc_ns.msg_ctlmnb = 16384;
+  init_ipc_ns.msg_ctlmni = 32000;
+  MEM[(struct atomic_t *)&init_ipc_ns + 328B].counter = 0;
+  MEM[(struct atomic_t *)&init_ipc_ns + 332B].counter = 0;
+  ipc_init_ids (&init_ipc_ns.ids[1]);
+  ipc_init_proc_interface ("sysvipc/msg", "       key      msqid perms      cbytes       qnum lspid lrpid   uid   gid  cuid  cgid      stime      rtime      ctime\n", 1, sysvipc_msg_proc_show);
+  return;
+
+}
+
+

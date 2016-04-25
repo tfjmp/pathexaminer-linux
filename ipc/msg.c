@@ -41,6 +41,29 @@
 #include <asm/current.h>
 #include <linux/uaccess.h>
 #include "util.h"
+#include <linux/mm.h>
+#include <linux/shm.h>
+#include <linux/init.h>
+#include <linux/msg.h>
+#include <linux/vmalloc.h>
+#include <linux/slab.h>
+#include <linux/notifier.h>
+#include <linux/capability.h>
+#include <linux/highuid.h>
+#include <linux/security.h>
+#include <linux/rcupdate.h>
+#include <linux/workqueue.h>
+#include <linux/seq_file.h>
+#include <linux/proc_fs.h>
+#include <linux/audit.h>
+#include <linux/nsproxy.h>
+#include <linux/rwsem.h>
+#include <linux/memory.h>
+#include <linux/ipc_namespace.h>
+
+#include <asm/unistd.h>
+
+void kayrebt_FlowNodeMarker(void);
 
 /* one msg_receiver structure for each sleeping receiver */
 struct msg_receiver {
@@ -798,7 +821,7 @@ static inline void free_copy(struct msg_msg *copy)
 }
 #endif
 
-static struct msg_msg *find_msg(struct msg_queue *msq, long *msgtyp, int mode)
+__attribute__((always_inline)) static struct msg_msg *find_msg(struct msg_queue *msq, long *msgtyp, int mode)
 {
 	struct msg_msg *msg, *found = NULL;
 	long count = 0;
@@ -821,8 +844,39 @@ static struct msg_msg *find_msg(struct msg_queue *msq, long *msgtyp, int mode)
 
 	return found ?: ERR_PTR(-EAGAIN);
 }
+/**
+ * ipcperms - check ipc permissions
+ * @ns: ipc namespace
+ * @ipcp: ipc permission set
+ * @flag: desired permission set
+ *
+ * Check user, group, other permissions for access
+ * to ipc resources. return 0 if allowed
+ *
+ * @flag will most probably be 0 or S_...UGO from <linux/stat.h>
+ */
+__attribute__((always_inline)) int ipcperms(struct ipc_namespace *ns, struct kern_ipc_perm *ipcp, short flag)
+{
+	kuid_t euid = current_euid();
+	int requested_mode, granted_mode;
 
-long do_msgrcv(int msqid, void __user *buf, size_t bufsz, long msgtyp, int msgflg,
+	audit_ipc_obj(ipcp);
+	requested_mode = (flag >> 6) | (flag >> 3) | flag;
+	granted_mode = ipcp->mode;
+	if (uid_eq(euid, ipcp->cuid) ||
+	    uid_eq(euid, ipcp->uid))
+		granted_mode >>= 6;
+	else if (in_group_p(ipcp->cgid) || in_group_p(ipcp->gid))
+		granted_mode >>= 3;
+	/* is there some bit set in requested_mode but not in granted_mode? */
+	if ((requested_mode & ~granted_mode & 0007) &&
+	    !ns_capable(ns->user_ns, CAP_IPC_OWNER))
+		return -1;
+
+	return security_ipc_permission(ipcp, flag);
+}
+
+__attribute__((always_inline)) long do_msgrcv(int msqid, void __user *buf, size_t bufsz, long msgtyp, int msgflg,
 	       long (*msg_handler)(void __user *, struct msg_msg *, size_t))
 {
 	int mode;
@@ -1005,6 +1059,7 @@ out_unlock1:
 		return PTR_ERR(msg);
 	}
 
+	kayrebt_FlowNodeMarker();
 	bufsz = msg_handler(buf, msg, bufsz);
 	free_msg(msg);
 
