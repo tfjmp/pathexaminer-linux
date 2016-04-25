@@ -1,0 +1,3839 @@
+
+;; Function ptrace_getsiginfo (ptrace_getsiginfo, funcdef_no=2427, decl_uid=34643, cgraph_uid=2427)
+
+ptrace_getsiginfo (struct task_struct * child, struct siginfo_t * info)
+{
+  struct sighand_struct * ret;
+  int error;
+  long unsigned int flags;
+  struct siginfo_t * _8;
+  long unsigned int _14;
+  struct sighand_struct * _18;
+  struct raw_spinlock * _19;
+
+  <bb 2>:
+  ret_17 = __lock_task_sighand (child_6(D), &flags);
+  if (ret_17 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 6>;
+
+  <bb 3>:
+  _8 = child_6(D)->last_siginfo;
+  if (_8 != 0B)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  *info_12(D) = *_8;
+
+  <bb 5>:
+  # error_1 = PHI <-22(3), 0(4)>
+  _14 = flags;
+  _18 = child_6(D)->sighand;
+  _19 = &MEM[(struct spinlock_t *)_18 + 2056B].D.5537.rlock;
+  _raw_spin_unlock_irqrestore (_19, _14);
+
+  <bb 6>:
+  # error_2 = PHI <-3(2), error_1(5)>
+  flags ={v} {CLOBBER};
+  return error_2;
+
+}
+
+
+
+;; Function ptrace_setsiginfo (ptrace_setsiginfo, funcdef_no=2428, decl_uid=34649, cgraph_uid=2428)
+
+ptrace_setsiginfo (struct task_struct * child, const struct siginfo_t * info)
+{
+  struct sighand_struct * ret;
+  int error;
+  long unsigned int flags;
+  struct siginfo_t * _8;
+  long unsigned int _14;
+  struct sighand_struct * _18;
+  struct raw_spinlock * _19;
+
+  <bb 2>:
+  ret_17 = __lock_task_sighand (child_6(D), &flags);
+  if (ret_17 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 6>;
+
+  <bb 3>:
+  _8 = child_6(D)->last_siginfo;
+  if (_8 != 0B)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  *_8 = *info_12(D);
+
+  <bb 5>:
+  # error_1 = PHI <-22(3), 0(4)>
+  _14 = flags;
+  _18 = child_6(D)->sighand;
+  _19 = &MEM[(struct spinlock_t *)_18 + 2056B].D.5537.rlock;
+  _raw_spin_unlock_irqrestore (_19, _14);
+
+  <bb 6>:
+  # error_2 = PHI <-3(2), error_1(5)>
+  flags ={v} {CLOBBER};
+  return error_2;
+
+}
+
+
+
+;; Function ptrace_get_task_struct (ptrace_get_task_struct, funcdef_no=2434, decl_uid=34804, cgraph_uid=2434)
+
+ptrace_get_task_struct (pid_t pid)
+{
+  struct task_struct * child;
+  struct task_struct * _1;
+  struct atomic_t * _8;
+
+  <bb 2>:
+  __asm__ __volatile__("" :  :  : "memory");
+  child_7 = find_task_by_vpid (pid_5(D));
+  if (child_7 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  _8 = &child_7->usage;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; incl %0" : "=m" _8->counter : "m" _8->counter);
+
+  <bb 4>:
+  __asm__ __volatile__("" :  :  : "memory");
+  if (child_7 == 0B)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+
+  <bb 6>:
+  # _1 = PHI <-3B(5), child_7(4)>
+  return _1;
+
+}
+
+
+
+;; Function ptrace_has_cap (ptrace_has_cap, funcdef_no=2415, decl_uid=34522, cgraph_uid=2415)
+
+ptrace_has_cap (struct user_namespace * ns, unsigned int mode)
+{
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  int _1;
+  unsigned int _4;
+  _Bool _9;
+  int _10;
+  _Bool _14;
+  int _15;
+
+  <bb 2>:
+  _4 = mode_3(D) & 4;
+  if (_4 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___13 : "p" &current_task);
+  _14 = has_ns_capability_noaudit (pfo_ret___13, ns_6(D), 19);
+  _15 = (int) _14;
+  goto <bb 5>;
+
+  <bb 4>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___12 : "p" &current_task);
+  _9 = has_ns_capability (pfo_ret___12, ns_6(D), 19);
+  _10 = (int) _9;
+
+  <bb 5>:
+  # _1 = PHI <_15(3), _10(4)>
+  return _1;
+
+}
+
+
+
+;; Function ptrace_unfreeze_traced.part.7 (ptrace_unfreeze_traced.part.7, funcdef_no=2449, decl_uid=36575, cgraph_uid=347)
+
+ptrace_unfreeze_traced.part.7 (struct task_struct * task)
+{
+  struct task_struct * pfo_ret__;
+  unsigned int _2;
+  struct task_struct * _3;
+  struct sighand_struct * _9;
+  struct raw_spinlock * _10;
+  long unsigned int _11;
+  long unsigned int _12;
+  int _13;
+  int _14;
+  struct sighand_struct * _19;
+
+  <bb 2>:
+  _2 = task_1(D)->ptrace;
+  if (_2 == 0)
+    goto <bb 8>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _3 = task_1(D)->parent;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___4 : "p" &current_task);
+  if (_3 != pfo_ret___4)
+    goto <bb 8>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _9 = task_1(D)->sighand;
+  _10 = &MEM[(struct spinlock_t *)_9 + 2056B].D.5537.rlock;
+  _raw_spin_lock_irq (_10);
+  _11 = MEM[(struct sigset_t *)task_1(D) + 1584B].sig[0];
+  _12 = _11 >> 8;
+  _13 = (int) _12;
+  _14 = _13 & 1;
+  if (_14 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  wake_up_state (task_1(D), 8);
+  goto <bb 7>;
+
+  <bb 6>:
+  task_1(D)->state ={v} 136;
+
+  <bb 7>:
+  _19 = task_1(D)->sighand;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)_19 + 2056B] ={v} 0;
+  __asm__ __volatile__("sti" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  return;
+
+  <bb 8>:
+  warn_slowpath_null ("kernel/ptrace.c", 145);
+  goto <bb 4>;
+
+}
+
+
+
+;; Function ptrace_regset (ptrace_regset, funcdef_no=2432, decl_uid=34713, cgraph_uid=2432)
+
+ptrace_regset (struct task_struct * task, int req, unsigned int type, struct iovec * kiov)
+{
+  long unsigned int data.36;
+  const struct user_regset * regset;
+  u64 pfo_ret__;
+  long unsigned int addr;
+  long unsigned int data.35;
+  const struct user_regset * regset;
+  u64 pfo_ret__;
+  long unsigned int addr;
+  int n;
+  const struct user_regset * regset;
+  long unsigned int _min2;
+  const struct user_regset_view * view;
+  long int regset.28;
+  long unsigned int _min1.29;
+  int _1;
+  const struct user_regset * _7;
+  unsigned int _8;
+  unsigned int _12;
+  long unsigned int _13;
+  long unsigned int _14;
+  long int _16;
+  long int _17;
+  long int _18;
+  unsigned int _19;
+  unsigned int _20;
+  long unsigned int _22;
+  void * _25;
+  unsigned int _26;
+  const struct user_regset * _28;
+  void * _31;
+  unsigned int _32;
+  unsigned int _33;
+  const struct user_regset * _34;
+  long unsigned int _38;
+  long unsigned int _39;
+  unsigned int _41;
+  const struct user_regset * _44;
+  long unsigned int _46;
+  long unsigned int _47;
+  int (*<T4fcf>) (struct task_struct *, const struct user_regset *, unsigned int, unsigned int, void *, void *) _49;
+  long unsigned int _51;
+  struct thread_info * _52;
+  long unsigned int _53;
+  long int _62;
+  int _65;
+  int _66;
+  long unsigned int _68;
+  long unsigned int _69;
+  int (*<T4fd1>) (struct task_struct *, const struct user_regset *, unsigned int, unsigned int, const void *, const void *) _71;
+  long unsigned int _73;
+  struct thread_info * _74;
+  long unsigned int _75;
+  int _87;
+  int _88;
+  int _92;
+  long int _95;
+
+  <bb 2>:
+  view_6 = task_user_regset_view (task_4(D));
+  _7 = MEM[(const struct user_regset_view *)view_6 + 8B];
+  _8 = MEM[(const struct user_regset_view *)view_6 + 16B];
+  if (_8 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 21>;
+
+  <bb 3>:
+  _33 = _7->core_note_type;
+  if (type_9(D) == _33)
+    goto <bb 8>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _92 = (int) _8;
+  goto <bb 7>;
+
+  <bb 5>:
+  _38 = (long unsigned int) n_42;
+  _39 = _38 * 56;
+  regset_40 = _7 + _39;
+  _41 = regset_40->core_note_type;
+  if (type_9(D) == _41)
+    goto <bb 8>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+
+  <bb 7>:
+  # n_94 = PHI <n_42(6), 0(4)>
+  n_42 = n_94 + 1;
+  if (n_42 != _92)
+    goto <bb 5>;
+  else
+    goto <bb 21>;
+
+  <bb 8>:
+  # _44 = PHI <regset_40(5), _7(3)>
+  if (_44 == 0B)
+    goto <bb 21>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  _min1.29_11 = kiov_10(D)->iov_len;
+  _12 = _44->size;
+  _13 = (long unsigned int) _12;
+  _14 = _min1.29_11 % _13;
+  if (_14 != 0)
+    goto <bb 21>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  regset.28_15 = (long int) _44;
+  _16 = (long int) _7;
+  _17 = regset.28_15 - _16;
+  _18 = _17 /[ex] 56;
+  _19 = _44->n;
+  _20 = _19 * _12;
+  _min2_21 = (long unsigned int) _20;
+  _22 = MIN_EXPR <_min2_21, _min1.29_11>;
+  kiov_10(D)->iov_len = _22;
+  if (req_24(D) == 16900)
+    goto <bb 11>;
+  else
+    goto <bb 16>;
+
+  <bb 11>:
+  _25 = kiov_10(D)->iov_base;
+  _26 = (unsigned int) _22;
+  _28 = MEM[(const struct user_regset_view *)view_6 + 8B];
+  _95 = _18 & 4294967295;
+  _46 = (long unsigned int) _95;
+  _47 = _46 * 56;
+  regset_48 = _28 + _47;
+  _49 = regset_48->get;
+  if (_49 == 0B)
+    goto <bb 15>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___50 : "p" &cpu_tss.x86_tss.sp0);
+  _51 = pfo_ret___50 + 18446744073709535232;
+  _52 = (struct thread_info *) _51;
+  _53 = _52->addr_limit.seg;
+  data.35_55 = (long unsigned int) _25;
+  addr_59 = _22 + data.35_55;
+  if (_22 > addr_59)
+    goto <bb 15>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  if (_53 < addr_59)
+    goto <bb 15>;
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  _65 = _49 (task_4(D), regset_48, 0, _26, 0B, _25);
+
+  <bb 15>:
+  # _66 = PHI <-95(11), -14(13), _65(14), -14(12)>
+  goto <bb 21>;
+
+  <bb 16>:
+  _31 = kiov_10(D)->iov_base;
+  _32 = (unsigned int) _22;
+  _34 = MEM[(const struct user_regset_view *)view_6 + 8B];
+  _62 = _18 & 4294967295;
+  _68 = (long unsigned int) _62;
+  _69 = _68 * 56;
+  regset_70 = _34 + _69;
+  _71 = regset_70->set;
+  if (_71 == 0B)
+    goto <bb 20>;
+  else
+    goto <bb 17>;
+
+  <bb 17>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___72 : "p" &cpu_tss.x86_tss.sp0);
+  _73 = pfo_ret___72 + 18446744073709535232;
+  _74 = (struct thread_info *) _73;
+  _75 = _74->addr_limit.seg;
+  data.36_77 = (long unsigned int) _31;
+  addr_81 = _22 + data.36_77;
+  if (_22 > addr_81)
+    goto <bb 20>;
+  else
+    goto <bb 18>;
+
+  <bb 18>:
+  if (_75 < addr_81)
+    goto <bb 20>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  _87 = _71 (task_4(D), regset_70, 0, _32, 0B, _31);
+
+  <bb 20>:
+  # _88 = PHI <-95(16), -14(18), _87(19), -14(17)>
+
+  <bb 21>:
+  # _1 = PHI <-22(7), _66(15), _88(20), -22(2), -22(9), -22(8)>
+  return _1;
+
+}
+
+
+
+;; Function __ptrace_detach.part.9 (__ptrace_detach.part.9, funcdef_no=2451, decl_uid=36723, cgraph_uid=543)
+
+__ptrace_detach.part.9 (struct task_struct * tracer, struct task_struct * p)
+{
+  int ret;
+  bool dead;
+  int _2;
+  struct list_head * _5;
+  struct list_head * _6;
+  struct task_struct * _7;
+  struct signal_struct * _8;
+  struct signal_struct * _10;
+  struct sighand_struct * _12;
+  _Bool _14;
+  struct raw_spinlock * _23;
+  void (*<T1ec4>) (int) _24;
+  long unsigned int _25;
+  long unsigned int _26;
+
+  <bb 2>:
+  _2 = p_1(D)->exit_signal;
+  if (_2 < 0)
+    goto <bb 13>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _5 = &p_1(D)->thread_group;
+  _6 = MEM[(const struct list_head *)p_1(D) + 1200B].next;
+  if (_5 == _6)
+    goto <bb 4>;
+  else
+    goto <bb 12>;
+
+  <bb 4>:
+  _7 = p_1(D)->real_parent;
+  _8 = _7->signal;
+  _10 = tracer_9(D)->signal;
+  if (_8 != _10)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  dead_11 = do_notify_parent (p_1(D), _2);
+  if (dead_11 != 0)
+    goto <bb 10>;
+  else
+    goto <bb 11>;
+
+  <bb 6>:
+  _12 = tracer_9(D)->sighand;
+  _23 = &MEM[(struct spinlock_t *)_12 + 2056B].D.5537.rlock;
+  _raw_spin_lock (_23);
+  _24 = _12->action[16].sa.sa_handler;
+  if (_24 == 1B)
+    goto <bb 8>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  _25 = _12->action[16].sa.sa_flags;
+  _26 = _25 & 2;
+  _14 = _26 != 0;
+  ret_16 = (int) _14;
+
+  <bb 8>:
+  # ret_27 = PHI <1(6), ret_16(7)>
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)_12 + 2056B] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  if (ret_27 != 0)
+    goto <bb 9>;
+  else
+    goto <bb 12>;
+
+  <bb 9>:
+  __wake_up_parent (p_1(D), tracer_9(D));
+  goto <bb 13>;
+
+  <bb 10>:
+  p_1(D)->exit_state = 16;
+
+  <bb 11>:
+  # dead_34 = PHI <0(12), 1(10), dead_11(5)>
+  return dead_34;
+
+  <bb 12>:
+  goto <bb 11>;
+
+  <bb 13>:
+  goto <bb 10>;
+
+}
+
+
+
+;; Function ptrace_check_attach (ptrace_check_attach, funcdef_no=2414, decl_uid=34513, cgraph_uid=2414)
+
+ptrace_check_attach (struct task_struct * child, bool ignore_state)
+{
+  bool ret;
+  int __ret;
+  struct task_struct * pfo_ret__;
+  int ret;
+  unsigned int _9;
+  struct task_struct * _10;
+  long int _11;
+  long unsigned int _24;
+  long int _25;
+  long unsigned int _34;
+  long unsigned int _35;
+  struct sighand_struct * _36;
+  struct raw_spinlock * _37;
+  long int _38;
+  long int _39;
+  long unsigned int _40;
+  long unsigned int _41;
+  int _42;
+  int _43;
+  _Bool prephitmp_44;
+  struct sighand_struct * _48;
+
+  <bb 2>:
+  _raw_read_lock (&tasklist_lock);
+  _9 = child_8(D)->ptrace;
+  if (_9 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  goto <bb 13>;
+
+  <bb 4>:
+  _10 = child_8(D)->parent;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___30 : "p" &current_task);
+  if (_10 == pfo_ret___30)
+    goto <bb 5>;
+  else
+    goto <bb 3>;
+
+  <bb 5>:
+  _11 ={v} child_8(D)->state;
+  if (_11 == 8)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  warn_slowpath_null ("kernel/ptrace.c", 185);
+
+  <bb 7>:
+  if (ignore_state_16(D) != 0)
+    goto <bb 13>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  _34 = child_8(D)->jobctl;
+  _35 = _34 & 4194304;
+  if (_35 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  _36 = child_8(D)->sighand;
+  _37 = &MEM[(struct spinlock_t *)_36 + 2056B].D.5537.rlock;
+  _raw_spin_lock_irq (_37);
+  _38 ={v} child_8(D)->state;
+  _39 = _38 & 8;
+  if (_39 != 0)
+    goto <bb 10>;
+  else
+    goto <bb 12>;
+
+  <bb 10>:
+  _40 = MEM[(struct sigset_t *)child_8(D) + 1584B].sig[0];
+  _41 = _40 >> 8;
+  _42 = (int) _41;
+  _43 = _42 & 1;
+  if (_43 == 0)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  child_8(D)->state ={v} 8;
+
+  <bb 12>:
+  # ret_51 = PHI <0(10), 1(11), 0(9)>
+  _48 = child_8(D)->sighand;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)_48 + 2056B] ={v} 0;
+  __asm__ __volatile__("sti" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  if (ret_51 != 0)
+    goto <bb 13>;
+  else
+    goto <bb 3>;
+
+  <bb 13>:
+  # ret_1 = PHI <-3(3), 0(7), 0(12)>
+  # prephitmp_44 = PHI <0(3), 0(7), 1(12)>
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; xaddl %0, %1
+" : "=r" __ret_31, "=m" MEM[(struct atomic_t *)&tasklist_lock].counter : "0" -256, "m" MEM[(struct atomic_t *)&tasklist_lock].counter : "cc", "memory", "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  if (prephitmp_44 != 0)
+    goto <bb 14>;
+  else
+    goto <bb 17>;
+
+  <bb 14>:
+  _24 = wait_task_inactive (child_8(D), 8);
+  if (_24 == 0)
+    goto <bb 15>;
+  else
+    goto <bb 17>;
+
+  <bb 15>:
+  _25 ={v} child_8(D)->state;
+  if (_25 == 8)
+    goto <bb 16>;
+  else
+    goto <bb 17>;
+
+  <bb 16>:
+  warn_slowpath_null ("kernel/ptrace.c", 202);
+
+  <bb 17>:
+  # ret_2 = PHI <ret_1(13), 0(14), -3(16), -3(15)>
+  return ret_2;
+
+}
+
+
+
+;; Function ptrace_peek_siginfo (ptrace_peek_siginfo, funcdef_no=2429, decl_uid=34656, cgraph_uid=2429)
+
+ptrace_peek_siginfo (struct task_struct * child, long unsigned int addr, long unsigned int data)
+{
+  struct task_struct * pfo_ret__;
+  u64 pfo_ret__;
+  long unsigned int n;
+  int __pu_err;
+  struct siginfo_t * uinfo;
+  int __pu_err;
+  s32 off;
+  struct siginfo_t info;
+  int i;
+  int ret;
+  struct sigqueue * q;
+  struct sigpending * pending;
+  struct ptrace_peeksiginfo_args arg;
+  unsigned int i.18;
+  const void * addr.17;
+  int _11;
+  unsigned int _23;
+  unsigned int _24;
+  int _25;
+  struct signal_struct * _28;
+  int _32;
+  long long unsigned int _33;
+  unsigned int _34;
+  unsigned int _36;
+  struct sighand_struct * _38;
+  struct siginfo_t * _42;
+  struct sighand_struct * _45;
+  int _50;
+  int _51;
+  int * _52;
+  int _56;
+  int _57;
+  int * _58;
+  struct raw_spinlock * _68;
+  long unsigned int _71;
+  struct thread_info * _72;
+  unsigned int _73;
+  unsigned int _74;
+  long unsigned int _78;
+  void * _79;
+  void * _81;
+  long unsigned int _82;
+  long unsigned int _83;
+  long unsigned int _84;
+  int _88;
+  int _92;
+
+  <bb 2>:
+  addr.17_19 = (const void *) addr_18(D);
+  n_67 = _copy_from_user (&arg, addr.17_19, 16);
+  ret_22 = (int) n_67;
+  if (ret_22 != 0)
+    goto <bb 29>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _23 = arg.flags;
+  _24 = _23 & 4294967294;
+  if (_24 != 0)
+    goto <bb 29>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _25 = arg.nr;
+  if (_25 < 0)
+    goto <bb 29>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  if (_23 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _28 = child_27(D)->signal;
+  pending_29 = &_28->shared_pending;
+  goto <bb 8>;
+
+  <bb 7>:
+  pending_30 = &child_27(D)->pending;
+
+  <bb 8>:
+  # pending_2 = PHI <pending_29(6), pending_30(7)>
+  if (_25 != 0)
+    goto <bb 9>;
+  else
+    goto <bb 29>;
+
+  <bb 9>:
+
+  <bb 10>:
+  # data_48 = PHI <data_60(25), data_31(D)(9)>
+  # i_77 = PHI <i_61(25), 0(9)>
+  _33 = arg.off;
+  _34 = (unsigned int) _33;
+  i.18_35 = (unsigned int) i_77;
+  _36 = i.18_35 + _34;
+  off_37 = (s32) _36;
+  _38 = child_27(D)->sighand;
+  _68 = &MEM[(struct spinlock_t *)_38 + 2056B].D.5537.rlock;
+  _raw_spin_lock_irq (_68);
+  q_40 = pending_2->list.next;
+  if (pending_2 != q_40)
+    goto <bb 11>;
+  else
+    goto <bb 19>;
+
+  <bb 11>:
+  off_86 = off_37 + -1;
+  if (off_37 == 0)
+    goto <bb 14>;
+  else
+    goto <bb 17>;
+
+  <bb 12>:
+  off_41 = off_75 + -1;
+  if (off_41 == -1)
+    goto <bb 14>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  goto <bb 18>;
+
+  <bb 14>:
+  # q_87 = PHI <q_44(12), q_40(11)>
+  _42 = &q_87->info;
+  _92 = MEM[(struct siginfo *)q_87 + 24B].si_code;
+  if (_92 < 0)
+    goto <bb 15>;
+  else
+    goto <bb 16>;
+
+  <bb 15>:
+  memcpy (&info, _42, 128);
+  goto <bb 19>;
+
+  <bb 16>:
+  memcpy (&info, _42, 48);
+  goto <bb 19>;
+
+  <bb 17>:
+
+  <bb 18>:
+  # q_107 = PHI <q_44(13), q_40(17)>
+  # off_75 = PHI <off_41(13), off_86(17)>
+  q_44 = q_107->list.next;
+  if (pending_2 != q_44)
+    goto <bb 12>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  # off_10 = PHI <-1(16), off_75(18), -1(15), off_37(10)>
+  _45 = child_27(D)->sighand;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)_45 + 2056B] ={v} 0;
+  __asm__ __volatile__("sti" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  if (off_10 >= 0)
+    goto <bb 26>;
+  else
+    goto <bb 20>;
+
+  <bb 20>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___70 : "p" &cpu_tss.x86_tss.sp0);
+  _71 = pfo_ret___70 + 18446744073709535232;
+  _72 = (struct thread_info *) _71;
+  _73 = _72->status;
+  _74 = _73 & 2;
+  if (_74 != 0)
+    goto <bb 30>;
+  else
+    goto <bb 31>;
+
+  <bb 21>:
+  _51 = info.si_code;
+  _52 = &MEM[(struct compat_siginfo_t *)_79].si_code;
+  __asm__ __volatile__("661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xcb
+6651:
+	.popsection
+1:	movl %k1,%2
+2: 661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xca
+6651:
+	.popsection
+.section .fixup,"ax"
+3:	mov %3,%0
+	jmp 2b
+.previous
+ .pushsection "__ex_table","a"
+ .balign 8
+ .long (1b) - .
+ .long (3b) - .
+ .popsection
+" : "=r" __pu_err_53 : "ir" _51, "m" MEM[(struct __large_struct *)_52], "i" -14, "0" 0);
+  if (__pu_err_53 != 0)
+    goto <bb 26>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  data_60 = data_48 + 128;
+  i_61 = i_77 + 1;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___80 : "p" &current_task);
+  _81 = pfo_ret___80->stack;
+  _82 ={v} MEM[(const long unsigned int *)_81 + 8B];
+  _83 = _82 >> 2;
+  _84 = _83 & 1;
+  _88 = (int) _84;
+  if (_88 != 0)
+    goto <bb 26>;
+  else
+    goto <bb 24>;
+
+  <bb 23>:
+  _57 = info.si_code;
+  _58 = &uinfo_54->si_code;
+  __asm__ __volatile__("661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xcb
+6651:
+	.popsection
+1:	movl %k1,%2
+2: 661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xca
+6651:
+	.popsection
+.section .fixup,"ax"
+3:	mov %3,%0
+	jmp 2b
+.previous
+ .pushsection "__ex_table","a"
+ .balign 8
+ .long (1b) - .
+ .long (3b) - .
+ .popsection
+" : "=r" __pu_err_59 : "ir" _57, "m" MEM[(struct __large_struct *)_58], "i" -14, "0" 0);
+  if (__pu_err_59 != 0)
+    goto <bb 26>;
+  else
+    goto <bb 22>;
+
+  <bb 24>:
+  _cond_resched ();
+  info ={v} {CLOBBER};
+  _32 = arg.nr;
+  if (_32 > i_61)
+    goto <bb 25>;
+  else
+    goto <bb 27>;
+
+  <bb 25>:
+  goto <bb 10>;
+
+  <bb 26>:
+  # ret_4 = PHI <ret_22(19), -14(21), -14(23), ret_22(22), -14(30), -14(31)>
+  # i_6 = PHI <i_77(19), i_77(21), i_77(23), i_61(22), i_77(30), i_77(31)>
+  info ={v} {CLOBBER};
+
+  <bb 27>:
+  # ret_5 = PHI <ret_4(26), ret_22(24)>
+  # i_8 = PHI <i_6(26), i_61(24)>
+  if (i_8 > 0)
+    goto <bb 28>;
+  else
+    goto <bb 29>;
+
+  <bb 28>:
+
+  <bb 29>:
+  # _11 = PHI <-14(2), -22(4), _25(8), i_8(28), ret_5(27), -22(3)>
+  arg ={v} {CLOBBER};
+  return _11;
+
+  <bb 30>:
+  _78 = data_48 & 4294967295;
+  _79 = (void *) _78;
+  _50 = copy_siginfo_to_user32 (_79, &info);
+  if (_50 != 0)
+    goto <bb 26>;
+  else
+    goto <bb 21>;
+
+  <bb 31>:
+  uinfo_54 = (struct siginfo_t *) data_48;
+  _56 = copy_siginfo_to_user (uinfo_54, &info);
+  if (_56 != 0)
+    goto <bb 26>;
+  else
+    goto <bb 23>;
+
+}
+
+
+
+;; Function ptrace_resume (ptrace_resume, funcdef_no=2430, decl_uid=34697, cgraph_uid=2430)
+
+ptrace_resume (struct task_struct * child, long int request, long unsigned int data)
+{
+  struct task_struct * pfo_ret__;
+  unsigned long request.26;
+  int _1;
+  unsigned long _15;
+  _Bool _19;
+  _Bool _20;
+  _Bool _21;
+  struct sighand_struct * _25;
+  struct sighand_struct * _30;
+  void * _32;
+  void * _33;
+  void * _34;
+  void * _35;
+  struct list_head * _37;
+  struct list_head * _38;
+  struct raw_spinlock * _39;
+  int _40;
+  volatile long int * _52;
+  volatile long int * _61;
+  volatile long int * _71;
+  volatile long int * _80;
+  int _89;
+
+  <bb 2>:
+  if (data_8(D) > 64)
+    goto <bb 14>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  if (request_10(D) == 24)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  _32 = child_11(D)->stack;
+  _52 = &MEM[(struct thread_info *)_32].flags;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; orb %1,%0" : "=m" *_52 : "iq" 1, "m" *_52 : "memory");
+  goto <bb 7>;
+
+  <bb 5>:
+  _33 = child_11(D)->stack;
+  _61 = &MEM[(struct thread_info *)_33].flags;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; andb %1,%0" : "=m" *_61 : "iq" 254, "m" *_61);
+  request.26_14 = (unsigned long) request_10(D);
+  _15 = request.26_14 + 18446744073709551585;
+  if (_15 <= 1)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _34 = child_11(D)->stack;
+  _71 = &MEM[(struct thread_info *)_34].flags;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; orb %1,%0" : "=m" *_71 : "iq" 64, "m" *_71 : "memory");
+  goto <bb 9>;
+
+  <bb 7>:
+  _35 = child_11(D)->stack;
+  _80 = &MEM[(struct thread_info *)_35].flags;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; andb %1,%0" : "=m" *_80 : "iq" 191, "m" *_80);
+  if (request_10(D) == 33)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  user_enable_block_step (child_11(D));
+  goto <bb 12>;
+
+  <bb 9>:
+  _19 = request_10(D) == 9;
+  _20 = request_10(D) == 32;
+  _21 = _20 | _19;
+  if (_21 != 0)
+    goto <bb 10>;
+  else
+    goto <bb 11>;
+
+  <bb 10>:
+  user_enable_single_step (child_11(D));
+  goto <bb 12>;
+
+  <bb 11>:
+  user_disable_single_step (child_11(D));
+
+  <bb 12>:
+  if (data_8(D) != 0)
+    goto <bb 13>;
+  else
+    goto <bb 16>;
+
+  <bb 13>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___36 : "p" &current_task);
+  _37 = &pfo_ret___36->thread_group;
+  _38 = MEM[(const struct list_head *)pfo_ret___36 + 1200B].next;
+  if (_37 != _38)
+    goto <bb 15>;
+  else
+    goto <bb 16>;
+
+  <bb 14>:
+  # _1 = PHI <-5(2), 0(15), 0(16)>
+  return _1;
+
+  <bb 15>:
+  _25 = child_11(D)->sighand;
+  _39 = &MEM[(struct spinlock_t *)_25 + 2056B].D.5537.rlock;
+  _raw_spin_lock_irq (_39);
+  _89 = (int) data_8(D);
+  child_11(D)->exit_code = _89;
+  wake_up_state (child_11(D), 8);
+  _30 = child_11(D)->sighand;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)_30 + 2056B] ={v} 0;
+  __asm__ __volatile__("sti" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 14>;
+
+  <bb 16>:
+  _40 = (int) data_8(D);
+  child_11(D)->exit_code = _40;
+  wake_up_state (child_11(D), 8);
+  goto <bb 14>;
+
+}
+
+
+
+;; Function __ptrace_link (__ptrace_link, funcdef_no=2410, decl_uid=25312, cgraph_uid=2410)
+
+__ptrace_link (struct task_struct * child, struct task_struct * new_parent)
+{
+  struct list_head * _2;
+  struct list_head * _8;
+  struct list_head * _12;
+  struct list_head * _14;
+
+  <bb 2>:
+  _2 = &child_1(D)->ptrace_entry;
+  _12 = MEM[(const struct list_head *)child_1(D) + 1112B].next;
+  if (_2 != _12)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "kernel/ptrace.c", "i" 39, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 4>:
+  _8 = &new_parent_7(D)->ptraced;
+  _14 = MEM[(struct list_head *)new_parent_7(D) + 1096B].next;
+  _14->prev = _2;
+  MEM[(struct list_head *)child_1(D) + 1112B].next = _14;
+  MEM[(struct list_head *)child_1(D) + 1112B].prev = _8;
+  MEM[(struct list_head *)new_parent_7(D) + 1096B].next = _2;
+  child_1(D)->parent = new_parent_7(D);
+  return;
+
+}
+
+
+
+;; Function __ptrace_unlink (__ptrace_unlink, funcdef_no=2411, decl_uid=25314, cgraph_uid=2411)
+
+__ptrace_unlink (struct task_struct * child)
+{
+  unsigned int _5;
+  long unsigned int prephitmp_7;
+  struct task_struct * _10;
+  struct list_head * _12;
+  struct sighand_struct * _14;
+  unsigned int _18;
+  unsigned int _19;
+  struct signal_struct * _20;
+  long unsigned int _21;
+  long unsigned int _22;
+  long unsigned int _23;
+  long unsigned int _24;
+  long unsigned int _26;
+  long unsigned int _27;
+  long unsigned int _30;
+  long int _31;
+  long int _32;
+  struct sighand_struct * _34;
+  struct list_head * _36;
+  struct list_head * _37;
+  struct raw_spinlock * _38;
+  long unsigned int pretmp_39;
+
+  <bb 2>:
+  _5 = child_4(D)->ptrace;
+  if (_5 == 0)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "kernel/ptrace.c", "i" 74, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 4>:
+  child_4(D)->ptrace = 0;
+  _10 = child_4(D)->real_parent;
+  child_4(D)->parent = _10;
+  _12 = &child_4(D)->ptrace_entry;
+  _36 = MEM[(struct list_head *)child_4(D) + 1112B].next;
+  _37 = MEM[(struct list_head *)child_4(D) + 1112B].prev;
+  _36->prev = _37;
+  _37->next = _36;
+  MEM[(struct list_head *)child_4(D) + 1112B].next = _12;
+  MEM[(struct list_head *)child_4(D) + 1112B].prev = _12;
+  _14 = child_4(D)->sighand;
+  _38 = &MEM[(struct spinlock_t *)_14 + 2056B].D.5537.rlock;
+  _raw_spin_lock (_38);
+  task_clear_jobctl_pending (child_4(D), 1572864);
+  task_clear_jobctl_trapping (child_4(D));
+  _18 = child_4(D)->flags;
+  _19 = _18 & 4;
+  if (_19 == 0)
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  pretmp_39 = child_4(D)->jobctl;
+  goto <bb 10>;
+
+  <bb 6>:
+  _20 = child_4(D)->signal;
+  _21 = BIT_FIELD_REF <*_20, 64, 832>;
+  _22 = _21 & 8589934591;
+  if (_22 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 5>;
+
+  <bb 7>:
+  _23 = child_4(D)->jobctl;
+  _26 = _23 & 65535;
+  if (_26 == 0)
+    goto <bb 9>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  _24 = _23 | 131072;
+  child_4(D)->jobctl = _24;
+  goto <bb 10>;
+
+  <bb 9>:
+  _27 = _23 | 131091;
+  child_4(D)->jobctl = _27;
+
+  <bb 10>:
+  # prephitmp_7 = PHI <pretmp_39(5), _27(9), _24(8)>
+  _30 = prephitmp_7 & 131072;
+  if (_30 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 11>;
+
+  <bb 11>:
+  _31 ={v} child_4(D)->state;
+  _32 = _31 & 8;
+  if (_32 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+  signal_wake_up_state (child_4(D), 8);
+
+  <bb 13>:
+  _34 = child_4(D)->sighand;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)_34 + 2056B] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  return;
+
+}
+
+
+
+;; Function ptrace_may_access (ptrace_may_access, funcdef_no=2417, decl_uid=25320, cgraph_uid=2417)
+
+ptrace_may_access (struct task_struct * task, unsigned int mode)
+{
+  gid_t right;
+  gid_t right;
+  gid_t right;
+  gid_t left;
+  uid_t right;
+  uid_t right;
+  uid_t right;
+  uid_t left;
+  const struct cred * cred;
+  const struct cred * tcred;
+  int dumpable;
+  const struct cred * ________p1;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct raw_spinlock * _8;
+  long long unsigned int _13;
+  struct user_namespace * _21;
+  int _22;
+  struct mm_struct * _23;
+  long unsigned int _24;
+  long long unsigned int _27;
+  struct user_namespace * _29;
+  int _30;
+  int _31;
+  struct signal_struct * _48;
+  struct signal_struct * _49;
+  bool pretmp_51;
+  bool prephitmp_52;
+  int _70;
+
+  <bb 2>:
+  _8 = &MEM[(struct spinlock_t *)task_2(D) + 1680B].D.5537.rlock;
+  _raw_spin_lock (_8);
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___9 : "p" &current_task);
+  cred_10 = pfo_ret___9->cred;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___11 : "p" &current_task);
+  _48 = task_2(D)->signal;
+  _49 = pfo_ret___11->signal;
+  if (_48 == _49)
+    goto <bb 17>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  __asm__ __volatile__("" :  :  : "memory");
+  _13 ={v} MEM[(volatile __u64 *)task_2(D) + 1440B];
+  tcred_14 = (const struct cred *) _13;
+  left_91 = MEM[(const struct cred *)cred_10 + 4B];
+  right_90 = MEM[(const struct cred *)tcred_14 + 20B];
+  if (right_90 == left_91)
+    goto <bb 4>;
+  else
+    goto <bb 9>;
+
+  <bb 4>:
+  right_87 = MEM[(const struct cred *)tcred_14 + 12B];
+  if (right_87 == right_90)
+    goto <bb 5>;
+  else
+    goto <bb 9>;
+
+  <bb 5>:
+  right_84 = MEM[(const struct cred *)tcred_14 + 4B];
+  if (right_84 == right_87)
+    goto <bb 6>;
+  else
+    goto <bb 9>;
+
+  <bb 6>:
+  left_82 = MEM[(const struct cred *)cred_10 + 8B];
+  right_81 = MEM[(const struct cred *)tcred_14 + 24B];
+  if (right_81 == left_82)
+    goto <bb 7>;
+  else
+    goto <bb 9>;
+
+  <bb 7>:
+  right_78 = MEM[(const struct cred *)tcred_14 + 16B];
+  if (right_78 == right_81)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  right_75 = MEM[(const struct cred *)tcred_14 + 8B];
+  if (right_75 == right_78)
+    goto <bb 11>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  _21 = tcred_14->user_ns;
+  _22 = ptrace_has_cap (_21, mode_4(D));
+  if (_22 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 17>;
+
+  <bb 11>:
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  _23 = task_2(D)->mm;
+  if (_23 != 0B)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+  _24 = MEM[(struct mm_struct *)_23 + 800B];
+  _70 = (int) _24;
+  dumpable_71 = _70 & 3;
+
+  <bb 13>:
+  # dumpable_26 = PHI <0(11), dumpable_71(12)>
+  __asm__ __volatile__("" :  :  : "memory");
+  if (dumpable_26 != 1)
+    goto <bb 14>;
+  else
+    goto <bb 16>;
+
+  <bb 14>:
+  _27 ={v} MEM[(volatile __u64 *)task_2(D) + 1440B];
+  ________p1_28 = (const struct cred *) _27;
+  _29 = ________p1_28->user_ns;
+  _30 = ptrace_has_cap (_29, mode_4(D));
+  if (_30 == 0)
+    goto <bb 15>;
+  else
+    goto <bb 16>;
+
+  <bb 15>:
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 17>;
+
+  <bb 16>:
+  __asm__ __volatile__("" :  :  : "memory");
+  _31 = security_ptrace_access_check (task_2(D), mode_4(D));
+  pretmp_51 = _31 == 0;
+
+  <bb 17>:
+  # prephitmp_52 = PHI <1(2), 0(10), 0(15), pretmp_51(16)>
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)task_2(D) + 1680B] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  return prephitmp_52;
+
+}
+
+
+
+;; Function exit_ptrace (exit_ptrace, funcdef_no=2423, decl_uid=25317, cgraph_uid=2423)
+
+exit_ptrace (struct task_struct * tracer, struct list_head * dead)
+{
+  const struct list_head * __mptr;
+  const struct list_head * __mptr;
+  const struct list_head * __mptr;
+  struct task_struct * p;
+  struct list_head * _12;
+  unsigned int _14;
+  unsigned int _15;
+  struct list_head * _16;
+  struct list_head * _26;
+  int _31;
+  bool _32;
+  struct list_head * _34;
+  struct list_head * _40;
+
+  <bb 2>:
+  __mptr_8 = tracer_7(D)->ptraced.next;
+  p_9 = &MEM[(void *)__mptr_8 + -1112B];
+  __mptr_10 = MEM[(struct task_struct *)__mptr_8 + -1112B].ptrace_entry.next;
+  p_11 = &MEM[(void *)__mptr_10 + -1112B];
+  _34 = &MEM[(struct task_struct *)__mptr_8 + -1112B].ptrace_entry;
+  _16 = &tracer_7(D)->ptraced;
+  if (_34 != _16)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  return;
+
+  <bb 4>:
+
+  <bb 5>:
+  # p_17 = PHI <p_18(12), p_9(4)>
+  # p_18 = PHI <p_25(12), p_11(4)>
+  # _40 = PHI <_12(12), _34(4)>
+  _14 = p_17->ptrace;
+  _15 = _14 & 8388608;
+  if (_15 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  send_sig_info (9, 2B, p_17);
+
+  <bb 7>:
+  __ptrace_unlink (p_17);
+  _31 = p_17->exit_state;
+  if (_31 != 32)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  goto <bb 11>;
+
+  <bb 9>:
+  _32 = __ptrace_detach.part.9 (tracer_7(D), p_17);
+  if (_32 != 0)
+    goto <bb 10>;
+  else
+    goto <bb 8>;
+
+  <bb 10>:
+  _26 = dead_22(D)->next;
+  _26->prev = _40;
+  MEM[(struct list_head *)p_17 + 1112B].next = _26;
+  MEM[(struct list_head *)p_17 + 1112B].prev = dead_22(D);
+  dead_22(D)->next = _40;
+
+  <bb 11>:
+  __mptr_24 = p_18->ptrace_entry.next;
+  p_25 = &MEM[(void *)__mptr_24 + -1112B];
+  _12 = &p_18->ptrace_entry;
+  if (_12 != _16)
+    goto <bb 12>;
+  else
+    goto <bb 3>;
+
+  <bb 12>:
+  goto <bb 5>;
+
+}
+
+
+
+;; Function ptrace_readdata (ptrace_readdata, funcdef_no=2424, decl_uid=25295, cgraph_uid=2424)
+
+ptrace_readdata (struct task_struct * tsk, long unsigned int src, char * dst, int len)
+{
+  long unsigned int n;
+  int retval;
+  int this_len;
+  char buf[128];
+  int copied;
+  unsigned int len.11;
+  int _5;
+  int _6;
+  unsigned int _16;
+  long unsigned int _22;
+  unsigned int _30;
+
+  <bb 2>:
+  if (len_13(D) > 0)
+    goto <bb 3>;
+  else
+    goto <bb 11>;
+
+  <bb 3>:
+
+  <bb 4>:
+  # src_38 = PHI <src_25(8), src_11(D)(3)>
+  # dst_39 = PHI <dst_26(8), dst_12(D)(3)>
+  # len_40 = PHI <len_27(8), len_13(D)(3)>
+  # copied_41 = PHI <copied_24(8), 0(3)>
+  len.11_15 = (unsigned int) len_40;
+  _16 = MIN_EXPR <len.11_15, 128>;
+  this_len_17 = (int) _16;
+  retval_20 = access_process_vm (tsk_18(D), src_38, &buf, this_len_17, 0);
+  if (retval_20 == 0)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  # copied_8 = PHI <copied_41(4)>
+  if (copied_8 != 0)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 6>:
+  _22 = (long unsigned int) retval_20;
+  _30 = (unsigned int) _22;
+  n_31 = _copy_to_user (dst_39, &buf, _30);
+  if (n_31 != 0)
+    goto <bb 10>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  copied_24 = copied_41 + retval_20;
+  src_25 = _22 + src_38;
+  dst_26 = dst_39 + _22;
+  len_27 = len_40 - retval_20;
+  buf ={v} {CLOBBER};
+  if (len_27 > 0)
+    goto <bb 8>;
+  else
+    goto <bb 11>;
+
+  <bb 8>:
+  goto <bb 4>;
+
+  <bb 9>:
+  buf ={v} {CLOBBER};
+  goto <bb 11>;
+
+  <bb 10>:
+  # _5 = PHI <-5(5), -14(6)>
+  buf ={v} {CLOBBER};
+
+  <bb 11>:
+  # _6 = PHI <_5(10), copied_24(7), copied_41(9), 0(2)>
+  return _6;
+
+}
+
+
+
+;; Function ptrace_writedata (ptrace_writedata, funcdef_no=2425, decl_uid=25300, cgraph_uid=2425)
+
+ptrace_writedata (struct task_struct * tsk, char * src, long unsigned int dst, int len)
+{
+  long unsigned int n;
+  int retval;
+  int this_len;
+  char buf[128];
+  int copied;
+  unsigned int len.12;
+  int _5;
+  int _6;
+  unsigned int _16;
+  sizetype _25;
+
+  <bb 2>:
+  if (len_13(D) > 0)
+    goto <bb 3>;
+  else
+    goto <bb 11>;
+
+  <bb 3>:
+
+  <bb 4>:
+  # src_38 = PHI <src_26(8), src_11(D)(3)>
+  # dst_39 = PHI <dst_27(8), dst_12(D)(3)>
+  # len_40 = PHI <len_28(8), len_13(D)(3)>
+  # copied_41 = PHI <copied_24(8), 0(3)>
+  len.12_15 = (unsigned int) len_40;
+  _16 = MIN_EXPR <len.12_15, 128>;
+  this_len_17 = (int) _16;
+  n_32 = _copy_from_user (&buf, src_38, _16);
+  if (n_32 != 0)
+    goto <bb 9>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  retval_22 = access_process_vm (tsk_20(D), dst_39, &buf, this_len_17, 1);
+  if (retval_22 == 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  # copied_9 = PHI <copied_41(5)>
+  if (copied_9 != 0)
+    goto <bb 10>;
+  else
+    goto <bb 9>;
+
+  <bb 7>:
+  copied_24 = copied_41 + retval_22;
+  _25 = (sizetype) retval_22;
+  src_26 = src_38 + _25;
+  dst_27 = _25 + dst_39;
+  len_28 = len_40 - retval_22;
+  buf ={v} {CLOBBER};
+  if (len_28 > 0)
+    goto <bb 8>;
+  else
+    goto <bb 11>;
+
+  <bb 8>:
+  goto <bb 4>;
+
+  <bb 9>:
+  # _5 = PHI <-14(4), -5(6)>
+  buf ={v} {CLOBBER};
+  goto <bb 11>;
+
+  <bb 10>:
+  buf ={v} {CLOBBER};
+
+  <bb 11>:
+  # _6 = PHI <_5(9), copied_24(7), copied_41(10), 0(2)>
+  return _6;
+
+}
+
+
+
+;; Function SyS_ptrace (SyS_ptrace, funcdef_no=2435, decl_uid=34821, cgraph_uid=2436)
+
+SyS_ptrace (long int request, long int pid, long int addr, long int data)
+{
+  gid_t right;
+  gid_t right;
+  gid_t right;
+  gid_t left;
+  uid_t right;
+  uid_t right;
+  uid_t right;
+  uid_t left;
+  struct task_struct * pfo_ret__;
+  void * p;
+  struct task_struct * child;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  int ret;
+  long unsigned int ptr.39;
+  long unsigned int flags;
+  struct task_struct * pfo_ret__;
+  const struct cred * cred;
+  const struct cred * tcred;
+  int dumpable;
+  const struct cred * ________p1;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  const struct cred * ________p1;
+  int retval;
+  long int ret;
+  long unsigned int addr.38;
+  long unsigned int data.37;
+  unsigned int _11;
+  struct task_struct * _13;
+  struct task_struct * _16;
+  unsigned int _17;
+  unsigned int _18;
+  struct task_struct * _21;
+  int _25;
+  _Bool _32;
+  _Bool _33;
+  _Bool _34;
+  long unsigned int _35;
+  long unsigned int _36;
+  unsigned int _38;
+  unsigned int _39;
+  struct mutex * _46;
+  int _47;
+  long long unsigned int _52;
+  struct mutex * _58;
+  struct user_namespace * _60;
+  int _61;
+  struct mm_struct * _62;
+  long unsigned int _63;
+  long long unsigned int _66;
+  struct user_namespace * _68;
+  int _69;
+  int _72;
+  unsigned int _76;
+  long long unsigned int _79;
+  struct user_namespace * _81;
+  _Bool _82;
+  unsigned int _86;
+  struct sighand_struct * _88;
+  struct raw_spinlock * _89;
+  long int _90;
+  long int _91;
+  _Bool _92;
+  struct sighand_struct * _93;
+  struct signal_struct * _95;
+  struct mutex * _96;
+  long unsigned int * _98;
+  _Bool _100;
+  _Bool _101;
+  _Bool _102;
+  int _103;
+  int _104;
+  _Bool _107;
+  _Bool _108;
+  _Bool _109;
+  long int _110;
+  int _117;
+  struct signal_struct * _122;
+  struct signal_struct * _123;
+  struct raw_spinlock * _125;
+  struct signal_struct * _126;
+  struct signal_struct * _127;
+  long int prephitmp_133;
+  long int pretmp_135;
+  long int pretmp_138;
+  int _148;
+  long unsigned int _157;
+  long unsigned int _159;
+  long unsigned int _160;
+  struct atomic_t * _169;
+  struct signal_struct * _215;
+
+  <bb 2>:
+  if (request_6(D) == 0)
+    goto <bb 3>;
+  else
+    goto <bb 9>;
+
+  <bb 3>:
+  _raw_write_lock_irq (&tasklist_lock);
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___10 : "p" &current_task);
+  _11 = pfo_ret___10->ptrace;
+  if (_11 == 0)
+    goto <bb 4>;
+  else
+    goto <bb 8>;
+
+  <bb 4>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___12 : "p" &current_task);
+  _13 = pfo_ret___12->parent;
+  ret_14 = security_ptrace_traceme (_13);
+  if (ret_14 == 0)
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  pretmp_138 = (long int) ret_14;
+  goto <bb 8>;
+
+  <bb 6>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___15 : "p" &current_task);
+  _16 = pfo_ret___15->real_parent;
+  _17 = _16->flags;
+  _18 = _17 & 4;
+  if (_18 == 0)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___19 : "p" &current_task);
+  pfo_ret___19->ptrace = 1;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___20 : "p" &current_task);
+  _21 = pfo_ret___20->real_parent;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___22 : "p" &current_task);
+  __ptrace_link (pfo_ret___22, _21);
+
+  <bb 8>:
+  # ret_139 = PHI <-1(3), pretmp_138(5), 0(6), 0(7)>
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)&tasklist_lock] ={v} 0;
+  __asm__ __volatile__("sti" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 61> (out);
+
+  <bb 9>:
+  _25 = (int) pid_7(D);
+  child_26 = ptrace_get_task_struct (_25);
+  ptr.39_27 = (long unsigned int) child_26;
+  if (ptr.39_27 > 18446744073709547520)
+    goto <bb 10>;
+  else
+    goto <bb 11>;
+
+  <bb 10>:
+  ret_31 = (long int) child_26;
+  goto <bb 61> (out);
+
+  <bb 11>:
+  data.37_2 = (long unsigned int) data_1(D);
+  addr.38_4 = (long unsigned int) addr_3(D);
+  _32 = request_6(D) == 16;
+  _33 = request_6(D) == 16902;
+  _34 = _33 | _32;
+  if (_34 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 55>;
+
+  <bb 12>:
+  if (_33 != 0)
+    goto <bb 13>;
+  else
+    goto <bb 16>;
+
+  <bb 13>:
+  if (addr.38_4 != 0)
+    goto <bb 63>;
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  _35 = data.37_2 & 18446744073706405632;
+  if (_35 != 0)
+    goto <bb 63>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _36 = data.37_2 << 3;
+  flags_37 = _36 | 65537;
+
+  <bb 16>:
+  # flags_77 = PHI <1(12), flags_37(15)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___115 : "p" &current_task);
+  p_116 = pfo_ret___115->audit_context;
+  if (p_116 == 0B)
+    goto <bb 18>;
+  else
+    goto <bb 17>;
+
+  <bb 17>:
+  _117 = MEM[(int *)p_116];
+  if (_117 != 0)
+    goto <bb 18>;
+  else
+    goto <bb 62>;
+
+  <bb 18>:
+  _38 = child_26->flags;
+  _39 = _38 & 2097152;
+  if (_39 != 0)
+    goto <bb 63>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___43 : "p" &current_task);
+  _122 = child_26->signal;
+  _123 = pfo_ret___43->signal;
+  if (_122 == _123)
+    goto <bb 63>;
+  else
+    goto <bb 20>;
+
+  <bb 20>:
+  _46 = &_122->cred_guard_mutex;
+  _47 = mutex_lock_interruptible (_46);
+  if (_47 != 0)
+    goto <bb 63>;
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+  _125 = &MEM[(struct spinlock_t *)child_26 + 1680B].D.5537.rlock;
+  _raw_spin_lock (_125);
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___48 : "p" &current_task);
+  cred_49 = pfo_ret___48->cred;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___50 : "p" &current_task);
+  _126 = child_26->signal;
+  _127 = pfo_ret___50->signal;
+  if (_126 == _127)
+    goto <bb 36>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  __asm__ __volatile__("" :  :  : "memory");
+  _52 ={v} MEM[(volatile __u64 *)child_26 + 1440B];
+  tcred_53 = (const struct cred *) _52;
+  left_209 = MEM[(const struct cred *)cred_49 + 4B];
+  right_208 = MEM[(const struct cred *)tcred_53 + 20B];
+  if (right_208 == left_209)
+    goto <bb 23>;
+  else
+    goto <bb 28>;
+
+  <bb 23>:
+  right_205 = MEM[(const struct cred *)tcred_53 + 12B];
+  if (right_205 == right_208)
+    goto <bb 24>;
+  else
+    goto <bb 28>;
+
+  <bb 24>:
+  right_202 = MEM[(const struct cred *)tcred_53 + 4B];
+  if (right_202 == right_205)
+    goto <bb 25>;
+  else
+    goto <bb 28>;
+
+  <bb 25>:
+  left_200 = MEM[(const struct cred *)cred_49 + 8B];
+  right_199 = MEM[(const struct cred *)tcred_53 + 24B];
+  if (right_199 == left_200)
+    goto <bb 26>;
+  else
+    goto <bb 28>;
+
+  <bb 26>:
+  right_196 = MEM[(const struct cred *)tcred_53 + 16B];
+  if (right_196 == right_199)
+    goto <bb 27>;
+  else
+    goto <bb 28>;
+
+  <bb 27>:
+  right_193 = MEM[(const struct cred *)tcred_53 + 8B];
+  if (right_193 == right_196)
+    goto <bb 30>;
+  else
+    goto <bb 28>;
+
+  <bb 28>:
+  _60 = tcred_53->user_ns;
+  _61 = ptrace_has_cap (_60, 2);
+  if (_61 != 0)
+    goto <bb 30>;
+  else
+    goto <bb 29>;
+
+  <bb 29>:
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 36>;
+
+  <bb 30>:
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  _62 = child_26->mm;
+  if (_62 != 0B)
+    goto <bb 31>;
+  else
+    goto <bb 32>;
+
+  <bb 31>:
+  _63 = MEM[(struct mm_struct *)_62 + 800B];
+  _148 = (int) _63;
+  dumpable_149 = _148 & 3;
+
+  <bb 32>:
+  # dumpable_65 = PHI <0(30), dumpable_149(31)>
+  __asm__ __volatile__("" :  :  : "memory");
+  if (dumpable_65 != 1)
+    goto <bb 33>;
+  else
+    goto <bb 35>;
+
+  <bb 33>:
+  _66 ={v} MEM[(volatile __u64 *)child_26 + 1440B];
+  ________p1_67 = (const struct cred *) _66;
+  _68 = ________p1_67->user_ns;
+  _69 = ptrace_has_cap (_68, 2);
+  if (_69 == 0)
+    goto <bb 34>;
+  else
+    goto <bb 35>;
+
+  <bb 34>:
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 36>;
+
+  <bb 35>:
+  __asm__ __volatile__("" :  :  : "memory");
+  retval_70 = security_ptrace_access_check (child_26, 2);
+
+  <bb 36>:
+  # retval_71 = PHI <0(21), -1(29), -1(34), retval_70(35)>
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)child_26 + 1680B] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  if (retval_71 != 0)
+    goto <bb 65>;
+  else
+    goto <bb 37>;
+
+  <bb 37>:
+  _raw_write_lock_irq (&tasklist_lock);
+  _72 = child_26->exit_state;
+  if (_72 != 0)
+    goto <bb 50> (unlock_tasklist);
+  else
+    goto <bb 38>;
+
+  <bb 38>:
+  _76 = child_26->ptrace;
+  if (_76 != 0)
+    goto <bb 50> (unlock_tasklist);
+  else
+    goto <bb 39>;
+
+  <bb 39>:
+  if (_33 != 0)
+    goto <bb 40>;
+  else
+    goto <bb 41>;
+
+  <bb 40>:
+  flags_78 = flags_77 | 65536;
+
+  <bb 41>:
+  # flags_83 = PHI <flags_77(39), flags_78(40)>
+  __asm__ __volatile__("" :  :  : "memory");
+  _79 ={v} MEM[(volatile __u64 *)child_26 + 1440B];
+  ________p1_80 = (const struct cred *) _79;
+  _81 = ________p1_80->user_ns;
+  _82 = ns_capable (_81, 19);
+  if (_82 != 0)
+    goto <bb 42>;
+  else
+    goto <bb 43>;
+
+  <bb 42>:
+  flags_84 = flags_83 | 4;
+
+  <bb 43>:
+  # flags_85 = PHI <flags_83(41), flags_84(42)>
+  __asm__ __volatile__("" :  :  : "memory");
+  _86 = (unsigned int) flags_85;
+  child_26->ptrace = _86;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___87 : "p" &current_task);
+  __ptrace_link (child_26, pfo_ret___87);
+  if (_33 != 0)
+    goto <bb 45>;
+  else
+    goto <bb 44>;
+
+  <bb 44>:
+  send_sig_info (19, 2B, child_26);
+
+  <bb 45>:
+  _88 = child_26->sighand;
+  _89 = &MEM[(struct spinlock_t *)_88 + 2056B].D.5537.rlock;
+  _raw_spin_lock (_89);
+  _90 ={v} child_26->state;
+  _91 = _90 & 4;
+  if (_91 != 0)
+    goto <bb 47>;
+  else
+    goto <bb 46>;
+
+  <bb 46>:
+  goto <bb 49>;
+
+  <bb 47>:
+  _92 = task_set_jobctl_pending (child_26, 2621440);
+  if (_92 != 0)
+    goto <bb 48>;
+  else
+    goto <bb 46>;
+
+  <bb 48>:
+  signal_wake_up_state (child_26, 4);
+
+  <bb 49>:
+  _93 = child_26->sighand;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)_93 + 2056B] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # retval_112 = PHI <-1(38), retval_71(49), -1(37)>
+unlock_tasklist:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)&tasklist_lock] ={v} 0;
+  __asm__ __volatile__("sti" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  _95 = child_26->signal;
+  _96 = &_95->cred_guard_mutex;
+  mutex_unlock (_96);
+  if (retval_112 == 0)
+    goto <bb 51>;
+  else
+    goto <bb 54>;
+
+  <bb 51>:
+  _cond_resched ();
+  _157 ={v} MEM[(const long unsigned int *)child_26 + 960B];
+  _159 = _157 >> 21;
+  _160 = _159 & 1;
+  if (_160 == 0)
+    goto <bb 53>;
+  else
+    goto <bb 52>;
+
+  <bb 52>:
+  _98 = &child_26->jobctl;
+  out_of_line_wait_on_bit (_98, 21, bit_wait, 2);
+
+  <bb 53>:
+  proc_ptrace_connector (child_26, 16);
+
+  <bb 54>:
+  # ret_136 = PHI <prephitmp_133(63), 0(53), -1(50), pretmp_135(65)>
+  goto <bb 59> (out_put_task_struct);
+
+  <bb 55>:
+  _100 = request_6(D) == 8;
+  _101 = request_6(D) == 16903;
+  _102 = _101 | _100;
+  _103 = (int) _102;
+  _104 = ptrace_check_attach (child_26, _103);
+  ret_105 = (long int) _104;
+  if (ret_105 < 0)
+    goto <bb 59> (out_put_task_struct);
+  else
+    goto <bb 56>;
+
+  <bb 56>:
+  ret_106 = arch_ptrace (child_26, request_6(D), addr.38_4, data.37_2);
+  _107 = ret_106 != 0;
+  _108 = request_6(D) != 17;
+  _109 = _107 | _108;
+  if (_109 != 0)
+    goto <bb 57>;
+  else
+    goto <bb 59> (out_put_task_struct);
+
+  <bb 57>:
+  _110 ={v} child_26->state;
+  if (_110 != 8)
+    goto <bb 59> (out_put_task_struct);
+  else
+    goto <bb 58>;
+
+  <bb 58>:
+  ptrace_unfreeze_traced.part.7 (child_26);
+
+  # ret_114 = PHI <ret_136(54), ret_105(55), 0(56), ret_106(57), ret_106(58)>
+out_put_task_struct:
+  _169 = &child_26->usage;
+  __asm__ __volatile__ goto(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; decl %0; je %l1" :  : "m" _169->counter : "memory" : "cc_label" <L9>);
+
+  <bb 60>:
+  __asm__ __volatile__("");
+
+  # ret_111 = PHI <ret_139(8), ret_31(10), ret_114(64), ret_114(60)>
+out:
+  return ret_111;
+
+  <bb 62>:
+  __audit_ptrace (child_26);
+  goto <bb 18>;
+
+  <bb 63>:
+  # prephitmp_133 = PHI <-513(20), -5(14), -1(19), -5(13), -1(18)>
+  goto <bb 54>;
+
+<L9>:
+  __put_task_struct (child_26);
+  goto <bb 61> (out);
+
+  <bb 65>:
+  _215 = child_26->signal;
+  _58 = &_215->cred_guard_mutex;
+  mutex_unlock (_58);
+  pretmp_135 = (long int) retval_71;
+  goto <bb 54>;
+
+}
+
+
+
+;; Function generic_ptrace_peekdata (generic_ptrace_peekdata, funcdef_no=2437, decl_uid=25330, cgraph_uid=2438)
+
+generic_ptrace_peekdata (struct task_struct * tsk, long unsigned int addr, long unsigned int data)
+{
+  long unsigned int __pu_val;
+  int __ret_pu;
+  int copied;
+  long unsigned int tmp;
+  long unsigned int * data.45;
+  int _1;
+
+  <bb 2>:
+  copied_6 = access_process_vm (tsk_3(D), addr_4(D), &tmp, 8, 0);
+  if (copied_6 != 8)
+    goto <bb 4>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  __pu_val_7 = tmp;
+  data.45_9 = (long unsigned int *) data_8(D);
+  __asm__ __volatile__("call __put_user_8" : "=a" __ret_pu_10 : "0" __pu_val_7, "c" data.45_9 : "ebx");
+
+  <bb 4>:
+  # _1 = PHI <-5(2), __ret_pu_10(3)>
+  tmp ={v} {CLOBBER};
+  return _1;
+
+}
+
+
+
+;; Function ptrace_request (ptrace_request, funcdef_no=2433, decl_uid=25307, cgraph_uid=2433)
+
+ptrace_request (struct task_struct * child, long int request, long unsigned int addr, long unsigned int data)
+{
+  int data.25;
+  struct task_struct * pfo_ret__;
+  u64 pfo_ret__;
+  struct sighand_struct * ret;
+  unsigned int iftmp.0;
+  struct sighand_struct * ret;
+  long unsigned int n;
+  long unsigned int n;
+  long unsigned int n;
+  unsigned int flags;
+  int copied;
+  long unsigned int data;
+  long unsigned int __gu_val;
+  int __gu_err;
+  long unsigned int __gu_val;
+  int __gu_err;
+  struct iovec * uiov;
+  struct iovec kiov;
+  struct sigset_t new_set;
+  long unsigned int __pu_val;
+  long unsigned int flags;
+  struct siginfo_t * si;
+  struct siginfo_t siginfo;
+  int ret;
+  bool seized;
+  void * __gu_val.15;
+  int _5;
+  unsigned int _14;
+  unsigned int _15;
+  int _22;
+  struct sigset_t * _36;
+  struct sighand_struct * _40;
+  struct sighand_struct * _43;
+  _Bool _54;
+  long unsigned int _57;
+  long unsigned int _58;
+  long unsigned int _60;
+  int _73;
+  int _74;
+  long unsigned int _75;
+  long unsigned int _78;
+  long unsigned int _79;
+  long unsigned int _81;
+  long unsigned int _83;
+  unsigned int _85;
+  int _89;
+  int _90;
+  int _92;
+  long unsigned int _93;
+  void * * _97;
+  __kernel_size_t * _102;
+  unsigned int _106;
+  int _107;
+  long unsigned int _110;
+  unsigned int _124;
+  unsigned int _125;
+  long unsigned int _131;
+  long unsigned int _132;
+  struct raw_spinlock * _133;
+  struct sighand_struct * _137;
+  struct raw_spinlock * _138;
+  struct sighand_struct * _140;
+  struct raw_spinlock * _141;
+  long unsigned int _143;
+  struct thread_info * _144;
+  long unsigned int _145;
+  void * _162;
+  unsigned int _163;
+  int _164;
+  int _171;
+  volatile long int * _177;
+  int _182;
+
+  <bb 2>:
+  _14 = child_13(D)->ptrace;
+  _15 = _14 & 65536;
+  seized_16 = _15 != 0;
+  uiov_18 = (struct iovec *) data_17(D);
+  switch (request_19(D)) <default: <L95>, case 1 ... 2: <L0>, case 4 ... 5: <L2>, case 7: <L48>, case 8: <L54>, case 9: <L48>, case 17: <L47>, case 21: <L91>, case 24: <L48>, case 31 ... 33: <L48>, case 16896: <L91>, case 16897: <L94>, case 16898: <L14>, case 16899: <L93>, case 16900 ... 16901: <L57>, case 16903: <L33>, case 16904: <L38>, case 16905: <L13>, case 16906: <L21>, case 16907: <L27>>
+
+<L0>:
+  _22 = generic_ptrace_peekdata (child_13(D), addr_20(D), data_17(D));
+  goto <bb 53> (<L95>);
+
+<L2>:
+  data = data_17(D);
+  copied_116 = access_process_vm (child_13(D), addr_20(D), &data, 8, 1);
+  if (copied_116 == 8)
+    goto <bb 5>;
+  else
+    goto <bb 53> (<L95>);
+
+  <bb 5>:
+  goto <bb 53> (<L95>);
+
+<L91>:
+  _75 = data_17(D) & 18446744073708502784;
+  if (_75 != 0)
+    goto <bb 53> (<L95>);
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  flags_123 = _14 & 4269799431;
+  _124 = (unsigned int) data_17(D);
+  _125 = _124 << 3;
+  flags_126 = _125 | flags_123;
+  child_13(D)->ptrace = flags_126;
+  goto <bb 53> (<L95>);
+
+<L94>:
+  __pu_val_25 = child_13(D)->ptrace_message;
+  __asm__ __volatile__("call __put_user_8" : "=a" ret_26 : "0" __pu_val_25, "c" uiov_18 : "ebx");
+  goto <bb 53> (<L95>);
+
+<L13>:
+  ret_28 = ptrace_peek_siginfo (child_13(D), addr_20(D), data_17(D));
+  goto <bb 53> (<L95>);
+
+<L14>:
+  ret_30 = ptrace_getsiginfo (child_13(D), &siginfo);
+  if (ret_30 == 0)
+    goto <bb 11>;
+  else
+    goto <bb 53> (<L95>);
+
+  <bb 11>:
+  ret_32 = copy_siginfo_to_user (uiov_18, &siginfo);
+  goto <bb 53> (<L95>);
+
+<L93>:
+  n_128 = _copy_from_user (&siginfo, uiov_18, 128);
+  if (n_128 != 0)
+    goto <bb 13>;
+  else
+    goto <bb 14>;
+
+  <bb 13>:
+  goto <bb 53> (<L95>);
+
+  <bb 14>:
+  ret_35 = ptrace_setsiginfo (child_13(D), &siginfo);
+  goto <bb 53> (<L95>);
+
+<L21>:
+  if (addr_20(D) != 8)
+    goto <bb 53> (<L95>);
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+  _36 = &child_13(D)->blocked;
+  n_129 = _copy_to_user (uiov_18, _36, 8);
+  if (n_129 != 0)
+    goto <bb 13>;
+  else
+    goto <bb 53> (<L95>);
+
+<L27>:
+  if (addr_20(D) != 8)
+    goto <bb 20>;
+  else
+    goto <bb 18>;
+
+  <bb 18>:
+  n_130 = _copy_from_user (&new_set, uiov_18, 8);
+  if (n_130 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  _131 = new_set.sig[0];
+  _132 = _131 & 18446744073709289215;
+  new_set.sig[0] = _132;
+  _40 = child_13(D)->sighand;
+  _133 = &MEM[(struct spinlock_t *)_40 + 2056B].D.5537.rlock;
+  _raw_spin_lock_irq (_133);
+  child_13(D)->blocked = new_set;
+  _43 = child_13(D)->sighand;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)_43 + 2056B] ={v} 0;
+  __asm__ __volatile__("sti" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+
+  <bb 20>:
+  # ret_1 = PHI <-22(17), -14(18), 0(19)>
+  new_set ={v} {CLOBBER};
+  goto <bb 53> (<L95>);
+
+<L33>:
+  if (seized_16 != 0)
+    goto <bb 23>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  goto <bb 53> (<L95>);
+
+  <bb 23>:
+  ret_135 = __lock_task_sighand (child_13(D), &flags);
+  if (ret_135 == 0B)
+    goto <bb 22>;
+  else
+    goto <bb 24>;
+
+  <bb 24>:
+  _54 = task_set_jobctl_pending (child_13(D), 524288);
+  if (_54 != 0)
+    goto <bb 25>;
+  else
+    goto <bb 28>;
+
+  <bb 25>:
+  _57 = child_13(D)->jobctl;
+  _58 = _57 & 4194304;
+  if (_58 != 0)
+    goto <bb 26>;
+  else
+    goto <bb 27>;
+
+  <bb 26>:
+
+  <bb 27>:
+  # iftmp.0_136 = PHI <8(26), 0(25)>
+  signal_wake_up_state (child_13(D), iftmp.0_136);
+
+  <bb 28>:
+  _60 = flags;
+  _137 = child_13(D)->sighand;
+  _138 = &MEM[(struct spinlock_t *)_137 + 2056B].D.5537.rlock;
+  _raw_spin_unlock_irqrestore (_138, _60);
+  goto <bb 53> (<L95>);
+
+<L38>:
+  if (seized_16 != 0)
+    goto <bb 30>;
+  else
+    goto <bb 22>;
+
+  <bb 30>:
+  ret_139 = __lock_task_sighand (child_13(D), &flags);
+  if (ret_139 == 0B)
+    goto <bb 22>;
+  else
+    goto <bb 31>;
+
+  <bb 31>:
+  si_69 = child_13(D)->last_siginfo;
+  if (si_69 != 0B)
+    goto <bb 32>;
+  else
+    goto <bb 35>;
+
+  <bb 32>:
+  _73 = si_69->si_code;
+  _74 = _73 >> 8;
+  if (_74 == 128)
+    goto <bb 33>;
+  else
+    goto <bb 35>;
+
+  <bb 33>:
+  _78 = child_13(D)->jobctl;
+  _79 = _78 | 4194304;
+  child_13(D)->jobctl = _79;
+  _81 = _78 & 1048576;
+  if (_81 != 0)
+    goto <bb 34>;
+  else
+    goto <bb 35>;
+
+  <bb 34>:
+  signal_wake_up_state (child_13(D), 8);
+
+  <bb 35>:
+  # ret_2 = PHI <-5(32), 0(33), 0(34), -5(31)>
+  _83 = flags;
+  _140 = child_13(D)->sighand;
+  _141 = &MEM[(struct spinlock_t *)_140 + 2056B].D.5537.rlock;
+  _raw_spin_unlock_irqrestore (_141, _83);
+  goto <bb 53> (<L95>);
+
+<L47>:
+  _85 = (unsigned int) data_17(D);
+  if (_85 > 64)
+    goto <bb 42>;
+  else
+    goto <bb 37>;
+
+  <bb 37>:
+  ptrace_disable (child_13(D));
+  _162 = child_13(D)->stack;
+  _177 = &MEM[(struct thread_info *)_162].flags;
+  __asm__ __volatile__(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; andb %1,%0" : "=m" *_177 : "iq" 254, "m" *_177);
+  _raw_write_lock_irq (&tasklist_lock);
+  _163 = child_13(D)->ptrace;
+  if (_163 == 0)
+    goto <bb 54>;
+  else
+    goto <bb 38>;
+
+  <bb 38>:
+  _164 = child_13(D)->exit_state;
+  if (_164 != 0)
+    goto <bb 54>;
+  else
+    goto <bb 39>;
+
+  <bb 39>:
+  data.25_169 = (int) data_17(D);
+  child_13(D)->exit_code = data.25_169;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___170 : "p" &current_task);
+  __ptrace_unlink (child_13(D));
+  _182 = child_13(D)->exit_state;
+  if (_182 != 32)
+    goto <bb 41>;
+  else
+    goto <bb 40>;
+
+  <bb 40>:
+  __ptrace_detach.part.9 (pfo_ret___170, child_13(D));
+
+  <bb 41>:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)&tasklist_lock] ={v} 0;
+  __asm__ __volatile__("sti" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  proc_ptrace_connector (child_13(D), 17);
+
+  <bb 42>:
+  # _171 = PHI <-5(36), 0(41)>
+  goto <bb 53> (<L95>);
+
+<L48>:
+  _89 = ptrace_resume (child_13(D), request_19(D), data_17(D));
+  goto <bb 53> (<L95>);
+
+<L54>:
+  _90 = child_13(D)->exit_state;
+  if (_90 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 45>;
+
+  <bb 45>:
+  _92 = ptrace_resume (child_13(D), 8, 9);
+  goto <bb 53> (<L95>);
+
+<L57>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___142 : "p" &cpu_tss.x86_tss.sp0);
+  _143 = pfo_ret___142 + 18446744073709535232;
+  _144 = (struct thread_info *) _143;
+  _93 = _144->addr_limit.seg;
+  _145 = _93 + 18446744073709551600;
+  if (data_17(D) > _145)
+    goto <bb 51>;
+  else
+    goto <bb 47>;
+
+  <bb 47>:
+  _97 = &uiov_18->iov_base;
+  __asm__ __volatile__("661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xcb
+6651:
+	.popsection
+1:	movq %2,%1
+2: 661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xca
+6651:
+	.popsection
+.section .fixup,"ax"
+3:	mov %3,%0
+	xorq %1,%1
+	jmp 2b
+.previous
+ .pushsection "__ex_table","a"
+ .balign 8
+ .long (1b) - .
+ .long (3b) - .
+ .popsection
+" : "=r" __gu_err_98, "=r" __gu_val_99 : "m" MEM[(struct __large_struct *)_97], "i" -14, "0" 0);
+  __gu_val.15_100 = (void *) __gu_val_99;
+  kiov.iov_base = __gu_val.15_100;
+  if (__gu_err_98 != 0)
+    goto <bb 51>;
+  else
+    goto <bb 48>;
+
+  <bb 48>:
+  _102 = &uiov_18->iov_len;
+  __asm__ __volatile__("661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xcb
+6651:
+	.popsection
+1:	movq %2,%1
+2: 661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xca
+6651:
+	.popsection
+.section .fixup,"ax"
+3:	mov %3,%0
+	xorq %1,%1
+	jmp 2b
+.previous
+ .pushsection "__ex_table","a"
+ .balign 8
+ .long (1b) - .
+ .long (3b) - .
+ .popsection
+" : "=r" __gu_err_103, "=r" __gu_val_104 : "m" MEM[(struct __large_struct *)_102], "i" -14, "0" 0);
+  kiov.iov_len = __gu_val_104;
+  if (__gu_err_103 != 0)
+    goto <bb 51>;
+  else
+    goto <bb 49>;
+
+  <bb 49>:
+  _106 = (unsigned int) addr_20(D);
+  _107 = (int) request_19(D);
+  ret_109 = ptrace_regset (child_13(D), _107, _106, &kiov);
+  if (ret_109 == 0)
+    goto <bb 50>;
+  else
+    goto <bb 52>;
+
+  <bb 50>:
+  _110 = kiov.iov_len;
+  __asm__ __volatile__("661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xcb
+6651:
+	.popsection
+1:	movq %1,%2
+2: 661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xca
+6651:
+	.popsection
+.section .fixup,"ax"
+3:	mov %3,%0
+	jmp 2b
+.previous
+ .pushsection "__ex_table","a"
+ .balign 8
+ .long (1b) - .
+ .long (3b) - .
+ .popsection
+" : "=r" ret_111 : "er" _110, "m" MEM[(struct __large_struct *)_102], "i" -14, "0" 0);
+  goto <bb 52>;
+
+  <bb 51>:
+  kiov ={v} {CLOBBER};
+  goto <bb 53> (<L95>);
+
+  <bb 52>:
+  # ret_3 = PHI <ret_111(50), ret_109(49)>
+  kiov ={v} {CLOBBER};
+
+  # _5 = PHI <_22(3), -5(4), _89(43), 0(7), _92(45), -14(51), ret_26(8), -22(15), ret_28(9), -14(13), ret_30(10), -5(2), ret_3(52), _171(42), ret_2(35), 0(5), ret_35(14), 0(28), ret_32(11), -5(22), ret_1(20), 0(16), -22(6)>
+<L95>:
+  siginfo ={v} {CLOBBER};
+  flags ={v} {CLOBBER};
+  return _5;
+
+  <bb 54>:
+  warn_slowpath_null ("kernel/ptrace.c", 471);
+  goto <bb 39>;
+
+}
+
+
+
+;; Function generic_ptrace_pokedata (generic_ptrace_pokedata, funcdef_no=2438, decl_uid=25334, cgraph_uid=2439)
+
+generic_ptrace_pokedata (struct task_struct * tsk, long unsigned int addr, long unsigned int data)
+{
+  int copied;
+  int iftmp.46;
+
+  <bb 2>:
+  copied_6 = access_process_vm (tsk_3(D), addr_4(D), &data, 8, 1);
+  if (copied_6 == 8)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+
+  <bb 4>:
+  # iftmp.46_1 = PHI <0(3), -5(2)>
+  return iftmp.46_1;
+
+}
+
+
+
+;; Function compat_ptrace_request (compat_ptrace_request, funcdef_no=2439, decl_uid=34078, cgraph_uid=2440)
+
+compat_ptrace_request (struct task_struct * child, compat_long_t request, compat_ulong_t addr, compat_ulong_t data)
+{
+  u64 pfo_ret__;
+  long unsigned int __gu_val;
+  int __gu_err;
+  long unsigned int __gu_val;
+  int __gu_err;
+  struct iovec kiov;
+  compat_ulong_t __pu_val;
+  compat_ulong_t __pu_val;
+  int ret;
+  struct siginfo_t siginfo;
+  compat_ulong_t word;
+  unsigned int data.47;
+  int _4;
+  long unsigned int _11;
+  long unsigned int _17;
+  long unsigned int _20;
+  int _29;
+  long unsigned int _32;
+  compat_uptr_t * _36;
+  compat_size_t * _39;
+  long unsigned int _43;
+  long unsigned int _47;
+  unsigned int _48;
+  long unsigned int _52;
+  long int _53;
+  long unsigned int _58;
+  void * _59;
+  long unsigned int _61;
+  struct thread_info * _62;
+  long unsigned int _63;
+  long unsigned int _64;
+  void * _65;
+
+  <bb 2>:
+  data.47_8 = data;
+  _58 = (long unsigned int) data.47_8;
+  _59 = (void *) _58;
+  switch (request_9(D)) <default: <L59>, case 1 ... 2: <L0>, case 4 ... 5: <L11>, case 16897: <L64>, case 16898: <L23>, case 16899: <L26>, case 16900 ... 16901: <L30>>
+
+<L0>:
+  _11 = (long unsigned int) addr_10(D);
+  ret_14 = access_process_vm (child_12(D), _11, &word, 4, 0);
+  if (ret_14 != 4)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  goto <bb 20>;
+
+  <bb 5>:
+  __pu_val_15 = word;
+  __asm__ __volatile__("call __put_user_4" : "=a" ret_16 : "0" __pu_val_15, "c" _59 : "ebx");
+  goto <bb 20>;
+
+<L11>:
+  _17 = (long unsigned int) addr_10(D);
+  ret_19 = access_process_vm (child_12(D), _17, &data, 4, 1);
+  if (ret_19 != 4)
+    goto <bb 4>;
+  else
+    goto <bb 20>;
+
+<L64>:
+  _20 = child_12(D)->ptrace_message;
+  __pu_val_21 = (compat_ulong_t) _20;
+  __asm__ __volatile__("call __put_user_4" : "=a" ret_22 : "0" __pu_val_21, "c" _59 : "ebx");
+  goto <bb 20>;
+
+<L23>:
+  ret_24 = ptrace_getsiginfo (child_12(D), &siginfo);
+  if (ret_24 == 0)
+    goto <bb 9>;
+  else
+    goto <bb 20>;
+
+  <bb 9>:
+  ret_26 = copy_siginfo_to_user32 (_59, &siginfo);
+  goto <bb 20>;
+
+<L26>:
+  memset (&siginfo, 0, 128);
+  _29 = copy_siginfo_from_user32 (&siginfo, _59);
+  if (_29 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 11>;
+
+  <bb 11>:
+  ret_31 = ptrace_setsiginfo (child_12(D), &siginfo);
+  goto <bb 20>;
+
+<L30>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___60 : "p" &cpu_tss.x86_tss.sp0);
+  _61 = pfo_ret___60 + 18446744073709535232;
+  _62 = (struct thread_info *) _61;
+  _32 = _62->addr_limit.seg;
+  _63 = _32 + 18446744073709551608;
+  if (_58 > _63)
+    goto <bb 17>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  _36 = &MEM[(struct compat_iovec *)_59].iov_base;
+  __asm__ __volatile__("661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xcb
+6651:
+	.popsection
+1:	movl %2,%k1
+2: 661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xca
+6651:
+	.popsection
+.section .fixup,"ax"
+3:	mov %3,%0
+	xorl %k1,%k1
+	jmp 2b
+.previous
+ .pushsection "__ex_table","a"
+ .balign 8
+ .long (1b) - .
+ .long (3b) - .
+ .popsection
+" : "=r" __gu_err_37, "=r" __gu_val_38 : "m" MEM[(struct __large_struct *)_36], "i" -14, "0" 0);
+  if (__gu_err_37 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  _39 = &MEM[(struct compat_iovec *)_59].iov_len;
+  __asm__ __volatile__("661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xcb
+6651:
+	.popsection
+1:	movl %2,%k1
+2: 661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xca
+6651:
+	.popsection
+.section .fixup,"ax"
+3:	mov %3,%0
+	xorl %k1,%k1
+	jmp 2b
+.previous
+ .pushsection "__ex_table","a"
+ .balign 8
+ .long (1b) - .
+ .long (3b) - .
+ .popsection
+" : "=r" __gu_err_40, "=r" __gu_val_41 : "m" MEM[(struct __large_struct *)_39], "i" -14, "0" 0);
+  if (__gu_err_40 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _64 = __gu_val_38 & 4294967295;
+  _65 = (void *) _64;
+  kiov.iov_base = _65;
+  _43 = __gu_val_41 & 4294967295;
+  kiov.iov_len = _43;
+  ret_46 = ptrace_regset (child_12(D), request_9(D), addr_10(D), &kiov);
+  if (ret_46 == 0)
+    goto <bb 16>;
+  else
+    goto <bb 18>;
+
+  <bb 16>:
+  _47 = kiov.iov_len;
+  _48 = (unsigned int) _47;
+  __asm__ __volatile__("661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xcb
+6651:
+	.popsection
+1:	movl %k1,%2
+2: 661:
+	
+662:
+.skip -(((6651f-6641f)-(662b-661b)) > 0) * ((6651f-6641f)-(662b-661b)),0x90
+663:
+.pushsection .altinstructions,"a"
+ .long 661b - .
+ .long 6641f - .
+ .word ( 9*32+20)
+ .byte 663b-661b
+ .byte 6651f-6641f
+ .byte 663b-662b
+.popsection
+.pushsection .altinstr_replacement, "ax"
+6641:
+	.byte 0x0f,0x01,0xca
+6651:
+	.popsection
+.section .fixup,"ax"
+3:	mov %3,%0
+	jmp 2b
+.previous
+ .pushsection "__ex_table","a"
+ .balign 8
+ .long (1b) - .
+ .long (3b) - .
+ .popsection
+" : "=r" ret_49 : "ir" _48, "m" MEM[(struct __large_struct *)_39], "i" -14, "0" 0);
+  goto <bb 18>;
+
+  <bb 17>:
+  kiov ={v} {CLOBBER};
+  goto <bb 20>;
+
+  <bb 18>:
+  # ret_1 = PHI <ret_49(16), ret_46(15)>
+  kiov ={v} {CLOBBER};
+  goto <bb 20>;
+
+<L59>:
+  _52 = (long unsigned int) addr_10(D);
+  _53 = (long int) request_9(D);
+  ret_55 = ptrace_request (child_12(D), _53, _52, _58);
+
+  <bb 20>:
+  # _4 = PHI <-14(17), 0(6), ret_16(5), -14(10), ret_24(8), -5(4), ret_55(19), ret_1(18), ret_31(11), ret_26(9), ret_22(7)>
+  word ={v} {CLOBBER};
+  siginfo ={v} {CLOBBER};
+  return _4;
+
+}
+
+
+
+;; Function compat_SyS_ptrace (compat_SyS_ptrace, funcdef_no=2440, decl_uid=34957, cgraph_uid=2442)
+
+compat_SyS_ptrace (long int request, long int pid, long int addr, long int data)
+{
+  gid_t right;
+  gid_t right;
+  gid_t right;
+  gid_t left;
+  uid_t right;
+  uid_t right;
+  uid_t right;
+  uid_t left;
+  struct task_struct * pfo_ret__;
+  void * p;
+  unsigned int data.53;
+  unsigned int addr.54;
+  struct task_struct * child;
+  long int ret;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  int ret;
+  long unsigned int ptr.39;
+  long unsigned int flags;
+  struct task_struct * pfo_ret__;
+  const struct cred * cred;
+  const struct cred * tcred;
+  int dumpable;
+  const struct cred * ________p1;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  const struct cred * ________p1;
+  int retval;
+  int _2;
+  int _4;
+  int _6;
+  int _8;
+  struct signal_struct * _11;
+  unsigned int _13;
+  struct task_struct * _15;
+  struct task_struct * _18;
+  unsigned int _19;
+  unsigned int _20;
+  struct task_struct * _23;
+  _Bool _33;
+  _Bool _34;
+  _Bool _35;
+  long unsigned int _36;
+  long unsigned int _37;
+  long unsigned int _38;
+  unsigned int _40;
+  unsigned int _41;
+  struct mutex * _48;
+  int _49;
+  long long unsigned int _54;
+  struct user_namespace * _62;
+  int _63;
+  struct mm_struct * _64;
+  long unsigned int _65;
+  long long unsigned int _68;
+  struct user_namespace * _70;
+  int _71;
+  int _74;
+  unsigned int _78;
+  long long unsigned int _81;
+  struct user_namespace * _83;
+  _Bool _84;
+  unsigned int _88;
+  struct sighand_struct * _90;
+  struct raw_spinlock * _91;
+  long int _92;
+  long int _93;
+  _Bool _94;
+  struct sighand_struct * _95;
+  struct signal_struct * _97;
+  struct mutex * _98;
+  long unsigned int * _100;
+  _Bool _102;
+  _Bool _103;
+  _Bool _104;
+  int _105;
+  int _106;
+  _Bool _111;
+  _Bool _112;
+  _Bool _113;
+  long int _114;
+  int _121;
+  struct signal_struct * _126;
+  struct signal_struct * _127;
+  struct raw_spinlock * _129;
+  struct signal_struct * _130;
+  struct signal_struct * _131;
+  long int prephitmp_137;
+  long int pretmp_139;
+  long int pretmp_142;
+  int _152;
+  long unsigned int _161;
+  long unsigned int _163;
+  long unsigned int _164;
+  struct atomic_t * _173;
+  struct mutex * _211;
+
+  <bb 2>:
+  _8 = (int) request_7(D);
+  if (_8 == 0)
+    goto <bb 3>;
+  else
+    goto <bb 9>;
+
+  <bb 3>:
+  _raw_write_lock_irq (&tasklist_lock);
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___12 : "p" &current_task);
+  _13 = pfo_ret___12->ptrace;
+  if (_13 == 0)
+    goto <bb 4>;
+  else
+    goto <bb 8>;
+
+  <bb 4>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___14 : "p" &current_task);
+  _15 = pfo_ret___14->parent;
+  ret_16 = security_ptrace_traceme (_15);
+  if (ret_16 == 0)
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  pretmp_142 = (long int) ret_16;
+  goto <bb 8>;
+
+  <bb 6>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___17 : "p" &current_task);
+  _18 = pfo_ret___17->real_parent;
+  _19 = _18->flags;
+  _20 = _19 & 4;
+  if (_20 == 0)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___21 : "p" &current_task);
+  pfo_ret___21->ptrace = 1;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___22 : "p" &current_task);
+  _23 = pfo_ret___22->real_parent;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___24 : "p" &current_task);
+  __ptrace_link (pfo_ret___24, _23);
+
+  <bb 8>:
+  # ret_143 = PHI <-1(3), pretmp_142(5), 0(6), 0(7)>
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)&tasklist_lock] ={v} 0;
+  __asm__ __volatile__("sti" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 61> (out);
+
+  <bb 9>:
+  _6 = (int) pid_5(D);
+  child_27 = ptrace_get_task_struct (_6);
+  ptr.39_28 = (long unsigned int) child_27;
+  if (ptr.39_28 > 18446744073709547520)
+    goto <bb 10>;
+  else
+    goto <bb 11>;
+
+  <bb 10>:
+  ret_32 = (long int) child_27;
+  goto <bb 61> (out);
+
+  <bb 11>:
+  _33 = _8 == 16;
+  _34 = _8 == 16902;
+  _35 = _34 | _33;
+  if (_35 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 55>;
+
+  <bb 12>:
+  if (_34 != 0)
+    goto <bb 13>;
+  else
+    goto <bb 16>;
+
+  <bb 13>:
+  _4 = (int) addr_3(D);
+  if (_4 != 0)
+    goto <bb 63>;
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  _2 = (int) data_1(D);
+  _36 = (long unsigned int) _2;
+  _37 = _36 & 18446744073706405632;
+  if (_37 != 0)
+    goto <bb 63>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _38 = _36 << 3;
+  flags_39 = _38 | 65537;
+
+  <bb 16>:
+  # flags_79 = PHI <1(12), flags_39(15)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___119 : "p" &current_task);
+  p_120 = pfo_ret___119->audit_context;
+  if (p_120 == 0B)
+    goto <bb 18>;
+  else
+    goto <bb 17>;
+
+  <bb 17>:
+  _121 = MEM[(int *)p_120];
+  if (_121 != 0)
+    goto <bb 18>;
+  else
+    goto <bb 62>;
+
+  <bb 18>:
+  _40 = child_27->flags;
+  _41 = _40 & 2097152;
+  if (_41 != 0)
+    goto <bb 63>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___45 : "p" &current_task);
+  _126 = child_27->signal;
+  _127 = pfo_ret___45->signal;
+  if (_126 == _127)
+    goto <bb 63>;
+  else
+    goto <bb 20>;
+
+  <bb 20>:
+  _48 = &_126->cred_guard_mutex;
+  _49 = mutex_lock_interruptible (_48);
+  if (_49 != 0)
+    goto <bb 63>;
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+  _129 = &MEM[(struct spinlock_t *)child_27 + 1680B].D.5537.rlock;
+  _raw_spin_lock (_129);
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___50 : "p" &current_task);
+  cred_51 = pfo_ret___50->cred;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___52 : "p" &current_task);
+  _130 = child_27->signal;
+  _131 = pfo_ret___52->signal;
+  if (_130 == _131)
+    goto <bb 36>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  __asm__ __volatile__("" :  :  : "memory");
+  _54 ={v} MEM[(volatile __u64 *)child_27 + 1440B];
+  tcred_55 = (const struct cred *) _54;
+  left_213 = MEM[(const struct cred *)cred_51 + 4B];
+  right_212 = MEM[(const struct cred *)tcred_55 + 20B];
+  if (right_212 == left_213)
+    goto <bb 23>;
+  else
+    goto <bb 28>;
+
+  <bb 23>:
+  right_209 = MEM[(const struct cred *)tcred_55 + 12B];
+  if (right_209 == right_212)
+    goto <bb 24>;
+  else
+    goto <bb 28>;
+
+  <bb 24>:
+  right_206 = MEM[(const struct cred *)tcred_55 + 4B];
+  if (right_206 == right_209)
+    goto <bb 25>;
+  else
+    goto <bb 28>;
+
+  <bb 25>:
+  left_204 = MEM[(const struct cred *)cred_51 + 8B];
+  right_203 = MEM[(const struct cred *)tcred_55 + 24B];
+  if (right_203 == left_204)
+    goto <bb 26>;
+  else
+    goto <bb 28>;
+
+  <bb 26>:
+  right_200 = MEM[(const struct cred *)tcred_55 + 16B];
+  if (right_200 == right_203)
+    goto <bb 27>;
+  else
+    goto <bb 28>;
+
+  <bb 27>:
+  right_197 = MEM[(const struct cred *)tcred_55 + 8B];
+  if (right_197 == right_200)
+    goto <bb 30>;
+  else
+    goto <bb 28>;
+
+  <bb 28>:
+  _62 = tcred_55->user_ns;
+  _63 = ptrace_has_cap (_62, 2);
+  if (_63 != 0)
+    goto <bb 30>;
+  else
+    goto <bb 29>;
+
+  <bb 29>:
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 36>;
+
+  <bb 30>:
+  __asm__ __volatile__("" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  _64 = child_27->mm;
+  if (_64 != 0B)
+    goto <bb 31>;
+  else
+    goto <bb 32>;
+
+  <bb 31>:
+  _65 = MEM[(struct mm_struct *)_64 + 800B];
+  _152 = (int) _65;
+  dumpable_153 = _152 & 3;
+
+  <bb 32>:
+  # dumpable_67 = PHI <0(30), dumpable_153(31)>
+  __asm__ __volatile__("" :  :  : "memory");
+  if (dumpable_67 != 1)
+    goto <bb 33>;
+  else
+    goto <bb 35>;
+
+  <bb 33>:
+  _68 ={v} MEM[(volatile __u64 *)child_27 + 1440B];
+  ________p1_69 = (const struct cred *) _68;
+  _70 = ________p1_69->user_ns;
+  _71 = ptrace_has_cap (_70, 2);
+  if (_71 == 0)
+    goto <bb 34>;
+  else
+    goto <bb 35>;
+
+  <bb 34>:
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 36>;
+
+  <bb 35>:
+  __asm__ __volatile__("" :  :  : "memory");
+  retval_72 = security_ptrace_access_check (child_27, 2);
+
+  <bb 36>:
+  # retval_73 = PHI <0(21), -1(29), -1(34), retval_72(35)>
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)child_27 + 1680B] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  if (retval_73 != 0)
+    goto <bb 65>;
+  else
+    goto <bb 37>;
+
+  <bb 37>:
+  _raw_write_lock_irq (&tasklist_lock);
+  _74 = child_27->exit_state;
+  if (_74 != 0)
+    goto <bb 50> (unlock_tasklist);
+  else
+    goto <bb 38>;
+
+  <bb 38>:
+  _78 = child_27->ptrace;
+  if (_78 != 0)
+    goto <bb 50> (unlock_tasklist);
+  else
+    goto <bb 39>;
+
+  <bb 39>:
+  if (_34 != 0)
+    goto <bb 40>;
+  else
+    goto <bb 41>;
+
+  <bb 40>:
+  flags_80 = flags_79 | 65536;
+
+  <bb 41>:
+  # flags_85 = PHI <flags_79(39), flags_80(40)>
+  __asm__ __volatile__("" :  :  : "memory");
+  _81 ={v} MEM[(volatile __u64 *)child_27 + 1440B];
+  ________p1_82 = (const struct cred *) _81;
+  _83 = ________p1_82->user_ns;
+  _84 = ns_capable (_83, 19);
+  if (_84 != 0)
+    goto <bb 42>;
+  else
+    goto <bb 43>;
+
+  <bb 42>:
+  flags_86 = flags_85 | 4;
+
+  <bb 43>:
+  # flags_87 = PHI <flags_85(41), flags_86(42)>
+  __asm__ __volatile__("" :  :  : "memory");
+  _88 = (unsigned int) flags_87;
+  child_27->ptrace = _88;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___89 : "p" &current_task);
+  __ptrace_link (child_27, pfo_ret___89);
+  if (_34 != 0)
+    goto <bb 45>;
+  else
+    goto <bb 44>;
+
+  <bb 44>:
+  send_sig_info (19, 2B, child_27);
+
+  <bb 45>:
+  _90 = child_27->sighand;
+  _91 = &MEM[(struct spinlock_t *)_90 + 2056B].D.5537.rlock;
+  _raw_spin_lock (_91);
+  _92 ={v} child_27->state;
+  _93 = _92 & 4;
+  if (_93 != 0)
+    goto <bb 47>;
+  else
+    goto <bb 46>;
+
+  <bb 46>:
+  goto <bb 49>;
+
+  <bb 47>:
+  _94 = task_set_jobctl_pending (child_27, 2621440);
+  if (_94 != 0)
+    goto <bb 48>;
+  else
+    goto <bb 46>;
+
+  <bb 48>:
+  signal_wake_up_state (child_27, 4);
+
+  <bb 49>:
+  _95 = child_27->sighand;
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)_95 + 2056B] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+
+  # retval_116 = PHI <-1(38), retval_73(49), -1(37)>
+unlock_tasklist:
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)&tasklist_lock] ={v} 0;
+  __asm__ __volatile__("sti" :  :  : "memory");
+  __asm__ __volatile__("" :  :  : "memory");
+  _97 = child_27->signal;
+  _98 = &_97->cred_guard_mutex;
+  mutex_unlock (_98);
+  if (retval_116 == 0)
+    goto <bb 51>;
+  else
+    goto <bb 54>;
+
+  <bb 51>:
+  _cond_resched ();
+  _161 ={v} MEM[(const long unsigned int *)child_27 + 960B];
+  _163 = _161 >> 21;
+  _164 = _163 & 1;
+  if (_164 == 0)
+    goto <bb 53>;
+  else
+    goto <bb 52>;
+
+  <bb 52>:
+  _100 = &child_27->jobctl;
+  out_of_line_wait_on_bit (_100, 21, bit_wait, 2);
+
+  <bb 53>:
+  proc_ptrace_connector (child_27, 16);
+
+  <bb 54>:
+  # ret_140 = PHI <prephitmp_137(63), 0(53), -1(50), pretmp_139(65)>
+  goto <bb 59> (out_put_task_struct);
+
+  <bb 55>:
+  _102 = _8 == 8;
+  _103 = _8 == 16903;
+  _104 = _103 | _102;
+  _105 = (int) _104;
+  _106 = ptrace_check_attach (child_27, _105);
+  ret_107 = (long int) _106;
+  if (ret_107 == 0)
+    goto <bb 56>;
+  else
+    goto <bb 59> (out_put_task_struct);
+
+  <bb 56>:
+  data.53_108 = (unsigned int) data_1(D);
+  addr.54_109 = (unsigned int) addr_3(D);
+  ret_110 = compat_arch_ptrace (child_27, _8, addr.54_109, data.53_108);
+  _111 = ret_110 != 0;
+  _112 = _8 != 17;
+  _113 = _111 | _112;
+  if (_113 != 0)
+    goto <bb 57>;
+  else
+    goto <bb 59> (out_put_task_struct);
+
+  <bb 57>:
+  _114 ={v} child_27->state;
+  if (_114 != 8)
+    goto <bb 59> (out_put_task_struct);
+  else
+    goto <bb 58>;
+
+  <bb 58>:
+  ptrace_unfreeze_traced.part.7 (child_27);
+
+  # ret_118 = PHI <ret_140(54), ret_107(55), ret_107(56), ret_110(57), ret_110(58)>
+out_put_task_struct:
+  _173 = &child_27->usage;
+  __asm__ __volatile__ goto(".pushsection .smp_locks,"a"
+.balign 4
+.long 671f - .
+.popsection
+671:
+	lock; decl %0; je %l1" :  : "m" _173->counter : "memory" : "cc_label" <L9>);
+
+  <bb 60>:
+  __asm__ __volatile__("");
+
+  # ret_115 = PHI <ret_143(8), ret_32(10), ret_118(64), ret_118(60)>
+out:
+  return ret_115;
+
+  <bb 62>:
+  __audit_ptrace (child_27);
+  goto <bb 18>;
+
+  <bb 63>:
+  # prephitmp_137 = PHI <-513(20), -5(14), -1(19), -5(13), -1(18)>
+  goto <bb 54>;
+
+<L9>:
+  __put_task_struct (child_27);
+  goto <bb 61> (out);
+
+  <bb 65>:
+  _11 = child_27->signal;
+  _211 = &_11->cred_guard_mutex;
+  mutex_unlock (_211);
+  pretmp_139 = (long int) retval_73;
+  goto <bb 54>;
+
+}
+
+

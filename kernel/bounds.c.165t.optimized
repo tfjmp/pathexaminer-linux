@@ -1,0 +1,19 @@
+
+;; Function foo (foo, funcdef_no=405, decl_uid=5099, cgraph_uid=405)
+
+foo ()
+{
+  <bb 2>:
+  __asm__ __volatile__("
+->NR_PAGEFLAGS %0 __NR_PAGEFLAGS" :  : "i" 23);
+  __asm__ __volatile__("
+->MAX_NR_ZONES %0 __MAX_NR_ZONES" :  : "i" 4);
+  __asm__ __volatile__("
+->NR_CPUS_BITS %0 ilog2(CONFIG_NR_CPUS)" :  : "i" 6);
+  __asm__ __volatile__("
+->SPINLOCK_SIZE %0 sizeof(spinlock_t)" :  : "i" 4);
+  return;
+
+}
+
+
