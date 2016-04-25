@@ -1,0 +1,4205 @@
+fs/read_write.c:527:40: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) ssize_t vfs_write(struct file *file, const char __user *buf, size_t count, loff_t *pos)
+                                        ^
+fs/read_write.c:487:40: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) ssize_t __vfs_write(struct file *file, const char __user *p, size_t count,
+                                        ^
+fs/read_write.c:469:47: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) static ssize_t new_sync_write(struct file *filp, const char __user *buf, size_t len, loff_t *ppos)
+                                               ^
+fs/read_write.c:442:40: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
+                                        ^
+fs/read_write.c:430:40: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) ssize_t __vfs_read(struct file *file, char __user *buf, size_t count,
+                                        ^
+fs/read_write.c:413:47: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) static ssize_t new_sync_read(struct file *filp, char __user *buf, size_t len, loff_t *ppos)
+                                               ^
+fs/read_write.c:379:36: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) int rw_verify_area(int read_write, struct file *file, const loff_t *ppos, size_t count)
+                                    ^
+Building the rich basic blocks
+About to build basic block 0
+is it a loop? false
+Building a regular RichBasicBlock 0
+About to build basic block 2
+is it a loop? false
+Building a regular RichBasicBlock 2
+    has flow: false    has LSM: false
+About to build basic block 3
+is it a loop? false
+Building a regular RichBasicBlock 3
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __fdget	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 4
+is it a loop? false
+Building a regular RichBasicBlock 4
+    has flow: false    has LSM: false
+About to build basic block 5
+is it a loop? false
+Building a regular RichBasicBlock 5
+    has flow: false    has LSM: false
+About to build basic block 6
+is it a loop? false
+Building a regular RichBasicBlock 6
+    has flow: false    has LSM: false
+About to build basic block 7
+is it a loop? false
+Building a regular RichBasicBlock 7
+    has flow: false    has LSM: false
+About to build basic block 8
+is it a loop? false
+Building a regular RichBasicBlock 8
+    has flow: false    has LSM: false
+About to build basic block 9
+is it a loop? false
+Building a regular RichBasicBlock 9
+    has flow: false    has LSM: false
+About to build basic block 10
+is it a loop? false
+Building a regular RichBasicBlock 10
+    has flow: false    has LSM: false
+About to build basic block 11
+is it a loop? false
+Building a regular RichBasicBlock 11
+    has flow: false    has LSM: false
+About to build basic block 12
+is it a loop? false
+Building a regular RichBasicBlock 12
+    has flow: false    has LSM: false
+About to build basic block 13
+is it a loop? false
+Building a regular RichBasicBlock 13
+    has flow: false    has LSM: false
+About to build basic block 14
+is it a loop? false
+Building a regular RichBasicBlock 14
+    has flow: false    has LSM: false
+About to build basic block 15
+is it a loop? false
+Building a regular RichBasicBlock 15
+    has flow: false    has LSM: false
+About to build basic block 16
+is it a loop? false
+Building a regular RichBasicBlock 16
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: security_file_permission	isLSM: true	isFlow: false
+    has flow: false    has LSM: true
+About to build basic block 17
+is it a loop? false
+Building a regular RichBasicBlock 17
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: mandatory_lock	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 18
+is it a loop? false
+Building a regular RichBasicBlock 18
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: locks_mandatory_area	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 19
+is it a loop? false
+Building a regular RichBasicBlock 19
+    has flow: false    has LSM: false
+About to build basic block 20
+is it a loop? false
+Building a regular RichBasicBlock 20
+    has flow: false    has LSM: false
+About to build basic block 21
+is it a loop? false
+Building a regular RichBasicBlock 21
+    has flow: false    has LSM: false
+About to build basic block 22
+is it a loop? false
+Building a regular RichBasicBlock 22
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __sb_start_write	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 23
+is it a loop? false
+Building a regular RichBasicBlock 23
+    has flow: false    has LSM: false
+About to build basic block 24
+is it a loop? false
+Building a regular RichBasicBlock 24
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kayrebt_FlowNodeMarker	isLSM: false	isFlow: true
+GIMPLE CALL
+    has flow: true    has LSM: false
+About to build basic block 25
+is it a loop? false
+Building a regular RichBasicBlock 25
+    has flow: false    has LSM: false
+About to build basic block 26
+is it a loop? false
+Building a regular RichBasicBlock 26
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kayrebt_FlowNodeMarker	isLSM: false	isFlow: true
+    has flow: true    has LSM: false
+About to build basic block 27
+is it a loop? false
+Building a regular RichBasicBlock 27
+    has flow: false    has LSM: false
+About to build basic block 28
+is it a loop? false
+Building a regular RichBasicBlock 28
+    has flow: false    has LSM: false
+About to build basic block 29
+is it a loop? false
+Building a regular RichBasicBlock 29
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: iov_iter_init	isLSM: false	isFlow: false
+GIMPLE CALL
+    has flow: false    has LSM: false
+About to build basic block 30
+is it a loop? false
+Building a regular RichBasicBlock 30
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __builtin_unreachable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 31
+is it a loop? false
+Building a regular RichBasicBlock 31
+    has flow: false    has LSM: false
+About to build basic block 32
+is it a loop? false
+Building a regular RichBasicBlock 32
+    has flow: false    has LSM: false
+About to build basic block 33
+is it a loop? false
+Building a regular RichBasicBlock 33
+    has flow: false    has LSM: false
+About to build basic block 34
+is it a loop? false
+Building a regular RichBasicBlock 34
+    has flow: false    has LSM: false
+About to build basic block 35
+is it a loop? false
+Building a regular RichBasicBlock 35
+    has flow: false    has LSM: false
+About to build basic block 36
+is it a loop? false
+Building a regular RichBasicBlock 36
+    has flow: false    has LSM: false
+About to build basic block 37
+is it a loop? false
+Building a regular RichBasicBlock 37
+    has flow: false    has LSM: false
+About to build basic block 38
+is it a loop? false
+Building a regular RichBasicBlock 38
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __fsnotify_parent	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: fsnotify	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 39
+is it a loop? false
+Building a regular RichBasicBlock 39
+    has flow: false    has LSM: false
+About to build basic block 40
+is it a loop? false
+Building a regular RichBasicBlock 40
+    has flow: false    has LSM: false
+About to build basic block 41
+is it a loop? false
+Building a regular RichBasicBlock 41
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __sb_end_write	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 42
+is it a loop? false
+Building a regular RichBasicBlock 42
+    has flow: false    has LSM: false
+About to build basic block 43
+is it a loop? false
+Building a regular RichBasicBlock 43
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: fput	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 44
+is it a loop? false
+Building a regular RichBasicBlock 44
+    has flow: false    has LSM: false
+About to build basic block 45
+is it a loop? false
+Building a regular RichBasicBlock 45
+    has flow: false    has LSM: false
+About to build basic block 46
+is it a loop? false
+Building a regular RichBasicBlock 46
+    has flow: false    has LSM: false
+About to build basic block 1
+is it a loop? false
+There are 2 bbs with flow nodes (excluding those having LSM nodes)
+Examining <24> (succs: 34 )
+basic block 23 is a predecessor
+got the corresponding RichBasicBlock
+<23> (succs: 24 25 ) is white, visiting it first
+basic block 22 is a predecessor
+got the corresponding RichBasicBlock
+<22> (succs: 23 ) is white, visiting it first
+basic block 21 is a predecessor
+got the corresponding RichBasicBlock
+<21> (succs: 23 22 ) is white, visiting it first
+basic block 20 is a predecessor
+got the corresponding RichBasicBlock
+<20> (succs: 21 42 ) is white, visiting it first
+basic block 19 is a predecessor
+got the corresponding RichBasicBlock
+<19> (succs: 20 ) is white, visiting it first
+basic block 16 is a predecessor
+got the corresponding RichBasicBlock
+0x15b3020 is red
+0x15b33b0 is red
+basic block 18 is a predecessor
+got the corresponding RichBasicBlock
+<18> (succs: 20 16 ) is white, visiting it first
+basic block 17 is a predecessor
+got the corresponding RichBasicBlock
+<17> (succs: 18 16 ) is white, visiting it first
+basic block 15 is a predecessor
+got the corresponding RichBasicBlock
+<15> (succs: 17 16 ) is white, visiting it first
+basic block 13 is a predecessor
+got the corresponding RichBasicBlock
+<13> (succs: 14 15 ) is white, visiting it first
+basic block 10 is a predecessor
+got the corresponding RichBasicBlock
+<10> (succs: 11 13 ) is white, visiting it first
+basic block 9 is a predecessor
+got the corresponding RichBasicBlock
+<9> (succs: 45 10 ) is white, visiting it first
+basic block 8 is a predecessor
+got the corresponding RichBasicBlock
+<8> (succs: 42 9 ) is white, visiting it first
+basic block 7 is a predecessor
+got the corresponding RichBasicBlock
+<7> (succs: 42 8 ) is white, visiting it first
+basic block 6 is a predecessor
+got the corresponding RichBasicBlock
+<6> (succs: 42 7 ) is white, visiting it first
+basic block 5 is a predecessor
+got the corresponding RichBasicBlock
+<5> (succs: 42 6 ) is white, visiting it first
+basic block 4 is a predecessor
+got the corresponding RichBasicBlock
+<4> (succs: 5 42 ) is white, visiting it first
+basic block 3 is a predecessor
+got the corresponding RichBasicBlock
+<3> (succs: 4 44 ) is white, visiting it first
+basic block 2 is a predecessor
+got the corresponding RichBasicBlock
+<2> (succs: 44 3 ) is white, visiting it first
+basic block 0 is a predecessor
+got the corresponding RichBasicBlock
+<0> (succs: 2 ) is green (or gray), adding myself as a successor
+0x15b2950 is green
+<2> (succs: 44 3 ) is green (or gray), adding myself as a successor
+0x15785b0 is green
+<3> (succs: 4 44 ) is green (or gray), adding myself as a successor
+0x15ba200 is green
+<4> (succs: 5 42 ) is green (or gray), adding myself as a successor
+0x1589ec0 is green
+<5> (succs: 42 6 ) is green (or gray), adding myself as a successor
+0x15786f0 is green
+<6> (succs: 42 7 ) is green (or gray), adding myself as a successor
+0x1578820 is green
+<7> (succs: 42 8 ) is green (or gray), adding myself as a successor
+0x1571f50 is green
+<8> (succs: 42 9 ) is green (or gray), adding myself as a successor
+0x1572080 is green
+<9> (succs: 45 10 ) is green (or gray), adding myself as a successor
+0x15721b0 is green
+<10> (succs: 11 13 ) is green (or gray), adding myself as a successor
+0x15722e0 is green
+<13> (succs: 14 15 ) is green (or gray), adding myself as a successor
+0x15b2c90 is green
+basic block 12 is a predecessor
+got the corresponding RichBasicBlock
+<12> (succs: 45 15 ) is white, visiting it first
+basic block 11 is a predecessor
+got the corresponding RichBasicBlock
+<11> (succs: 45 12 ) is white, visiting it first
+basic block 10 is a predecessor
+got the corresponding RichBasicBlock
+<10> (succs: 11 13 ) is green (or gray), adding myself as a successor
+0x15722e0 is green
+<11> (succs: 45 12 ) is green (or gray), adding myself as a successor
+0x15b2a30 is green
+<12> (succs: 45 15 ) is green (or gray), adding myself as a successor
+0x15b2b60 is green
+basic block 14 is a predecessor
+got the corresponding RichBasicBlock
+<14> (succs: 45 15 ) is white, visiting it first
+basic block 13 is a predecessor
+got the corresponding RichBasicBlock
+<13> (succs: 14 15 ) is green (or gray), adding myself as a successor
+0x15b2c90 is green
+<14> (succs: 45 15 ) is green (or gray), adding myself as a successor
+0x15b2dc0 is green
+<15> (succs: 17 16 ) is green (or gray), adding myself as a successor
+0x15b2ef0 is green
+<17> (succs: 18 16 ) is green (or gray), adding myself as a successor
+0x15b3150 is green
+<18> (succs: 20 16 ) is green (or gray), adding myself as a successor
+0x15b3280 is green
+basic block 16 is a predecessor
+got the corresponding RichBasicBlock
+0x15b3020 is red
+<20> (succs: 21 42 ) is green (or gray), adding myself as a successor
+0x15b3490 is green
+<21> (succs: 23 22 ) is green (or gray), adding myself as a successor
+0x15b35c0 is green
+<22> (succs: 23 ) is green (or gray), adding myself as a successor
+0x15b36f0 is green
+basic block 21 is a predecessor
+got the corresponding RichBasicBlock
+<21> (succs: 23 22 ) is green (or gray), adding myself as a successor
+0x15b35c0 is green
+<23> (succs: 24 25 ) is green (or gray), adding myself as a successor
+0x15b9190 is green
+These are all the basic blocks:
+<16> (succs: 20 19 )
+<36> (succs: 37 )
+<27> (succs: 28 )
+<3> (succs: 4 44 )
+<4> (succs: 5 42 )
+<5> (succs: 42 6 )
+<6> (succs: 42 7 )
+<9> (succs: 45 10 )
+<10> (succs: 11 13 )
+<12> (succs: 45 15 )
+<13> (succs: 14 15 )
+<15> (succs: 17 16 )
+<17> (succs: 18 16 )
+<18> (succs: 20 16 )
+<19> (succs: 20 )
+<20> (succs: 21 42 )
+<21> (succs: 23 22 )
+<24> (succs: 34 )
+<25> (succs: 26 40 )
+<26> (succs: 28 27 )
+<30> (succs: )
+<31> (succs: 32 33 )
+<32> (succs: 33 )
+<33> (succs: 34 )
+<34> (succs: 35 40 )
+<40> (succs: 42 41 )
+<42> (succs: 43 44 )
+<43> (succs: 44 )
+<44> (succs: 1 )
+<7> (succs: 42 8 )
+<8> (succs: 42 9 )
+<11> (succs: 45 12 )
+<14> (succs: 45 15 )
+<23> (succs: 24 25 )
+<22> (succs: 23 )
+<28> (succs: 46 29 )
+<29> (succs: 30 31 )
+<39> (succs: 40 )
+<35> (succs: 37 36 )
+<37> (succs: 38 39 )
+<38> (succs: 39 )
+<41> (succs: 42 )
+<45> (succs: 42 )
+<46> (succs: 29 )
+<0> (succs: 2 )
+<1> (succs: )
+<2> (succs: 44 3 )
+These are the basic blocks from the interesting subgraph:
+[7] (succs in graph: [8] )
+[8] (succs in graph: [9] )
+[9] (succs in graph: [10] )
+[10] (succs in graph: [13] [11] )
+[2] (succs in graph: [3] )
+[5] (succs in graph: [6] )
+[6] (succs in graph: [7] )
+[4] (succs in graph: [5] )
+[0] (succs in graph: [2] )
+[11] (succs in graph: [12] )
+[12] (succs in graph: [15] )
+[13] (succs in graph: [15] [14] )
+[14] (succs in graph: [15] )
+[15] (succs in graph: [17] )
+[17] (succs in graph: [18] )
+[18] (succs in graph: [20] )
+[20] (succs in graph: [21] )
+[21] (succs in graph: [22] [23] )
+[22] (succs in graph: [23] )
+[23] (succs in graph: [24] )
+[24] (succs in graph: )
+[3] (succs in graph: [4] )
+
+Starting the walk until <24> (succs: 34 )
+Configuration created, _constraints size: 0
+Reached <0> (succs: 2 )
+Handled all statements
+<2> (succs: 44 3 ) is a valid successor
+extracted the constraint for successor <2> (succs: 44 3 )
+Configuration copied
+Copy of configuration initialized
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+true
+Yices says satisfiable
+Reached <2> (succs: 44 3 )
+Next statement : gimple_assign
+<ssa 0>.6 is a variable
+Trying to add a constraint about <ssa 0>.6
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term fd.5
+fd.5
+Normalized term <ssa 0>.6
+<ssa 0>.6
+After normalization, new constraint: 
+(= fd.5 <ssa 0>.6)
+Constraint about to be inserted, size: 0
+Constraint inserted, size: 1
+Next statement : gimple_assign
+pos is a variable
+Trying to add a constraint about pos
+	lhs tree code: var_decl
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term pos.8
+pos.8
+Normalized term pos
+pos
+After normalization, new constraint: 
+(= pos.8 pos)
+Constraint about to be inserted, size: 1
+	(= fd.5 <ssa 0>.6)
+Constraint inserted, size: 2
+Next statement : gimple_cond
+Handled all statements
+<3> (succs: 4 44 ) is a valid successor
+extracted the constraint for successor <3> (succs: 4 44 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about pos.8
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term pos.8
+pos.8
+After normalization, new constraint: 
+(>= pos.8 0)
+Constraint about to be inserted, size: 2
+	(= fd.5 <ssa 0>.6)
+	(= pos.8 pos)
+Constraint inserted, size: 3
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (= pos.8 pos) (>= pos.8 0))
+Yices says satisfiable
+Reached <3> (succs: 4 44 )
+Next statement : gimple_call
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+<ssa 1>.14 is a variable
+Trying to add a constraint about <ssa 1>.14
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 2>.13
+<ssa 2>.13
+Normalized term <ssa 1>.14
+<ssa 1>.14
+After normalization, new constraint: 
+(= <ssa 2>.13 <ssa 1>.14)
+Constraint about to be inserted, size: 2
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+Constraint inserted, size: 3
+Next statement : gimple_assign
+<ssa 3>.15 is a variable
+Trying to add a constraint about <ssa 3>.15
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 4>.12
+<ssa 4>.12
+Normalized term <ssa 3>.15
+<ssa 3>.15
+After normalization, new constraint: 
+(= <ssa 4>.12 <ssa 3>.15)
+Constraint about to be inserted, size: 3
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+Constraint inserted, size: 4
+Next statement : gimple_cond
+Handled all statements
+<4> (succs: 5 42 ) is a valid successor
+extracted the constraint for successor <4> (succs: 5 42 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 1>.14
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term <ssa 1>.14
+<ssa 1>.14
+After normalization, new constraint: 
+(/= <ssa 1>.14 0)
+Constraint about to be inserted, size: 4
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+Constraint inserted, size: 5
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0))
+Yices says satisfiable
+Reached <4> (succs: 5 42 )
+Next statement : gimple_assign
+<ssa 5>.17 is a variable
+Trying to add a constraint about <ssa 5>.17
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<5> (succs: 42 6 ) is a valid successor
+extracted the constraint for successor <5> (succs: 42 6 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 6>.18
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term <ssa 6>.18
+<ssa 6>.18
+After normalization, new constraint: 
+(/= <ssa 6>.18 0)
+Constraint about to be inserted, size: 5
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+Constraint inserted, size: 6
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0))
+Yices says satisfiable
+Reached <5> (succs: 42 6 )
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<6> (succs: 42 7 ) is a valid successor
+extracted the constraint for successor <6> (succs: 42 7 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 7>.19
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 7>.19
+<ssa 7>.19
+After normalization, new constraint: 
+(/= <ssa 7>.19 0)
+Constraint about to be inserted, size: 6
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+Constraint inserted, size: 7
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0))
+Yices says satisfiable
+Reached <6> (succs: 42 7 )
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<7> (succs: 42 8 ) is a valid successor
+extracted the constraint for successor <7> (succs: 42 8 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 8>.20
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 8>.20
+<ssa 8>.20
+After normalization, new constraint: 
+(/= <ssa 8>.20 0)
+Constraint about to be inserted, size: 7
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+Constraint inserted, size: 8
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0))
+Yices says satisfiable
+Reached <7> (succs: 42 8 )
+Next statement : gimple_assign
+count.34.2 is a variable
+Trying to add a constraint about count.34.2
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term count.1
+count.1
+Normalized term count.34.2
+count.34.2
+After normalization, new constraint: 
+(= count.1 count.34.2)
+Constraint about to be inserted, size: 8
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+Constraint inserted, size: 9
+Next statement : gimple_asm
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+<ssa 9>.87 is a variable
+Trying to add a constraint about <ssa 9>.87
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 10>.86
+<ssa 10>.86
+Normalized term <ssa 9>.87
+<ssa 9>.87
+After normalization, new constraint: 
+(= <ssa 10>.86 <ssa 9>.87)
+Constraint about to be inserted, size: 9
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+Constraint inserted, size: 10
+Next statement : gimple_assign
+<ssa 11>.22 is a variable
+Trying to add a constraint about <ssa 11>.22
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+buf.20.23 is a variable
+Trying to add a constraint about buf.20.23
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term buf.3
+buf.3
+Normalized term buf.20.23
+buf.20.23
+After normalization, new constraint: 
+(= buf.3 buf.20.23)
+Constraint about to be inserted, size: 10
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+Constraint inserted, size: 11
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<8> (succs: 42 9 ) is a valid successor
+extracted the constraint for successor <8> (succs: 42 9 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about count.34.2
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term addr.91
+addr.91
+Normalized term count.34.2
+count.34.2
+After normalization, new constraint: 
+(>= (+ (* -1 count.34.2) addr.91) 0)
+Constraint about to be inserted, size: 11
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+Constraint inserted, size: 12
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0))
+Yices says satisfiable
+Reached <8> (succs: 42 9 )
+Next statement : gimple_cond
+Handled all statements
+<9> (succs: 45 10 ) is a valid successor
+extracted the constraint for successor <9> (succs: 45 10 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 11>.22
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term addr.91
+addr.91
+Normalized term <ssa 11>.22
+<ssa 11>.22
+After normalization, new constraint: 
+(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+Constraint about to be inserted, size: 12
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+Constraint inserted, size: 13
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0))
+Yices says satisfiable
+Reached <9> (succs: 45 10 )
+Next statement : gimple_assign
+<ssa 12>.28 is a variable
+Trying to add a constraint about <ssa 12>.28
+	lhs tree code: ssa_name
+	rhs tree code: mem_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<10> (succs: 11 13 ) is a valid successor
+extracted the constraint for successor <10> (succs: 11 13 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about count.1
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term count.1
+count.1
+After normalization, new constraint: 
+(>= count.1 0)
+Constraint about to be inserted, size: 13
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+Constraint inserted, size: 14
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0))
+Yices says satisfiable
+Reached <10> (succs: 11 13 )
+Next statement : gimple_assign
+pos.34 is a variable
+Trying to add a constraint about pos.34
+	lhs tree code: ssa_name
+	rhs tree code: var_decl
+Constraint accepted
+Normalized term pos
+pos
+Normalized term pos.34
+pos.34
+After normalization, new constraint: 
+(= pos pos.34)
+Constraint about to be inserted, size: 14
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+Constraint inserted, size: 15
+Next statement : gimple_cond
+Handled all statements
+<13> (succs: 14 15 ) is a valid successor
+extracted the constraint for successor <13> (succs: 14 15 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about pos.34
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term pos.34
+pos.34
+After normalization, new constraint: 
+(>= pos.34 0)
+Constraint about to be inserted, size: 15
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+Constraint inserted, size: 16
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0))
+Yices says satisfiable
+<11> (succs: 45 12 ) is a valid successor
+extracted the constraint for successor <11> (succs: 45 12 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about pos.34
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term pos.34
+pos.34
+After normalization, new constraint: 
+(< pos.34 0)
+Constraint about to be inserted, size: 15
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+Constraint inserted, size: 16
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (< pos.34 0))
+Yices says satisfiable
+Reached <11> (succs: 45 12 )
+Next statement : gimple_assign
+<ssa 13>.96 is a variable
+Trying to add a constraint about <ssa 13>.96
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 5>.17
+<ssa 5>.17
+Normalized term <ssa 13>.96
+<ssa 13>.96
+After normalization, new constraint: 
+(= <ssa 5>.17 <ssa 13>.96)
+Constraint about to be inserted, size: 16
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(< pos.34 0)
+Constraint inserted, size: 17
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<12> (succs: 45 15 ) is a valid successor
+extracted the constraint for successor <12> (succs: 45 15 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 14>.97
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term <ssa 14>.97
+<ssa 14>.97
+After normalization, new constraint: 
+(/= <ssa 14>.97 0)
+Constraint about to be inserted, size: 17
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+Constraint inserted, size: 18
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0))
+Yices says satisfiable
+Reached <12> (succs: 45 15 )
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+<ssa 15>.40 is a variable
+Trying to add a constraint about <ssa 15>.40
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 16>.39
+<ssa 16>.39
+Normalized term <ssa 15>.40
+<ssa 15>.40
+After normalization, new constraint: 
+(= <ssa 16>.39 <ssa 15>.40)
+Constraint about to be inserted, size: 18
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+Constraint inserted, size: 19
+Next statement : gimple_cond
+Handled all statements
+<15> (succs: 17 16 ) is a valid successor
+extracted the constraint for successor <15> (succs: 17 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about count.34.2
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 15>.40
+<ssa 15>.40
+Normalized term count.34.2
+count.34.2
+After normalization, new constraint: 
+(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+Constraint about to be inserted, size: 19
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+Constraint inserted, size: 20
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0) (= <ssa 16>.39 <ssa 15>.40)
+     (< (+ count.34.2 (* -1 <ssa 15>.40)) 0))
+Yices says satisfiable
+Reached <15> (succs: 17 16 )
+Next statement : gimple_assign
+<ssa 17>.48 is a variable
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<17> (succs: 18 16 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term <ssa 17>.48
+<ssa 17>.48
+After normalization, new constraint: 
+(/= <ssa 17>.48 0)
+Constraint about to be inserted, size: 20
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0) (= <ssa 16>.39 <ssa 15>.40)
+     (< (+ count.34.2 (* -1 <ssa 15>.40)) 0) (/= <ssa 17>.48 0))
+Yices says satisfiable
+Reached <17> (succs: 18 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 20 16 ) is a valid successor
+extracted the constraint for successor <18> (succs: 20 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 18>.52
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 18>.52
+<ssa 18>.52
+After normalization, new constraint: 
+(/= <ssa 18>.52 0)
+Constraint about to be inserted, size: 20
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+	(/= <ssa 17>.48 0)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0) (= <ssa 16>.39 <ssa 15>.40)
+     (< (+ count.34.2 (* -1 <ssa 15>.40)) 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0))
+Yices says satisfiable
+Reached <18> (succs: 20 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 42 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 42 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about retval.56
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term retval.56
+retval.56
+After normalization, new constraint: 
+(< retval.56 0)
+Constraint about to be inserted, size: 21
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+Constraint inserted, size: 22
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0) (= <ssa 16>.39 <ssa 15>.40)
+     (< (+ count.34.2 (* -1 <ssa 15>.40)) 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0))
+Yices says satisfiable
+Reached <20> (succs: 21 42 )
+Trying to add a constraint about <ssa 19>.60
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term retval.56
+retval.56
+Normalized term <ssa 19>.60
+<ssa 19>.60
+After normalization, new constraint: 
+(= retval.56 <ssa 19>.60)
+Constraint about to be inserted, size: 22
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+Constraint inserted, size: 23
+Next statement : gimple_assign
+ret.61 is a variable
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 19>.60
+<ssa 19>.60
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(= <ssa 19>.60 ret.61)
+Constraint about to be inserted, size: 23
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+Constraint inserted, size: 24
+Next statement : gimple_cond
+Handled all statements
+<21> (succs: 23 22 ) is a valid successor
+extracted the constraint for successor <21> (succs: 23 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(>= ret.61 0)
+Constraint about to be inserted, size: 24
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+	(= <ssa 19>.60 ret.61)
+Constraint inserted, size: 25
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0) (= <ssa 16>.39 <ssa 15>.40)
+     (< (+ count.34.2 (* -1 <ssa 15>.40)) 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0)
+     (= retval.56 <ssa 19>.60) (= <ssa 19>.60 ret.61) (>= ret.61 0))
+Yices says unsatisfiable
+Reached <13> (succs: 14 15 )
+Next statement : gimple_assign
+pos.13.41 is a variable
+Trying to add a constraint about pos.13.41
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term pos.34
+pos.34
+Normalized term pos.13.41
+pos.13.41
+After normalization, new constraint: 
+(= pos.34 pos.13.41)
+Constraint about to be inserted, size: 16
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+Constraint inserted, size: 17
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+<ssa 20>.43 is a variable
+Trying to add a constraint about <ssa 20>.43
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 21>.42
+<ssa 21>.42
+Normalized term <ssa 20>.43
+<ssa 20>.43
+After normalization, new constraint: 
+(= <ssa 21>.42 <ssa 20>.43)
+Constraint about to be inserted, size: 17
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+Constraint inserted, size: 18
+Next statement : gimple_cond
+Handled all statements
+<15> (succs: 17 16 ) is a valid successor
+extracted the constraint for successor <15> (succs: 17 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 20>.43
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term <ssa 20>.43
+<ssa 20>.43
+After normalization, new constraint: 
+(>= <ssa 20>.43 0)
+Constraint about to be inserted, size: 18
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+Constraint inserted, size: 19
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (>= <ssa 20>.43 0))
+Yices says satisfiable
+<14> (succs: 45 15 ) is a valid successor
+extracted the constraint for successor <14> (succs: 45 15 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 20>.43
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 20>.43
+<ssa 20>.43
+After normalization, new constraint: 
+(< <ssa 20>.43 0)
+Constraint about to be inserted, size: 18
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+Constraint inserted, size: 19
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (< <ssa 20>.43 0))
+Yices says satisfiable
+Reached <14> (succs: 45 15 )
+Next statement : gimple_assign
+<ssa 22>.99 is a variable
+Trying to add a constraint about <ssa 22>.99
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 5>.17
+<ssa 5>.17
+Normalized term <ssa 22>.99
+<ssa 22>.99
+After normalization, new constraint: 
+(= <ssa 5>.17 <ssa 22>.99)
+Constraint about to be inserted, size: 19
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+Constraint inserted, size: 20
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<15> (succs: 17 16 ) is a valid successor
+extracted the constraint for successor <15> (succs: 17 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 23>.100
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 23>.100
+<ssa 23>.100
+After normalization, new constraint: 
+(/= <ssa 23>.100 0)
+Constraint about to be inserted, size: 20
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (< <ssa 20>.43 0)
+     (= <ssa 5>.17 <ssa 22>.99) (/= <ssa 23>.100 0))
+Yices says satisfiable
+Reached <15> (succs: 17 16 )
+Next statement : gimple_assign
+<ssa 17>.48 is a variable
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<17> (succs: 18 16 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 17>.48
+<ssa 17>.48
+After normalization, new constraint: 
+(/= <ssa 17>.48 0)
+Constraint about to be inserted, size: 21
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+Constraint inserted, size: 22
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0) (/= <ssa 17>.48 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (< <ssa 20>.43 0)
+     (= <ssa 5>.17 <ssa 22>.99) (/= <ssa 23>.100 0))
+Yices says satisfiable
+Reached <17> (succs: 18 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 20 16 ) is a valid successor
+extracted the constraint for successor <18> (succs: 20 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 18>.52
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 18>.52
+<ssa 18>.52
+After normalization, new constraint: 
+(/= <ssa 18>.52 0)
+Constraint about to be inserted, size: 21
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+	(/= <ssa 17>.48 0)
+Constraint inserted, size: 22
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43)
+     (< <ssa 20>.43 0) (= <ssa 5>.17 <ssa 22>.99) (/= <ssa 23>.100 0))
+Yices says satisfiable
+Reached <18> (succs: 20 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 42 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 42 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about retval.56
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term retval.56
+retval.56
+After normalization, new constraint: 
+(< retval.56 0)
+Constraint about to be inserted, size: 22
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+Constraint inserted, size: 23
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0) (= pos.34 pos.13.41)
+     (= <ssa 21>.42 <ssa 20>.43) (< <ssa 20>.43 0) (= <ssa 5>.17 <ssa 22>.99) (/= <ssa 23>.100 0))
+Yices says satisfiable
+Reached <20> (succs: 21 42 )
+Trying to add a constraint about <ssa 19>.60
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term retval.56
+retval.56
+Normalized term <ssa 19>.60
+<ssa 19>.60
+After normalization, new constraint: 
+(= retval.56 <ssa 19>.60)
+Constraint about to be inserted, size: 23
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+Constraint inserted, size: 24
+Next statement : gimple_assign
+ret.61 is a variable
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 19>.60
+<ssa 19>.60
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(= <ssa 19>.60 ret.61)
+Constraint about to be inserted, size: 24
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+Constraint inserted, size: 25
+Next statement : gimple_cond
+Handled all statements
+<21> (succs: 23 22 ) is a valid successor
+extracted the constraint for successor <21> (succs: 23 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(>= ret.61 0)
+Constraint about to be inserted, size: 25
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+	(= <ssa 19>.60 ret.61)
+Constraint inserted, size: 26
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0) (= retval.56 <ssa 19>.60)
+     (= <ssa 19>.60 ret.61) (>= ret.61 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (< <ssa 20>.43 0)
+     (= <ssa 5>.17 <ssa 22>.99) (/= <ssa 23>.100 0))
+Yices says unsatisfiable
+Reached <15> (succs: 17 16 )
+Next statement : gimple_assign
+<ssa 17>.48 is a variable
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<17> (succs: 18 16 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 17>.48
+<ssa 17>.48
+After normalization, new constraint: 
+(/= <ssa 17>.48 0)
+Constraint about to be inserted, size: 19
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+Constraint inserted, size: 20
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0) (/= <ssa 17>.48 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43)
+     (>= <ssa 20>.43 0))
+Yices says satisfiable
+Reached <17> (succs: 18 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 20 16 ) is a valid successor
+extracted the constraint for successor <18> (succs: 20 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 18>.52
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 18>.52
+<ssa 18>.52
+After normalization, new constraint: 
+(/= <ssa 18>.52 0)
+Constraint about to be inserted, size: 19
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+	(/= <ssa 17>.48 0)
+Constraint inserted, size: 20
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43)
+     (>= <ssa 20>.43 0))
+Yices says satisfiable
+Reached <18> (succs: 20 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 42 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 42 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about retval.56
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term retval.56
+retval.56
+After normalization, new constraint: 
+(< retval.56 0)
+Constraint about to be inserted, size: 20
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0) (= pos.34 pos.13.41)
+     (= <ssa 21>.42 <ssa 20>.43) (>= <ssa 20>.43 0))
+Yices says satisfiable
+Reached <20> (succs: 21 42 )
+Trying to add a constraint about <ssa 19>.60
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term retval.56
+retval.56
+Normalized term <ssa 19>.60
+<ssa 19>.60
+After normalization, new constraint: 
+(= retval.56 <ssa 19>.60)
+Constraint about to be inserted, size: 21
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+Constraint inserted, size: 22
+Next statement : gimple_assign
+ret.61 is a variable
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 19>.60
+<ssa 19>.60
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(= <ssa 19>.60 ret.61)
+Constraint about to be inserted, size: 22
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+Constraint inserted, size: 23
+Next statement : gimple_cond
+Handled all statements
+<21> (succs: 23 22 ) is a valid successor
+extracted the constraint for successor <21> (succs: 23 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(>= ret.61 0)
+Constraint about to be inserted, size: 23
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+	(= <ssa 19>.60 ret.61)
+Constraint inserted, size: 24
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0) (= retval.56 <ssa 19>.60)
+     (= <ssa 19>.60 ret.61) (>= ret.61 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (>= <ssa 20>.43 0))
+Yices says unsatisfiable
+----------------------
+Result of the analysis
+paths found: 0
+paths rejected: 26
+----------------------
+
+Examining <26> (succs: 28 27 )
+basic block 25 is a predecessor
+got the corresponding RichBasicBlock
+<25> (succs: 26 40 ) is white, visiting it first
+basic block 23 is a predecessor
+got the corresponding RichBasicBlock
+<23> (succs: 24 25 ) is white, visiting it first
+basic block 22 is a predecessor
+got the corresponding RichBasicBlock
+<22> (succs: 23 ) is white, visiting it first
+basic block 21 is a predecessor
+got the corresponding RichBasicBlock
+<21> (succs: 23 22 ) is white, visiting it first
+basic block 20 is a predecessor
+got the corresponding RichBasicBlock
+<20> (succs: 21 42 ) is white, visiting it first
+basic block 19 is a predecessor
+got the corresponding RichBasicBlock
+<19> (succs: 20 ) is white, visiting it first
+basic block 16 is a predecessor
+got the corresponding RichBasicBlock
+0x15b3020 is red
+0x15b33b0 is red
+basic block 18 is a predecessor
+got the corresponding RichBasicBlock
+<18> (succs: 20 16 ) is white, visiting it first
+basic block 17 is a predecessor
+got the corresponding RichBasicBlock
+<17> (succs: 18 16 ) is white, visiting it first
+basic block 15 is a predecessor
+got the corresponding RichBasicBlock
+<15> (succs: 17 16 ) is white, visiting it first
+basic block 13 is a predecessor
+got the corresponding RichBasicBlock
+<13> (succs: 14 15 ) is white, visiting it first
+basic block 10 is a predecessor
+got the corresponding RichBasicBlock
+<10> (succs: 11 13 ) is white, visiting it first
+basic block 9 is a predecessor
+got the corresponding RichBasicBlock
+<9> (succs: 45 10 ) is white, visiting it first
+basic block 8 is a predecessor
+got the corresponding RichBasicBlock
+<8> (succs: 42 9 ) is white, visiting it first
+basic block 7 is a predecessor
+got the corresponding RichBasicBlock
+<7> (succs: 42 8 ) is white, visiting it first
+basic block 6 is a predecessor
+got the corresponding RichBasicBlock
+<6> (succs: 42 7 ) is white, visiting it first
+basic block 5 is a predecessor
+got the corresponding RichBasicBlock
+<5> (succs: 42 6 ) is white, visiting it first
+basic block 4 is a predecessor
+got the corresponding RichBasicBlock
+<4> (succs: 5 42 ) is white, visiting it first
+basic block 3 is a predecessor
+got the corresponding RichBasicBlock
+<3> (succs: 4 44 ) is white, visiting it first
+basic block 2 is a predecessor
+got the corresponding RichBasicBlock
+<2> (succs: 44 3 ) is white, visiting it first
+basic block 0 is a predecessor
+got the corresponding RichBasicBlock
+<0> (succs: 2 ) is green (or gray), adding myself as a successor
+0x15b2950 is green
+<2> (succs: 44 3 ) is green (or gray), adding myself as a successor
+0x15785b0 is green
+<3> (succs: 4 44 ) is green (or gray), adding myself as a successor
+0x15ba200 is green
+<4> (succs: 5 42 ) is green (or gray), adding myself as a successor
+0x1589ec0 is green
+<5> (succs: 42 6 ) is green (or gray), adding myself as a successor
+0x15786f0 is green
+<6> (succs: 42 7 ) is green (or gray), adding myself as a successor
+0x1578820 is green
+<7> (succs: 42 8 ) is green (or gray), adding myself as a successor
+0x1571f50 is green
+<8> (succs: 42 9 ) is green (or gray), adding myself as a successor
+0x1572080 is green
+<9> (succs: 45 10 ) is green (or gray), adding myself as a successor
+0x15721b0 is green
+<10> (succs: 11 13 ) is green (or gray), adding myself as a successor
+0x15722e0 is green
+<13> (succs: 14 15 ) is green (or gray), adding myself as a successor
+0x15b2c90 is green
+basic block 12 is a predecessor
+got the corresponding RichBasicBlock
+<12> (succs: 45 15 ) is white, visiting it first
+basic block 11 is a predecessor
+got the corresponding RichBasicBlock
+<11> (succs: 45 12 ) is white, visiting it first
+basic block 10 is a predecessor
+got the corresponding RichBasicBlock
+<10> (succs: 11 13 ) is green (or gray), adding myself as a successor
+0x15722e0 is green
+<11> (succs: 45 12 ) is green (or gray), adding myself as a successor
+0x15b2a30 is green
+<12> (succs: 45 15 ) is green (or gray), adding myself as a successor
+0x15b2b60 is green
+basic block 14 is a predecessor
+got the corresponding RichBasicBlock
+<14> (succs: 45 15 ) is white, visiting it first
+basic block 13 is a predecessor
+got the corresponding RichBasicBlock
+<13> (succs: 14 15 ) is green (or gray), adding myself as a successor
+0x15b2c90 is green
+<14> (succs: 45 15 ) is green (or gray), adding myself as a successor
+0x15b2dc0 is green
+<15> (succs: 17 16 ) is green (or gray), adding myself as a successor
+0x15b2ef0 is green
+<17> (succs: 18 16 ) is green (or gray), adding myself as a successor
+0x15b3150 is green
+<18> (succs: 20 16 ) is green (or gray), adding myself as a successor
+0x15b3280 is green
+basic block 16 is a predecessor
+got the corresponding RichBasicBlock
+0x15b3020 is red
+<20> (succs: 21 42 ) is green (or gray), adding myself as a successor
+0x15b3490 is green
+<21> (succs: 23 22 ) is green (or gray), adding myself as a successor
+0x15b35c0 is green
+<22> (succs: 23 ) is green (or gray), adding myself as a successor
+0x15b36f0 is green
+basic block 21 is a predecessor
+got the corresponding RichBasicBlock
+<21> (succs: 23 22 ) is green (or gray), adding myself as a successor
+0x15b35c0 is green
+<23> (succs: 24 25 ) is green (or gray), adding myself as a successor
+0x15b9190 is green
+<25> (succs: 26 40 ) is green (or gray), adding myself as a successor
+0x15b93a0 is green
+These are all the basic blocks:
+<16> (succs: 20 19 )
+<36> (succs: 37 )
+<27> (succs: 28 )
+<3> (succs: 4 44 )
+<4> (succs: 5 42 )
+<5> (succs: 42 6 )
+<6> (succs: 42 7 )
+<9> (succs: 45 10 )
+<10> (succs: 11 13 )
+<12> (succs: 45 15 )
+<13> (succs: 14 15 )
+<15> (succs: 17 16 )
+<17> (succs: 18 16 )
+<18> (succs: 20 16 )
+<19> (succs: 20 )
+<20> (succs: 21 42 )
+<21> (succs: 23 22 )
+<24> (succs: 34 )
+<25> (succs: 26 40 )
+<26> (succs: 28 27 )
+<30> (succs: )
+<31> (succs: 32 33 )
+<32> (succs: 33 )
+<33> (succs: 34 )
+<34> (succs: 35 40 )
+<40> (succs: 42 41 )
+<42> (succs: 43 44 )
+<43> (succs: 44 )
+<44> (succs: 1 )
+<7> (succs: 42 8 )
+<8> (succs: 42 9 )
+<11> (succs: 45 12 )
+<14> (succs: 45 15 )
+<23> (succs: 24 25 )
+<22> (succs: 23 )
+<28> (succs: 46 29 )
+<29> (succs: 30 31 )
+<39> (succs: 40 )
+<35> (succs: 37 36 )
+<37> (succs: 38 39 )
+<38> (succs: 39 )
+<41> (succs: 42 )
+<45> (succs: 42 )
+<46> (succs: 29 )
+<0> (succs: 2 )
+<1> (succs: )
+<2> (succs: 44 3 )
+These are the basic blocks from the interesting subgraph:
+[7] (succs in graph: [8] )
+[8] (succs in graph: [9] )
+[9] (succs in graph: [10] )
+[10] (succs in graph: [13] [11] )
+[2] (succs in graph: [3] )
+[5] (succs in graph: [6] )
+[6] (succs in graph: [7] )
+[4] (succs in graph: [5] )
+[0] (succs in graph: [2] )
+[11] (succs in graph: [12] )
+[12] (succs in graph: [15] )
+[13] (succs in graph: [15] [14] )
+[14] (succs in graph: [15] )
+[15] (succs in graph: [17] )
+[17] (succs in graph: [18] )
+[18] (succs in graph: [20] )
+[20] (succs in graph: [21] )
+[21] (succs in graph: [22] [23] )
+[22] (succs in graph: [23] )
+[23] (succs in graph: [25] )
+[25] (succs in graph: [26] )
+[26] (succs in graph: )
+[3] (succs in graph: [4] )
+
+Starting the walk until <26> (succs: 28 27 )
+Configuration created, _constraints size: 0
+Reached <0> (succs: 2 )
+Handled all statements
+<2> (succs: 44 3 ) is a valid successor
+extracted the constraint for successor <2> (succs: 44 3 )
+Configuration copied
+Copy of configuration initialized
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+true
+Yices says satisfiable
+Reached <2> (succs: 44 3 )
+Next statement : gimple_assign
+<ssa 0>.6 is a variable
+Trying to add a constraint about <ssa 0>.6
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term fd.5
+fd.5
+Normalized term <ssa 0>.6
+<ssa 0>.6
+After normalization, new constraint: 
+(= fd.5 <ssa 0>.6)
+Constraint about to be inserted, size: 0
+Constraint inserted, size: 1
+Next statement : gimple_assign
+pos is a variable
+Trying to add a constraint about pos
+	lhs tree code: var_decl
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term pos.8
+pos.8
+Normalized term pos
+pos
+After normalization, new constraint: 
+(= pos.8 pos)
+Constraint about to be inserted, size: 1
+	(= fd.5 <ssa 0>.6)
+Constraint inserted, size: 2
+Next statement : gimple_cond
+Handled all statements
+<3> (succs: 4 44 ) is a valid successor
+extracted the constraint for successor <3> (succs: 4 44 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about pos.8
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term pos.8
+pos.8
+After normalization, new constraint: 
+(>= pos.8 0)
+Constraint about to be inserted, size: 2
+	(= fd.5 <ssa 0>.6)
+	(= pos.8 pos)
+Constraint inserted, size: 3
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (= pos.8 pos) (>= pos.8 0))
+Yices says satisfiable
+Reached <3> (succs: 4 44 )
+Next statement : gimple_call
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+<ssa 1>.14 is a variable
+Trying to add a constraint about <ssa 1>.14
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 2>.13
+<ssa 2>.13
+Normalized term <ssa 1>.14
+<ssa 1>.14
+After normalization, new constraint: 
+(= <ssa 2>.13 <ssa 1>.14)
+Constraint about to be inserted, size: 2
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+Constraint inserted, size: 3
+Next statement : gimple_assign
+<ssa 3>.15 is a variable
+Trying to add a constraint about <ssa 3>.15
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 4>.12
+<ssa 4>.12
+Normalized term <ssa 3>.15
+<ssa 3>.15
+After normalization, new constraint: 
+(= <ssa 4>.12 <ssa 3>.15)
+Constraint about to be inserted, size: 3
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+Constraint inserted, size: 4
+Next statement : gimple_cond
+Handled all statements
+<4> (succs: 5 42 ) is a valid successor
+extracted the constraint for successor <4> (succs: 5 42 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 1>.14
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 1>.14
+<ssa 1>.14
+After normalization, new constraint: 
+(/= <ssa 1>.14 0)
+Constraint about to be inserted, size: 4
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+Constraint inserted, size: 5
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0))
+Yices says satisfiable
+Reached <4> (succs: 5 42 )
+Next statement : gimple_assign
+<ssa 5>.17 is a variable
+Trying to add a constraint about <ssa 5>.17
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<5> (succs: 42 6 ) is a valid successor
+extracted the constraint for successor <5> (succs: 42 6 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 6>.18
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 6>.18
+<ssa 6>.18
+After normalization, new constraint: 
+(/= <ssa 6>.18 0)
+Constraint about to be inserted, size: 5
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+Constraint inserted, size: 6
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0))
+Yices says satisfiable
+Reached <5> (succs: 42 6 )
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<6> (succs: 42 7 ) is a valid successor
+extracted the constraint for successor <6> (succs: 42 7 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 7>.19
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 7>.19
+<ssa 7>.19
+After normalization, new constraint: 
+(/= <ssa 7>.19 0)
+Constraint about to be inserted, size: 6
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+Constraint inserted, size: 7
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0))
+Yices says satisfiable
+Reached <6> (succs: 42 7 )
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<7> (succs: 42 8 ) is a valid successor
+extracted the constraint for successor <7> (succs: 42 8 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 8>.20
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 8>.20
+<ssa 8>.20
+After normalization, new constraint: 
+(/= <ssa 8>.20 0)
+Constraint about to be inserted, size: 7
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+Constraint inserted, size: 8
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0))
+Yices says satisfiable
+Reached <7> (succs: 42 8 )
+Next statement : gimple_assign
+count.34.2 is a variable
+Trying to add a constraint about count.34.2
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term count.1
+count.1
+Normalized term count.34.2
+count.34.2
+After normalization, new constraint: 
+(= count.1 count.34.2)
+Constraint about to be inserted, size: 8
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+Constraint inserted, size: 9
+Next statement : gimple_asm
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+<ssa 9>.87 is a variable
+Trying to add a constraint about <ssa 9>.87
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 10>.86
+<ssa 10>.86
+Normalized term <ssa 9>.87
+<ssa 9>.87
+After normalization, new constraint: 
+(= <ssa 10>.86 <ssa 9>.87)
+Constraint about to be inserted, size: 9
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+Constraint inserted, size: 10
+Next statement : gimple_assign
+<ssa 11>.22 is a variable
+Trying to add a constraint about <ssa 11>.22
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+buf.20.23 is a variable
+Trying to add a constraint about buf.20.23
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term buf.3
+buf.3
+Normalized term buf.20.23
+buf.20.23
+After normalization, new constraint: 
+(= buf.3 buf.20.23)
+Constraint about to be inserted, size: 10
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+Constraint inserted, size: 11
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<8> (succs: 42 9 ) is a valid successor
+extracted the constraint for successor <8> (succs: 42 9 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about count.34.2
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term addr.91
+addr.91
+Normalized term count.34.2
+count.34.2
+After normalization, new constraint: 
+(>= (+ (* -1 count.34.2) addr.91) 0)
+Constraint about to be inserted, size: 11
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+Constraint inserted, size: 12
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0))
+Yices says satisfiable
+Reached <8> (succs: 42 9 )
+Next statement : gimple_cond
+Handled all statements
+<9> (succs: 45 10 ) is a valid successor
+extracted the constraint for successor <9> (succs: 45 10 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 11>.22
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term addr.91
+addr.91
+Normalized term <ssa 11>.22
+<ssa 11>.22
+After normalization, new constraint: 
+(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+Constraint about to be inserted, size: 12
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+Constraint inserted, size: 13
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0))
+Yices says satisfiable
+Reached <9> (succs: 45 10 )
+Next statement : gimple_assign
+<ssa 12>.28 is a variable
+Trying to add a constraint about <ssa 12>.28
+	lhs tree code: ssa_name
+	rhs tree code: mem_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<10> (succs: 11 13 ) is a valid successor
+extracted the constraint for successor <10> (succs: 11 13 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about count.1
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term count.1
+count.1
+After normalization, new constraint: 
+(>= count.1 0)
+Constraint about to be inserted, size: 13
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+Constraint inserted, size: 14
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0))
+Yices says satisfiable
+Reached <10> (succs: 11 13 )
+Next statement : gimple_assign
+pos.34 is a variable
+Trying to add a constraint about pos.34
+	lhs tree code: ssa_name
+	rhs tree code: var_decl
+Constraint accepted
+Normalized term pos
+pos
+Normalized term pos.34
+pos.34
+After normalization, new constraint: 
+(= pos pos.34)
+Constraint about to be inserted, size: 14
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+Constraint inserted, size: 15
+Next statement : gimple_cond
+Handled all statements
+<13> (succs: 14 15 ) is a valid successor
+extracted the constraint for successor <13> (succs: 14 15 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about pos.34
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term pos.34
+pos.34
+After normalization, new constraint: 
+(>= pos.34 0)
+Constraint about to be inserted, size: 15
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+Constraint inserted, size: 16
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0))
+Yices says satisfiable
+<11> (succs: 45 12 ) is a valid successor
+extracted the constraint for successor <11> (succs: 45 12 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about pos.34
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term pos.34
+pos.34
+After normalization, new constraint: 
+(< pos.34 0)
+Constraint about to be inserted, size: 15
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+Constraint inserted, size: 16
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (< pos.34 0))
+Yices says satisfiable
+Reached <11> (succs: 45 12 )
+Next statement : gimple_assign
+<ssa 13>.96 is a variable
+Trying to add a constraint about <ssa 13>.96
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 5>.17
+<ssa 5>.17
+Normalized term <ssa 13>.96
+<ssa 13>.96
+After normalization, new constraint: 
+(= <ssa 5>.17 <ssa 13>.96)
+Constraint about to be inserted, size: 16
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(< pos.34 0)
+Constraint inserted, size: 17
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<12> (succs: 45 15 ) is a valid successor
+extracted the constraint for successor <12> (succs: 45 15 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 14>.97
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 14>.97
+<ssa 14>.97
+After normalization, new constraint: 
+(/= <ssa 14>.97 0)
+Constraint about to be inserted, size: 17
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+Constraint inserted, size: 18
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0))
+Yices says satisfiable
+Reached <12> (succs: 45 15 )
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+<ssa 15>.40 is a variable
+Trying to add a constraint about <ssa 15>.40
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 16>.39
+<ssa 16>.39
+Normalized term <ssa 15>.40
+<ssa 15>.40
+After normalization, new constraint: 
+(= <ssa 16>.39 <ssa 15>.40)
+Constraint about to be inserted, size: 18
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+Constraint inserted, size: 19
+Next statement : gimple_cond
+Handled all statements
+<15> (succs: 17 16 ) is a valid successor
+extracted the constraint for successor <15> (succs: 17 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about count.34.2
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 15>.40
+<ssa 15>.40
+Normalized term count.34.2
+count.34.2
+After normalization, new constraint: 
+(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+Constraint about to be inserted, size: 19
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+Constraint inserted, size: 20
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0) (= <ssa 16>.39 <ssa 15>.40)
+     (< (+ count.34.2 (* -1 <ssa 15>.40)) 0))
+Yices says satisfiable
+Reached <15> (succs: 17 16 )
+Next statement : gimple_assign
+<ssa 17>.48 is a variable
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<17> (succs: 18 16 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 17>.48
+<ssa 17>.48
+After normalization, new constraint: 
+(/= <ssa 17>.48 0)
+Constraint about to be inserted, size: 20
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0) (= <ssa 16>.39 <ssa 15>.40)
+     (< (+ count.34.2 (* -1 <ssa 15>.40)) 0) (/= <ssa 17>.48 0))
+Yices says satisfiable
+Reached <17> (succs: 18 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 20 16 ) is a valid successor
+extracted the constraint for successor <18> (succs: 20 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 18>.52
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 18>.52
+<ssa 18>.52
+After normalization, new constraint: 
+(/= <ssa 18>.52 0)
+Constraint about to be inserted, size: 20
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+	(/= <ssa 17>.48 0)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0) (= <ssa 16>.39 <ssa 15>.40)
+     (< (+ count.34.2 (* -1 <ssa 15>.40)) 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0))
+Yices says satisfiable
+Reached <18> (succs: 20 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 42 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 42 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about retval.56
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term retval.56
+retval.56
+After normalization, new constraint: 
+(< retval.56 0)
+Constraint about to be inserted, size: 21
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+Constraint inserted, size: 22
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0) (= <ssa 16>.39 <ssa 15>.40)
+     (< (+ count.34.2 (* -1 <ssa 15>.40)) 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0))
+Yices says satisfiable
+Reached <20> (succs: 21 42 )
+Trying to add a constraint about <ssa 19>.60
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term retval.56
+retval.56
+Normalized term <ssa 19>.60
+<ssa 19>.60
+After normalization, new constraint: 
+(= retval.56 <ssa 19>.60)
+Constraint about to be inserted, size: 22
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+Constraint inserted, size: 23
+Next statement : gimple_assign
+ret.61 is a variable
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 19>.60
+<ssa 19>.60
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(= <ssa 19>.60 ret.61)
+Constraint about to be inserted, size: 23
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+Constraint inserted, size: 24
+Next statement : gimple_cond
+Handled all statements
+<21> (succs: 23 22 ) is a valid successor
+extracted the constraint for successor <21> (succs: 23 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(>= ret.61 0)
+Constraint about to be inserted, size: 24
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(< pos.34 0)
+	(= <ssa 5>.17 <ssa 13>.96)
+	(/= <ssa 14>.97 0)
+	(= <ssa 16>.39 <ssa 15>.40)
+	(< (+ count.34.2 (* -1 <ssa 15>.40)) 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+	(= <ssa 19>.60 ret.61)
+Constraint inserted, size: 25
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (< pos.34 0) (= <ssa 5>.17 <ssa 13>.96) (/= <ssa 14>.97 0) (= <ssa 16>.39 <ssa 15>.40)
+     (< (+ count.34.2 (* -1 <ssa 15>.40)) 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0)
+     (= retval.56 <ssa 19>.60) (= <ssa 19>.60 ret.61) (>= ret.61 0))
+Yices says unsatisfiable
+Reached <13> (succs: 14 15 )
+Next statement : gimple_assign
+pos.13.41 is a variable
+Trying to add a constraint about pos.13.41
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term pos.34
+pos.34
+Normalized term pos.13.41
+pos.13.41
+After normalization, new constraint: 
+(= pos.34 pos.13.41)
+Constraint about to be inserted, size: 16
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+Constraint inserted, size: 17
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+<ssa 20>.43 is a variable
+Trying to add a constraint about <ssa 20>.43
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 21>.42
+<ssa 21>.42
+Normalized term <ssa 20>.43
+<ssa 20>.43
+After normalization, new constraint: 
+(= <ssa 21>.42 <ssa 20>.43)
+Constraint about to be inserted, size: 17
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+Constraint inserted, size: 18
+Next statement : gimple_cond
+Handled all statements
+<15> (succs: 17 16 ) is a valid successor
+extracted the constraint for successor <15> (succs: 17 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 20>.43
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 20>.43
+<ssa 20>.43
+After normalization, new constraint: 
+(>= <ssa 20>.43 0)
+Constraint about to be inserted, size: 18
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+Constraint inserted, size: 19
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (>= <ssa 20>.43 0))
+Yices says satisfiable
+<14> (succs: 45 15 ) is a valid successor
+extracted the constraint for successor <14> (succs: 45 15 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 20>.43
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 20>.43
+<ssa 20>.43
+After normalization, new constraint: 
+(< <ssa 20>.43 0)
+Constraint about to be inserted, size: 18
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+Constraint inserted, size: 19
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (< <ssa 20>.43 0))
+Yices says satisfiable
+Reached <14> (succs: 45 15 )
+Next statement : gimple_assign
+<ssa 22>.99 is a variable
+Trying to add a constraint about <ssa 22>.99
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 5>.17
+<ssa 5>.17
+Normalized term <ssa 22>.99
+<ssa 22>.99
+After normalization, new constraint: 
+(= <ssa 5>.17 <ssa 22>.99)
+Constraint about to be inserted, size: 19
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+Constraint inserted, size: 20
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<15> (succs: 17 16 ) is a valid successor
+extracted the constraint for successor <15> (succs: 17 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 23>.100
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 23>.100
+<ssa 23>.100
+After normalization, new constraint: 
+(/= <ssa 23>.100 0)
+Constraint about to be inserted, size: 20
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (< <ssa 20>.43 0)
+     (= <ssa 5>.17 <ssa 22>.99) (/= <ssa 23>.100 0))
+Yices says satisfiable
+Reached <15> (succs: 17 16 )
+Next statement : gimple_assign
+<ssa 17>.48 is a variable
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<17> (succs: 18 16 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 17>.48
+<ssa 17>.48
+After normalization, new constraint: 
+(/= <ssa 17>.48 0)
+Constraint about to be inserted, size: 21
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+Constraint inserted, size: 22
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0) (/= <ssa 17>.48 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (< <ssa 20>.43 0)
+     (= <ssa 5>.17 <ssa 22>.99) (/= <ssa 23>.100 0))
+Yices says satisfiable
+Reached <17> (succs: 18 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 20 16 ) is a valid successor
+extracted the constraint for successor <18> (succs: 20 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 18>.52
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 18>.52
+<ssa 18>.52
+After normalization, new constraint: 
+(/= <ssa 18>.52 0)
+Constraint about to be inserted, size: 21
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+	(/= <ssa 17>.48 0)
+Constraint inserted, size: 22
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43)
+     (< <ssa 20>.43 0) (= <ssa 5>.17 <ssa 22>.99) (/= <ssa 23>.100 0))
+Yices says satisfiable
+Reached <18> (succs: 20 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 42 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 42 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about retval.56
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term retval.56
+retval.56
+After normalization, new constraint: 
+(< retval.56 0)
+Constraint about to be inserted, size: 22
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+Constraint inserted, size: 23
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0) (= pos.34 pos.13.41)
+     (= <ssa 21>.42 <ssa 20>.43) (< <ssa 20>.43 0) (= <ssa 5>.17 <ssa 22>.99) (/= <ssa 23>.100 0))
+Yices says satisfiable
+Reached <20> (succs: 21 42 )
+Trying to add a constraint about <ssa 19>.60
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term retval.56
+retval.56
+Normalized term <ssa 19>.60
+<ssa 19>.60
+After normalization, new constraint: 
+(= retval.56 <ssa 19>.60)
+Constraint about to be inserted, size: 23
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+Constraint inserted, size: 24
+Next statement : gimple_assign
+ret.61 is a variable
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 19>.60
+<ssa 19>.60
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(= <ssa 19>.60 ret.61)
+Constraint about to be inserted, size: 24
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+Constraint inserted, size: 25
+Next statement : gimple_cond
+Handled all statements
+<21> (succs: 23 22 ) is a valid successor
+extracted the constraint for successor <21> (succs: 23 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(>= ret.61 0)
+Constraint about to be inserted, size: 25
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(< <ssa 20>.43 0)
+	(= <ssa 5>.17 <ssa 22>.99)
+	(/= <ssa 23>.100 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+	(= <ssa 19>.60 ret.61)
+Constraint inserted, size: 26
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0) (= retval.56 <ssa 19>.60)
+     (= <ssa 19>.60 ret.61) (>= ret.61 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (< <ssa 20>.43 0)
+     (= <ssa 5>.17 <ssa 22>.99) (/= <ssa 23>.100 0))
+Yices says unsatisfiable
+Reached <15> (succs: 17 16 )
+Next statement : gimple_assign
+<ssa 17>.48 is a variable
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<17> (succs: 18 16 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 17>.48
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 17>.48
+<ssa 17>.48
+After normalization, new constraint: 
+(/= <ssa 17>.48 0)
+Constraint about to be inserted, size: 19
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(= pos pos.34)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+Constraint inserted, size: 20
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (= pos pos.34) (>= pos.34 0) (/= <ssa 17>.48 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43)
+     (>= <ssa 20>.43 0))
+Yices says satisfiable
+Reached <17> (succs: 18 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 20 16 ) is a valid successor
+extracted the constraint for successor <18> (succs: 20 16 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 18>.52
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 18>.52
+<ssa 18>.52
+After normalization, new constraint: 
+(/= <ssa 18>.52 0)
+Constraint about to be inserted, size: 19
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+	(/= <ssa 17>.48 0)
+Constraint inserted, size: 20
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43)
+     (>= <ssa 20>.43 0))
+Yices says satisfiable
+Reached <18> (succs: 20 16 )
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 42 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 42 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about retval.56
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term retval.56
+retval.56
+After normalization, new constraint: 
+(< retval.56 0)
+Constraint about to be inserted, size: 20
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0) (= pos.34 pos.13.41)
+     (= <ssa 21>.42 <ssa 20>.43) (>= <ssa 20>.43 0))
+Yices says satisfiable
+Reached <20> (succs: 21 42 )
+Trying to add a constraint about <ssa 19>.60
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term retval.56
+retval.56
+Normalized term <ssa 19>.60
+<ssa 19>.60
+After normalization, new constraint: 
+(= retval.56 <ssa 19>.60)
+Constraint about to be inserted, size: 21
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+Constraint inserted, size: 22
+Next statement : gimple_assign
+ret.61 is a variable
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 19>.60
+<ssa 19>.60
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(= <ssa 19>.60 ret.61)
+Constraint about to be inserted, size: 22
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+Constraint inserted, size: 23
+Next statement : gimple_cond
+Handled all statements
+<21> (succs: 23 22 ) is a valid successor
+extracted the constraint for successor <21> (succs: 23 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ret.61
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term ret.61
+ret.61
+After normalization, new constraint: 
+(>= ret.61 0)
+Constraint about to be inserted, size: 23
+	(= fd.5 <ssa 0>.6)
+	(>= pos.8 0)
+	(= <ssa 2>.13 <ssa 1>.14)
+	(= <ssa 4>.12 <ssa 3>.15)
+	(/= <ssa 1>.14 0)
+	(/= <ssa 6>.18 0)
+	(/= <ssa 7>.19 0)
+	(/= <ssa 8>.20 0)
+	(= count.1 count.34.2)
+	(= <ssa 10>.86 <ssa 9>.87)
+	(= buf.3 buf.20.23)
+	(>= (+ (* -1 count.34.2) addr.91) 0)
+	(>= (+ (* -1 addr.91) <ssa 11>.22) 0)
+	(>= count.1 0)
+	(>= pos.34 0)
+	(= pos.34 pos.13.41)
+	(= <ssa 21>.42 <ssa 20>.43)
+	(>= <ssa 20>.43 0)
+	(/= <ssa 17>.48 0)
+	(/= <ssa 18>.52 0)
+	(< retval.56 0)
+	(= retval.56 <ssa 19>.60)
+	(= <ssa 19>.60 ret.61)
+Constraint inserted, size: 24
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= fd.5 <ssa 0>.6) (>= pos.8 0) (= <ssa 2>.13 <ssa 1>.14) (= <ssa 4>.12 <ssa 3>.15) (/= <ssa 1>.14 0)
+     (/= <ssa 6>.18 0) (/= <ssa 7>.19 0) (/= <ssa 8>.20 0) (= count.1 count.34.2) (= <ssa 10>.86 <ssa 9>.87)
+     (= buf.3 buf.20.23) (>= (+ (* -1 count.34.2) addr.91) 0) (>= (+ (* -1 addr.91) <ssa 11>.22) 0) (>= count.1 0)
+     (>= pos.34 0) (/= <ssa 17>.48 0) (/= <ssa 18>.52 0) (< retval.56 0) (= retval.56 <ssa 19>.60)
+     (= <ssa 19>.60 ret.61) (>= ret.61 0) (= pos.34 pos.13.41) (= <ssa 21>.42 <ssa 20>.43) (>= <ssa 20>.43 0))
+Yices says unsatisfiable
+----------------------
+Result of the analysis
+paths found: 0
+paths rejected: 26
+----------------------
+

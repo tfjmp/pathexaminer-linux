@@ -1,0 +1,2911 @@
+net/socket.c: In function ‘sock_sendmsg_nosec’:
+net/socket.c:613:2: attention : ISO C89 interdit les mélanges de déclarations et de code [-Wdeclaration-after-statement]
+  int ret = sock->ops->sendmsg(sock, msg, msg_data_left(msg));
+  ^
+net/socket.c: Hors de toute fonction :
+net/socket.c:2005:36: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) int __sys_sendmmsg(int fd, struct mmsghdr __user *mmsg, unsigned int vlen,
+                                    ^
+net/socket.c:1977:37: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) long __sys_sendmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
+                                     ^
+net/socket.c:1881:43: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) static int ___sys_sendmsg(struct socket *sock, struct user_msghdr __user *msg,
+                                           ^
+net/socket.c:1628:37: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) long sys_sendto(int fd, void* buff, size_t len, unsigned int flags, struct sockaddr* addr, int addr_len)
+                                     ^
+net/socket.c:618:36: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) int sock_sendmsg(struct socket *sock, struct msghdr *msg)
+                                    ^
+Building the rich basic blocks
+About to build basic block 0
+is it a loop? false
+Building a regular RichBasicBlock 0
+About to build basic block 2
+is it a loop? false
+Building a regular RichBasicBlock 2
+    has flow: false    has LSM: false
+About to build basic block 3
+is it a loop? false
+Building a regular RichBasicBlock 3
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: sockfd_lookup_light	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 4
+is it a loop? false
+Building a regular RichBasicBlock 4
+    has flow: false    has LSM: false
+About to build basic block 5
+is it a loop? false
+Building a regular RichBasicBlock 5
+    has flow: false    has LSM: false
+About to build basic block 6
+is it a loop? false
+Building a regular RichBasicBlock 6
+    has flow: false    has LSM: false
+About to build basic block 7
+is it a loop? true
+Building a loop header pseudo-basic block
+Building a regular RichBasicBlock 7
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_msghdr_from_user	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+Loop added for basic_block 7
+About to build basic block 8
+is it a loop? false
+Building a regular RichBasicBlock 8
+    has flow: false    has LSM: false
+About to build basic block 9
+is it a loop? true
+Building a regular RichBasicBlock 9
+    has flow: false    has LSM: false
+About to build basic block 10
+is it a loop? true
+Building a regular RichBasicBlock 10
+    has flow: false    has LSM: false
+About to build basic block 11
+is it a loop? true
+Building a regular RichBasicBlock 11
+    has flow: false    has LSM: false
+About to build basic block 12
+is it a loop? true
+Building a regular RichBasicBlock 12
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: sock_kmalloc	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 13
+is it a loop? true
+Building a regular RichBasicBlock 13
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: _copy_from_user	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 14
+is it a loop? true
+Building a regular RichBasicBlock 14
+    has flow: false    has LSM: false
+About to build basic block 15
+is it a loop? true
+Building a regular RichBasicBlock 15
+    has flow: false    has LSM: false
+About to build basic block 16
+is it a loop? true
+Building a regular RichBasicBlock 16
+    has flow: false    has LSM: false
+About to build basic block 17
+is it a loop? true
+Building a regular RichBasicBlock 17
+    has flow: false    has LSM: false
+About to build basic block 18
+is it a loop? true
+Building a regular RichBasicBlock 18
+    has flow: false    has LSM: false
+About to build basic block 19
+is it a loop? true
+Building a regular RichBasicBlock 19
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: memcmp	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 20
+is it a loop? true
+Building a regular RichBasicBlock 20
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kayrebt_FlowNodeMarker	isLSM: false	isFlow: true
+GIMPLE CALL
+    has flow: true    has LSM: false
+About to build basic block 21
+is it a loop? false
+Building a regular RichBasicBlock 21
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __builtin_unreachable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 22
+is it a loop? true
+Building a regular RichBasicBlock 22
+    has flow: false    has LSM: false
+About to build basic block 23
+is it a loop? true
+Building a regular RichBasicBlock 23
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: security_socket_sendmsg	isLSM: true	isFlow: false
+    has flow: false    has LSM: true
+About to build basic block 24
+is it a loop? true
+Building a regular RichBasicBlock 24
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kayrebt_FlowNodeMarker	isLSM: false	isFlow: true
+GIMPLE CALL
+    has flow: true    has LSM: false
+About to build basic block 25
+is it a loop? false
+Building a regular RichBasicBlock 25
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __builtin_unreachable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 26
+is it a loop? true
+Building a regular RichBasicBlock 26
+    has flow: false    has LSM: false
+About to build basic block 27
+is it a loop? true
+Building a regular RichBasicBlock 27
+    has flow: false    has LSM: false
+About to build basic block 28
+is it a loop? true
+Building a regular RichBasicBlock 28
+    has flow: false    has LSM: false
+About to build basic block 29
+is it a loop? true
+Building a regular RichBasicBlock 29
+    has flow: false    has LSM: false
+About to build basic block 30
+is it a loop? true
+Building a regular RichBasicBlock 30
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: memcpy	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 31
+is it a loop? true
+Building a regular RichBasicBlock 31
+    has flow: false    has LSM: false
+About to build basic block 32
+is it a loop? true
+Building a regular RichBasicBlock 32
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: sock_kfree_s	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 33
+is it a loop? true
+Building a regular RichBasicBlock 33
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kfree	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 34
+is it a loop? false
+Building a regular RichBasicBlock 34
+    has flow: false    has LSM: false
+About to build basic block 35
+is it a loop? true
+Building a regular RichBasicBlock 35
+    has flow: false    has LSM: false
+About to build basic block 36
+is it a loop? true
+Building a regular RichBasicBlock 36
+    has flow: false    has LSM: false
+About to build basic block 37
+is it a loop? true
+Building a regular RichBasicBlock 37
+    has flow: false    has LSM: false
+About to build basic block 38
+is it a loop? false
+Building a regular RichBasicBlock 38
+    has flow: false    has LSM: false
+About to build basic block 39
+is it a loop? false
+Building a regular RichBasicBlock 39
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: fput	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 40
+is it a loop? false
+Building a regular RichBasicBlock 40
+    has flow: false    has LSM: false
+About to build basic block 41
+is it a loop? false
+Building a regular RichBasicBlock 41
+    has flow: false    has LSM: false
+About to build basic block 42
+is it a loop? false
+Building a regular RichBasicBlock 42
+    has flow: false    has LSM: false
+About to build basic block 43
+is it a loop? false
+Building a regular RichBasicBlock 43
+    has flow: false    has LSM: false
+About to build basic block 44
+is it a loop? false
+Building a regular RichBasicBlock 44
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kfree	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 1
+is it a loop? false
+There are 2 bbs with flow nodes (excluding those having LSM nodes)
+Examining <20> (succs: 21 22 )
+basic block 19 is a predecessor
+got the corresponding RichBasicBlock
+<19> (succs: 20 23 ) is white, visiting it first
+basic block 18 is a predecessor
+got the corresponding RichBasicBlock
+<18> (succs: 19 23 ) is white, visiting it first
+basic block 17 is a predecessor
+got the corresponding RichBasicBlock
+<17> (succs: 18 23 ) is white, visiting it first
+basic block 15 is a predecessor
+got the corresponding RichBasicBlock
+<15> (succs: 16 17 ) is white, visiting it first
+basic block 14 is a predecessor
+got the corresponding RichBasicBlock
+<14> (succs: 15 ) is white, visiting it first
+basic block 13 is a predecessor
+got the corresponding RichBasicBlock
+<13> (succs: 31 14 ) is white, visiting it first
+basic block 11 is a predecessor
+got the corresponding RichBasicBlock
+<11> (succs: 12 13 ) is white, visiting it first
+basic block 10 is a predecessor
+got the corresponding RichBasicBlock
+<10> (succs: 11 15 ) is white, visiting it first
+basic block 9 is a predecessor
+got the corresponding RichBasicBlock
+<9> (succs: 44 10 ) is white, visiting it first
+basic block 7 is a predecessor
+got the corresponding RichBasicBlock
+(Loop header) <7> (succs: 8 9 ) is white, visiting it first
+basic block 37 is a predecessor
+Stuck in a loop, abandoning this path
+basic block 6 is a predecessor
+got the corresponding RichBasicBlock
+<6> (succs: 7 ) is white, visiting it first
+basic block 5 is a predecessor
+got the corresponding RichBasicBlock
+<5> (succs: 6 38 ) is white, visiting it first
+basic block 3 is a predecessor
+got the corresponding RichBasicBlock
+<3> (succs: 4 5 ) is white, visiting it first
+basic block 2 is a predecessor
+got the corresponding RichBasicBlock
+<2> (succs: 43 3 ) is white, visiting it first
+basic block 0 is a predecessor
+got the corresponding RichBasicBlock
+<0> (succs: 2 ) is green (or gray), adding myself as a successor
+0x163ee30 is green
+<2> (succs: 43 3 ) is green (or gray), adding myself as a successor
+0x15f1eb0 is green
+<3> (succs: 4 5 ) is green (or gray), adding myself as a successor
+0x16b8d00 is green
+<5> (succs: 6 38 ) is green (or gray), adding myself as a successor
+0x16ee320 is green
+<6> (succs: 7 ) is green (or gray), adding myself as a successor
+0x16ee450 is green
+(Loop header) <7> (succs: 8 9 ) is green (or gray), adding myself as a successor
+0x16ee530 is green
+<9> (succs: 44 10 ) is green (or gray), adding myself as a successor
+0x163eff0 is green
+<10> (succs: 11 15 ) is green (or gray), adding myself as a successor
+0x163f120 is green
+<11> (succs: 12 13 ) is green (or gray), adding myself as a successor
+0x163f250 is green
+basic block 12 is a predecessor
+got the corresponding RichBasicBlock
+<12> (succs: 44 13 ) is white, visiting it first
+basic block 11 is a predecessor
+got the corresponding RichBasicBlock
+<11> (succs: 12 13 ) is green (or gray), adding myself as a successor
+0x163f250 is green
+<12> (succs: 44 13 ) is green (or gray), adding myself as a successor
+0x16ecee0 is green
+<13> (succs: 31 14 ) is green (or gray), adding myself as a successor
+0x16ed010 is green
+<14> (succs: 15 ) is green (or gray), adding myself as a successor
+0x16ed140 is green
+basic block 10 is a predecessor
+got the corresponding RichBasicBlock
+<10> (succs: 11 15 ) is green (or gray), adding myself as a successor
+0x163f120 is green
+<15> (succs: 16 17 ) is green (or gray), adding myself as a successor
+0x16ed220 is green
+basic block 16 is a predecessor
+got the corresponding RichBasicBlock
+<16> (succs: 17 ) is white, visiting it first
+basic block 15 is a predecessor
+got the corresponding RichBasicBlock
+<15> (succs: 16 17 ) is green (or gray), adding myself as a successor
+0x16ed220 is green
+<16> (succs: 17 ) is green (or gray), adding myself as a successor
+0x16ed350 is green
+<17> (succs: 18 23 ) is green (or gray), adding myself as a successor
+0x16ed430 is green
+<18> (succs: 19 23 ) is green (or gray), adding myself as a successor
+0x16ed560 is green
+<19> (succs: 20 23 ) is green (or gray), adding myself as a successor
+0x16ed690 is green
+These are all the basic blocks:
+<23> (succs: 26 24 )
+<40> (succs: 42 41 )
+<39> (succs: 40 )
+<6> (succs: 7 )
+<44> (succs: 38 )
+<27> (succs: 31 )
+<29> (succs: 31 )
+<34> (succs: 38 )
+<37> (succs: 7 )
+<3> (succs: 4 5 )
+<4> (succs: 42 )
+<5> (succs: 6 38 )
+(Loop header) <7> (succs: 8 9 )
+<8> (succs: 38 )
+<9> (succs: 44 10 )
+<10> (succs: 11 15 )
+<11> (succs: 12 13 )
+<12> (succs: 44 13 )
+<13> (succs: 31 14 )
+<14> (succs: 15 )
+<15> (succs: 16 17 )
+<16> (succs: 17 )
+<17> (succs: 18 23 )
+<18> (succs: 19 23 )
+<19> (succs: 20 23 )
+<20> (succs: 21 22 )
+<21> (succs: )
+<22> (succs: 31 )
+<24> (succs: 25 26 )
+<25> (succs: )
+<26> (succs: 28 27 )
+<28> (succs: 30 29 )
+<30> (succs: 31 )
+<31> (succs: 32 33 )
+<32> (succs: 33 )
+<33> (succs: 34 35 )
+<35> (succs: 38 36 )
+<36> (succs: 37 38 )
+<38> (succs: 39 40 )
+<41> (succs: 42 )
+<42> (succs: 43 )
+<0> (succs: 2 )
+<1> (succs: )
+<2> (succs: 43 3 )
+<43> (succs: 1 )
+These are the basic blocks from the interesting subgraph:
+[2] (succs in graph: [3] )
+[0] (succs in graph: [2] )
+[9] (succs in graph: [10] )
+[10] (succs in graph: [11] [15] )
+[11] (succs in graph: [13] [12] )
+[3] (succs in graph: [5] )
+[12] (succs in graph: [13] )
+[13] (succs in graph: [14] )
+[14] (succs in graph: [15] )
+[15] (succs in graph: [17] [16] )
+[16] (succs in graph: [17] )
+[17] (succs in graph: [18] )
+[18] (succs in graph: [19] )
+[19] (succs in graph: [20] )
+[20] (succs in graph: )
+[5] (succs in graph: [6] )
+[6] (succs in graph: [7] )
+[7] (succs in graph: [9] )
+
+Starting the walk until <20> (succs: 21 22 )
+Configuration created, _constraints size: 0
+Reached <0> (succs: 2 )
+Handled all statements
+<2> (succs: 43 3 ) is a valid successor
+extracted the constraint for successor <2> (succs: 43 3 )
+Configuration copied
+Copy of configuration initialized
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+true
+Yices says satisfiable
+Reached <2> (succs: 43 3 )
+Next statement : gimple_assign
+flags.194.4 is a variable
+Trying to add a constraint about flags.194.4
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term flags.3
+flags.3
+Normalized term flags.194.4
+flags.194.4
+After normalization, new constraint: 
+(= flags.3 flags.194.4)
+Constraint about to be inserted, size: 0
+Constraint inserted, size: 1
+Next statement : gimple_cond
+Handled all statements
+<3> (succs: 4 5 ) is a valid successor
+extracted the constraint for successor <3> (succs: 4 5 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about flags.194.4
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term flags.194.4
+flags.194.4
+After normalization, new constraint: 
+(>= flags.194.4 0)
+Constraint about to be inserted, size: 1
+	(= flags.3 flags.194.4)
+Constraint inserted, size: 2
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0))
+Yices says satisfiable
+Reached <3> (succs: 4 5 )
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<5> (succs: 6 38 ) is a valid successor
+extracted the constraint for successor <5> (succs: 6 38 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about sock.11
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term sock.11
+sock.11
+After normalization, new constraint: 
+(/= sock.11 0)
+Constraint about to be inserted, size: 2
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+Constraint inserted, size: 3
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0))
+Yices says satisfiable
+Reached <5> (succs: 6 38 )
+Next statement : gimple_assign
+Next statement : gimple_assign
+err is a variable
+Trying to add a constraint about err
+	lhs tree code: var_decl
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term err
+err
+After normalization, new constraint: 
+(= err 0)
+Constraint about to be inserted, size: 3
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+Constraint inserted, size: 4
+Next statement : gimple_cond
+Handled all statements
+<6> (succs: 7 ) is a valid successor
+extracted the constraint for successor <6> (succs: 7 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about vlen.148
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term vlen.148
+vlen.148
+After normalization, new constraint: 
+(/= vlen.148 0)
+Constraint about to be inserted, size: 4
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(= err 0)
+Constraint inserted, size: 5
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (= err 0) (/= vlen.148 0))
+Yices says satisfiable
+Reached <6> (succs: 7 )
+Next statement : gimple_assign
+<ssa 0>.147 is a variable
+Trying to add a constraint about <ssa 0>.147
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term vlen.148
+vlen.148
+Normalized term <ssa 0>.147
+<ssa 0>.147
+After normalization, new constraint: 
+(= vlen.148 <ssa 0>.147)
+Constraint about to be inserted, size: 5
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(= err 0)
+	(/= vlen.148 0)
+Constraint inserted, size: 6
+Handled all statements
+(Loop header) <7> (succs: 8 9 ) is a valid successor
+extracted the constraint for successor (Loop header) <7> (succs: 8 9 )
+Configuration copied
+Copy of configuration initialized
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (= err 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147))
+Yices says satisfiable
+Reached (Loop header) <7> (succs: 8 9 )
+Next statement : gimple_assign
+iov is a variable
+Trying to add a constraint about iov
+	lhs tree code: var_decl
+	rhs tree code: addr_expr
+Bad nodes
+Next statement : gimple_assign
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<9> (succs: 44 10 ) is a valid successor
+extracted the constraint for successor <9> (succs: 44 10 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 1>.86
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 1>.86
+<ssa 1>.86
+After normalization, new constraint: 
+(>= <ssa 1>.86 0)
+Constraint about to be inserted, size: 5
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+Constraint inserted, size: 6
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0))
+Yices says satisfiable
+Reached <9> (succs: 44 10 )
+Next statement : gimple_assign
+<ssa 2>.90 is a variable
+Trying to add a constraint about <ssa 2>.90
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<10> (succs: 11 15 ) is a valid successor
+extracted the constraint for successor <10> (succs: 11 15 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 2>.90
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+2147483647
+Normalized term <ssa 2>.90
+<ssa 2>.90
+After normalization, new constraint: 
+(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+Constraint about to be inserted, size: 6
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+Constraint inserted, size: 7
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0))
+Yices says satisfiable
+Reached <10> (succs: 11 15 )
+Next statement : gimple_assign
+ctl_len.91 is a variable
+Trying to add a constraint about ctl_len.91
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 2>.90
+<ssa 2>.90
+Normalized term ctl_len.91
+ctl_len.91
+After normalization, new constraint: 
+(= <ssa 2>.90 ctl_len.91)
+Constraint about to be inserted, size: 7
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+Constraint inserted, size: 8
+Next statement : gimple_cond
+Handled all statements
+<11> (succs: 12 13 ) is a valid successor
+extracted the constraint for successor <11> (succs: 12 13 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ctl_len.91
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term ctl_len.91
+ctl_len.91
+After normalization, new constraint: 
+(/= ctl_len.91 0)
+Constraint about to be inserted, size: 8
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+Constraint inserted, size: 9
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0))
+Yices says satisfiable
+<15> (succs: 16 17 ) is a valid successor
+extracted the constraint for successor <15> (succs: 16 17 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ctl_len.91
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term ctl_len.91
+ctl_len.91
+After normalization, new constraint: 
+(= ctl_len.91 0)
+Constraint about to be inserted, size: 8
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+Constraint inserted, size: 9
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (= ctl_len.91 0))
+Yices says satisfiable
+Reached <15> (succs: 16 17 )
+Trying to add a constraint about ctl_buf.165
+	lhs tree code: ssa_name
+	rhs tree code: addr_expr
+Bad nodes
+Trying to add a constraint about ctl_len.166
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term ctl_len.91
+ctl_len.91
+Normalized term ctl_len.166
+ctl_len.166
+After normalization, new constraint: 
+(= ctl_len.91 ctl_len.166)
+Constraint about to be inserted, size: 9
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+Constraint inserted, size: 10
+Next statement : gimple_assign
+Next statement : gimple_assign
+<ssa 3>.108 is a variable
+Trying to add a constraint about <ssa 3>.108
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 4>.109 is a variable
+Trying to add a constraint about <ssa 4>.109
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<17> (succs: 18 23 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 5>.110
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 5>.110
+<ssa 5>.110
+After normalization, new constraint: 
+(= <ssa 5>.110 0)
+Constraint about to be inserted, size: 10
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+Constraint inserted, size: 11
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0))
+Yices says satisfiable
+<16> (succs: 17 ) is a valid successor
+extracted the constraint for successor <16> (succs: 17 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 5>.110
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 5>.110
+<ssa 5>.110
+After normalization, new constraint: 
+(/= <ssa 5>.110 0)
+Constraint about to be inserted, size: 10
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+Constraint inserted, size: 11
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0))
+Yices says satisfiable
+Reached <16> (succs: 17 )
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+Handled all statements
+<17> (succs: 18 23 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 23 )
+Configuration copied
+Copy of configuration initialized
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0))
+Yices says satisfiable
+Reached <17> (succs: 18 23 )
+Next statement : gimple_assign
+<ssa 6>.112 is a variable
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 19 23 ) is a valid successor
+extracted the constraint for successor <18> (succs: 19 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term <ssa 6>.112
+<ssa 6>.112
+After normalization, new constraint: 
+(/= <ssa 6>.112 0)
+Constraint about to be inserted, size: 11
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+Constraint inserted, size: 12
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (/= <ssa 6>.112 0))
+Yices says satisfiable
+Reached <18> (succs: 19 23 )
+Next statement : gimple_assign
+<ssa 7>.113 is a variable
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 8>.114 is a variable
+Trying to add a constraint about <ssa 8>.114
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 9>.115 is a variable
+Trying to add a constraint about <ssa 9>.115
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 8>.114
+<ssa 8>.114
+Normalized term <ssa 9>.115
+<ssa 9>.115
+After normalization, new constraint: 
+(= <ssa 8>.114 <ssa 9>.115)
+Constraint about to be inserted, size: 12
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+Constraint inserted, size: 13
+Next statement : gimple_cond
+Handled all statements
+<19> (succs: 20 23 ) is a valid successor
+extracted the constraint for successor <19> (succs: 20 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 9>.115
+<ssa 9>.115
+Normalized term <ssa 7>.113
+<ssa 7>.113
+After normalization, new constraint: 
+(= <ssa 9>.115 <ssa 7>.113)
+Constraint about to be inserted, size: 13
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+Constraint inserted, size: 14
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113))
+Yices says satisfiable
+Reached <19> (succs: 20 23 )
+Next statement : gimple_assign
+<ssa 10>.116 is a variable
+Trying to add a constraint about <ssa 10>.116
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 7>.113
+<ssa 7>.113
+Normalized term <ssa 10>.116
+<ssa 10>.116
+After normalization, new constraint: 
+(= <ssa 7>.113 <ssa 10>.116)
+Constraint about to be inserted, size: 14
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+Constraint inserted, size: 15
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 22 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 11>.117
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 11>.117
+<ssa 11>.117
+After normalization, new constraint: 
+(= <ssa 11>.117 0)
+Constraint about to be inserted, size: 15
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+	(= <ssa 7>.113 <ssa 10>.116)
+Constraint inserted, size: 16
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113) (= <ssa 7>.113 <ssa 10>.116) (= <ssa 11>.117 0))
+Yices says satisfiable
+Reached <20> (succs: 21 22 )
+Found a path
+	[<0> (succs: 2 ), <2> (succs: 43 3 ), <3> (succs: 4 5 ), <5> (succs: 6 38 ), <6> (succs: 7 ), (Loop header) <7> (succs: 8 9 ), <9> (succs: 44 10 ), <10> (succs: 11 15 ), <15> (succs: 16 17 ), <16> (succs: 17 ), <17> (succs: 18 23 ), <18> (succs: 19 23 ), <19> (succs: 20 23 ), <20> (succs: 21 22 )]
+Reached <17> (succs: 18 23 )
+Next statement : gimple_assign
+<ssa 6>.112 is a variable
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 19 23 ) is a valid successor
+extracted the constraint for successor <18> (succs: 19 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 6>.112
+<ssa 6>.112
+After normalization, new constraint: 
+(/= <ssa 6>.112 0)
+Constraint about to be inserted, size: 11
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+Constraint inserted, size: 12
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (/= <ssa 6>.112 0))
+Yices says satisfiable
+Reached <18> (succs: 19 23 )
+Next statement : gimple_assign
+<ssa 7>.113 is a variable
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 8>.114 is a variable
+Trying to add a constraint about <ssa 8>.114
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 9>.115 is a variable
+Trying to add a constraint about <ssa 9>.115
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 8>.114
+<ssa 8>.114
+Normalized term <ssa 9>.115
+<ssa 9>.115
+After normalization, new constraint: 
+(= <ssa 8>.114 <ssa 9>.115)
+Constraint about to be inserted, size: 12
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+Constraint inserted, size: 13
+Next statement : gimple_cond
+Handled all statements
+<19> (succs: 20 23 ) is a valid successor
+extracted the constraint for successor <19> (succs: 20 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 9>.115
+<ssa 9>.115
+Normalized term <ssa 7>.113
+<ssa 7>.113
+After normalization, new constraint: 
+(= <ssa 9>.115 <ssa 7>.113)
+Constraint about to be inserted, size: 13
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+Constraint inserted, size: 14
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113))
+Yices says satisfiable
+Reached <19> (succs: 20 23 )
+Next statement : gimple_assign
+<ssa 10>.116 is a variable
+Trying to add a constraint about <ssa 10>.116
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 7>.113
+<ssa 7>.113
+Normalized term <ssa 10>.116
+<ssa 10>.116
+After normalization, new constraint: 
+(= <ssa 7>.113 <ssa 10>.116)
+Constraint about to be inserted, size: 14
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+Constraint inserted, size: 15
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 22 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 11>.117
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 11>.117
+<ssa 11>.117
+After normalization, new constraint: 
+(= <ssa 11>.117 0)
+Constraint about to be inserted, size: 15
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(= ctl_len.91 0)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+	(= <ssa 7>.113 <ssa 10>.116)
+Constraint inserted, size: 16
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113) (= <ssa 7>.113 <ssa 10>.116) (= <ssa 11>.117 0))
+Yices says satisfiable
+Reached <20> (succs: 21 22 )
+Found a path
+	[<0> (succs: 2 ), <2> (succs: 43 3 ), <3> (succs: 4 5 ), <5> (succs: 6 38 ), <6> (succs: 7 ), (Loop header) <7> (succs: 8 9 ), <9> (succs: 44 10 ), <10> (succs: 11 15 ), <15> (succs: 16 17 ), <17> (succs: 18 23 ), <18> (succs: 19 23 ), <19> (succs: 20 23 ), <20> (succs: 21 22 )]
+Reached <11> (succs: 12 13 )
+Next statement : gimple_assign
+ctl_len.178.101 is a variable
+Trying to add a constraint about ctl_len.178.101
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 2>.90
+<ssa 2>.90
+Normalized term ctl_len.178.101
+ctl_len.178.101
+After normalization, new constraint: 
+(= <ssa 2>.90 ctl_len.178.101)
+Constraint about to be inserted, size: 9
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+Constraint inserted, size: 10
+Next statement : gimple_cond
+Handled all statements
+<13> (succs: 31 14 ) is a valid successor
+extracted the constraint for successor <13> (succs: 31 14 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ctl_len.178.101
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+36
+Normalized term ctl_len.178.101
+ctl_len.178.101
+After normalization, new constraint: 
+(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+Constraint about to be inserted, size: 10
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+Constraint inserted, size: 11
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= <ssa 2>.90 ctl_len.178.101) (>= (+ 36 (* -1 ctl_len.178.101)) 0))
+Yices says satisfiable
+<12> (succs: 44 13 ) is a valid successor
+extracted the constraint for successor <12> (succs: 44 13 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ctl_len.178.101
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+36
+Normalized term ctl_len.178.101
+ctl_len.178.101
+After normalization, new constraint: 
+(< (+ 36 (* -1 ctl_len.178.101)) 0)
+Constraint about to be inserted, size: 10
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+Constraint inserted, size: 11
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= <ssa 2>.90 ctl_len.178.101) (< (+ 36 (* -1 ctl_len.178.101)) 0))
+Yices says satisfiable
+Reached <12> (succs: 44 13 )
+Next statement : gimple_assign
+<ssa 12>.102 is a variable
+Trying to add a constraint about <ssa 12>.102
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<13> (succs: 31 14 ) is a valid successor
+extracted the constraint for successor <13> (succs: 31 14 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about ctl_buf.103
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term ctl_buf.103
+ctl_buf.103
+After normalization, new constraint: 
+(/= ctl_buf.103 0)
+Constraint about to be inserted, size: 11
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+Constraint inserted, size: 12
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= <ssa 2>.90 ctl_len.178.101) (< (+ 36 (* -1 ctl_len.178.101)) 0) (/= ctl_buf.103 0))
+Yices says satisfiable
+Reached <13> (succs: 31 14 )
+Trying to add a constraint about ctl_buf.106
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term ctl_buf.103
+ctl_buf.103
+Normalized term ctl_buf.106
+ctl_buf.106
+After normalization, new constraint: 
+(= ctl_buf.103 ctl_buf.106)
+Constraint about to be inserted, size: 12
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+Constraint inserted, size: 13
+Next statement : gimple_assign
+<ssa 13>.105 is a variable
+Trying to add a constraint about <ssa 13>.105
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 14>.253 is a variable
+Trying to add a constraint about <ssa 14>.253
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 2>.90
+<ssa 2>.90
+Normalized term <ssa 14>.253
+<ssa 14>.253
+After normalization, new constraint: 
+(= <ssa 2>.90 <ssa 14>.253)
+Constraint about to be inserted, size: 13
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+Constraint inserted, size: 14
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<14> (succs: 15 ) is a valid successor
+extracted the constraint for successor <14> (succs: 15 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about n.254
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Warning: trying to get a name for integer_cst
+Normalized term 
+0
+Normalized term n.254
+n.254
+After normalization, new constraint: 
+(= n.254 0)
+Constraint about to be inserted, size: 14
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+Constraint inserted, size: 15
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= <ssa 2>.90 ctl_len.178.101) (< (+ 36 (* -1 ctl_len.178.101)) 0) (/= ctl_buf.103 0) (= ctl_buf.103 ctl_buf.106)
+     (= <ssa 2>.90 <ssa 14>.253) (= n.254 0))
+Yices says satisfiable
+Reached <14> (succs: 15 )
+Next statement : gimple_assign
+Handled all statements
+<15> (succs: 16 17 ) is a valid successor
+extracted the constraint for successor <15> (succs: 16 17 )
+Configuration copied
+Copy of configuration initialized
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= <ssa 2>.90 ctl_len.178.101) (< (+ 36 (* -1 ctl_len.178.101)) 0) (/= ctl_buf.103 0) (= ctl_buf.103 ctl_buf.106)
+     (= <ssa 2>.90 <ssa 14>.253) (= n.254 0))
+Yices says satisfiable
+Reached <15> (succs: 16 17 )
+Trying to add a constraint about ctl_buf.165
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term ctl_buf.106
+ctl_buf.106
+Normalized term ctl_buf.165
+ctl_buf.165
+After normalization, new constraint: 
+(= ctl_buf.106 ctl_buf.165)
+Constraint about to be inserted, size: 15
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+Constraint inserted, size: 16
+Trying to add a constraint about ctl_len.166
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term ctl_len.91
+ctl_len.91
+Normalized term ctl_len.166
+ctl_len.166
+After normalization, new constraint: 
+(= ctl_len.91 ctl_len.166)
+Constraint about to be inserted, size: 16
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+Constraint inserted, size: 17
+Next statement : gimple_assign
+Next statement : gimple_assign
+<ssa 3>.108 is a variable
+Trying to add a constraint about <ssa 3>.108
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 4>.109 is a variable
+Trying to add a constraint about <ssa 4>.109
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<17> (succs: 18 23 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 5>.110
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 5>.110
+<ssa 5>.110
+After normalization, new constraint: 
+(= <ssa 5>.110 0)
+Constraint about to be inserted, size: 17
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+Constraint inserted, size: 18
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (= <ssa 2>.90 ctl_len.178.101) (< (+ 36 (* -1 ctl_len.178.101)) 0)
+     (/= ctl_buf.103 0) (= ctl_buf.103 ctl_buf.106) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+<16> (succs: 17 ) is a valid successor
+extracted the constraint for successor <16> (succs: 17 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 5>.110
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 5>.110
+<ssa 5>.110
+After normalization, new constraint: 
+(/= <ssa 5>.110 0)
+Constraint about to be inserted, size: 17
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+Constraint inserted, size: 18
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (= <ssa 2>.90 ctl_len.178.101) (< (+ 36 (* -1 ctl_len.178.101)) 0)
+     (/= ctl_buf.103 0) (= ctl_buf.103 ctl_buf.106) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <16> (succs: 17 )
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+Handled all statements
+<17> (succs: 18 23 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 23 )
+Configuration copied
+Copy of configuration initialized
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (= <ssa 2>.90 ctl_len.178.101) (< (+ 36 (* -1 ctl_len.178.101)) 0)
+     (/= ctl_buf.103 0) (= ctl_buf.103 ctl_buf.106) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <17> (succs: 18 23 )
+Next statement : gimple_assign
+<ssa 6>.112 is a variable
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 19 23 ) is a valid successor
+extracted the constraint for successor <18> (succs: 19 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 6>.112
+<ssa 6>.112
+After normalization, new constraint: 
+(/= <ssa 6>.112 0)
+Constraint about to be inserted, size: 18
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+Constraint inserted, size: 19
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 2>.90 ctl_len.178.101)
+     (< (+ 36 (* -1 ctl_len.178.101)) 0) (/= ctl_buf.103 0) (= ctl_buf.103 ctl_buf.106) (= <ssa 2>.90 <ssa 14>.253)
+     (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <18> (succs: 19 23 )
+Next statement : gimple_assign
+<ssa 7>.113 is a variable
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 8>.114 is a variable
+Trying to add a constraint about <ssa 8>.114
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 9>.115 is a variable
+Trying to add a constraint about <ssa 9>.115
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 8>.114
+<ssa 8>.114
+Normalized term <ssa 9>.115
+<ssa 9>.115
+After normalization, new constraint: 
+(= <ssa 8>.114 <ssa 9>.115)
+Constraint about to be inserted, size: 19
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+Constraint inserted, size: 20
+Next statement : gimple_cond
+Handled all statements
+<19> (succs: 20 23 ) is a valid successor
+extracted the constraint for successor <19> (succs: 20 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 9>.115
+<ssa 9>.115
+Normalized term <ssa 7>.113
+<ssa 7>.113
+After normalization, new constraint: 
+(= <ssa 9>.115 <ssa 7>.113)
+Constraint about to be inserted, size: 20
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113) (= <ssa 2>.90 ctl_len.178.101) (< (+ 36 (* -1 ctl_len.178.101)) 0) (/= ctl_buf.103 0)
+     (= ctl_buf.103 ctl_buf.106) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <19> (succs: 20 23 )
+Next statement : gimple_assign
+<ssa 10>.116 is a variable
+Trying to add a constraint about <ssa 10>.116
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 7>.113
+<ssa 7>.113
+Normalized term <ssa 10>.116
+<ssa 10>.116
+After normalization, new constraint: 
+(= <ssa 7>.113 <ssa 10>.116)
+Constraint about to be inserted, size: 21
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+Constraint inserted, size: 22
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 22 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 11>.117
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 11>.117
+<ssa 11>.117
+After normalization, new constraint: 
+(= <ssa 11>.117 0)
+Constraint about to be inserted, size: 22
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+	(= <ssa 7>.113 <ssa 10>.116)
+Constraint inserted, size: 23
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113) (= <ssa 7>.113 <ssa 10>.116) (= <ssa 11>.117 0) (= <ssa 2>.90 ctl_len.178.101)
+     (< (+ 36 (* -1 ctl_len.178.101)) 0) (/= ctl_buf.103 0) (= ctl_buf.103 ctl_buf.106) (= <ssa 2>.90 <ssa 14>.253)
+     (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <20> (succs: 21 22 )
+Found a path
+	[<0> (succs: 2 ), <2> (succs: 43 3 ), <3> (succs: 4 5 ), <5> (succs: 6 38 ), <6> (succs: 7 ), (Loop header) <7> (succs: 8 9 ), <9> (succs: 44 10 ), <10> (succs: 11 15 ), <11> (succs: 12 13 ), <12> (succs: 44 13 ), <13> (succs: 31 14 ), <14> (succs: 15 ), <15> (succs: 16 17 ), <16> (succs: 17 ), <17> (succs: 18 23 ), <18> (succs: 19 23 ), <19> (succs: 20 23 ), <20> (succs: 21 22 )]
+Reached <17> (succs: 18 23 )
+Next statement : gimple_assign
+<ssa 6>.112 is a variable
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 19 23 ) is a valid successor
+extracted the constraint for successor <18> (succs: 19 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 6>.112
+<ssa 6>.112
+After normalization, new constraint: 
+(/= <ssa 6>.112 0)
+Constraint about to be inserted, size: 18
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+Constraint inserted, size: 19
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 2>.90 ctl_len.178.101)
+     (< (+ 36 (* -1 ctl_len.178.101)) 0) (/= ctl_buf.103 0) (= ctl_buf.103 ctl_buf.106) (= <ssa 2>.90 <ssa 14>.253)
+     (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <18> (succs: 19 23 )
+Next statement : gimple_assign
+<ssa 7>.113 is a variable
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 8>.114 is a variable
+Trying to add a constraint about <ssa 8>.114
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 9>.115 is a variable
+Trying to add a constraint about <ssa 9>.115
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 8>.114
+<ssa 8>.114
+Normalized term <ssa 9>.115
+<ssa 9>.115
+After normalization, new constraint: 
+(= <ssa 8>.114 <ssa 9>.115)
+Constraint about to be inserted, size: 19
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+Constraint inserted, size: 20
+Next statement : gimple_cond
+Handled all statements
+<19> (succs: 20 23 ) is a valid successor
+extracted the constraint for successor <19> (succs: 20 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 9>.115
+<ssa 9>.115
+Normalized term <ssa 7>.113
+<ssa 7>.113
+After normalization, new constraint: 
+(= <ssa 9>.115 <ssa 7>.113)
+Constraint about to be inserted, size: 20
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113) (= <ssa 2>.90 ctl_len.178.101) (< (+ 36 (* -1 ctl_len.178.101)) 0) (/= ctl_buf.103 0)
+     (= ctl_buf.103 ctl_buf.106) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <19> (succs: 20 23 )
+Next statement : gimple_assign
+<ssa 10>.116 is a variable
+Trying to add a constraint about <ssa 10>.116
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 7>.113
+<ssa 7>.113
+Normalized term <ssa 10>.116
+<ssa 10>.116
+After normalization, new constraint: 
+(= <ssa 7>.113 <ssa 10>.116)
+Constraint about to be inserted, size: 21
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+Constraint inserted, size: 22
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 22 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 11>.117
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 11>.117
+<ssa 11>.117
+After normalization, new constraint: 
+(= <ssa 11>.117 0)
+Constraint about to be inserted, size: 22
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(< (+ 36 (* -1 ctl_len.178.101)) 0)
+	(/= ctl_buf.103 0)
+	(= ctl_buf.103 ctl_buf.106)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+	(= <ssa 7>.113 <ssa 10>.116)
+Constraint inserted, size: 23
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113) (= <ssa 7>.113 <ssa 10>.116) (= <ssa 11>.117 0) (= <ssa 2>.90 ctl_len.178.101)
+     (< (+ 36 (* -1 ctl_len.178.101)) 0) (/= ctl_buf.103 0) (= ctl_buf.103 ctl_buf.106) (= <ssa 2>.90 <ssa 14>.253)
+     (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <20> (succs: 21 22 )
+Found a path
+	[<0> (succs: 2 ), <2> (succs: 43 3 ), <3> (succs: 4 5 ), <5> (succs: 6 38 ), <6> (succs: 7 ), (Loop header) <7> (succs: 8 9 ), <9> (succs: 44 10 ), <10> (succs: 11 15 ), <11> (succs: 12 13 ), <12> (succs: 44 13 ), <13> (succs: 31 14 ), <14> (succs: 15 ), <15> (succs: 16 17 ), <17> (succs: 18 23 ), <18> (succs: 19 23 ), <19> (succs: 20 23 ), <20> (succs: 21 22 )]
+Reached <13> (succs: 31 14 )
+Trying to add a constraint about ctl_buf.106
+	lhs tree code: ssa_name
+	rhs tree code: addr_expr
+Bad nodes
+Next statement : gimple_assign
+<ssa 13>.105 is a variable
+Trying to add a constraint about <ssa 13>.105
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 14>.253 is a variable
+Trying to add a constraint about <ssa 14>.253
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 2>.90
+<ssa 2>.90
+Normalized term <ssa 14>.253
+<ssa 14>.253
+After normalization, new constraint: 
+(= <ssa 2>.90 <ssa 14>.253)
+Constraint about to be inserted, size: 11
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+Constraint inserted, size: 12
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<14> (succs: 15 ) is a valid successor
+extracted the constraint for successor <14> (succs: 15 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about n.254
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term n.254
+n.254
+After normalization, new constraint: 
+(= n.254 0)
+Constraint about to be inserted, size: 12
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+Constraint inserted, size: 13
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= <ssa 2>.90 ctl_len.178.101) (>= (+ 36 (* -1 ctl_len.178.101)) 0) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0))
+Yices says satisfiable
+Reached <14> (succs: 15 )
+Next statement : gimple_assign
+Handled all statements
+<15> (succs: 16 17 ) is a valid successor
+extracted the constraint for successor <15> (succs: 16 17 )
+Configuration copied
+Copy of configuration initialized
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= <ssa 2>.90 ctl_len.178.101) (>= (+ 36 (* -1 ctl_len.178.101)) 0) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0))
+Yices says satisfiable
+Reached <15> (succs: 16 17 )
+Trying to add a constraint about ctl_buf.165
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term ctl_buf.106
+ctl_buf.106
+Normalized term ctl_buf.165
+ctl_buf.165
+After normalization, new constraint: 
+(= ctl_buf.106 ctl_buf.165)
+Constraint about to be inserted, size: 13
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+Constraint inserted, size: 14
+Trying to add a constraint about ctl_len.166
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term ctl_len.91
+ctl_len.91
+Normalized term ctl_len.166
+ctl_len.166
+After normalization, new constraint: 
+(= ctl_len.91 ctl_len.166)
+Constraint about to be inserted, size: 14
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+Constraint inserted, size: 15
+Next statement : gimple_assign
+Next statement : gimple_assign
+<ssa 3>.108 is a variable
+Trying to add a constraint about <ssa 3>.108
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 4>.109 is a variable
+Trying to add a constraint about <ssa 4>.109
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_cond
+Handled all statements
+<17> (succs: 18 23 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 5>.110
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 5>.110
+<ssa 5>.110
+After normalization, new constraint: 
+(= <ssa 5>.110 0)
+Constraint about to be inserted, size: 15
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+Constraint inserted, size: 16
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (= <ssa 2>.90 ctl_len.178.101) (>= (+ 36 (* -1 ctl_len.178.101)) 0)
+     (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+<16> (succs: 17 ) is a valid successor
+extracted the constraint for successor <16> (succs: 17 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 5>.110
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 5>.110
+<ssa 5>.110
+After normalization, new constraint: 
+(/= <ssa 5>.110 0)
+Constraint about to be inserted, size: 15
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+Constraint inserted, size: 16
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (= <ssa 2>.90 ctl_len.178.101) (>= (+ 36 (* -1 ctl_len.178.101)) 0)
+     (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <16> (succs: 17 )
+Next statement : gimple_assign
+the statement has several rhs args
+Next statement : gimple_assign
+Handled all statements
+<17> (succs: 18 23 ) is a valid successor
+extracted the constraint for successor <17> (succs: 18 23 )
+Configuration copied
+Copy of configuration initialized
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (= <ssa 2>.90 ctl_len.178.101) (>= (+ 36 (* -1 ctl_len.178.101)) 0)
+     (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <17> (succs: 18 23 )
+Next statement : gimple_assign
+<ssa 6>.112 is a variable
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 19 23 ) is a valid successor
+extracted the constraint for successor <18> (succs: 19 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 6>.112
+<ssa 6>.112
+After normalization, new constraint: 
+(/= <ssa 6>.112 0)
+Constraint about to be inserted, size: 16
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+Constraint inserted, size: 17
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 2>.90 ctl_len.178.101)
+     (>= (+ 36 (* -1 ctl_len.178.101)) 0) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <18> (succs: 19 23 )
+Next statement : gimple_assign
+<ssa 7>.113 is a variable
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 8>.114 is a variable
+Trying to add a constraint about <ssa 8>.114
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 9>.115 is a variable
+Trying to add a constraint about <ssa 9>.115
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 8>.114
+<ssa 8>.114
+Normalized term <ssa 9>.115
+<ssa 9>.115
+After normalization, new constraint: 
+(= <ssa 8>.114 <ssa 9>.115)
+Constraint about to be inserted, size: 17
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+Constraint inserted, size: 18
+Next statement : gimple_cond
+Handled all statements
+<19> (succs: 20 23 ) is a valid successor
+extracted the constraint for successor <19> (succs: 20 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 9>.115
+<ssa 9>.115
+Normalized term <ssa 7>.113
+<ssa 7>.113
+After normalization, new constraint: 
+(= <ssa 9>.115 <ssa 7>.113)
+Constraint about to be inserted, size: 18
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+Constraint inserted, size: 19
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113) (= <ssa 2>.90 ctl_len.178.101) (>= (+ 36 (* -1 ctl_len.178.101)) 0)
+     (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <19> (succs: 20 23 )
+Next statement : gimple_assign
+<ssa 10>.116 is a variable
+Trying to add a constraint about <ssa 10>.116
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 7>.113
+<ssa 7>.113
+Normalized term <ssa 10>.116
+<ssa 10>.116
+After normalization, new constraint: 
+(= <ssa 7>.113 <ssa 10>.116)
+Constraint about to be inserted, size: 19
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+Constraint inserted, size: 20
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 22 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 11>.117
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 11>.117
+<ssa 11>.117
+After normalization, new constraint: 
+(= <ssa 11>.117 0)
+Constraint about to be inserted, size: 20
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(/= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+	(= <ssa 7>.113 <ssa 10>.116)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (/= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113) (= <ssa 7>.113 <ssa 10>.116) (= <ssa 11>.117 0) (= <ssa 2>.90 ctl_len.178.101)
+     (>= (+ 36 (* -1 ctl_len.178.101)) 0) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <20> (succs: 21 22 )
+Found a path
+	[<0> (succs: 2 ), <2> (succs: 43 3 ), <3> (succs: 4 5 ), <5> (succs: 6 38 ), <6> (succs: 7 ), (Loop header) <7> (succs: 8 9 ), <9> (succs: 44 10 ), <10> (succs: 11 15 ), <11> (succs: 12 13 ), <13> (succs: 31 14 ), <14> (succs: 15 ), <15> (succs: 16 17 ), <16> (succs: 17 ), <17> (succs: 18 23 ), <18> (succs: 19 23 ), <19> (succs: 20 23 ), <20> (succs: 21 22 )]
+Reached <17> (succs: 18 23 )
+Next statement : gimple_assign
+<ssa 6>.112 is a variable
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_cond
+Handled all statements
+<18> (succs: 19 23 ) is a valid successor
+extracted the constraint for successor <18> (succs: 19 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 6>.112
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 6>.112
+<ssa 6>.112
+After normalization, new constraint: 
+(/= <ssa 6>.112 0)
+Constraint about to be inserted, size: 16
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+Constraint inserted, size: 17
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 2>.90 ctl_len.178.101)
+     (>= (+ 36 (* -1 ctl_len.178.101)) 0) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <18> (succs: 19 23 )
+Next statement : gimple_assign
+<ssa 7>.113 is a variable
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 8>.114 is a variable
+Trying to add a constraint about <ssa 8>.114
+	lhs tree code: ssa_name
+	rhs tree code: component_ref
+Bad nodes
+Next statement : gimple_assign
+<ssa 9>.115 is a variable
+Trying to add a constraint about <ssa 9>.115
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 8>.114
+<ssa 8>.114
+Normalized term <ssa 9>.115
+<ssa 9>.115
+After normalization, new constraint: 
+(= <ssa 8>.114 <ssa 9>.115)
+Constraint about to be inserted, size: 17
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+Constraint inserted, size: 18
+Next statement : gimple_cond
+Handled all statements
+<19> (succs: 20 23 ) is a valid successor
+extracted the constraint for successor <19> (succs: 20 23 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 7>.113
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 9>.115
+<ssa 9>.115
+Normalized term <ssa 7>.113
+<ssa 7>.113
+After normalization, new constraint: 
+(= <ssa 9>.115 <ssa 7>.113)
+Constraint about to be inserted, size: 18
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+Constraint inserted, size: 19
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113) (= <ssa 2>.90 ctl_len.178.101) (>= (+ 36 (* -1 ctl_len.178.101)) 0)
+     (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <19> (succs: 20 23 )
+Next statement : gimple_assign
+<ssa 10>.116 is a variable
+Trying to add a constraint about <ssa 10>.116
+	lhs tree code: ssa_name
+	rhs tree code: ssa_name
+Constraint accepted
+Normalized term <ssa 7>.113
+<ssa 7>.113
+Normalized term <ssa 10>.116
+<ssa 10>.116
+After normalization, new constraint: 
+(= <ssa 7>.113 <ssa 10>.116)
+Constraint about to be inserted, size: 19
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+Constraint inserted, size: 20
+Next statement : gimple_call
+Next statement : gimple_cond
+Handled all statements
+<20> (succs: 21 22 ) is a valid successor
+extracted the constraint for successor <20> (succs: 21 22 )
+Configuration copied
+Copy of configuration initialized
+Trying to add a constraint about <ssa 11>.117
+	lhs tree code: ssa_name
+	rhs tree code: integer_cst
+Constraint accepted
+Normalized term 
+0
+Normalized term <ssa 11>.117
+<ssa 11>.117
+After normalization, new constraint: 
+(= <ssa 11>.117 0)
+Constraint about to be inserted, size: 20
+	(= flags.3 flags.194.4)
+	(>= flags.194.4 0)
+	(/= sock.11 0)
+	(/= vlen.148 0)
+	(= vlen.148 <ssa 0>.147)
+	(>= <ssa 1>.86 0)
+	(>= (+ 2147483647 (* -1 <ssa 2>.90)) 0)
+	(= <ssa 2>.90 ctl_len.91)
+	(/= ctl_len.91 0)
+	(= <ssa 2>.90 ctl_len.178.101)
+	(>= (+ 36 (* -1 ctl_len.178.101)) 0)
+	(= <ssa 2>.90 <ssa 14>.253)
+	(= n.254 0)
+	(= ctl_buf.106 ctl_buf.165)
+	(= ctl_len.91 ctl_len.166)
+	(= <ssa 5>.110 0)
+	(/= <ssa 6>.112 0)
+	(= <ssa 8>.114 <ssa 9>.115)
+	(= <ssa 9>.115 <ssa 7>.113)
+	(= <ssa 7>.113 <ssa 10>.116)
+Constraint inserted, size: 21
+Constraint added to configuration
+Building the set of constraints
+Set of constraints built
+(and (= flags.3 flags.194.4) (>= flags.194.4 0) (/= sock.11 0) (/= vlen.148 0) (= vlen.148 <ssa 0>.147)
+     (>= <ssa 1>.86 0) (>= (+ 2147483647 (* -1 <ssa 2>.90)) 0) (= <ssa 2>.90 ctl_len.91) (/= ctl_len.91 0)
+     (= ctl_len.91 ctl_len.166) (= <ssa 5>.110 0) (/= <ssa 6>.112 0) (= <ssa 8>.114 <ssa 9>.115)
+     (= <ssa 9>.115 <ssa 7>.113) (= <ssa 7>.113 <ssa 10>.116) (= <ssa 11>.117 0) (= <ssa 2>.90 ctl_len.178.101)
+     (>= (+ 36 (* -1 ctl_len.178.101)) 0) (= <ssa 2>.90 <ssa 14>.253) (= n.254 0) (= ctl_buf.106 ctl_buf.165))
+Yices says satisfiable
+Reached <20> (succs: 21 22 )
+Found a path
+	[<0> (succs: 2 ), <2> (succs: 43 3 ), <3> (succs: 4 5 ), <5> (succs: 6 38 ), <6> (succs: 7 ), (Loop header) <7> (succs: 8 9 ), <9> (succs: 44 10 ), <10> (succs: 11 15 ), <11> (succs: 12 13 ), <13> (succs: 31 14 ), <14> (succs: 15 ), <15> (succs: 16 17 ), <17> (succs: 18 23 ), <18> (succs: 19 23 ), <19> (succs: 20 23 ), <20> (succs: 21 22 )]
+----------------------
+Result of the analysis
+paths found: 6
+paths rejected: 38
+----------------------
+
+Examining <24> (succs: 25 26 )
+basic block 23 is a predecessor
+got the corresponding RichBasicBlock
+0x16eda60 is red
+These are all the basic blocks:
+<23> (succs: 26 24 )
+<40> (succs: 42 41 )
+<39> (succs: 40 )
+<6> (succs: 7 )
+<44> (succs: 38 )
+<27> (succs: 31 )
+<29> (succs: 31 )
+<34> (succs: 38 )
+<37> (succs: 7 )
+<3> (succs: 4 5 )
+<4> (succs: 42 )
+<5> (succs: 6 38 )
+(Loop header) <7> (succs: 8 9 )
+<8> (succs: 38 )
+<9> (succs: 44 10 )
+<10> (succs: 11 15 )
+<11> (succs: 12 13 )
+<12> (succs: 44 13 )
+<13> (succs: 31 14 )
+<14> (succs: 15 )
+<15> (succs: 16 17 )
+<16> (succs: 17 )
+<17> (succs: 18 23 )
+<18> (succs: 19 23 )
+<19> (succs: 20 23 )
+<20> (succs: 21 22 )
+<21> (succs: )
+<22> (succs: 31 )
+<24> (succs: 25 26 )
+<25> (succs: )
+<26> (succs: 28 27 )
+<28> (succs: 30 29 )
+<30> (succs: 31 )
+<31> (succs: 32 33 )
+<32> (succs: 33 )
+<33> (succs: 34 35 )
+<35> (succs: 38 36 )
+<36> (succs: 37 38 )
+<38> (succs: 39 40 )
+<41> (succs: 42 )
+<42> (succs: 43 )
+<0> (succs: 2 )
+<1> (succs: )
+<2> (succs: 43 3 )
+<43> (succs: 1 )
+These are the basic blocks from the interesting subgraph:
+
+Starting the walk until <24> (succs: 25 26 )
+Configuration created, _constraints size: 0
+Reached <0> (succs: 2 )
+Handled all statements
+----------------------
+Result of the analysis
+paths found: 0
+paths rejected: 1
+----------------------
+

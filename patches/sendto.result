@@ -1,0 +1,161 @@
+net/socket.c: In function ‘sock_sendmsg_nosec’:
+net/socket.c:613:2: attention : ISO C89 interdit les mélanges de déclarations et de code [-Wdeclaration-after-statement]
+  int ret = sock->ops->sendmsg(sock, msg, msg_data_left(msg));
+  ^
+net/socket.c: Hors de toute fonction :
+net/socket.c:618:36: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) int sock_sendmsg(struct socket *sock, struct msghdr *msg)
+                                    ^
+Building the rich basic blocks
+About to build basic block 0
+is it a loop? false
+Building a regular RichBasicBlock 0
+About to build basic block 2
+is it a loop? false
+Building a regular RichBasicBlock 2
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: import_single_range	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 3
+is it a loop? false
+Building a regular RichBasicBlock 3
+    has flow: false    has LSM: false
+About to build basic block 4
+is it a loop? false
+Building a regular RichBasicBlock 4
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: sockfd_lookup_light	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 5
+is it a loop? false
+Building a regular RichBasicBlock 5
+    has flow: false    has LSM: false
+About to build basic block 6
+is it a loop? false
+Building a regular RichBasicBlock 6
+    has flow: false    has LSM: false
+About to build basic block 7
+is it a loop? false
+Building a regular RichBasicBlock 7
+    has flow: false    has LSM: false
+About to build basic block 8
+is it a loop? false
+Building a regular RichBasicBlock 8
+    has flow: false    has LSM: false
+About to build basic block 9
+is it a loop? false
+Building a regular RichBasicBlock 9
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: move_addr_to_kernel.part.17	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 10
+is it a loop? false
+Building a regular RichBasicBlock 10
+    has flow: false    has LSM: false
+About to build basic block 11
+is it a loop? false
+Building a regular RichBasicBlock 11
+    has flow: false    has LSM: false
+About to build basic block 12
+is it a loop? false
+Building a regular RichBasicBlock 12
+    has flow: false    has LSM: false
+About to build basic block 13
+is it a loop? false
+Building a regular RichBasicBlock 13
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: security_socket_sendmsg	isLSM: true	isFlow: false
+    has flow: false    has LSM: true
+About to build basic block 14
+is it a loop? false
+Building a regular RichBasicBlock 14
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kayrebt_FlowNodeMarker	isLSM: false	isFlow: true
+GIMPLE CALL
+    has flow: true    has LSM: false
+About to build basic block 15
+is it a loop? false
+Building a regular RichBasicBlock 15
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __builtin_unreachable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 16
+is it a loop? false
+Building a regular RichBasicBlock 16
+    has flow: false    has LSM: false
+About to build basic block 17
+is it a loop? false
+Building a regular RichBasicBlock 17
+    has flow: false    has LSM: false
+About to build basic block 18
+is it a loop? false
+Building a regular RichBasicBlock 18
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: fput	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 19
+is it a loop? false
+Building a regular RichBasicBlock 19
+    has flow: false    has LSM: false
+About to build basic block 20
+is it a loop? false
+Building a regular RichBasicBlock 20
+    has flow: false    has LSM: false
+About to build basic block 21
+is it a loop? false
+Building a regular RichBasicBlock 21
+    has flow: false    has LSM: false
+About to build basic block 22
+is it a loop? false
+Building a regular RichBasicBlock 22
+    has flow: false    has LSM: false
+About to build basic block 1
+is it a loop? false
+There are 1 bbs with flow nodes (excluding those having LSM nodes)
+Examining <14> (succs: 15 16 )
+basic block 13 is a predecessor
+got the corresponding RichBasicBlock
+0x1645200 is red
+These are all the basic blocks:
+<21> (succs: 17 )
+<22> (succs: 10 )
+<5> (succs: 19 )
+<16> (succs: 17 )
+<18> (succs: 19 )
+<7> (succs: 21 8 )
+<8> (succs: 22 9 )
+<9> (succs: 17 10 )
+<14> (succs: 15 16 )
+<15> (succs: )
+<0> (succs: 2 )
+<1> (succs: )
+<2> (succs: 3 4 )
+<3> (succs: 20 )
+<4> (succs: 5 6 )
+<6> (succs: 7 11 )
+<10> (succs: 11 )
+<11> (succs: 12 13 )
+<12> (succs: 13 )
+<13> (succs: 16 14 )
+<17> (succs: 18 5 )
+<19> (succs: 20 )
+<20> (succs: 1 )
+These are the basic blocks from the interesting subgraph:
+
+Starting the walk until <14> (succs: 15 16 )
+Configuration created, _constraints size: 0
+Reached <0> (succs: 2 )
+Handled all statements
+----------------------
+Result of the analysis
+paths found: 0
+paths rejected: 1
+----------------------
+

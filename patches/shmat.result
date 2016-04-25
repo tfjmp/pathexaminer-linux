@@ -1,0 +1,999 @@
+ipc/shm.c:1499:37: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) long do_shmat(int shmid, char __user *shmaddr, int shmflg, ulong *raddr,
+                                     ^
+ipc/shm.c:1326:46: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) unsigned long mmap_region(struct file *file, unsigned long addr,
+                                              ^
+ipc/shm.c:1167:46: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) unsigned long do_mmap(struct file *file, unsigned long addr,
+                                              ^
+ipc/shm.c:1123:36: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) int ipcperms(struct ipc_namespace *ns, struct kern_ipc_perm *ipcp, short flag)
+                                    ^
+ipc/shm.c: In function ‘SyS_shmat’:
+ipc/shm.c:1666:2: attention : ‘ret’ may be used uninitialized in this function [-Wmaybe-uninitialized]
+  return (long)ret;
+  ^
+ipc/shm.c:1659:16: note: ‘ret’ was declared here
+  unsigned long ret;
+                ^
+Building the rich basic blocks
+About to build basic block 0
+is it a loop? false
+Building a regular RichBasicBlock 0
+About to build basic block 2
+is it a loop? false
+Building a regular RichBasicBlock 2
+    has flow: false    has LSM: false
+About to build basic block 3
+is it a loop? false
+Building a regular RichBasicBlock 3
+    has flow: false    has LSM: false
+About to build basic block 4
+is it a loop? false
+Building a regular RichBasicBlock 4
+    has flow: false    has LSM: false
+About to build basic block 5
+is it a loop? false
+Building a regular RichBasicBlock 5
+    has flow: false    has LSM: false
+About to build basic block 6
+is it a loop? false
+Building a regular RichBasicBlock 6
+    has flow: false    has LSM: false
+About to build basic block 7
+is it a loop? false
+Building a regular RichBasicBlock 7
+    has flow: false    has LSM: false
+About to build basic block 8
+is it a loop? false
+Building a regular RichBasicBlock 8
+    has flow: false    has LSM: false
+About to build basic block 9
+is it a loop? false
+Building a regular RichBasicBlock 9
+    has flow: false    has LSM: false
+About to build basic block 10
+is it a loop? false
+Building a regular RichBasicBlock 10
+    has flow: false    has LSM: false
+About to build basic block 11
+is it a loop? false
+Building a regular RichBasicBlock 11
+    has flow: false    has LSM: false
+About to build basic block 12
+is it a loop? false
+Building a regular RichBasicBlock 12
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: ipc_obtain_object_check	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 13
+is it a loop? false
+Building a regular RichBasicBlock 13
+    has flow: false    has LSM: false
+About to build basic block 14
+is it a loop? false
+Building a regular RichBasicBlock 14
+    has flow: false    has LSM: false
+About to build basic block 15
+is it a loop? false
+Building a regular RichBasicBlock 15
+    has flow: false    has LSM: false
+About to build basic block 16
+is it a loop? false
+Building a regular RichBasicBlock 16
+    has flow: false    has LSM: false
+About to build basic block 17
+is it a loop? false
+Building a regular RichBasicBlock 17
+    has flow: false    has LSM: false
+About to build basic block 18
+is it a loop? false
+Building a regular RichBasicBlock 18
+    has flow: false    has LSM: false
+About to build basic block 19
+is it a loop? false
+Building a regular RichBasicBlock 19
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: in_group_p	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 20
+is it a loop? false
+Building a regular RichBasicBlock 20
+    has flow: false    has LSM: false
+About to build basic block 21
+is it a loop? false
+Building a regular RichBasicBlock 21
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: in_group_p	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 22
+is it a loop? false
+Building a regular RichBasicBlock 22
+    has flow: false    has LSM: false
+About to build basic block 23
+is it a loop? false
+Building a regular RichBasicBlock 23
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: security_ipc_permission	isLSM: true	isFlow: false
+    has flow: false    has LSM: true
+About to build basic block 24
+is it a loop? false
+Building a regular RichBasicBlock 24
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: ns_capable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 25
+is it a loop? false
+Building a regular RichBasicBlock 25
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: security_shm_shmat	isLSM: true	isFlow: false
+    has flow: false    has LSM: true
+About to build basic block 26
+is it a loop? false
+Building a regular RichBasicBlock 26
+    has flow: false    has LSM: false
+About to build basic block 27
+is it a loop? false
+Building a regular RichBasicBlock 27
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: _raw_spin_lock	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 28
+is it a loop? false
+Building a regular RichBasicBlock 28
+    has flow: false    has LSM: false
+About to build basic block 29
+is it a loop? false
+Building a regular RichBasicBlock 29
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: path_get	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kmem_cache_alloc_trace	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 30
+is it a loop? false
+Building a regular RichBasicBlock 30
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: path_put	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 31
+is it a loop? false
+Building a regular RichBasicBlock 31
+    has flow: false    has LSM: false
+About to build basic block 32
+is it a loop? false
+Building a regular RichBasicBlock 32
+    has flow: false    has LSM: false
+About to build basic block 33
+is it a loop? false
+Building a regular RichBasicBlock 33
+    has flow: false    has LSM: false
+About to build basic block 34
+is it a loop? false
+Building a regular RichBasicBlock 34
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: alloc_file	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 35
+is it a loop? false
+Building a regular RichBasicBlock 35
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kfree	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: path_put	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 36
+is it a loop? false
+Building a regular RichBasicBlock 36
+    has flow: false    has LSM: false
+About to build basic block 37
+is it a loop? false
+Building a regular RichBasicBlock 37
+    has flow: false    has LSM: false
+About to build basic block 38
+is it a loop? false
+Building a regular RichBasicBlock 38
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: security_mmap_file	isLSM: true	isFlow: false
+    has flow: false    has LSM: true
+About to build basic block 39
+is it a loop? false
+Building a regular RichBasicBlock 39
+    has flow: false    has LSM: false
+About to build basic block 40
+is it a loop? false
+Building a regular RichBasicBlock 40
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: down_write	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 41
+is it a loop? false
+Building a regular RichBasicBlock 41
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kayrebt_FlowNodeMarker	isLSM: false	isFlow: true
+    has flow: true    has LSM: false
+About to build basic block 42
+is it a loop? false
+Building a regular RichBasicBlock 42
+    has flow: false    has LSM: false
+About to build basic block 43
+is it a loop? false
+Building a regular RichBasicBlock 43
+    has flow: false    has LSM: false
+About to build basic block 44
+is it a loop? false
+Building a regular RichBasicBlock 44
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: find_vma	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 45
+is it a loop? false
+Building a regular RichBasicBlock 45
+    has flow: false    has LSM: false
+About to build basic block 46
+is it a loop? false
+Building a regular RichBasicBlock 46
+    has flow: false    has LSM: false
+About to build basic block 47
+is it a loop? false
+Building a regular RichBasicBlock 47
+    has flow: false    has LSM: false
+About to build basic block 48
+is it a loop? false
+Building a regular RichBasicBlock 48
+    has flow: false    has LSM: false
+About to build basic block 49
+is it a loop? false
+Building a regular RichBasicBlock 49
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: path_noexec	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 50
+is it a loop? false
+Building a regular RichBasicBlock 50
+    has flow: false    has LSM: false
+About to build basic block 51
+is it a loop? false
+Building a regular RichBasicBlock 51
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: round_hint_to_min	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 52
+is it a loop? false
+Building a regular RichBasicBlock 52
+    has flow: false    has LSM: false
+About to build basic block 53
+is it a loop? false
+Building a regular RichBasicBlock 53
+    has flow: false    has LSM: false
+About to build basic block 54
+is it a loop? false
+Building a regular RichBasicBlock 54
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: get_unmapped_area	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 55
+is it a loop? false
+Building a regular RichBasicBlock 55
+    has flow: false    has LSM: false
+About to build basic block 56
+is it a loop? false
+Building a regular RichBasicBlock 56
+    has flow: false    has LSM: false
+About to build basic block 57
+is it a loop? false
+Building a regular RichBasicBlock 57
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: capable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 58
+is it a loop? false
+Building a regular RichBasicBlock 58
+    has flow: false    has LSM: false
+About to build basic block 59
+is it a loop? false
+Building a regular RichBasicBlock 59
+    has flow: false    has LSM: false
+About to build basic block 60
+is it a loop? false
+Building a regular RichBasicBlock 60
+    has flow: false    has LSM: false
+About to build basic block 61
+is it a loop? false
+Building a regular RichBasicBlock 61
+    has flow: false    has LSM: false
+About to build basic block 62
+is it a loop? false
+Building a regular RichBasicBlock 62
+    has flow: false    has LSM: false
+About to build basic block 63
+is it a loop? false
+Building a regular RichBasicBlock 63
+    has flow: false    has LSM: false
+About to build basic block 64
+is it a loop? false
+Building a regular RichBasicBlock 64
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: locks_verify_locked	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 65
+is it a loop? false
+Building a regular RichBasicBlock 65
+    has flow: false    has LSM: false
+About to build basic block 66
+is it a loop? false
+Building a regular RichBasicBlock 66
+    has flow: false    has LSM: false
+About to build basic block 67
+is it a loop? false
+Building a regular RichBasicBlock 67
+    has flow: false    has LSM: false
+About to build basic block 68
+is it a loop? false
+Building a regular RichBasicBlock 68
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: path_noexec	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 69
+is it a loop? false
+Building a regular RichBasicBlock 69
+    has flow: false    has LSM: false
+About to build basic block 70
+is it a loop? false
+Building a regular RichBasicBlock 70
+    has flow: false    has LSM: false
+About to build basic block 71
+is it a loop? false
+Building a regular RichBasicBlock 71
+    has flow: false    has LSM: false
+About to build basic block 72
+is it a loop? false
+Building a regular RichBasicBlock 72
+    has flow: false    has LSM: false
+About to build basic block 73
+is it a loop? false
+Building a regular RichBasicBlock 73
+    has flow: false    has LSM: false
+About to build basic block 74
+is it a loop? false
+Building a regular RichBasicBlock 74
+    has flow: false    has LSM: false
+About to build basic block 75
+is it a loop? false
+Building a regular RichBasicBlock 75
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: may_expand_vm	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 76
+is it a loop? false
+Building a regular RichBasicBlock 76
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: count_vma_pages_range	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: may_expand_vm	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 77
+is it a loop? true
+Building a regular RichBasicBlock 77
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: do_munmap	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 78
+is it a loop? true
+Building a regular RichBasicBlock 78
+    has flow: false    has LSM: false
+About to build basic block 79
+is it a loop? false
+Building a regular RichBasicBlock 79
+    has flow: false    has LSM: false
+About to build basic block 80
+is it a loop? true
+Building a loop header pseudo-basic block
+Building a regular RichBasicBlock 80
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: find_vma_links	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+Loop added for basic_block 80
+About to build basic block 81
+is it a loop? false
+Building a regular RichBasicBlock 81
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: accountable_mapping	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 82
+is it a loop? false
+Building a regular RichBasicBlock 82
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: security_vm_enough_memory_mm	isLSM: true	isFlow: false
+    has flow: false    has LSM: true
+About to build basic block 83
+is it a loop? false
+Building a regular RichBasicBlock 83
+    has flow: false    has LSM: false
+About to build basic block 84
+is it a loop? false
+Building a regular RichBasicBlock 84
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: vma_merge	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 85
+is it a loop? false
+Building a regular RichBasicBlock 85
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kmem_cache_alloc	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 86
+is it a loop? false
+Building a regular RichBasicBlock 86
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: vm_get_page_prot	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 87
+is it a loop? false
+Building a regular RichBasicBlock 87
+    has flow: false    has LSM: false
+About to build basic block 88
+is it a loop? false
+Building a regular RichBasicBlock 88
+    has flow: false    has LSM: false
+About to build basic block 89
+is it a loop? false
+Building a regular RichBasicBlock 89
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: deny_write_access	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 90
+is it a loop? false
+Building a regular RichBasicBlock 90
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: get_file	isLSM: false	isFlow: false
+GIMPLE CALL
+    has flow: false    has LSM: false
+About to build basic block 91
+is it a loop? false
+Building a regular RichBasicBlock 91
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: mapping_map_writable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 92
+is it a loop? false
+Building a regular RichBasicBlock 92
+    has flow: false    has LSM: false
+About to build basic block 93
+is it a loop? false
+Building a regular RichBasicBlock 93
+    has flow: false    has LSM: false
+About to build basic block 94
+is it a loop? false
+Building a regular RichBasicBlock 94
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: warn_slowpath_null	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 95
+is it a loop? false
+Building a regular RichBasicBlock 95
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: vma_link	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 96
+is it a loop? false
+Building a regular RichBasicBlock 96
+    has flow: false    has LSM: false
+About to build basic block 97
+is it a loop? false
+Building a regular RichBasicBlock 97
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: shmem_zero_setup	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 98
+is it a loop? false
+Building a regular RichBasicBlock 98
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: mapping_unmap_writable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 99
+is it a loop? false
+Building a regular RichBasicBlock 99
+    has flow: false    has LSM: false
+About to build basic block 100
+is it a loop? false
+Building a regular RichBasicBlock 100
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: allow_write_access	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 101
+is it a loop? false
+Building a regular RichBasicBlock 101
+    has flow: false    has LSM: false
+About to build basic block 102
+is it a loop? false
+Building a regular RichBasicBlock 102
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: perf_event_mmap	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: vm_stat_account	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 103
+is it a loop? false
+Building a regular RichBasicBlock 103
+    has flow: false    has LSM: false
+About to build basic block 104
+is it a loop? false
+Building a regular RichBasicBlock 104
+    has flow: false    has LSM: false
+About to build basic block 105
+is it a loop? false
+Building a regular RichBasicBlock 105
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: get_gate_vma	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 106
+is it a loop? false
+Building a regular RichBasicBlock 106
+    has flow: false    has LSM: false
+About to build basic block 107
+is it a loop? false
+Building a regular RichBasicBlock 107
+    has flow: false    has LSM: false
+About to build basic block 108
+is it a loop? false
+Building a regular RichBasicBlock 108
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: vma_set_page_prot	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 109
+is it a loop? false
+Building a regular RichBasicBlock 109
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: fput	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: unmap_region	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 110
+is it a loop? false
+Building a regular RichBasicBlock 110
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: mapping_unmap_writable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 111
+is it a loop? false
+Building a regular RichBasicBlock 111
+    has flow: false    has LSM: false
+About to build basic block 112
+is it a loop? false
+Building a regular RichBasicBlock 112
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: allow_write_access	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 113
+is it a loop? false
+Building a regular RichBasicBlock 113
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kmem_cache_free	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 114
+is it a loop? false
+Building a regular RichBasicBlock 114
+    has flow: false    has LSM: false
+About to build basic block 115
+is it a loop? false
+Building a regular RichBasicBlock 115
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: vm_unacct_memory	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 116
+is it a loop? false
+Building a regular RichBasicBlock 116
+    has flow: false    has LSM: false
+About to build basic block 117
+is it a loop? false
+Building a regular RichBasicBlock 117
+    has flow: false    has LSM: false
+About to build basic block 118
+is it a loop? false
+Building a regular RichBasicBlock 118
+    has flow: false    has LSM: false
+About to build basic block 119
+is it a loop? false
+Building a regular RichBasicBlock 119
+    has flow: false    has LSM: false
+About to build basic block 120
+is it a loop? false
+Building a regular RichBasicBlock 120
+    has flow: false    has LSM: false
+About to build basic block 121
+is it a loop? false
+Building a regular RichBasicBlock 121
+    has flow: false    has LSM: false
+About to build basic block 122
+is it a loop? false
+Building a regular RichBasicBlock 122
+    has flow: false    has LSM: false
+About to build basic block 123
+is it a loop? false
+Building a regular RichBasicBlock 123
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: fput	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 124
+is it a loop? false
+Building a regular RichBasicBlock 124
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: down_write	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: ipc_lock	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 125
+is it a loop? false
+Building a regular RichBasicBlock 125
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: warn_slowpath_null	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 126
+is it a loop? false
+Building a regular RichBasicBlock 126
+    has flow: false    has LSM: false
+About to build basic block 127
+is it a loop? false
+Building a regular RichBasicBlock 127
+    has flow: false    has LSM: false
+About to build basic block 128
+is it a loop? false
+Building a regular RichBasicBlock 128
+    has flow: false    has LSM: false
+About to build basic block 129
+is it a loop? false
+Building a regular RichBasicBlock 129
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: up_write	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 130
+is it a loop? false
+Building a regular RichBasicBlock 130
+    has flow: false    has LSM: false
+About to build basic block 131
+is it a loop? false
+Building a regular RichBasicBlock 131
+    has flow: false    has LSM: false
+About to build basic block 132
+is it a loop? false
+Building a regular RichBasicBlock 132
+    has flow: false    has LSM: false
+About to build basic block 133
+is it a loop? false
+Building a regular RichBasicBlock 133
+    has flow: false    has LSM: false
+About to build basic block 134
+is it a loop? false
+Building a regular RichBasicBlock 134
+    has flow: false    has LSM: false
+About to build basic block 135
+is it a loop? false
+Building a regular RichBasicBlock 135
+    has flow: false    has LSM: false
+About to build basic block 136
+is it a loop? false
+Building a regular RichBasicBlock 136
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __audit_ipc_obj	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 137
+is it a loop? false
+Building a regular RichBasicBlock 137
+    has flow: false    has LSM: false
+About to build basic block 138
+is it a loop? false
+Building a regular RichBasicBlock 138
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: vma_link	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 139
+is it a loop? false
+Building a regular RichBasicBlock 139
+    has flow: false    has LSM: false
+About to build basic block 140
+is it a loop? false
+Building a regular RichBasicBlock 140
+    has flow: false    has LSM: false
+About to build basic block 141
+is it a loop? false
+Building a regular RichBasicBlock 141
+    has flow: false    has LSM: false
+About to build basic block 142
+is it a loop? false
+Building a regular RichBasicBlock 142
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: up_write	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 143
+is it a loop? false
+Building a regular RichBasicBlock 143
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: shm_destroy	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 144
+is it a loop? false
+Building a regular RichBasicBlock 144
+    has flow: false    has LSM: false
+About to build basic block 145
+is it a loop? false
+Building a regular RichBasicBlock 145
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: up_write	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 146
+is it a loop? false
+Building a regular RichBasicBlock 146
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: up_write	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __mm_populate	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 147
+is it a loop? false
+Building a regular RichBasicBlock 147
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: up_write	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 1
+is it a loop? false
+There are 1 bbs with flow nodes (excluding those having LSM nodes)
+Examining <41> (succs: 140 46 )
+basic block 40 is a predecessor
+got the corresponding RichBasicBlock
+<40> (succs: 42 41 ) is white, visiting it first
+basic block 38 is a predecessor
+got the corresponding RichBasicBlock
+0x1675bb0 is red
+0x1675dc0 is red
+basic block 42 is a predecessor
+got the corresponding RichBasicBlock
+<42> (succs: 43 41 ) is white, visiting it first
+basic block 40 is a predecessor
+got the corresponding RichBasicBlock
+0x1675dc0 is red
+0x1676020 is red
+basic block 44 is a predecessor
+got the corresponding RichBasicBlock
+<44> (succs: 45 41 ) is white, visiting it first
+basic block 43 is a predecessor
+got the corresponding RichBasicBlock
+<43> (succs: 142 44 ) is white, visiting it first
+basic block 42 is a predecessor
+got the corresponding RichBasicBlock
+0x1676020 is red
+0x1676150 is red
+0x1676280 is red
+basic block 45 is a predecessor
+got the corresponding RichBasicBlock
+<45> (succs: 41 142 ) is white, visiting it first
+basic block 44 is a predecessor
+got the corresponding RichBasicBlock
+0x1676280 is red
+0x16763b0 is red
+These are all the basic blocks:
+<3> (succs: 4 7 )
+<4> (succs: 5 8 )
+<5> (succs: 6 132 )
+<6> (succs: 8 )
+<7> (succs: 132 8 )
+<8> (succs: 9 10 )
+<10> (succs: 11 12 )
+<11> (succs: 12 )
+<12> (succs: 13 14 )
+<13> (succs: 131 )
+<14> (succs: 16 15 )
+<17> (succs: 18 19 )
+<18> (succs: 22 )
+<19> (succs: 20 21 )
+<21> (succs: 20 22 )
+<22> (succs: 24 23 )
+<24> (succs: 130 23 )
+<25> (succs: 26 27 )
+<29> (succs: 30 31 )
+<30> (succs: 124 )
+<31> (succs: 34 32 )
+<34> (succs: 35 36 )
+<35> (succs: 124 )
+<36> (succs: 37 38 )
+<40> (succs: 42 41 )
+<42> (succs: 43 41 )
+<43> (succs: 142 44 )
+<44> (succs: 45 41 )
+<46> (succs: 47 50 )
+<47> (succs: 48 49 )
+<49> (succs: 48 50 )
+<50> (succs: 51 52 )
+<51> (succs: 52 )
+<52> (succs: 141 53 )
+<53> (succs: 141 54 )
+<54> (succs: 120 55 )
+<56> (succs: 57 137 )
+<57> (succs: 58 137 )
+<59> (succs: 60 62 )
+<60> (succs: 61 62 )
+<62> (succs: 63 64 )
+<63> (succs: 61 64 )
+<64> (succs: 58 65 )
+<65> (succs: 66 67 )
+<66> (succs: 67 )
+<67> (succs: 61 68 )
+<68> (succs: 69 71 )
+<69> (succs: 141 70 )
+<70> (succs: 71 )
+<71> (succs: 141 72 )
+<72> (succs: 140 75 )
+<73> (succs: 140 74 )
+<74> (succs: 75 )
+<75> (succs: 76 79 )
+<76> (succs: 139 79 )
+<77> (succs: 139 78 )
+<81> (succs: 82 84 )
+<82> (succs: 139 83 )
+<83> (succs: 84 )
+<84> (succs: 102 85 )
+<85> (succs: 114 86 )
+<86> (succs: 87 96 )
+<87> (succs: 89 88 )
+<89> (succs: 113 88 )
+<91> (succs: 111 90 )
+<92> (succs: 93 95 )
+<93> (succs: 94 95 )
+<94> (succs: 95 )
+<95> (succs: 98 99 )
+<96> (succs: 97 138 )
+<97> (succs: 113 138 )
+<98> (succs: 99 )
+<99> (succs: 100 101 )
+<100> (succs: 101 )
+<101> (succs: 102 )
+<102> (succs: 103 108 )
+<103> (succs: 104 107 )
+<104> (succs: 105 107 )
+<105> (succs: 106 107 )
+<106> (succs: 108 )
+<108> (succs: 117 )
+<109> (succs: 110 111 )
+<110> (succs: 111 )
+<111> (succs: 112 113 )
+<112> (succs: 113 )
+<113> (succs: 114 )
+<114> (succs: 115 116 )
+<115> (succs: 116 )
+<116> (succs: 117 )
+<117> (succs: 119 118 )
+<119> (succs: 146 147 )
+<120> (succs: 121 145 )
+<122> (succs: 145 )
+<123> (succs: 124 )
+<124> (succs: 125 126 )
+<129> (succs: 133 )
+<131> (succs: 132 )
+<132> (succs: 133 )
+<133> (succs: 135 134 )
+<134> (succs: 135 )
+<135> (succs: 1 )
+<16> (succs: 18 17 )
+<15> (succs: 16 136 )
+<27> (succs: 28 29 )
+<28> (succs: 131 )
+<32> (succs: 33 34 )
+<37> (succs: 38 )
+<38> (succs: 39 40 )
+<45> (succs: 41 142 )
+<55> (succs: 56 137 )
+<126> (succs: 127 144 )
+<125> (succs: 126 )
+<127> (succs: 143 128 )
+<128> (succs: 143 144 )
+(Loop header) <80> (succs: 77 81 )
+<136> (succs: 16 )
+<141> (succs: 122 )
+<143> (succs: 129 )
+<144> (succs: 129 )
+<145> (succs: 123 )
+<20> (succs: 22 )
+<23> (succs: 130 25 )
+<130> (succs: 131 )
+<26> (succs: 131 )
+<39> (succs: 123 )
+<41> (succs: 140 46 )
+<142> (succs: 123 )
+<140> (succs: 141 )
+<48> (succs: 50 )
+<137> (succs: 59 73 )
+<58> (succs: 141 )
+<61> (succs: 141 )
+<79> (succs: 80 )
+<139> (succs: 141 )
+<78> (succs: 80 )
+<88> (succs: 91 90 )
+<90> (succs: 109 92 )
+<138> (succs: 101 )
+<107> (succs: 108 )
+<118> (succs: 141 )
+<121> (succs: 122 )
+<33> (succs: 34 )
+<9> (succs: 10 )
+<146> (succs: 123 )
+<147> (succs: 123 )
+<0> (succs: 2 )
+<1> (succs: )
+<2> (succs: 132 3 )
+These are the basic blocks from the interesting subgraph:
+
+Starting the walk until <41> (succs: 140 46 )
+Configuration created, _constraints size: 0
+Reached <0> (succs: 2 )
+Handled all statements
+----------------------
+Result of the analysis
+paths found: 0
+paths rejected: 1
+----------------------
+

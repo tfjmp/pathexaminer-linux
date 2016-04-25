@@ -1,0 +1,1080 @@
+kernel/fork.c:1699:37: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) long _do_fork(unsigned long clone_flags,
+                                     ^
+kernel/fork.c:1246:59: attention : always_inline function might not be inlinable [-Wattributes]
+ __attribute__((always_inline)) static struct task_struct *copy_process(unsigned long clone_flags,
+                                                           ^
+Building the rich basic blocks
+About to build basic block 0
+is it a loop? false
+Building a regular RichBasicBlock 0
+About to build basic block 2
+is it a loop? false
+Building a regular RichBasicBlock 2
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: security_task_create	isLSM: true	isFlow: false
+    has flow: false    has LSM: true
+About to build basic block 3
+is it a loop? false
+Building a regular RichBasicBlock 3
+    has flow: false    has LSM: false
+About to build basic block 4
+is it a loop? false
+Building a regular RichBasicBlock 4
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: dup_task_struct	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 5
+is it a loop? false
+Building a regular RichBasicBlock 5
+    has flow: false    has LSM: false
+About to build basic block 6
+is it a loop? false
+Building a regular RichBasicBlock 6
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_creds	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 7
+is it a loop? false
+Building a regular RichBasicBlock 7
+    has flow: false    has LSM: false
+About to build basic block 8
+is it a loop? false
+Building a regular RichBasicBlock 8
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: capable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 9
+is it a loop? false
+Building a regular RichBasicBlock 9
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: capable	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 10
+is it a loop? false
+Building a regular RichBasicBlock 10
+    has flow: false    has LSM: false
+About to build basic block 11
+is it a loop? false
+Building a regular RichBasicBlock 11
+    has flow: false    has LSM: false
+About to build basic block 12
+is it a loop? false
+Building a regular RichBasicBlock 12
+    has flow: false    has LSM: false
+About to build basic block 13
+is it a loop? false
+Building a regular RichBasicBlock 13
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __delayacct_tsk_init	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 14
+is it a loop? false
+Building a regular RichBasicBlock 14
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: memset	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: memset	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: acct_clear_integrals	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: posix_cpu_timers_init	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: ktime_get	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: ktime_get_with_offset	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: cgroup_fork	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 15
+is it a loop? false
+Building a regular RichBasicBlock 15
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __mpol_dup	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 16
+is it a loop? false
+Building a regular RichBasicBlock 16
+    has flow: false    has LSM: false
+About to build basic block 17
+is it a loop? false
+Building a regular RichBasicBlock 17
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: sched_fork	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 18
+is it a loop? false
+Building a regular RichBasicBlock 18
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: perf_event_init_task	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 19
+is it a loop? false
+Building a regular RichBasicBlock 19
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: audit_alloc	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 20
+is it a loop? false
+Building a regular RichBasicBlock 20
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_semundo	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 21
+is it a loop? false
+Building a regular RichBasicBlock 21
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_files	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 22
+is it a loop? false
+Building a regular RichBasicBlock 22
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_fs	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 23
+is it a loop? false
+Building a regular RichBasicBlock 23
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_sighand	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 24
+is it a loop? false
+Building a regular RichBasicBlock 24
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_signal	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 25
+is it a loop? false
+Building a regular RichBasicBlock 25
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_mm	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 26
+is it a loop? false
+Building a regular RichBasicBlock 26
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_namespaces	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 27
+is it a loop? false
+Building a regular RichBasicBlock 27
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_io	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 28
+is it a loop? false
+Building a regular RichBasicBlock 28
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_thread_tls	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 29
+is it a loop? false
+Building a regular RichBasicBlock 29
+    has flow: false    has LSM: false
+About to build basic block 30
+is it a loop? false
+Building a regular RichBasicBlock 30
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: alloc_pid	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 31
+is it a loop? false
+Building a regular RichBasicBlock 31
+    has flow: false    has LSM: false
+About to build basic block 32
+is it a loop? false
+Building a regular RichBasicBlock 32
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: user_disable_single_step	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: clear_tsk_thread_flag	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: clear_tsk_thread_flag	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 33
+is it a loop? false
+Building a regular RichBasicBlock 33
+    has flow: false    has LSM: false
+About to build basic block 34
+is it a loop? false
+Building a regular RichBasicBlock 34
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: cgroup_can_fork	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 35
+is it a loop? false
+Building a regular RichBasicBlock 35
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: _raw_write_lock_irq	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: _raw_spin_lock	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: copy_seccomp	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: recalc_sigpending	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: signal_pending	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 36
+is it a loop? false
+Building a regular RichBasicBlock 36
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: cgroup_cancel_fork	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 37
+is it a loop? false
+Building a regular RichBasicBlock 37
+    has flow: false    has LSM: false
+About to build basic block 38
+is it a loop? false
+Building a regular RichBasicBlock 38
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: ptrace_init_task	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 39
+is it a loop? false
+Building a regular RichBasicBlock 39
+    has flow: false    has LSM: false
+About to build basic block 40
+is it a loop? false
+Building a regular RichBasicBlock 40
+    has flow: false    has LSM: false
+About to build basic block 41
+is it a loop? false
+Building a regular RichBasicBlock 41
+    has flow: false    has LSM: false
+About to build basic block 42
+is it a loop? false
+Building a regular RichBasicBlock 42
+    has flow: false    has LSM: false
+About to build basic block 43
+is it a loop? false
+Building a regular RichBasicBlock 43
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: tty_kref_get	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: attach_pid	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: attach_pid	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 44
+is it a loop? false
+Building a regular RichBasicBlock 44
+    has flow: false    has LSM: false
+About to build basic block 45
+is it a loop? false
+Building a regular RichBasicBlock 45
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: attach_pid	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 46
+is it a loop? false
+Building a regular RichBasicBlock 46
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: syscall_tracepoint_update	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: proc_fork_connector	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: cgroup_post_fork	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: perf_event_fork	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: trace_task_newtask	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 47
+is it a loop? false
+Building a regular RichBasicBlock 47
+    has flow: false    has LSM: false
+About to build basic block 48
+is it a loop? false
+Building a regular RichBasicBlock 48
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: free_pid	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 49
+is it a loop? false
+Building a regular RichBasicBlock 49
+    has flow: false    has LSM: false
+About to build basic block 50
+is it a loop? false
+Building a regular RichBasicBlock 50
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: exit_io_context	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 51
+is it a loop? false
+Building a regular RichBasicBlock 51
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: exit_task_namespaces	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 52
+is it a loop? false
+Building a regular RichBasicBlock 52
+    has flow: false    has LSM: false
+About to build basic block 53
+is it a loop? false
+Building a regular RichBasicBlock 53
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: mmput	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 54
+is it a loop? false
+Building a regular RichBasicBlock 54
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: free_signal_struct	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 55
+is it a loop? false
+Building a regular RichBasicBlock 55
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __cleanup_sighand	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 56
+is it a loop? false
+Building a regular RichBasicBlock 56
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: exit_fs	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 57
+is it a loop? false
+Building a regular RichBasicBlock 57
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: exit_files	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 58
+is it a loop? false
+Building a regular RichBasicBlock 58
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: exit_sem	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 59
+is it a loop? false
+Building a regular RichBasicBlock 59
+    has flow: false    has LSM: false
+About to build basic block 60
+is it a loop? false
+Building a regular RichBasicBlock 60
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __audit_free	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 61
+is it a loop? false
+Building a regular RichBasicBlock 61
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: perf_event_free_task	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 62
+is it a loop? false
+Building a regular RichBasicBlock 62
+    has flow: false    has LSM: false
+About to build basic block 63
+is it a loop? false
+Building a regular RichBasicBlock 63
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: __mpol_put	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 64
+is it a loop? false
+Building a regular RichBasicBlock 64
+    has flow: false    has LSM: false
+About to build basic block 65
+is it a loop? false
+Building a regular RichBasicBlock 65
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kmem_cache_free	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 66
+is it a loop? false
+Building a regular RichBasicBlock 66
+    has flow: false    has LSM: false
+About to build basic block 67
+is it a loop? false
+Building a regular RichBasicBlock 67
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: exit_creds	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 68
+is it a loop? false
+Building a regular RichBasicBlock 68
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: free_task	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 69
+is it a loop? false
+Building a regular RichBasicBlock 69
+    has flow: false    has LSM: false
+About to build basic block 70
+is it a loop? false
+Building a regular RichBasicBlock 70
+    has flow: false    has LSM: false
+About to build basic block 71
+is it a loop? false
+Building a regular RichBasicBlock 71
+    has flow: false    has LSM: false
+About to build basic block 72
+is it a loop? false
+Building a regular RichBasicBlock 72
+    has flow: false    has LSM: false
+About to build basic block 73
+is it a loop? true
+Building a regular RichBasicBlock 73
+    has flow: false    has LSM: false
+About to build basic block 74
+is it a loop? true
+Building a loop header pseudo-basic block
+Building a regular RichBasicBlock 74
+GIMPLE CALL
+    has flow: false    has LSM: false
+Loop added for basic_block 74
+About to build basic block 75
+is it a loop? false
+Building a regular RichBasicBlock 75
+    has flow: false    has LSM: false
+About to build basic block 76
+is it a loop? false
+Building a regular RichBasicBlock 76
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: get_task_pid	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: pid_vnr	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: kayrebt_FlowNodeMarker	isLSM: false	isFlow: true
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: wake_up_new_task	isLSM: false	isFlow: true
+    has flow: true    has LSM: false
+About to build basic block 77
+is it a loop? false
+Building a regular RichBasicBlock 77
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: ptrace_event_pid	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 78
+is it a loop? false
+Building a regular RichBasicBlock 78
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: put_pid	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 79
+is it a loop? false
+Building a regular RichBasicBlock 79
+    has flow: false    has LSM: false
+About to build basic block 80
+is it a loop? false
+Building a regular RichBasicBlock 80
+    has flow: false    has LSM: false
+About to build basic block 81
+is it a loop? false
+Building a regular RichBasicBlock 81
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: user_disable_single_step	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: clear_tsk_thread_flag	isLSM: false	isFlow: false
+GIMPLE CALL
+GIMPLE CALL with a decl
+name: clear_tsk_thread_flag	isLSM: false	isFlow: false
+    has flow: false    has LSM: false
+About to build basic block 82
+is it a loop? false
+Building a regular RichBasicBlock 82
+    has flow: false    has LSM: false
+About to build basic block 83
+is it a loop? false
+Building a regular RichBasicBlock 83
+    has flow: false    has LSM: false
+About to build basic block 1
+is it a loop? false
+There are 1 bbs with flow nodes (excluding those having LSM nodes)
+Examining <76> (succs: 77 78 )
+basic block 75 is a predecessor
+got the corresponding RichBasicBlock
+<75> (succs: 76 ) is white, visiting it first
+basic block 74 is a predecessor
+got the corresponding RichBasicBlock
+(Loop header) <74> (succs: 73 75 ) is white, visiting it first
+basic block 83 is a predecessor
+got the corresponding RichBasicBlock
+<83> (succs: 74 ) is white, visiting it first
+basic block 82 is a predecessor
+got the corresponding RichBasicBlock
+<82> (succs: 83 75 ) is white, visiting it first
+basic block 71 is a predecessor
+got the corresponding RichBasicBlock
+<71> (succs: 82 72 ) is white, visiting it first
+basic block 70 is a predecessor
+got the corresponding RichBasicBlock
+<70> (succs: 71 79 ) is white, visiting it first
+basic block 69 is a predecessor
+got the corresponding RichBasicBlock
+<69> (succs: 70 ) is white, visiting it first
+basic block 3 is a predecessor
+got the corresponding RichBasicBlock
+<3> (succs: 69 ) is white, visiting it first
+basic block 2 is a predecessor
+got the corresponding RichBasicBlock
+0x1648f60 is red
+0x1631d40 is red
+basic block 4 is a predecessor
+got the corresponding RichBasicBlock
+<4> (succs: 69 5 ) is white, visiting it first
+basic block 2 is a predecessor
+got the corresponding RichBasicBlock
+0x1648f60 is red
+0x17129a0 is red
+basic block 68 is a predecessor
+got the corresponding RichBasicBlock
+<68> (succs: 69 ) is white, visiting it first
+basic block 9 is a predecessor
+got the corresponding RichBasicBlock
+<9> (succs: 68 6 ) is white, visiting it first
+basic block 8 is a predecessor
+got the corresponding RichBasicBlock
+<8> (succs: 9 6 ) is white, visiting it first
+basic block 7 is a predecessor
+got the corresponding RichBasicBlock
+<7> (succs: 8 6 ) is white, visiting it first
+basic block 5 is a predecessor
+got the corresponding RichBasicBlock
+<5> (succs: 7 6 ) is white, visiting it first
+basic block 4 is a predecessor
+got the corresponding RichBasicBlock
+0x17129a0 is red
+0x1712ad0 is red
+0x1712d30 is red
+0x169fa60 is red
+0x169fb90 is red
+basic block 10 is a predecessor
+got the corresponding RichBasicBlock
+<10> (succs: 68 ) is white, visiting it first
+basic block 6 is a predecessor
+got the corresponding RichBasicBlock
+<6> (succs: 10 11 ) is white, visiting it first
+basic block 5 is a predecessor
+got the corresponding RichBasicBlock
+0x1712ad0 is red
+basic block 7 is a predecessor
+got the corresponding RichBasicBlock
+0x1712d30 is red
+basic block 8 is a predecessor
+got the corresponding RichBasicBlock
+0x169fa60 is red
+basic block 9 is a predecessor
+got the corresponding RichBasicBlock
+0x169fb90 is red
+0x1712c00 is red
+0x169fcc0 is red
+basic block 67 is a predecessor
+got the corresponding RichBasicBlock
+<67> (succs: 68 ) is white, visiting it first
+basic block 11 is a predecessor
+got the corresponding RichBasicBlock
+<11> (succs: 67 12 ) is white, visiting it first
+basic block 6 is a predecessor
+got the corresponding RichBasicBlock
+0x1712c00 is red
+0x169fda0 is red
+basic block 66 is a predecessor
+got the corresponding RichBasicBlock
+<66> (succs: 67 ) is white, visiting it first
+basic block 64 is a predecessor
+got the corresponding RichBasicBlock
+<64> (succs: 65 66 ) is white, visiting it first
+basic block 16 is a predecessor
+got the corresponding RichBasicBlock
+<16> (succs: 64 ) is white, visiting it first
+basic block 15 is a predecessor
+got the corresponding RichBasicBlock
+<15> (succs: 16 17 ) is white, visiting it first
+basic block 14 is a predecessor
+got the corresponding RichBasicBlock
+<14> (succs: 15 17 ) is white, visiting it first
+basic block 13 is a predecessor
+got the corresponding RichBasicBlock
+<13> (succs: 14 ) is white, visiting it first
+basic block 12 is a predecessor
+got the corresponding RichBasicBlock
+<12> (succs: 13 14 ) is white, visiting it first
+basic block 11 is a predecessor
+got the corresponding RichBasicBlock
+0x169fda0 is red
+0x169fed0 is red
+0x16a0000 is red
+basic block 12 is a predecessor
+got the corresponding RichBasicBlock
+0x169fed0 is red
+0x16a00e0 is red
+0x16a0210 is red
+0x1622ac0 is red
+basic block 63 is a predecessor
+got the corresponding RichBasicBlock
+<63> (succs: 64 ) is white, visiting it first
+basic block 62 is a predecessor
+got the corresponding RichBasicBlock
+<62> (succs: 63 64 ) is white, visiting it first
+basic block 17 is a predecessor
+got the corresponding RichBasicBlock
+<17> (succs: 62 18 ) is white, visiting it first
+basic block 14 is a predecessor
+got the corresponding RichBasicBlock
+0x16a00e0 is red
+basic block 15 is a predecessor
+got the corresponding RichBasicBlock
+0x16a0210 is red
+0x1622ba0 is red
+basic block 18 is a predecessor
+got the corresponding RichBasicBlock
+<18> (succs: 62 19 ) is white, visiting it first
+basic block 17 is a predecessor
+got the corresponding RichBasicBlock
+0x1622ba0 is red
+0x1622cd0 is red
+basic block 61 is a predecessor
+got the corresponding RichBasicBlock
+<61> (succs: 62 ) is white, visiting it first
+basic block 19 is a predecessor
+got the corresponding RichBasicBlock
+<19> (succs: 61 20 ) is white, visiting it first
+basic block 18 is a predecessor
+got the corresponding RichBasicBlock
+0x1622cd0 is red
+0x1622e00 is red
+basic block 60 is a predecessor
+got the corresponding RichBasicBlock
+<60> (succs: 61 ) is white, visiting it first
+basic block 59 is a predecessor
+got the corresponding RichBasicBlock
+<59> (succs: 60 61 ) is white, visiting it first
+basic block 20 is a predecessor
+got the corresponding RichBasicBlock
+<20> (succs: 59 21 ) is white, visiting it first
+basic block 19 is a predecessor
+got the corresponding RichBasicBlock
+0x1622e00 is red
+0x1622f30 is red
+basic block 58 is a predecessor
+got the corresponding RichBasicBlock
+<58> (succs: 59 ) is white, visiting it first
+basic block 21 is a predecessor
+got the corresponding RichBasicBlock
+<21> (succs: 58 22 ) is white, visiting it first
+basic block 20 is a predecessor
+got the corresponding RichBasicBlock
+0x1622f30 is red
+0x1623060 is red
+basic block 57 is a predecessor
+got the corresponding RichBasicBlock
+<57> (succs: 58 ) is white, visiting it first
+basic block 22 is a predecessor
+got the corresponding RichBasicBlock
+<22> (succs: 57 23 ) is white, visiting it first
+basic block 21 is a predecessor
+got the corresponding RichBasicBlock
+0x1623060 is red
+0x1623190 is red
+basic block 56 is a predecessor
+got the corresponding RichBasicBlock
+<56> (succs: 57 ) is white, visiting it first
+basic block 23 is a predecessor
+got the corresponding RichBasicBlock
+<23> (succs: 56 24 ) is white, visiting it first
+basic block 22 is a predecessor
+got the corresponding RichBasicBlock
+0x1623190 is red
+0x16232c0 is red
+basic block 55 is a predecessor
+got the corresponding RichBasicBlock
+<55> (succs: 56 ) is white, visiting it first
+basic block 24 is a predecessor
+got the corresponding RichBasicBlock
+<24> (succs: 55 25 ) is white, visiting it first
+basic block 23 is a predecessor
+got the corresponding RichBasicBlock
+0x16232c0 is red
+0x16e0420 is red
+basic block 54 is a predecessor
+got the corresponding RichBasicBlock
+<54> (succs: 55 ) is white, visiting it first
+basic block 25 is a predecessor
+got the corresponding RichBasicBlock
+<25> (succs: 54 26 ) is white, visiting it first
+basic block 24 is a predecessor
+got the corresponding RichBasicBlock
+0x16e0420 is red
+0x16e0550 is red
+basic block 52 is a predecessor
+got the corresponding RichBasicBlock
+<52> (succs: 53 54 ) is white, visiting it first
+basic block 26 is a predecessor
+got the corresponding RichBasicBlock
+<26> (succs: 52 27 ) is white, visiting it first
+basic block 25 is a predecessor
+got the corresponding RichBasicBlock
+0x16e0550 is red
+0x16e0680 is red
+basic block 51 is a predecessor
+got the corresponding RichBasicBlock
+<51> (succs: 52 ) is white, visiting it first
+basic block 27 is a predecessor
+got the corresponding RichBasicBlock
+<27> (succs: 51 28 ) is white, visiting it first
+basic block 26 is a predecessor
+got the corresponding RichBasicBlock
+0x16e0680 is red
+0x16e07b0 is red
+basic block 49 is a predecessor
+got the corresponding RichBasicBlock
+<49> (succs: 50 51 ) is white, visiting it first
+basic block 28 is a predecessor
+got the corresponding RichBasicBlock
+<28> (succs: 49 29 ) is white, visiting it first
+basic block 27 is a predecessor
+got the corresponding RichBasicBlock
+0x16e07b0 is red
+0x16e08e0 is red
+basic block 31 is a predecessor
+got the corresponding RichBasicBlock
+<31> (succs: 49 ) is white, visiting it first
+basic block 30 is a predecessor
+got the corresponding RichBasicBlock
+<30> (succs: 31 32 ) is white, visiting it first
+basic block 29 is a predecessor
+got the corresponding RichBasicBlock
+<29> (succs: 30 81 ) is white, visiting it first
+basic block 28 is a predecessor
+got the corresponding RichBasicBlock
+0x16e08e0 is red
+0x16e0a10 is red
+0x16e0b40 is red
+0x16e0c70 is red
+basic block 47 is a predecessor
+got the corresponding RichBasicBlock
+<47> (succs: 48 49 ) is white, visiting it first
+basic block 34 is a predecessor
+got the corresponding RichBasicBlock
+<34> (succs: 47 35 ) is white, visiting it first
+basic block 81 is a predecessor
+got the corresponding RichBasicBlock
+<81> (succs: 34 ) is white, visiting it first
+basic block 29 is a predecessor
+got the corresponding RichBasicBlock
+0x16e0a10 is red
+0x166c6c0 is red
+basic block 33 is a predecessor
+got the corresponding RichBasicBlock
+<33> (succs: 34 ) is white, visiting it first
+basic block 32 is a predecessor
+got the corresponding RichBasicBlock
+<32> (succs: 33 34 ) is white, visiting it first
+basic block 30 is a predecessor
+got the corresponding RichBasicBlock
+0x16e0b40 is red
+0x16e0d50 is red
+0x16e0e80 is red
+basic block 32 is a predecessor
+got the corresponding RichBasicBlock
+0x16e0d50 is red
+0x16e0f60 is red
+basic block 36 is a predecessor
+got the corresponding RichBasicBlock
+<36> (succs: 47 ) is white, visiting it first
+basic block 35 is a predecessor
+got the corresponding RichBasicBlock
+<35> (succs: 36 37 ) is white, visiting it first
+basic block 34 is a predecessor
+got the corresponding RichBasicBlock
+0x16e0f60 is red
+0x16a1c00 is red
+0x16a1d30 is red
+0x16a2810 is red
+basic block 48 is a predecessor
+got the corresponding RichBasicBlock
+<48> (succs: 49 ) is white, visiting it first
+basic block 47 is a predecessor
+got the corresponding RichBasicBlock
+0x16a2810 is red
+0x16a2940 is red
+0x16a2a20 is red
+basic block 50 is a predecessor
+got the corresponding RichBasicBlock
+<50> (succs: 51 ) is white, visiting it first
+basic block 49 is a predecessor
+got the corresponding RichBasicBlock
+0x16a2a20 is red
+0x16a2b50 is red
+0x16e1100 is red
+0x16e11e0 is red
+basic block 53 is a predecessor
+got the corresponding RichBasicBlock
+<53> (succs: 54 ) is white, visiting it first
+basic block 52 is a predecessor
+got the corresponding RichBasicBlock
+0x16e11e0 is red
+0x16e1310 is red
+0x16e13f0 is red
+0x16e14d0 is red
+0x16e15b0 is red
+0x16e1690 is red
+0x16e1770 is red
+0x16e1850 is red
+0x16e1980 is red
+basic block 59 is a predecessor
+got the corresponding RichBasicBlock
+0x16e1850 is red
+0x16e1a60 is red
+0x16e1b40 is red
+0x16e1c70 is red
+basic block 62 is a predecessor
+got the corresponding RichBasicBlock
+0x16e1b40 is red
+0x16e1d50 is red
+basic block 65 is a predecessor
+got the corresponding RichBasicBlock
+<65> (succs: 66 ) is white, visiting it first
+basic block 64 is a predecessor
+got the corresponding RichBasicBlock
+0x16e1d50 is red
+0x16e1e80 is red
+0x16e1f60 is red
+0x16e2040 is red
+0x16e2120 is red
+0x16e2200 is red
+basic block 46 is a predecessor
+got the corresponding RichBasicBlock
+<46> (succs: 70 ) is white, visiting it first
+basic block 37 is a predecessor
+got the corresponding RichBasicBlock
+<37> (succs: 38 46 ) is white, visiting it first
+basic block 35 is a predecessor
+got the corresponding RichBasicBlock
+0x16a1c00 is red
+0x16a1e10 is red
+basic block 45 is a predecessor
+got the corresponding RichBasicBlock
+<45> (succs: 46 ) is white, visiting it first
+basic block 43 is a predecessor
+got the corresponding RichBasicBlock
+<43> (succs: 45 ) is white, visiting it first
+basic block 39 is a predecessor
+got the corresponding RichBasicBlock
+<39> (succs: 40 43 ) is white, visiting it first
+basic block 38 is a predecessor
+got the corresponding RichBasicBlock
+<38> (succs: 39 44 ) is white, visiting it first
+basic block 37 is a predecessor
+got the corresponding RichBasicBlock
+0x16a1e10 is red
+0x16a1f40 is red
+0x16a2070 is red
+basic block 42 is a predecessor
+got the corresponding RichBasicBlock
+<42> (succs: 43 ) is white, visiting it first
+basic block 40 is a predecessor
+got the corresponding RichBasicBlock
+<40> (succs: 41 42 ) is white, visiting it first
+basic block 39 is a predecessor
+got the corresponding RichBasicBlock
+0x16a2070 is red
+0x16a21a0 is red
+basic block 41 is a predecessor
+got the corresponding RichBasicBlock
+<41> (succs: 42 ) is white, visiting it first
+basic block 40 is a predecessor
+got the corresponding RichBasicBlock
+0x16a21a0 is red
+0x16a22d0 is red
+0x16a23b0 is red
+0x16a2490 is red
+basic block 44 is a predecessor
+got the corresponding RichBasicBlock
+<44> (succs: 45 ) is white, visiting it first
+basic block 38 is a predecessor
+got the corresponding RichBasicBlock
+0x16a1f40 is red
+0x16a2570 is red
+0x16a2650 is red
+0x16a2730 is red
+0x16e22e0 is red
+0x16e2410 is red
+0x166c7a0 is red
+0x166c8d0 is red
+basic block 73 is a predecessor
+Stuck in a loop, abandoning this path
+0x166c000 is red
+basic block 82 is a predecessor
+got the corresponding RichBasicBlock
+0x166c7a0 is red
+0x166c130 is red
+basic block 72 is a predecessor
+got the corresponding RichBasicBlock
+<72> (succs: 76 ) is white, visiting it first
+basic block 71 is a predecessor
+got the corresponding RichBasicBlock
+0x16e2410 is red
+0x16e2540 is red
+These are all the basic blocks:
+<5> (succs: 7 6 )
+<14> (succs: 15 17 )
+<12> (succs: 13 14 )
+<13> (succs: 14 )
+<15> (succs: 16 17 )
+<33> (succs: 34 )
+<34> (succs: 47 35 )
+<40> (succs: 41 42 )
+<41> (succs: 42 )
+<42> (succs: 43 )
+<60> (succs: 61 )
+<63> (succs: 64 )
+<65> (succs: 66 )
+<66> (succs: 67 )
+<76> (succs: 77 78 )
+<72> (succs: 76 )
+<81> (succs: 34 )
+<82> (succs: 83 75 )
+(Loop header) <74> (succs: 73 75 )
+<3> (succs: 69 )
+<6> (succs: 10 11 )
+<10> (succs: 68 )
+<17> (succs: 62 18 )
+<73> (succs: 74 )
+<75> (succs: 76 )
+<83> (succs: 74 )
+<4> (succs: 69 5 )
+<7> (succs: 8 6 )
+<8> (succs: 9 6 )
+<9> (succs: 68 6 )
+<11> (succs: 67 12 )
+<16> (succs: 64 )
+<18> (succs: 62 19 )
+<19> (succs: 61 20 )
+<20> (succs: 59 21 )
+<21> (succs: 58 22 )
+<22> (succs: 57 23 )
+<23> (succs: 56 24 )
+<24> (succs: 55 25 )
+<25> (succs: 54 26 )
+<26> (succs: 52 27 )
+<27> (succs: 51 28 )
+<28> (succs: 49 29 )
+<29> (succs: 30 81 )
+<30> (succs: 31 32 )
+<31> (succs: 49 )
+<32> (succs: 33 34 )
+<35> (succs: 36 37 )
+<36> (succs: 47 )
+<37> (succs: 38 46 )
+<38> (succs: 39 44 )
+<39> (succs: 40 43 )
+<43> (succs: 45 )
+<44> (succs: 45 )
+<45> (succs: 46 )
+<46> (succs: 70 )
+<47> (succs: 48 49 )
+<48> (succs: 49 )
+<49> (succs: 50 51 )
+<50> (succs: 51 )
+<51> (succs: 52 )
+<52> (succs: 53 54 )
+<53> (succs: 54 )
+<54> (succs: 55 )
+<55> (succs: 56 )
+<56> (succs: 57 )
+<57> (succs: 58 )
+<58> (succs: 59 )
+<59> (succs: 60 61 )
+<61> (succs: 62 )
+<62> (succs: 63 64 )
+<64> (succs: 65 66 )
+<67> (succs: 68 )
+<68> (succs: 69 )
+<69> (succs: 70 )
+<70> (succs: 71 79 )
+<71> (succs: 82 72 )
+<77> (succs: 78 )
+<78> (succs: 80 )
+<79> (succs: 80 )
+<80> (succs: 1 )
+<0> (succs: 2 )
+<1> (succs: )
+<2> (succs: 3 4 )
+These are the basic blocks from the interesting subgraph:
+
+Starting the walk until <76> (succs: 77 78 )
+Configuration created, _constraints size: 0
+Reached <0> (succs: 2 )
+Handled all statements
+----------------------
+Result of the analysis
+paths found: 0
+paths rejected: 1
+----------------------
+
