@@ -17,6 +17,8 @@
 #include <linux/slab.h>
 #include <linux/syscalls.h>
 
+void kayrebt_FlowNodeMarker(void);
+
 #ifdef CONFIG_COMPAT
 #include <linux/compat.h>
 #endif
@@ -30,7 +32,7 @@
  * @vm_write: 0 means copy from, 1 means copy to
  * Returns 0 on success, error code otherwise
  */
-static int process_vm_rw_pages(struct page **pages,
+__attribute__((always_inline)) static int process_vm_rw_pages(struct page **pages,
 			       unsigned offset,
 			       size_t len,
 			       struct iov_iter *iter,
@@ -46,9 +48,11 @@ static int process_vm_rw_pages(struct page **pages,
 			copy = len;
 
 		if (vm_write) {
+			kayrebt_FlowNodeMarker();
 			copied = copy_page_from_iter(page, offset, copy, iter);
 			set_page_dirty_lock(page);
 		} else {
+			kayrebt_FlowNodeMarker();
 			copied = copy_page_to_iter(page, offset, copy, iter);
 		}
 		len -= copied;
@@ -74,7 +78,7 @@ static int process_vm_rw_pages(struct page **pages,
  * @vm_write: 0 means copy from, 1 means copy to
  * Returns 0 on success or on failure error code
  */
-static int process_vm_rw_single_vec(unsigned long addr,
+__attribute__((always_inline)) static int process_vm_rw_single_vec(unsigned long addr,
 				    unsigned long len,
 				    struct iov_iter *iter,
 				    struct page **process_pages,
@@ -126,6 +130,206 @@ static int process_vm_rw_single_vec(unsigned long addr,
    which lives on stack */
 #define PVM_MAX_PP_ARRAY_COUNT 16
 
+#include <linux/slab.h>
+#include <linux/init.h>
+#include <linux/unistd.h>
+#include <linux/module.h>
+#include <linux/vmalloc.h>
+#include <linux/completion.h>
+#include <linux/personality.h>
+#include <linux/mempolicy.h>
+#include <linux/sem.h>
+#include <linux/file.h>
+#include <linux/fdtable.h>
+#include <linux/iocontext.h>
+#include <linux/key.h>
+#include <linux/binfmts.h>
+#include <linux/mman.h>
+#include <linux/mmu_notifier.h>
+#include <linux/fs.h>
+#include <linux/mm.h>
+#include <linux/vmacache.h>
+#include <linux/nsproxy.h>
+#include <linux/capability.h>
+#include <linux/cpu.h>
+#include <linux/cgroup.h>
+#include <linux/security.h>
+#include <linux/hugetlb.h>
+#include <linux/seccomp.h>
+#include <linux/swap.h>
+#include <linux/syscalls.h>
+#include <linux/jiffies.h>
+#include <linux/futex.h>
+#include <linux/compat.h>
+#include <linux/kthread.h>
+#include <linux/task_io_accounting_ops.h>
+#include <linux/rcupdate.h>
+#include <linux/ptrace.h>
+#include <linux/mount.h>
+#include <linux/audit.h>
+#include <linux/memcontrol.h>
+#include <linux/ftrace.h>
+#include <linux/proc_fs.h>
+#include <linux/profile.h>
+#include <linux/rmap.h>
+#include <linux/ksm.h>
+#include <linux/acct.h>
+#include <linux/tsacct_kern.h>
+#include <linux/cn_proc.h>
+#include <linux/freezer.h>
+#include <linux/delayacct.h>
+#include <linux/taskstats_kern.h>
+#include <linux/random.h>
+#include <linux/tty.h>
+#include <linux/blkdev.h>
+#include <linux/fs_struct.h>
+#include <linux/magic.h>
+#include <linux/perf_event.h>
+#include <linux/posix-timers.h>
+#include <linux/user-return-notifier.h>
+#include <linux/oom.h>
+#include <linux/khugepaged.h>
+#include <linux/signalfd.h>
+#include <linux/uprobes.h>
+#include <linux/aio.h>
+#include <linux/compiler.h>
+#include <linux/sysctl.h>
+
+#include <asm/pgtable.h>
+#include <asm/pgalloc.h>
+#include <asm/uaccess.h>
+#include <asm/mmu_context.h>
+#include <asm/cacheflush.h>
+#include <asm/tlbflush.h>
+
+#include <trace/events/sched.h>
+
+#include <linux/capability.h>
+#include <linux/export.h>
+#include <linux/sched.h>
+#include <linux/errno.h>
+#include <linux/mm.h>
+#include <linux/highmem.h>
+#include <linux/pagemap.h>
+#include <linux/ptrace.h>
+#include <linux/security.h>
+#include <linux/signal.h>
+#include <linux/uio.h>
+#include <linux/audit.h>
+#include <linux/pid_namespace.h>
+#include <linux/syscalls.h>
+#include <linux/uaccess.h>
+#include <linux/regset.h>
+#include <linux/hw_breakpoint.h>
+#include <linux/cn_proc.h>
+#include <linux/compat.h>
+
+/**
+ * get_task_mm - acquire a reference to the task's mm
+ *
+ * Returns %NULL if the task has no mm.  Checks PF_KTHREAD (meaning
+ * this kernel workthread has transiently adopted a user mm with use_mm,
+ * to do its AIO) is not set and if so returns a reference to it, after
+ * bumping up the use count.  User must release the mm via mmput()
+ * after use.  Typically used by /proc and ptrace.
+ */
+__attribute__((always_inline)) struct mm_struct *get_task_mm(struct task_struct *task)
+{
+	struct mm_struct *mm;
+
+	task_lock(task);
+	mm = task->mm;
+	if (mm) {
+		if (task->flags & PF_KTHREAD)
+			mm = NULL;
+		else
+			atomic_inc(&mm->mm_users);
+	}
+	task_unlock(task);
+	return mm;
+}
+static int ptrace_has_cap(struct user_namespace *ns, unsigned int mode)
+{
+	if (mode & PTRACE_MODE_NOAUDIT)
+		return has_ns_capability_noaudit(current, ns, CAP_SYS_PTRACE);
+	else
+		return has_ns_capability(current, ns, CAP_SYS_PTRACE);
+}
+
+
+/* Returns 0 on success, -errno on denial. */
+__attribute__((always_inline)) static int __ptrace_may_access(struct task_struct *task, unsigned int mode)
+{
+	const struct cred *cred = current_cred(), *tcred;
+
+	/* May we inspect the given task?
+	 * This check is used both for attaching with ptrace
+	 * and for allowing access to sensitive information in /proc.
+	 *
+	 * ptrace_attach denies several cases that /proc allows
+	 * because setting up the necessary parent/child relationship
+	 * or halting the specified task is impossible.
+	 */
+	int dumpable = 0;
+	/* Don't let security modules deny introspection */
+	if (same_thread_group(task, current))
+		return 0;
+	rcu_read_lock();
+	tcred = __task_cred(task);
+	if (uid_eq(cred->uid, tcred->euid) &&
+	    uid_eq(cred->uid, tcred->suid) &&
+	    uid_eq(cred->uid, tcred->uid)  &&
+	    gid_eq(cred->gid, tcred->egid) &&
+	    gid_eq(cred->gid, tcred->sgid) &&
+	    gid_eq(cred->gid, tcred->gid))
+		goto ok;
+	if (ptrace_has_cap(tcred->user_ns, mode))
+		goto ok;
+	rcu_read_unlock();
+	return -EPERM;
+ok:
+	rcu_read_unlock();
+	smp_rmb();
+	if (task->mm)
+		dumpable = get_dumpable(task->mm);
+	rcu_read_lock();
+	if (dumpable != SUID_DUMP_USER &&
+	    !ptrace_has_cap(__task_cred(task)->user_ns, mode)) {
+		rcu_read_unlock();
+		return -EPERM;
+	}
+	rcu_read_unlock();
+
+	return security_ptrace_access_check(task, mode);
+}
+
+__attribute__((always_inline)) bool ptrace_may_access(struct task_struct *task, unsigned int mode)
+{
+	int err;
+	task_lock(task);
+	err = __ptrace_may_access(task, mode);
+	task_unlock(task);
+	return !err;
+}
+__attribute__((always_inline)) struct mm_struct *mm_access(struct task_struct *task, unsigned int mode)
+{
+	struct mm_struct *mm;
+	int err;
+
+	err =  mutex_lock_killable(&task->signal->cred_guard_mutex);
+	if (err)
+		return ERR_PTR(err);
+
+	mm = get_task_mm(task);
+	if (mm && mm != current->mm &&
+			!ptrace_may_access(task, mode)) {
+		mmput(mm);
+		mm = ERR_PTR(-EACCES);
+	}
+	mutex_unlock(&task->signal->cred_guard_mutex);
+
+	return mm;
+}
 /**
  * process_vm_rw_core - core of reading/writing pages from task specified
  * @pid: PID of process to read/write from/to
@@ -138,7 +342,7 @@ static int process_vm_rw_single_vec(unsigned long addr,
  *  return less bytes than expected if an error occurs during the copying
  *  process.
  */
-static ssize_t process_vm_rw_core(pid_t pid, struct iov_iter *iter,
+__attribute__((always_inline)) static ssize_t process_vm_rw_core(pid_t pid, struct iov_iter *iter,
 				  const struct iovec *rvec,
 				  unsigned long riovcnt,
 				  unsigned long flags, int vm_write)
@@ -244,7 +448,7 @@ free_proc_pages:
  *  return less bytes than expected if an error occurs during the copying
  *  process.
  */
-static ssize_t process_vm_rw(pid_t pid,
+__attribute__((always_inline)) static ssize_t process_vm_rw(pid_t pid,
 			     const struct iovec __user *lvec,
 			     unsigned long liovcnt,
 			     const struct iovec __user *rvec,
