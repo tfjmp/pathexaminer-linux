@@ -83,6 +83,8 @@
 #include <asm/cacheflush.h>
 #include <asm/tlbflush.h>
 
+void kayrebt_FlowNodeMarker(void);
+
 #include <trace/events/sched.h>
 
 #define CREATE_TRACE_POINTS
@@ -1241,7 +1243,7 @@ init_task_pid(struct task_struct *task, enum pid_type type, struct pid *pid)
  * parts of the process environment (as per the clone
  * flags). The actual kick-off is left to the caller.
  */
-static struct task_struct *copy_process(unsigned long clone_flags,
+__attribute__((always_inline)) static struct task_struct *copy_process(unsigned long clone_flags,
 					unsigned long stack_start,
 					unsigned long stack_size,
 					int __user *child_tidptr,
@@ -1694,7 +1696,7 @@ struct task_struct *fork_idle(int cpu)
  * It copies the process, and if successful kick-starts
  * it and waits for it to finish using the VM if required.
  */
-long _do_fork(unsigned long clone_flags,
+__attribute__((always_inline)) long _do_fork(unsigned long clone_flags,
 	      unsigned long stack_start,
 	      unsigned long stack_size,
 	      int __user *parent_tidptr,
@@ -1747,6 +1749,7 @@ long _do_fork(unsigned long clone_flags,
 			get_task_struct(p);
 		}
 
+		kayrebt_FlowNodeMarker();
 		wake_up_new_task(p);
 
 		/* forking complete and child started to run, tell ptracer */
