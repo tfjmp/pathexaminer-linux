@@ -21,6 +21,8 @@
 #include <asm/uaccess.h>
 #include <asm/unistd.h>
 
+void kayrebt_FlowNodeMarker(void);
+
 typedef ssize_t (*io_fn_t)(struct file *, char __user *, size_t, loff_t *);
 typedef ssize_t (*iter_fn_t)(struct kiocb *, struct iov_iter *);
 
@@ -374,7 +376,7 @@ EXPORT_SYMBOL(vfs_iter_write);
  * them to something that fits in "int" so that others
  * won't have to do range checks all the time.
  */
-int rw_verify_area(int read_write, struct file *file, const loff_t *ppos, size_t count)
+__attribute__((always_inline)) int rw_verify_area(int read_write, struct file *file, const loff_t *ppos, size_t count)
 {
 	struct inode *inode;
 	loff_t pos;
@@ -652,7 +654,7 @@ unsigned long iov_shorten(struct iovec *iov, unsigned long nr_segs, size_t to)
 }
 EXPORT_SYMBOL(iov_shorten);
 
-static ssize_t do_iter_readv_writev(struct file *filp, struct iov_iter *iter,
+__attribute__((always_inline)) static ssize_t do_iter_readv_writev(struct file *filp, struct iov_iter *iter,
 		loff_t *ppos, iter_fn_t fn)
 {
 	struct kiocb kiocb;
@@ -661,6 +663,7 @@ static ssize_t do_iter_readv_writev(struct file *filp, struct iov_iter *iter,
 	init_sync_kiocb(&kiocb, filp);
 	kiocb.ki_pos = *ppos;
 
+	kayrebt_FlowNodeMarker();
 	ret = fn(&kiocb, iter);
 	BUG_ON(ret == -EIOCBQUEUED);
 	*ppos = kiocb.ki_pos;
@@ -668,7 +671,7 @@ static ssize_t do_iter_readv_writev(struct file *filp, struct iov_iter *iter,
 }
 
 /* Do it by hand, with file-ops */
-static ssize_t do_loop_readv_writev(struct file *filp, struct iov_iter *iter,
+__attribute__((always_inline)) static ssize_t do_loop_readv_writev(struct file *filp, struct iov_iter *iter,
 		loff_t *ppos, io_fn_t fn)
 {
 	ssize_t ret = 0;
@@ -677,6 +680,7 @@ static ssize_t do_loop_readv_writev(struct file *filp, struct iov_iter *iter,
 		struct iovec iovec = iov_iter_iovec(iter);
 		ssize_t nr;
 
+		kayrebt_FlowNodeMarker();
 		nr = fn(filp, iovec.iov_base, iovec.iov_len, ppos);
 
 		if (nr < 0) {
@@ -771,7 +775,7 @@ out:
 	return ret;
 }
 
-static ssize_t do_readv_writev(int type, struct file *file,
+__attribute__((always_inline)) static ssize_t do_readv_writev(int type, struct file *file,
 			       const struct iovec __user * uvector,
 			       unsigned long nr_segs, loff_t *pos)
 {
@@ -823,7 +827,7 @@ out:
 	return ret;
 }
 
-ssize_t vfs_readv(struct file *file, const struct iovec __user *vec,
+__attribute__((always_inline)) ssize_t vfs_readv(struct file *file, const struct iovec __user *vec,
 		  unsigned long vlen, loff_t *pos)
 {
 	if (!(file->f_mode & FMODE_READ))
@@ -836,7 +840,7 @@ ssize_t vfs_readv(struct file *file, const struct iovec __user *vec,
 
 EXPORT_SYMBOL(vfs_readv);
 
-ssize_t vfs_writev(struct file *file, const struct iovec __user *vec,
+__attribute((always_inline)) ssize_t vfs_writev(struct file *file, const struct iovec __user *vec,
 		   unsigned long vlen, loff_t *pos)
 {
 	if (!(file->f_mode & FMODE_WRITE))
