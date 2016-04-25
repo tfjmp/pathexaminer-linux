@@ -27,6 +27,174 @@
 #include <linux/cn_proc.h>
 #include <linux/compat.h>
 
+void kayrebt_FlowNodeMarker(void);
+
+#include <linux/kernel.h>
+#include <linux/sched.h>
+#include <linux/mm.h>
+#include <linux/smp.h>
+#include <linux/errno.h>
+#include <linux/slab.h>
+#include <linux/ptrace.h>
+#include <linux/tracehook.h>
+#include <linux/user.h>
+#include <linux/elf.h>
+#include <linux/security.h>
+#include <linux/audit.h>
+#include <linux/seccomp.h>
+#include <linux/signal.h>
+#include <linux/perf_event.h>
+#include <linux/hw_breakpoint.h>
+#include <linux/rcupdate.h>
+#include <linux/export.h>
+#include <linux/context_tracking.h>
+
+#include <asm/uaccess.h>
+#include <asm/pgtable.h>
+#include <asm/processor.h>
+#include <asm/fpu/internal.h>
+#include <asm/fpu/signal.h>
+#include <asm/fpu/regset.h>
+#include <asm/debugreg.h>
+#include <asm/ldt.h>
+#include <asm/desc.h>
+#include <asm/prctl.h>
+#include <asm/proto.h>
+#include <asm/hw_breakpoint.h>
+#include <asm/traps.h>
+#include <asm/syscall.h>
+int ptrace_set_debugreg(struct task_struct *tsk, int n,
+			       unsigned long val);
+unsigned long getreg(struct task_struct *task, unsigned long offset);
+unsigned long ptrace_get_debugreg(struct task_struct *tsk, int n);
+int putreg(struct task_struct *child, unsigned long offset, unsigned long value);
+enum x86_regset {
+	REGSET_GENERAL,
+	REGSET_FP,
+	REGSET_XFP,
+	REGSET_IOPERM64 = REGSET_XFP,
+	REGSET_XSTATE,
+	REGSET_TLS,
+	REGSET_IOPERM32,
+};
+
+__attribute__((always_inline)) long arch_ptrace(struct task_struct *child,
+		long request, unsigned long addr, unsigned long data)
+{
+	int ret;
+	unsigned long __user *datap = (unsigned long __user *)data;
+
+	switch (request) {
+	/* read the word at location addr in the USER area. */
+	case PTRACE_PEEKUSR: {
+		unsigned long tmp;
+
+		ret = -EIO;
+		if ((addr & (sizeof(data) - 1)) || addr >= sizeof(struct user))
+			break;
+
+		tmp = 0;  /* Default return condition */
+		if (addr < sizeof(struct user_regs_struct))
+			tmp = getreg(child, addr);
+		else if (addr >= offsetof(struct user, u_debugreg[0]) &&
+			 addr <= offsetof(struct user, u_debugreg[7])) {
+			addr -= offsetof(struct user, u_debugreg[0]);
+			tmp = ptrace_get_debugreg(child, addr / sizeof(data));
+		}
+		ret = put_user(tmp, datap);
+		break;
+	}
+
+	case PTRACE_POKEUSR: /* write the word at location addr in the USER area */
+		ret = -EIO;
+		if ((addr & (sizeof(data) - 1)) || addr >= sizeof(struct user))
+			break;
+
+		if (addr < sizeof(struct user_regs_struct))
+			ret = putreg(child, addr, data);
+		else if (addr >= offsetof(struct user, u_debugreg[0]) &&
+			 addr <= offsetof(struct user, u_debugreg[7])) {
+			addr -= offsetof(struct user, u_debugreg[0]);
+			ret = ptrace_set_debugreg(child,
+						  addr / sizeof(data), data);
+		}
+		break;
+
+	case PTRACE_GETREGS:	/* Get all gp regs from the child. */
+		return copy_regset_to_user(child,
+					   task_user_regset_view(current),
+					   REGSET_GENERAL,
+					   0, sizeof(struct user_regs_struct),
+					   datap);
+
+	case PTRACE_SETREGS:	/* Set all gp regs in the child. */
+		return copy_regset_from_user(child,
+					     task_user_regset_view(current),
+					     REGSET_GENERAL,
+					     0, sizeof(struct user_regs_struct),
+					     datap);
+
+	case PTRACE_GETFPREGS:	/* Get the child FPU state. */
+		return copy_regset_to_user(child,
+					   task_user_regset_view(current),
+					   REGSET_FP,
+					   0, sizeof(struct user_i387_struct),
+					   datap);
+
+	case PTRACE_SETFPREGS:	/* Set the child FPU state. */
+		return copy_regset_from_user(child,
+					     task_user_regset_view(current),
+					     REGSET_FP,
+					     0, sizeof(struct user_i387_struct),
+					     datap);
+
+#ifdef CONFIG_X86_32
+	case PTRACE_GETFPXREGS:	/* Get the child extended FPU state. */
+		return copy_regset_to_user(child, &user_x86_32_view,
+					   REGSET_XFP,
+					   0, sizeof(struct user_fxsr_struct),
+					   datap) ? -EIO : 0;
+
+	case PTRACE_SETFPXREGS:	/* Set the child extended FPU state. */
+		return copy_regset_from_user(child, &user_x86_32_view,
+					     REGSET_XFP,
+					     0, sizeof(struct user_fxsr_struct),
+					     datap) ? -EIO : 0;
+#endif
+
+#if defined CONFIG_X86_32 || defined CONFIG_IA32_EMULATION
+	case PTRACE_GET_THREAD_AREA:
+		if ((int) addr < 0)
+			return -EIO;
+		ret = do_get_thread_area(child, addr,
+					(struct user_desc __user *)data);
+		break;
+
+	case PTRACE_SET_THREAD_AREA:
+		if ((int) addr < 0)
+			return -EIO;
+		ret = do_set_thread_area(child, addr,
+					(struct user_desc __user *)data, 0);
+		break;
+#endif
+
+#ifdef CONFIG_X86_64
+		/* normal 64bit interface to access TLS data.
+		   Works just like arch_prctl, except that the arguments
+		   are reversed. */
+	case PTRACE_ARCH_PRCTL:
+		ret = do_arch_prctl(child, data, addr);
+		break;
+#endif
+
+	default:
+		ret = ptrace_request(child, request, addr, data);
+		break;
+	}
+
+	return ret;
+}
+
 
 /*
  * ptrace a task: make the debugger its new parent and
@@ -37,6 +205,7 @@
 void __ptrace_link(struct task_struct *child, struct task_struct *new_parent)
 {
 	BUG_ON(!list_empty(&child->ptrace_entry));
+	kayrebt_FlowNodeMarker();
 	list_add(&child->ptrace_entry, &new_parent->ptraced);
 	child->parent = new_parent;
 }
@@ -216,7 +385,7 @@ static int ptrace_has_cap(struct user_namespace *ns, unsigned int mode)
 }
 
 /* Returns 0 on success, -errno on denial. */
-static int __ptrace_may_access(struct task_struct *task, unsigned int mode)
+__attribute__((always_inline)) static int __ptrace_may_access(struct task_struct *task, unsigned int mode)
 {
 	const struct cred *cred = current_cred(), *tcred;
 
@@ -270,7 +439,7 @@ bool ptrace_may_access(struct task_struct *task, unsigned int mode)
 	return !err;
 }
 
-static int ptrace_attach(struct task_struct *task, long request,
+__attribute__((always_inline)) static int ptrace_attach(struct task_struct *task, long request,
 			 unsigned long addr,
 			 unsigned long flags)
 {
@@ -378,7 +547,7 @@ out:
  * Performs checks and sets PT_PTRACED.
  * Should be used by all ptrace implementations for PTRACE_TRACEME.
  */
-static int ptrace_traceme(void)
+__attribute__((always_inline)) static int ptrace_traceme(void)
 {
 	int ret = -EPERM;
 
@@ -822,9 +991,11 @@ int ptrace_request(struct task_struct *child, long request,
 	switch (request) {
 	case PTRACE_PEEKTEXT:
 	case PTRACE_PEEKDATA:
+		kayrebt_FlowNodeMarker();
 		return generic_ptrace_peekdata(child, addr, data);
 	case PTRACE_POKETEXT:
 	case PTRACE_POKEDATA:
+		kayrebt_FlowNodeMarker();
 		return generic_ptrace_pokedata(child, addr, data);
 
 #ifdef PTRACE_OLDSETOPTIONS
@@ -1002,6 +1173,7 @@ int ptrace_request(struct task_struct *child, long request,
 	case PTRACE_SETREGSET: {
 		struct iovec kiov;
 		struct iovec __user *uiov = datavp;
+		kayrebt_FlowNodeMarker();
 
 		if (!access_ok(VERIFY_WRITE, uiov, sizeof(*uiov)))
 			return -EFAULT;
