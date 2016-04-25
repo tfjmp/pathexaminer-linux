@@ -438,6 +438,7 @@ __attribute__((always_inline)) ssize_t __vfs_read(struct file *file, char __user
 		return new_sync_read(file, buf, count, pos);
 	} else {
 		return -EINVAL;
+	}
 }
 EXPORT_SYMBOL(__vfs_read);
 
