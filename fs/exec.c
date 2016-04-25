@@ -66,6 +66,8 @@
 
 #include <trace/events/sched.h>
 
+void kayrebt_FlowNodeMarker(void);
+
 int suid_dumpable = 0;
 
 static LIST_HEAD(formats);
@@ -1218,7 +1220,7 @@ EXPORT_SYMBOL(bprm_change_interp);
 /*
  * install the new credentials for this executable
  */
-void install_exec_creds(struct linux_binprm *bprm)
+__attribute__((always_inline)) void install_exec_creds(struct linux_binprm *bprm)
 {
 	security_bprm_committing_creds(bprm);
 
@@ -1337,7 +1339,7 @@ static void bprm_fill_uid(struct linux_binprm *bprm)
  *
  * This may be called multiple times for binary chains (scripts for example).
  */
-int prepare_binprm(struct linux_binprm *bprm)
+__attribute__((always_inline)) int prepare_binprm(struct linux_binprm *bprm)
 {
 	int retval;
 
@@ -1403,7 +1405,7 @@ EXPORT_SYMBOL(remove_arg_zero);
 /*
  * cycle the list of binary formats handler, until one recognizes the image
  */
-int search_binary_handler(struct linux_binprm *bprm)
+__attribute__((always_inline)) int search_binary_handler(struct linux_binprm *bprm)
 {
 	bool need_retry = IS_ENABLED(CONFIG_MODULES);
 	struct linux_binfmt *fmt;
@@ -1456,7 +1458,7 @@ int search_binary_handler(struct linux_binprm *bprm)
 }
 EXPORT_SYMBOL(search_binary_handler);
 
-static int exec_binprm(struct linux_binprm *bprm)
+__attribute__((always_inline)) static int exec_binprm(struct linux_binprm *bprm)
 {
 	pid_t old_pid, old_vpid;
 	int ret;
@@ -1469,6 +1471,7 @@ static int exec_binprm(struct linux_binprm *bprm)
 
 	ret = search_binary_handler(bprm);
 	if (ret >= 0) {
+		kayrebt_FlowNodeMarker();
 		audit_bprm(bprm);
 		trace_sched_process_exec(current, old_pid, bprm);
 		ptrace_event(PTRACE_EVENT_EXEC, old_vpid);
@@ -1481,7 +1484,7 @@ static int exec_binprm(struct linux_binprm *bprm)
 /*
  * sys_execve() executes a new program.
  */
-static int do_execveat_common(int fd, struct filename *filename,
+__attribute__((always_inline)) static int do_execveat_common(int fd, struct filename *filename,
 			      struct user_arg_ptr argv,
 			      struct user_arg_ptr envp,
 			      int flags)
@@ -1625,7 +1628,7 @@ out_ret:
 	return retval;
 }
 
-int do_execve(struct filename *filename,
+__attribute__((always_inline)) int do_execve(struct filename *filename,
 	const char __user *const __user *__argv,
 	const char __user *const __user *__envp)
 {
@@ -1634,7 +1637,7 @@ int do_execve(struct filename *filename,
 	return do_execveat_common(AT_FDCWD, filename, argv, envp, 0);
 }
 
-int do_execveat(int fd, struct filename *filename,
+__attribute__((always_inline)) int do_execveat(int fd, struct filename *filename,
 		const char __user *const __user *__argv,
 		const char __user *const __user *__envp,
 		int flags)

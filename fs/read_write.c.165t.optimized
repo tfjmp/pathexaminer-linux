@@ -1,0 +1,6913 @@
+
+;; Function mandatory_lock (mandatory_lock, funcdef_no=1252, decl_uid=16198, cgraph_uid=1252) (unlikely executed)
+
+mandatory_lock (struct inode * ino)
+{
+  int iftmp.16;
+  struct super_block * _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  short unsigned int _7;
+  short unsigned int _8;
+  _Bool _9;
+  int _10;
+
+  <bb 2>:
+  _4 = ino_3(D)->i_sb;
+  _5 = _4->s_flags;
+  _6 = _5 & 64;
+  if (_6 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  _7 = MEM[(struct inode *)ino_3(D)];
+  _8 = _7 & 1032;
+  _9 = _8 == 1024;
+  _10 = (int) _9;
+
+  <bb 4>:
+  # iftmp.16_1 = PHI <_10(3), 0(2)>
+  return iftmp.16_1;
+
+}
+
+
+
+;; Function vfs_setpos (vfs_setpos, funcdef_no=2428, decl_uid=16819, cgraph_uid=2428)
+
+vfs_setpos (struct file * file, loff_t offset, loff_t maxsize)
+{
+  loff_t _1;
+  unsigned int _7;
+  long long int _9;
+  int _12;
+  int _13;
+
+  <bb 2>:
+  if (offset_4(D) < 0)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  _7 = MEM[(struct file *)file_6(D) + 68B];
+  _12 = (int) _7;
+  _13 = _12 & 8192;
+  if (_13 == 0)
+    goto <bb 7>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  if (offset_4(D) > maxsize_8(D))
+    goto <bb 7>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  _9 = file_6(D)->f_pos;
+  if (_9 != offset_4(D))
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  file_6(D)->f_pos = offset_4(D);
+  file_6(D)->f_version = 0;
+
+  <bb 7>:
+  # _1 = PHI <-22(4), offset_4(D)(5), offset_4(D)(6), -22(3)>
+  return _1;
+
+}
+
+
+
+;; Function noop_llseek (noop_llseek, funcdef_no=2432, decl_uid=16811, cgraph_uid=2432)
+
+noop_llseek (struct file * file, loff_t offset, int whence)
+{
+  loff_t _3;
+
+  <bb 2>:
+  _3 = file_2(D)->f_pos;
+  return _3;
+
+}
+
+
+
+;; Function no_llseek (no_llseek, funcdef_no=2433, decl_uid=16815, cgraph_uid=2433)
+
+no_llseek (struct file * file, loff_t offset, int whence)
+{
+  <bb 2>:
+  return -29;
+
+}
+
+
+
+;; Function vfs_llseek (vfs_llseek, funcdef_no=2435, decl_uid=16603, cgraph_uid=2435)
+
+vfs_llseek (struct file * file, loff_t offset, int whence)
+{
+  loff_t (*<T26db>) (struct file *, loff_t, int) fn;
+  unsigned int _4;
+  unsigned int _5;
+  const struct file_operations * _6;
+  loff_t _11;
+
+  <bb 2>:
+  _4 = file_3(D)->f_mode;
+  _5 = _4 & 4;
+  if (_5 != 0)
+    goto <bb 3>;
+  else
+    goto <bb 5>;
+
+  <bb 3>:
+  _6 = file_3(D)->f_op;
+  fn_7 = _6->llseek;
+  if (fn_7 != 0B)
+    goto <bb 5>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+
+  <bb 5>:
+  # fn_1 = PHI <no_llseek(2), no_llseek(4), fn_7(3)>
+  _11 = fn_1 (file_3(D), offset_8(D), whence_9(D));
+  return _11;
+
+}
+
+
+
+;; Function iov_shorten (iov_shorten, funcdef_no=2464, decl_uid=12798, cgraph_uid=2471)
+
+iov_shorten (struct iovec * iov, long unsigned int nr_segs, size_t to)
+{
+  size_t len;
+  long unsigned int seg;
+  long unsigned int _10;
+  long unsigned int _13;
+
+  <bb 2>:
+  if (nr_segs_7(D) != 0)
+    goto <bb 3>;
+  else
+    goto <bb 9>;
+
+  <bb 3>:
+  len_23 = iov_6(D)->iov_len;
+  if (to_12(D) <= len_23)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 4>:
+  seg_9 = seg_26 + 1;
+  _10 = MEM[base: iov_15, offset: 8B];
+  len_11 = len_27 + _10;
+  if (len_11 >= to_12(D))
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  goto <bb 8>;
+
+  <bb 6>:
+  # iov_16 = PHI <iov_15(4), iov_6(D)(3)>
+  # len_17 = PHI <len_27(4), 0(3)>
+  # seg_18 = PHI <seg_9(4), 1(3)>
+  _13 = to_12(D) - len_17;
+  iov_16->iov_len = _13;
+  goto <bb 9>;
+
+  <bb 7>:
+
+  <bb 8>:
+  # iov_25 = PHI <iov_15(5), iov_6(D)(7)>
+  # seg_26 = PHI <seg_9(5), 1(7)>
+  # len_27 = PHI <len_11(5), len_23(7)>
+  iov_15 = iov_25 + 16;
+  if (seg_26 != nr_segs_7(D))
+    goto <bb 4>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  # seg_3 = PHI <seg_18(6), seg_26(8), 0(2)>
+  return seg_3;
+
+}
+
+
+
+;; Function vfs_readv (vfs_readv, funcdef_no=2469, decl_uid=15914, cgraph_uid=2476)
+
+vfs_readv (struct file * file, const struct iovec * vec, long unsigned int vlen, loff_t * pos)
+{
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  long unsigned int _min2.114;
+  int res;
+  struct iovec * iov.110;
+  struct iovec iovstack[8];
+  struct iovec * iov;
+  struct iov_iter iter;
+  ssize_t ret;
+  ssize_t (*io_fn_t) (struct file *, char *, size_t, loff_t *) fn;
+  ssize_t (*iter_fn_t) (struct kiocb *, struct iov_iter *) iter_fn;
+  int retval;
+  loff_t pos;
+  long long unsigned int pos.13;
+  long int count.12;
+  struct kiocb kiocb;
+  long unsigned int nr.111;
+  ssize_t _1;
+  unsigned int _5;
+  unsigned int _6;
+  unsigned int _7;
+  unsigned int _12;
+  int _13;
+  long unsigned int _15;
+  long unsigned int _16;
+  struct inode * _17;
+  int _26;
+  unsigned int _27;
+  long long int _29;
+  long long unsigned int _30;
+  long long unsigned int _32;
+  long long int _33;
+  unsigned int _37;
+  struct file_lock_context * _39;
+  int _43;
+  long unsigned int _46;
+  long unsigned int _49;
+  int _50;
+  int _51;
+  const struct file_operations * _53;
+  long long int _59;
+  long long int _64;
+  long unsigned int _72;
+  long int _76;
+  int _103;
+  int _104;
+  int _106;
+  int _107;
+  unsigned int _108;
+  unsigned int _109;
+  unsigned int _110;
+  const struct iovec * _116;
+  void * _117;
+  long unsigned int _118;
+  void * _119;
+  long unsigned int _121;
+  const long unsigned int _123;
+  struct inode * _126;
+  short unsigned int _127;
+  short unsigned int _128;
+  unsigned int _129;
+  unsigned int _130;
+
+  <bb 2>:
+  _5 = file_4(D)->f_mode;
+  _6 = _5 & 1;
+  if (_6 == 0)
+    goto <bb 40>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _7 = _5 & 131072;
+  if (_7 == 0)
+    goto <bb 40>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  iov = &iovstack;
+  _12 = (unsigned int) vlen_9(D);
+  _13 = import_iovec (0, vec_8(D), _12, 8, &iov, &iter);
+  ret_14 = (ssize_t) _13;
+  if (ret_14 < 0)
+    goto <bb 39>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  _15 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_15 == 0)
+    goto <bb 34> (out);
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _17 = MEM[(const struct file *)file_4(D) + 32B];
+  count.12_19 = (long int) _15;
+  if (count.12_19 < 0)
+    goto <bb 41>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  pos_23 = MEM[(const loff_t *)pos_10(D)];
+  if (pos_23 < 0)
+    goto <bb 8>;
+  else
+    goto <bb 10>;
+
+  <bb 8>:
+  _27 = MEM[(struct file *)file_4(D) + 68B];
+  _103 = (int) _27;
+  _104 = _103 & 8192;
+  if (_104 == 0)
+    goto <bb 41>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  _29 = -pos_23;
+  _30 = (long long unsigned int) _29;
+  if (_15 >= _30)
+    goto <bb 41>;
+  else
+    goto <bb 12>;
+
+  <bb 10>:
+  pos.13_31 = (long long unsigned int) pos_23;
+  _32 = pos.13_31 + _15;
+  _33 = (long long int) _32;
+  if (_33 < 0)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  _37 = MEM[(struct file *)file_4(D) + 68B];
+  _106 = (int) _37;
+  _107 = _106 & 8192;
+  if (_107 == 0)
+    goto <bb 41>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  _39 = _17->i_flctx;
+  if (_39 != 0B)
+    goto <bb 14>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  retval_48 = security_file_permission (file_4(D), 4);
+  if (retval_48 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 14>:
+  _43 = mandatory_lock (_17);
+  if (_43 != 0)
+    goto <bb 15>;
+  else
+    goto <bb 13>;
+
+  <bb 15>:
+  retval_47 = locks_mandatory_area (1, _17, file_4(D), pos_23, _15);
+  if (retval_47 < 0)
+    goto <bb 17>;
+  else
+    goto <bb 13>;
+
+  <bb 16>:
+  _49 = MIN_EXPR <_15, 2147479552>;
+  _50 = (int) _49;
+
+  <bb 17>:
+  # _51 = PHI <_50(16), retval_47(15), retval_48(13)>
+  ret_52 = (ssize_t) _51;
+  if (ret_52 < 0)
+    goto <bb 34> (out);
+  else
+    goto <bb 18>;
+
+  <bb 18>:
+  _53 = file_4(D)->f_op;
+  fn_54 = _53->read;
+  iter_fn_55 = _53->read_iter;
+  if (iter_fn_55 != 0B)
+    goto <bb 20>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  _16 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_16 != 0)
+    goto <bb 26>;
+  else
+    goto <bb 43>;
+
+  <bb 20>:
+  _108 = MEM[(struct file *)file_4(D) + 64B];
+  _109 = _108 & 1024;
+  if (_109 != 0)
+    goto <bb 22>;
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+
+  <bb 22>:
+  # res_113 = PHI <0(21), 2(20)>
+  _110 = _108 & 16384;
+  if (_110 != 0)
+    goto <bb 42>;
+  else
+    goto <bb 23>;
+
+  <bb 23>:
+  # res_115 = PHI <res_113(22), res_114(42)>
+  kiocb = {};
+  kiocb.ki_filp = file_4(D);
+  kiocb.ki_flags = res_115;
+  _59 = *pos_10(D);
+  kiocb.ki_pos = _59;
+  ret_60 = iter_fn_55 (&kiocb, &iter);
+  if (ret_60 == -529)
+    goto <bb 24>;
+  else
+    goto <bb 25>;
+
+  <bb 24>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 665, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 25>:
+  _64 = kiocb.ki_pos;
+  *pos_10(D) = _64;
+  kiocb ={v} {CLOBBER};
+  goto <bb 34> (out);
+
+  <bb 26>:
+
+  <bb 27>:
+  # ret_124 = PHI <ret_70(31), 0(26)>
+  # _46 = PHI <_72(31), _16(26)>
+  _116 = iter.D.12777.iov;
+  _117 = _116->iov_base;
+  _118 = iter.iov_offset;
+  _119 = _117 + _118;
+  _121 = _116->iov_len;
+  _min2.114_122 = _121 - _118;
+  _123 = MIN_EXPR <_46, _min2.114_122>;
+  ret_68 = fn_54 (file_4(D), _119, _123, pos_10(D));
+  if (ret_68 < 0)
+    goto <bb 28>;
+  else
+    goto <bb 29>;
+
+  <bb 28>:
+  # ret_120 = PHI <ret_124(27)>
+  if (ret_120 == 0)
+    goto <bb 33>;
+  else
+    goto <bb 32>;
+
+  <bb 29>:
+  ret_70 = ret_68 + ret_124;
+  nr.111_71 = (long unsigned int) ret_68;
+  if (nr.111_71 != _123)
+    goto <bb 33>;
+  else
+    goto <bb 30>;
+
+  <bb 30>:
+  iov_iter_advance (&iter, nr.111_71);
+  _72 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_72 != 0)
+    goto <bb 31>;
+  else
+    goto <bb 34> (out);
+
+  <bb 31>:
+  goto <bb 27>;
+
+  <bb 32>:
+
+  <bb 33>:
+  # ret_78 = PHI <ret_124(32), ret_68(28), ret_70(29)>
+
+  # ret_75 = PHI <ret_14(5), ret_40(41), ret_70(30), ret_60(25), ret_78(33), ret_52(17)>
+out:
+  iov.110_74 = iov;
+  kfree (iov.110_74);
+  _76 = ret_75 + 1;
+  if (_76 > 0)
+    goto <bb 35>;
+  else
+    goto <bb 39>;
+
+  <bb 35>:
+  # ret_112 = PHI <ret_75(34), 0(43)>
+  _126 = MEM[(const struct file *)file_4(D) + 32B];
+  _127 = _126->i_mode;
+  _128 = _127 & 61440;
+  if (_128 == 16384)
+    goto <bb 37>;
+  else
+    goto <bb 36>;
+
+  <bb 36>:
+
+  <bb 37>:
+  # mask_132 = PHI <1(36), 1073741825(35)>
+  _129 = file_4(D)->f_mode;
+  _130 = _129 & 67108864;
+  if (_130 == 0)
+    goto <bb 38>;
+  else
+    goto <bb 39>;
+
+  <bb 38>:
+  path_125 = &file_4(D)->f_path;
+  dentry_131 = MEM[(struct path *)file_4(D) + 16B].dentry;
+  __fsnotify_parent (path_125, dentry_131, mask_132);
+  fsnotify (_126, mask_132, path_125, 1, 0B, 0);
+
+  <bb 39>:
+  # ret_77 = PHI <ret_14(4), ret_112(38), ret_75(34), ret_112(37)>
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+
+  <bb 40>:
+  # _1 = PHI <-9(2), -22(3), ret_77(39)>
+  return _1;
+
+  <bb 41>:
+  # _26 = PHI <-22(8), -75(9), -22(6), -22(11)>
+  ret_40 = (ssize_t) _26;
+  goto <bb 34> (out);
+
+  <bb 42>:
+  res_114 = res_113 | 4;
+  goto <bb 23>;
+
+  <bb 43>:
+  iov.110_56 = iov;
+  kfree (iov.110_56);
+  goto <bb 35>;
+
+}
+
+
+
+;; Function vfs_writev (vfs_writev, funcdef_no=2470, decl_uid=15919, cgraph_uid=2477)
+
+vfs_writev (struct file * file, const struct iovec * vec, long unsigned int vlen, loff_t * pos)
+{
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  long unsigned int _min2.114;
+  int res;
+  struct iovec * iov.110;
+  struct iovec iovstack[8];
+  struct iovec * iov;
+  struct iov_iter iter;
+  ssize_t ret;
+  ssize_t (*io_fn_t) (struct file *, char *, size_t, loff_t *) fn;
+  ssize_t (*iter_fn_t) (struct kiocb *, struct iov_iter *) iter_fn;
+  int retval;
+  loff_t pos;
+  long long unsigned int pos.13;
+  long int count.12;
+  struct kiocb kiocb;
+  long unsigned int nr.111;
+  ssize_t _1;
+  unsigned int _5;
+  unsigned int _6;
+  unsigned int _7;
+  unsigned int _12;
+  int _13;
+  long unsigned int _15;
+  long unsigned int _16;
+  struct inode * _17;
+  unsigned int _27;
+  long long int _29;
+  long long unsigned int _30;
+  long long unsigned int _32;
+  long long int _33;
+  int _34;
+  unsigned int _37;
+  struct file_lock_context * _39;
+  long unsigned int _40;
+  int _43;
+  long unsigned int _49;
+  int _50;
+  int _51;
+  const struct file_operations * _56;
+  long long int _60;
+  long long int _65;
+  long unsigned int _73;
+  int _106;
+  int _107;
+  int _109;
+  int _110;
+  struct inode * _111;
+  short unsigned int _112;
+  short unsigned int _113;
+  struct super_block * _114;
+  unsigned int _115;
+  unsigned int _116;
+  unsigned int _117;
+  const struct iovec * _123;
+  void * _124;
+  long unsigned int _125;
+  void * _126;
+  long unsigned int _128;
+  const long unsigned int _130;
+  struct inode * _132;
+  short unsigned int _133;
+  short unsigned int _134;
+  struct super_block * _135;
+  struct inode * _137;
+  short unsigned int _138;
+  short unsigned int _139;
+  unsigned int _140;
+  unsigned int _141;
+
+  <bb 2>:
+  _5 = file_4(D)->f_mode;
+  _6 = _5 & 2;
+  if (_6 == 0)
+    goto <bb 44>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _7 = _5 & 262144;
+  if (_7 == 0)
+    goto <bb 44>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  iov = &iovstack;
+  _12 = (unsigned int) vlen_9(D);
+  _13 = import_iovec (1, vec_8(D), _12, 8, &iov, &iter);
+  ret_14 = (ssize_t) _13;
+  if (ret_14 < 0)
+    goto <bb 43>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  _15 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_15 == 0)
+    goto <bb 38> (out);
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _17 = MEM[(const struct file *)file_4(D) + 32B];
+  count.12_19 = (long int) _15;
+  if (count.12_19 < 0)
+    goto <bb 45>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  pos_23 = MEM[(const loff_t *)pos_10(D)];
+  if (pos_23 < 0)
+    goto <bb 8>;
+  else
+    goto <bb 10>;
+
+  <bb 8>:
+  _27 = MEM[(struct file *)file_4(D) + 68B];
+  _106 = (int) _27;
+  _107 = _106 & 8192;
+  if (_107 == 0)
+    goto <bb 45>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  _29 = -pos_23;
+  _30 = (long long unsigned int) _29;
+  if (_15 >= _30)
+    goto <bb 45>;
+  else
+    goto <bb 12>;
+
+  <bb 10>:
+  pos.13_31 = (long long unsigned int) pos_23;
+  _32 = pos.13_31 + _15;
+  _33 = (long long int) _32;
+  if (_33 < 0)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  _37 = MEM[(struct file *)file_4(D) + 68B];
+  _109 = (int) _37;
+  _110 = _109 & 8192;
+  if (_110 == 0)
+    goto <bb 45>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  _39 = _17->i_flctx;
+  if (_39 != 0B)
+    goto <bb 14>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  retval_48 = security_file_permission (file_4(D), 2);
+  if (retval_48 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 14>:
+  _43 = mandatory_lock (_17);
+  if (_43 != 0)
+    goto <bb 15>;
+  else
+    goto <bb 13>;
+
+  <bb 15>:
+  retval_47 = locks_mandatory_area (2, _17, file_4(D), pos_23, _15);
+  if (retval_47 < 0)
+    goto <bb 17>;
+  else
+    goto <bb 13>;
+
+  <bb 16>:
+  _49 = MIN_EXPR <_15, 2147479552>;
+  _50 = (int) _49;
+
+  <bb 17>:
+  # _51 = PHI <_50(16), retval_47(15), retval_48(13)>
+  ret_52 = (ssize_t) _51;
+  if (ret_52 < 0)
+    goto <bb 47>;
+  else
+    goto <bb 18>;
+
+  <bb 18>:
+  _56 = file_4(D)->f_op;
+  fn_57 = _56->write;
+  iter_fn_58 = _56->write_iter;
+  _111 = MEM[(const struct file *)file_4(D) + 32B];
+  _112 = _111->i_mode;
+  _113 = _112 & 61440;
+  if (_113 != 32768)
+    goto <bb 20>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  _114 = _111->i_sb;
+  __sb_start_write (_114, 1, 1);
+
+  <bb 20>:
+  if (iter_fn_58 != 0B)
+    goto <bb 22>;
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+  _16 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_16 != 0)
+    goto <bb 28>;
+  else
+    goto <bb 36>;
+
+  <bb 22>:
+  _115 = MEM[(struct file *)file_4(D) + 64B];
+  _116 = _115 & 1024;
+  if (_116 != 0)
+    goto <bb 24>;
+  else
+    goto <bb 23>;
+
+  <bb 23>:
+
+  <bb 24>:
+  # res_120 = PHI <0(23), 2(22)>
+  _117 = _115 & 16384;
+  if (_117 != 0)
+    goto <bb 46>;
+  else
+    goto <bb 25>;
+
+  <bb 25>:
+  # res_122 = PHI <res_120(24), res_121(46)>
+  kiocb = {};
+  kiocb.ki_filp = file_4(D);
+  kiocb.ki_flags = res_122;
+  _60 = *pos_10(D);
+  kiocb.ki_pos = _60;
+  ret_61 = iter_fn_58 (&kiocb, &iter);
+  if (ret_61 == -529)
+    goto <bb 26>;
+  else
+    goto <bb 27>;
+
+  <bb 26>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 665, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 27>:
+  _65 = kiocb.ki_pos;
+  *pos_10(D) = _65;
+  kiocb ={v} {CLOBBER};
+  goto <bb 36>;
+
+  <bb 28>:
+
+  <bb 29>:
+  # ret_131 = PHI <ret_71(33), 0(28)>
+  # _40 = PHI <_73(33), _16(28)>
+  _123 = iter.D.12777.iov;
+  _124 = _123->iov_base;
+  _125 = iter.iov_offset;
+  _126 = _124 + _125;
+  _128 = _123->iov_len;
+  _min2.114_129 = _128 - _125;
+  _130 = MIN_EXPR <_40, _min2.114_129>;
+  ret_69 = fn_57 (file_4(D), _126, _130, pos_10(D));
+  if (ret_69 < 0)
+    goto <bb 30>;
+  else
+    goto <bb 31>;
+
+  <bb 30>:
+  # ret_127 = PHI <ret_131(29)>
+  if (ret_127 == 0)
+    goto <bb 35>;
+  else
+    goto <bb 34>;
+
+  <bb 31>:
+  ret_71 = ret_69 + ret_131;
+  nr.111_72 = (long unsigned int) ret_69;
+  if (nr.111_72 != _130)
+    goto <bb 35>;
+  else
+    goto <bb 32>;
+
+  <bb 32>:
+  iov_iter_advance (&iter, nr.111_72);
+  _73 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_73 != 0)
+    goto <bb 33>;
+  else
+    goto <bb 36>;
+
+  <bb 33>:
+  goto <bb 29>;
+
+  <bb 34>:
+
+  <bb 35>:
+  # ret_78 = PHI <ret_131(34), ret_69(30), ret_71(31)>
+
+  <bb 36>:
+  # ret_79 = PHI <ret_61(27), ret_71(32), ret_78(35), 0(21)>
+  _132 = MEM[(const struct file *)file_4(D) + 32B];
+  _133 = _132->i_mode;
+  _134 = _133 & 61440;
+  if (_134 != 32768)
+    goto <bb 38> (out);
+  else
+    goto <bb 37>;
+
+  <bb 37>:
+  _135 = _132->i_sb;
+  __sb_end_write (_135, 1);
+
+  # ret_76 = PHI <ret_14(5), ret_79(36), ret_79(37)>
+out:
+  iov.110_75 = iov;
+  kfree (iov.110_75);
+  if (ret_76 > 0)
+    goto <bb 39>;
+  else
+    goto <bb 43>;
+
+  <bb 39>:
+  _137 = MEM[(const struct file *)file_4(D) + 32B];
+  _138 = _137->i_mode;
+  _139 = _138 & 61440;
+  if (_139 == 16384)
+    goto <bb 41>;
+  else
+    goto <bb 40>;
+
+  <bb 40>:
+
+  <bb 41>:
+  # mask_143 = PHI <2(40), 1073741826(39)>
+  _140 = file_4(D)->f_mode;
+  _141 = _140 & 67108864;
+  if (_141 == 0)
+    goto <bb 42>;
+  else
+    goto <bb 43>;
+
+  <bb 42>:
+  path_136 = &file_4(D)->f_path;
+  dentry_142 = MEM[(struct path *)file_4(D) + 16B].dentry;
+  __fsnotify_parent (path_136, dentry_142, mask_143);
+  fsnotify (_137, mask_143, path_136, 1, 0B, 0);
+
+  <bb 43>:
+  # ret_77 = PHI <ret_14(4), ret_76(42), ret_42(47), ret_76(41), ret_76(38)>
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+
+  <bb 44>:
+  # _1 = PHI <-9(2), -22(3), ret_77(43)>
+  return _1;
+
+  <bb 45>:
+  # _34 = PHI <-22(8), -75(9), -22(6), -22(11)>
+  ret_21 = (ssize_t) _34;
+  goto <bb 47>;
+
+  <bb 46>:
+  res_121 = res_120 | 4;
+  goto <bb 25>;
+
+  <bb 47>:
+  # ret_42 = PHI <ret_21(45), ret_52(17)>
+  iov.110_36 = iov;
+  kfree (iov.110_36);
+  goto <bb 43>;
+
+}
+
+
+
+;; Function default_llseek (default_llseek, funcdef_no=2434, decl_uid=16599, cgraph_uid=2434)
+
+default_llseek (struct file * file, loff_t offset, int whence)
+{
+  struct inode * _7;
+  struct mutex * _8;
+  long long int _12;
+  long long int _15;
+  long long int _17;
+  unsigned int _19;
+  long long int _20;
+  int _24;
+  int _25;
+
+  <bb 2>:
+  _7 = MEM[(const struct file *)file_6(D) + 32B];
+  _8 = &_7->i_mutex;
+  mutex_lock (_8);
+  switch (whence_10(D)) <default: <L10>, case 1: <L1>, case 2: <L0>, case 3: <L4>, case 4: <L7>>
+
+<L0>:
+  _12 = MEM[(const struct inode *)_7 + 80B];
+  offset_13 = offset_11(D) + _12;
+  goto <bb 9> (<L10>);
+
+<L1>:
+  if (offset_11(D) == 0)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  offset_14 = file_6(D)->f_pos;
+  goto <bb 13> (out);
+
+  <bb 6>:
+  _15 = file_6(D)->f_pos;
+  offset_16 = _15 + offset_11(D);
+  goto <bb 9> (<L10>);
+
+<L4>:
+  _17 = _7->i_size;
+  if (offset_11(D) >= _17)
+    goto <bb 13> (out);
+  else
+    goto <bb 9> (<L10>);
+
+<L7>:
+  offset_18 = _7->i_size;
+  if (offset_11(D) >= offset_18)
+    goto <bb 13> (out);
+  else
+    goto <bb 9> (<L10>);
+
+  # offset_1 = PHI <offset_11(D)(2), offset_13(3), offset_16(6), offset_11(D)(7), offset_18(8)>
+<L10>:
+  if (offset_1 >= 0)
+    goto <bb 11>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  _19 = MEM[(struct file *)file_6(D) + 68B];
+  _24 = (int) _19;
+  _25 = _24 & 8192;
+  if (_25 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 13> (out);
+
+  <bb 11>:
+  _20 = file_6(D)->f_pos;
+  if (_20 != offset_1)
+    goto <bb 12>;
+  else
+    goto <bb 13> (out);
+
+  <bb 12>:
+  file_6(D)->f_pos = offset_1;
+  file_6(D)->f_version = 0;
+
+  # offset_2 = PHI <offset_14(5), -6(8), offset_1(11), -22(10), offset_1(12), -6(7)>
+out:
+  mutex_unlock (_8);
+  return offset_2;
+
+}
+
+
+
+;; Function generic_file_llseek_size (generic_file_llseek_size, funcdef_no=2429, decl_uid=16829, cgraph_uid=2429)
+
+generic_file_llseek_size (struct file * file, loff_t offset, int whence, loff_t maxsize, loff_t eof)
+{
+  loff_t _2;
+  loff_t _10;
+  unsigned int _17;
+  int _18;
+  int _19;
+  long long int _20;
+  struct raw_spinlock * _26;
+  long long int _27;
+  long long int _28;
+  unsigned int _29;
+  int _30;
+  int _31;
+  loff_t _33;
+
+  <bb 2>:
+  switch (whence_4(D)) <default: <L10>, case 1: <L1>, case 2: <L0>, case 3: <L4>, case 4: <L7>>
+
+<L0>:
+  offset_7 = offset_5(D) + eof_6(D);
+  goto <bb 14> (<L10>);
+
+<L1>:
+  if (offset_5(D) == 0)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  _10 = file_9(D)->f_pos;
+  goto <bb 19>;
+
+  <bb 6>:
+  _26 = &MEM[(struct spinlock_t *)file_9(D) + 48B].D.5408.rlock;
+  _raw_spin_lock (_26);
+  _27 = file_9(D)->f_pos;
+  _28 = offset_5(D) + _27;
+  if (_28 < 0)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  _29 = MEM[(struct file *)file_9(D) + 68B];
+  _30 = (int) _29;
+  _31 = _30 & 8192;
+  if (_31 == 0)
+    goto <bb 11>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  if (maxsize_12(D) < _28)
+    goto <bb 11>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  if (_27 != _28)
+    goto <bb 10>;
+  else
+    goto <bb 11>;
+
+  <bb 10>:
+  file_9(D)->f_pos = _28;
+  file_9(D)->f_version = 0;
+
+  <bb 11>:
+  # _33 = PHI <-22(8), _28(10), _28(9), -22(7)>
+  __asm__ __volatile__("" :  :  : "memory");
+  MEM[(volatile __u8 *)file_9(D) + 48B] ={v} 0;
+  __asm__ __volatile__("" :  :  : "memory");
+  goto <bb 19>;
+
+<L4>:
+  if (offset_5(D) >= eof_6(D))
+    goto <bb 19>;
+  else
+    goto <bb 14> (<L10>);
+
+<L7>:
+  if (offset_5(D) >= eof_6(D))
+    goto <bb 19>;
+  else
+    goto <bb 14> (<L10>);
+
+  # offset_1 = PHI <offset_5(D)(2), offset_7(3), offset_5(D)(12), eof_6(D)(13)>
+<L10>:
+  if (offset_1 < 0)
+    goto <bb 15>;
+  else
+    goto <bb 16>;
+
+  <bb 15>:
+  _17 = MEM[(struct file *)file_9(D) + 68B];
+  _18 = (int) _17;
+  _19 = _18 & 8192;
+  if (_19 == 0)
+    goto <bb 19>;
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+  if (offset_1 > maxsize_12(D))
+    goto <bb 19>;
+  else
+    goto <bb 17>;
+
+  <bb 17>:
+  _20 = file_9(D)->f_pos;
+  if (offset_1 != _20)
+    goto <bb 18>;
+  else
+    goto <bb 19>;
+
+  <bb 18>:
+  file_9(D)->f_pos = offset_1;
+  file_9(D)->f_version = 0;
+
+  <bb 19>:
+  # _2 = PHI <_10(5), _33(11), -6(13), offset_1(18), offset_1(17), -22(16), -6(12), -22(15)>
+  return _2;
+
+}
+
+
+
+;; Function generic_file_llseek (generic_file_llseek, funcdef_no=2430, decl_uid=16823, cgraph_uid=2430)
+
+generic_file_llseek (struct file * file, loff_t offset, int whence)
+{
+  struct inode * inode;
+  struct address_space * _3;
+  long long int _5;
+  struct super_block * _6;
+  long long int _7;
+  loff_t _11;
+
+  <bb 2>:
+  _3 = file_2(D)->f_mapping;
+  inode_4 = _3->host;
+  _5 = MEM[(const struct inode *)inode_4 + 80B];
+  _6 = inode_4->i_sb;
+  _7 = _6->s_maxbytes;
+  _11 = generic_file_llseek_size (file_2(D), offset_8(D), whence_9(D), _7, _5);
+  return _11;
+
+}
+
+
+
+;; Function fixed_size_llseek (fixed_size_llseek, funcdef_no=2431, decl_uid=16834, cgraph_uid=2431)
+
+fixed_size_llseek (struct file * file, loff_t offset, int whence, loff_t size)
+{
+  loff_t _1;
+  loff_t _9;
+
+  <bb 2>:
+  switch (whence_3(D)) <default: <L5>, case 0 ... 2: <L0>>
+
+<L0>:
+  _9 = generic_file_llseek_size (file_5(D), offset_6(D), whence_3(D), size_7(D), size_7(D));
+
+  # _1 = PHI <_9(3), -22(2)>
+<L5>:
+  return _1;
+
+}
+
+
+
+;; Function vfs_iter_read (vfs_iter_read, funcdef_no=2444, decl_uid=16756, cgraph_uid=2447)
+
+vfs_iter_read (struct file * file, struct iov_iter * iter, loff_t * ppos)
+{
+  int res;
+  ssize_t ret;
+  struct kiocb kiocb;
+  ssize_t _1;
+  const struct file_operations * _6;
+  ssize_t (*<T26e7>) (struct kiocb *, struct iov_iter *) _7;
+  long long int _10;
+  ssize_t (*<T26e7>) (struct kiocb *, struct iov_iter *) _14;
+  long long int _20;
+  unsigned int _24;
+  unsigned int _25;
+  unsigned int _26;
+
+  <bb 2>:
+  _6 = file_5(D)->f_op;
+  _7 = _6->read_iter;
+  if (_7 == 0B)
+    goto <bb 10>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _24 = MEM[(struct file *)file_5(D) + 64B];
+  _25 = _24 & 1024;
+  if (_25 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+
+  <bb 5>:
+  # res_29 = PHI <0(4), 2(3)>
+  _26 = _24 & 16384;
+  if (_26 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  # res_31 = PHI <res_29(5), res_30(11)>
+  kiocb = {};
+  kiocb.ki_filp = file_5(D);
+  kiocb.ki_flags = res_31;
+  _10 = *ppos_9(D);
+  kiocb.ki_pos = _10;
+  _14 = _6->read_iter;
+  ret_16 = _14 (&kiocb, iter_12(D));
+  if (ret_16 == -529)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 345, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 8>:
+  if (ret_16 > 0)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  _20 = kiocb.ki_pos;
+  *ppos_9(D) = _20;
+
+  <bb 10>:
+  # _1 = PHI <-22(2), ret_16(9), ret_16(8)>
+  kiocb ={v} {CLOBBER};
+  return _1;
+
+  <bb 11>:
+  res_30 = res_29 | 4;
+  goto <bb 6>;
+
+}
+
+
+
+;; Function vfs_iter_write (vfs_iter_write, funcdef_no=2445, decl_uid=16760, cgraph_uid=2448)
+
+vfs_iter_write (struct file * file, struct iov_iter * iter, loff_t * ppos)
+{
+  int res;
+  ssize_t ret;
+  struct kiocb kiocb;
+  ssize_t _1;
+  const struct file_operations * _6;
+  ssize_t (*<T26e7>) (struct kiocb *, struct iov_iter *) _7;
+  long long int _10;
+  int _13;
+  int _14;
+  const struct file_operations * _16;
+  ssize_t (*<T26e7>) (struct kiocb *, struct iov_iter *) _17;
+  long long int _23;
+  unsigned int _27;
+  unsigned int _28;
+  unsigned int _29;
+
+  <bb 2>:
+  _6 = file_5(D)->f_op;
+  _7 = _6->write_iter;
+  if (_7 == 0B)
+    goto <bb 10>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _27 = MEM[(struct file *)file_5(D) + 64B];
+  _28 = _27 & 1024;
+  if (_28 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+
+  <bb 5>:
+  # res_32 = PHI <0(4), 2(3)>
+  _29 = _27 & 16384;
+  if (_29 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  # res_34 = PHI <res_32(5), res_33(11)>
+  kiocb = {};
+  kiocb.ki_filp = file_5(D);
+  kiocb.ki_flags = res_34;
+  _10 = *ppos_9(D);
+  kiocb.ki_pos = _10;
+  _13 = iter_12(D)->type;
+  _14 = _13 | 1;
+  iter_12(D)->type = _14;
+  _16 = file_5(D)->f_op;
+  _17 = _16->write_iter;
+  ret_19 = _17 (&kiocb, iter_12(D));
+  if (ret_19 == -529)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 365, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 8>:
+  if (ret_19 > 0)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  _23 = kiocb.ki_pos;
+  *ppos_9(D) = _23;
+
+  <bb 10>:
+  # _1 = PHI <-22(2), ret_19(9), ret_19(8)>
+  kiocb ={v} {CLOBBER};
+  return _1;
+
+  <bb 11>:
+  res_33 = res_32 | 4;
+  goto <bb 6>;
+
+}
+
+
+
+;; Function __vfs_read (__vfs_read, funcdef_no=2448, decl_uid=15894, cgraph_uid=2451)
+
+__vfs_read (struct file * file, char * buf, size_t count, loff_t * pos)
+{
+  int res;
+  struct iovec iov;
+  struct kiocb kiocb;
+  struct iov_iter iter;
+  ssize_t ret;
+  ssize_t _1;
+  const struct file_operations * _5;
+  ssize_t (*<T26df>) (struct file *, char *, size_t, loff_t *) _6;
+  ssize_t _11;
+  ssize_t (*<T26e7>) (struct kiocb *, struct iov_iter *) _12;
+  long long int _15;
+  const struct file_operations * _16;
+  ssize_t (*<T26e7>) (struct kiocb *, struct iov_iter *) _17;
+  long long int _22;
+  unsigned int _23;
+  unsigned int _24;
+  unsigned int _25;
+
+  <bb 2>:
+  _5 = file_4(D)->f_op;
+  _6 = _5->read;
+  if (_6 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  _11 = _6 (file_4(D), buf_7(D), count_8(D), pos_9(D));
+  goto <bb 11>;
+
+  <bb 4>:
+  _12 = _5->read_iter;
+  if (_12 != 0B)
+    goto <bb 5>;
+  else
+    goto <bb 11>;
+
+  <bb 5>:
+  iov.iov_base = buf_7(D);
+  iov.iov_len = count_8(D);
+  _23 = MEM[(struct file *)file_4(D) + 64B];
+  _24 = _23 & 1024;
+  if (_24 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+
+  <bb 7>:
+  # res_28 = PHI <0(6), 2(5)>
+  _25 = _23 & 16384;
+  if (_25 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  # res_30 = PHI <res_28(7), res_29(12)>
+  kiocb = {};
+  kiocb.ki_filp = file_4(D);
+  kiocb.ki_flags = res_30;
+  _15 = *pos_9(D);
+  kiocb.ki_pos = _15;
+  iov_iter_init (&iter, 0, &iov, 1, count_8(D));
+  _16 = file_4(D)->f_op;
+  _17 = _16->read_iter;
+  ret_18 = _17 (&kiocb, &iter);
+  if (ret_18 == -529)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 423, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 10>:
+  _22 = kiocb.ki_pos;
+  *pos_9(D) = _22;
+  iov ={v} {CLOBBER};
+  kiocb ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+
+  <bb 11>:
+  # _1 = PHI <_11(3), ret_18(10), -22(4)>
+  return _1;
+
+  <bb 12>:
+  res_29 = res_28 | 4;
+  goto <bb 8>;
+
+}
+
+
+
+;; Function __vfs_write (__vfs_write, funcdef_no=2451, decl_uid=15899, cgraph_uid=2454)
+
+__vfs_write (struct file * file, const char * p, size_t count, loff_t * pos)
+{
+  int res;
+  struct iovec iov;
+  struct kiocb kiocb;
+  struct iov_iter iter;
+  ssize_t ret;
+  ssize_t _1;
+  const struct file_operations * _5;
+  ssize_t (*<T26e3>) (struct file *, const char *, size_t, loff_t *) _6;
+  ssize_t _11;
+  ssize_t (*<T26e7>) (struct kiocb *, struct iov_iter *) _12;
+  long long int _15;
+  const struct file_operations * _16;
+  ssize_t (*<T26e7>) (struct kiocb *, struct iov_iter *) _17;
+  long long int _22;
+  unsigned int _23;
+  unsigned int _24;
+  unsigned int _25;
+
+  <bb 2>:
+  _5 = file_4(D)->f_op;
+  _6 = _5->write;
+  if (_6 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 4>;
+
+  <bb 3>:
+  _11 = _6 (file_4(D), p_7(D), count_8(D), pos_9(D));
+  goto <bb 13>;
+
+  <bb 4>:
+  _12 = _5->write_iter;
+  if (_12 != 0B)
+    goto <bb 5>;
+  else
+    goto <bb 13>;
+
+  <bb 5>:
+  iov.iov_base = p_7(D);
+  iov.iov_len = count_8(D);
+  _23 = MEM[(struct file *)file_4(D) + 64B];
+  _24 = _23 & 1024;
+  if (_24 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+
+  <bb 7>:
+  # res_28 = PHI <0(6), 2(5)>
+  _25 = _23 & 16384;
+  if (_25 != 0)
+    goto <bb 14>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  # res_30 = PHI <res_28(7), res_29(14)>
+  kiocb = {};
+  kiocb.ki_filp = file_4(D);
+  kiocb.ki_flags = res_30;
+  _15 = *pos_9(D);
+  kiocb.ki_pos = _15;
+  iov_iter_init (&iter, 1, &iov, 1, count_8(D));
+  _16 = file_4(D)->f_op;
+  _17 = _16->write_iter;
+  ret_18 = _17 (&kiocb, &iter);
+  if (ret_18 == -529)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 479, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 10>:
+  if (ret_18 > 0)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  _22 = kiocb.ki_pos;
+  *pos_9(D) = _22;
+
+  <bb 12>:
+  iov ={v} {CLOBBER};
+  kiocb ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+
+  <bb 13>:
+  # _1 = PHI <_11(3), ret_18(12), -22(4)>
+  return _1;
+
+  <bb 14>:
+  res_29 = res_28 | 4;
+  goto <bb 8>;
+
+}
+
+
+
+;; Function __kernel_write (__kernel_write, funcdef_no=2452, decl_uid=16583, cgraph_uid=2455)
+
+__kernel_write (struct file * file, const char * buf, size_t count, loff_t * pos)
+{
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  long unsigned int old_fs$seg;
+  struct task_struct * pfo_ret__;
+  long long unsigned int amt.19;
+  struct task_struct * pfo_ret__;
+  u64 pfo_ret__;
+  u64 pfo_ret__;
+  u64 pfo_ret__;
+  ssize_t ret;
+  ssize_t _2;
+  unsigned int _7;
+  unsigned int _8;
+  long unsigned int _21;
+  struct thread_info * _22;
+  long unsigned int _24;
+  struct thread_info * _25;
+  long unsigned int _27;
+  struct thread_info * _28;
+  long long unsigned int _30;
+  long long unsigned int _32;
+  long long unsigned int _34;
+  long long unsigned int _35;
+  struct inode * _39;
+  short unsigned int _40;
+  short unsigned int _41;
+  unsigned int _42;
+  unsigned int _43;
+
+  <bb 2>:
+  _7 = file_6(D)->f_mode;
+  _8 = _7 & 262144;
+  if (_8 == 0)
+    goto <bb 10>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___20 : "p" &cpu_tss.x86_tss.sp0);
+  _21 = pfo_ret___20 + 18446744073709535232;
+  _22 = (struct thread_info *) _21;
+  old_fs$seg_19 = MEM[(struct thread_info *)_22 + 24B];
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___23 : "p" &cpu_tss.x86_tss.sp0);
+  _24 = pfo_ret___23 + 18446744073709535232;
+  _25 = (struct thread_info *) _24;
+  _25->addr_limit.seg = 18446744073709551615;
+  count_51 = MIN_EXPR <count_11(D), 2147479552>;
+  ret_14 = __vfs_write (file_6(D), buf_10(D), count_51, pos_12(D));
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___26 : "p" &cpu_tss.x86_tss.sp0);
+  _27 = pfo_ret___26 + 18446744073709535232;
+  _28 = (struct thread_info *) _27;
+  MEM[(struct thread_info *)_28 + 24B] = old_fs$seg_19;
+  if (ret_14 > 0)
+    goto <bb 4>;
+  else
+    goto <bb 9>;
+
+  <bb 4>:
+  _39 = MEM[(const struct file *)file_6(D) + 32B];
+  _40 = _39->i_mode;
+  _41 = _40 & 61440;
+  if (_41 == 16384)
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+
+  <bb 6>:
+  # mask_45 = PHI <2(5), 1073741826(4)>
+  _42 = file_6(D)->f_mode;
+  _43 = _42 & 67108864;
+  if (_43 == 0)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  path_38 = &file_6(D)->f_path;
+  dentry_44 = MEM[(struct path *)file_6(D) + 16B].dentry;
+  __fsnotify_parent (path_38, dentry_44, mask_45);
+  fsnotify (_39, mask_45, path_38, 1, 0B, 0);
+
+  <bb 8>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___29 : "p" &current_task);
+  _30 = pfo_ret___29->ioac.wchar;
+  amt.19_31 = (long long unsigned int) ret_14;
+  _32 = amt.19_31 + _30;
+  pfo_ret___29->ioac.wchar = _32;
+
+  <bb 9>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___33 : "p" &current_task);
+  _34 = pfo_ret___33->ioac.syscw;
+  _35 = _34 + 1;
+  pfo_ret___33->ioac.syscw = _35;
+
+  <bb 10>:
+  # _2 = PHI <-22(2), ret_14(9)>
+  return _2;
+
+}
+
+
+
+;; Function vfs_read (vfs_read, funcdef_no=2449, decl_uid=15904, cgraph_uid=2452)
+
+vfs_read (struct file * file, char * buf, size_t count, loff_t * pos)
+{
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  struct task_struct * pfo_ret__;
+  long long unsigned int amt.18;
+  struct task_struct * pfo_ret__;
+  long int count.12;
+  long long unsigned int pos.13;
+  loff_t pos;
+  int retval;
+  long unsigned int addr;
+  u64 pfo_ret__;
+  ssize_t ret;
+  long unsigned int buf.17;
+  ssize_t _2;
+  unsigned int _8;
+  unsigned int _9;
+  unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _28;
+  struct thread_info * _29;
+  struct inode * _36;
+  long long int _47;
+  long long unsigned int _48;
+  long long unsigned int _50;
+  long long int _51;
+  struct file_lock_context * _56;
+  int _60;
+  int _62;
+  long unsigned int _66;
+  int _67;
+  int _68;
+  long long unsigned int _70;
+  long long unsigned int _72;
+  long long unsigned int _74;
+  long long unsigned int _75;
+  int _84;
+  int _85;
+  int _87;
+  int _88;
+  struct inode * _90;
+  short unsigned int _91;
+  short unsigned int _92;
+  unsigned int _93;
+  unsigned int _94;
+
+  <bb 2>:
+  _8 = file_7(D)->f_mode;
+  _9 = _8 & 1;
+  if (_9 == 0)
+    goto <bb 25>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _10 = _8 & 131072;
+  if (_10 == 0)
+    goto <bb 25>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___27 : "p" &cpu_tss.x86_tss.sp0);
+  _28 = pfo_ret___27 + 18446744073709535232;
+  _29 = (struct thread_info *) _28;
+  _11 = _29->addr_limit.seg;
+  buf.17_13 = (long unsigned int) buf_12(D);
+  addr_33 = buf.17_13 + count_14(D);
+  if (count_14(D) > addr_33)
+    goto <bb 25>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  if (_11 < addr_33)
+    goto <bb 25>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _36 = MEM[(const struct file *)file_7(D) + 32B];
+  count.12_38 = (long int) count_14(D);
+  if (count.12_38 < 0)
+    goto <bb 26>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  pos_42 = MEM[(const loff_t *)pos_18(D)];
+  if (pos_42 < 0)
+    goto <bb 8>;
+  else
+    goto <bb 10>;
+
+  <bb 8>:
+  _84 = (int) _8;
+  _85 = _84 & 8192;
+  if (_85 == 0)
+    goto <bb 26>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  _47 = -pos_42;
+  _48 = (long long unsigned int) _47;
+  if (count_14(D) >= _48)
+    goto <bb 26>;
+  else
+    goto <bb 12>;
+
+  <bb 10>:
+  pos.13_49 = (long long unsigned int) pos_42;
+  _50 = pos.13_49 + count_14(D);
+  _51 = (long long int) _50;
+  if (_51 < 0)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  _87 = (int) _8;
+  _88 = _87 & 8192;
+  if (_88 == 0)
+    goto <bb 26>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  _56 = _36->i_flctx;
+  if (_56 != 0B)
+    goto <bb 14>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  retval_65 = security_file_permission (file_7(D), 4);
+  if (retval_65 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 14>:
+  _60 = mandatory_lock (_36);
+  if (_60 != 0)
+    goto <bb 15>;
+  else
+    goto <bb 13>;
+
+  <bb 15>:
+  retval_64 = locks_mandatory_area (1, _36, file_7(D), pos_42, count_14(D));
+  if (retval_64 < 0)
+    goto <bb 17>;
+  else
+    goto <bb 13>;
+
+  <bb 16>:
+  _66 = MIN_EXPR <count_14(D), 2147479552>;
+  _67 = (int) _66;
+
+  <bb 17>:
+  # _68 = PHI <_67(16), retval_64(15), retval_65(13)>
+  ret_20 = (ssize_t) _68;
+  if (ret_20 >= 0)
+    goto <bb 18>;
+  else
+    goto <bb 25>;
+
+  <bb 18>:
+  count_21 = (size_t) _68;
+  ret_23 = __vfs_read (file_7(D), buf_12(D), count_21, pos_18(D));
+  if (ret_23 > 0)
+    goto <bb 19>;
+  else
+    goto <bb 24>;
+
+  <bb 19>:
+  _90 = MEM[(const struct file *)file_7(D) + 32B];
+  _91 = _90->i_mode;
+  _92 = _91 & 61440;
+  if (_92 == 16384)
+    goto <bb 21>;
+  else
+    goto <bb 20>;
+
+  <bb 20>:
+
+  <bb 21>:
+  # mask_96 = PHI <1(20), 1073741825(19)>
+  _93 = file_7(D)->f_mode;
+  _94 = _93 & 67108864;
+  if (_94 == 0)
+    goto <bb 22>;
+  else
+    goto <bb 23>;
+
+  <bb 22>:
+  path_89 = &file_7(D)->f_path;
+  dentry_95 = MEM[(struct path *)file_7(D) + 16B].dentry;
+  __fsnotify_parent (path_89, dentry_95, mask_96);
+  fsnotify (_90, mask_96, path_89, 1, 0B, 0);
+
+  <bb 23>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___69 : "p" &current_task);
+  _70 = pfo_ret___69->ioac.rchar;
+  amt.18_71 = (long long unsigned int) ret_23;
+  _72 = amt.18_71 + _70;
+  pfo_ret___69->ioac.rchar = _72;
+
+  <bb 24>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___73 : "p" &current_task);
+  _74 = pfo_ret___73->ioac.syscr;
+  _75 = _74 + 1;
+  pfo_ret___73->ioac.syscr = _75;
+
+  <bb 25>:
+  # _2 = PHI <-9(2), -22(3), ret_20(17), ret_23(24), ret_98(26), -14(5), -14(4)>
+  return _2;
+
+  <bb 26>:
+  # _62 = PHI <-22(8), -75(9), -22(6), -22(11)>
+  ret_98 = (ssize_t) _62;
+  goto <bb 25>;
+
+}
+
+
+
+;; Function vfs_write (vfs_write, funcdef_no=2453, decl_uid=15909, cgraph_uid=2456)
+
+vfs_write (struct file * file, const char * buf, size_t count, loff_t * pos)
+{
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  struct task_struct * pfo_ret__;
+  long long unsigned int amt.19;
+  struct task_struct * pfo_ret__;
+  long int count.12;
+  long long unsigned int pos.13;
+  loff_t pos;
+  int retval;
+  long unsigned int addr;
+  u64 pfo_ret__;
+  ssize_t ret;
+  long unsigned int buf.20;
+  ssize_t _2;
+  unsigned int _8;
+  unsigned int _9;
+  unsigned int _10;
+  long unsigned int _11;
+  long unsigned int _30;
+  struct thread_info * _31;
+  struct inode * _38;
+  long long int _49;
+  long long unsigned int _50;
+  long long unsigned int _52;
+  long long int _53;
+  struct file_lock_context * _58;
+  int _62;
+  int _64;
+  long unsigned int _68;
+  int _69;
+  int _70;
+  long long unsigned int _72;
+  long long unsigned int _74;
+  long long unsigned int _76;
+  long long unsigned int _77;
+  int _86;
+  int _87;
+  int _89;
+  int _90;
+  struct inode * _91;
+  short unsigned int _92;
+  short unsigned int _93;
+  struct super_block * _94;
+  struct inode * _96;
+  short unsigned int _97;
+  short unsigned int _98;
+  unsigned int _99;
+  unsigned int _100;
+  struct inode * _103;
+  short unsigned int _104;
+  short unsigned int _105;
+  struct super_block * _106;
+
+  <bb 2>:
+  _8 = file_7(D)->f_mode;
+  _9 = _8 & 2;
+  if (_9 == 0)
+    goto <bb 28>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _10 = _8 & 262144;
+  if (_10 == 0)
+    goto <bb 28>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___29 : "p" &cpu_tss.x86_tss.sp0);
+  _30 = pfo_ret___29 + 18446744073709535232;
+  _31 = (struct thread_info *) _30;
+  _11 = _31->addr_limit.seg;
+  buf.20_13 = (long unsigned int) buf_12(D);
+  addr_35 = buf.20_13 + count_14(D);
+  if (count_14(D) > addr_35)
+    goto <bb 28>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  if (_11 < addr_35)
+    goto <bb 28>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _38 = MEM[(const struct file *)file_7(D) + 32B];
+  count.12_40 = (long int) count_14(D);
+  if (count.12_40 < 0)
+    goto <bb 29>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  pos_44 = MEM[(const loff_t *)pos_18(D)];
+  if (pos_44 < 0)
+    goto <bb 8>;
+  else
+    goto <bb 10>;
+
+  <bb 8>:
+  _86 = (int) _8;
+  _87 = _86 & 8192;
+  if (_87 == 0)
+    goto <bb 29>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  _49 = -pos_44;
+  _50 = (long long unsigned int) _49;
+  if (count_14(D) >= _50)
+    goto <bb 29>;
+  else
+    goto <bb 12>;
+
+  <bb 10>:
+  pos.13_51 = (long long unsigned int) pos_44;
+  _52 = pos.13_51 + count_14(D);
+  _53 = (long long int) _52;
+  if (_53 < 0)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  _89 = (int) _8;
+  _90 = _89 & 8192;
+  if (_90 == 0)
+    goto <bb 29>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  _58 = _38->i_flctx;
+  if (_58 != 0B)
+    goto <bb 14>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  retval_67 = security_file_permission (file_7(D), 2);
+  if (retval_67 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 14>:
+  _62 = mandatory_lock (_38);
+  if (_62 != 0)
+    goto <bb 15>;
+  else
+    goto <bb 13>;
+
+  <bb 15>:
+  retval_66 = locks_mandatory_area (2, _38, file_7(D), pos_44, count_14(D));
+  if (retval_66 < 0)
+    goto <bb 17>;
+  else
+    goto <bb 13>;
+
+  <bb 16>:
+  _68 = MIN_EXPR <count_14(D), 2147479552>;
+  _69 = (int) _68;
+
+  <bb 17>:
+  # _70 = PHI <_69(16), retval_66(15), retval_67(13)>
+  ret_20 = (ssize_t) _70;
+  if (ret_20 >= 0)
+    goto <bb 18>;
+  else
+    goto <bb 28>;
+
+  <bb 18>:
+  count_21 = (size_t) _70;
+  _91 = MEM[(const struct file *)file_7(D) + 32B];
+  _92 = _91->i_mode;
+  _93 = _92 & 61440;
+  if (_93 != 32768)
+    goto <bb 20>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  _94 = _91->i_sb;
+  __sb_start_write (_94, 1, 1);
+
+  <bb 20>:
+  ret_24 = __vfs_write (file_7(D), buf_12(D), count_21, pos_18(D));
+  if (ret_24 > 0)
+    goto <bb 21>;
+  else
+    goto <bb 26>;
+
+  <bb 21>:
+  _96 = MEM[(const struct file *)file_7(D) + 32B];
+  _97 = _96->i_mode;
+  _98 = _97 & 61440;
+  if (_98 == 16384)
+    goto <bb 23>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+
+  <bb 23>:
+  # mask_102 = PHI <2(22), 1073741826(21)>
+  _99 = file_7(D)->f_mode;
+  _100 = _99 & 67108864;
+  if (_100 == 0)
+    goto <bb 24>;
+  else
+    goto <bb 25>;
+
+  <bb 24>:
+  path_95 = &file_7(D)->f_path;
+  dentry_101 = MEM[(struct path *)file_7(D) + 16B].dentry;
+  __fsnotify_parent (path_95, dentry_101, mask_102);
+  fsnotify (_96, mask_102, path_95, 1, 0B, 0);
+
+  <bb 25>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___71 : "p" &current_task);
+  _72 = pfo_ret___71->ioac.wchar;
+  amt.19_73 = (long long unsigned int) ret_24;
+  _74 = amt.19_73 + _72;
+  pfo_ret___71->ioac.wchar = _74;
+
+  <bb 26>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___75 : "p" &current_task);
+  _76 = pfo_ret___75->ioac.syscw;
+  _77 = _76 + 1;
+  pfo_ret___75->ioac.syscw = _77;
+  _103 = MEM[(const struct file *)file_7(D) + 32B];
+  _104 = _103->i_mode;
+  _105 = _104 & 61440;
+  if (_105 != 32768)
+    goto <bb 28>;
+  else
+    goto <bb 27>;
+
+  <bb 27>:
+  _106 = _103->i_sb;
+  __sb_end_write (_106, 1);
+
+  <bb 28>:
+  # _2 = PHI <-9(2), -22(3), ret_20(17), ret_24(27), ret_109(29), ret_24(26), -14(5), -14(4)>
+  return _2;
+
+  <bb 29>:
+  # _64 = PHI <-22(8), -75(9), -22(6), -22(11)>
+  ret_109 = (ssize_t) _64;
+  goto <bb 28>;
+
+}
+
+
+
+;; Function compat_do_readv_writev (compat_do_readv_writev, funcdef_no=2480, decl_uid=35669, cgraph_uid=2491)
+
+compat_do_readv_writev (int type, struct file * file, const struct compat_iovec * uvector, long unsigned int nr_segs, loff_t * pos)
+{
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  long unsigned int _min2.114;
+  int res;
+  long unsigned int nr.111;
+  struct kiocb kiocb;
+  long long unsigned int pos.13;
+  int iftmp.14;
+  int iftmp.15;
+  loff_t pos;
+  int retval;
+  ssize_t (*iter_fn_t) (struct kiocb *, struct iov_iter *) iter_fn;
+  ssize_t (*io_fn_t) (struct file *, char *, size_t, loff_t *) fn;
+  ssize_t ret;
+  struct iov_iter iter;
+  struct iovec * iov;
+  struct iovec iovstack[8];
+  compat_ssize_t tot_len;
+  struct iovec * iov.145;
+  unsigned int _14;
+  int _18;
+  long unsigned int _20;
+  long unsigned int _22;
+  const struct file_operations * _27;
+  const struct file_operations * _30;
+  _Bool _39;
+  long int _40;
+  long int _41;
+  struct inode * _47;
+  long unsigned int _48;
+  long int _53;
+  unsigned int _56;
+  long long int _58;
+  long long unsigned int _59;
+  long long unsigned int _61;
+  long long int _62;
+  long unsigned int _64;
+  unsigned int _66;
+  struct file_lock_context * _68;
+  int _72;
+  long unsigned int _80;
+  int _81;
+  int _82;
+  long long int _83;
+  long long int _88;
+  long unsigned int _95;
+  int _96;
+  int _118;
+  int _119;
+  int _121;
+  int _122;
+  struct inode * _123;
+  short unsigned int _124;
+  short unsigned int _125;
+  struct super_block * _126;
+  unsigned int _127;
+  unsigned int _128;
+  unsigned int _129;
+  const struct iovec * _135;
+  void * _136;
+  long unsigned int _137;
+  void * _138;
+  long unsigned int _140;
+  const long unsigned int _142;
+  struct inode * _144;
+  short unsigned int _145;
+  short unsigned int _146;
+  struct super_block * _147;
+  struct inode * _149;
+  short unsigned int _150;
+  short unsigned int _151;
+  unsigned int _152;
+  unsigned int _153;
+  struct inode * _157;
+  short unsigned int _158;
+  short unsigned int _159;
+  unsigned int _160;
+  unsigned int _161;
+
+  <bb 2>:
+  iov = &iovstack;
+  _14 = (unsigned int) nr_segs_13(D);
+  _18 = compat_import_iovec (type_15(D), uvector_16(D), _14, 8, &iov, &iter);
+  ret_19 = (ssize_t) _18;
+  if (ret_19 < 0)
+    goto <bb 53>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _20 = MEM[(struct iov_iter *)&iter + 16B];
+  tot_len_21 = (compat_ssize_t) _20;
+  if (tot_len_21 == 0)
+    goto <bb 43> (out);
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _22 = (long unsigned int) tot_len_21;
+  _47 = MEM[(const struct file *)file_23(D) + 32B];
+  if (tot_len_21 < 0)
+    goto <bb 54>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  pos_52 = MEM[(const loff_t *)pos_24(D)];
+  if (pos_52 < 0)
+    goto <bb 6>;
+  else
+    goto <bb 8>;
+
+  <bb 6>:
+  _56 = MEM[(struct file *)file_23(D) + 68B];
+  _118 = (int) _56;
+  _119 = _118 & 8192;
+  if (_119 == 0)
+    goto <bb 54>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  _58 = -pos_52;
+  _59 = (long long unsigned int) _58;
+  if (_22 >= _59)
+    goto <bb 54>;
+  else
+    goto <bb 10>;
+
+  <bb 8>:
+  pos.13_60 = (long long unsigned int) pos_52;
+  _61 = pos.13_60 + _22;
+  _62 = (long long int) _61;
+  if (_62 < 0)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  _66 = MEM[(struct file *)file_23(D) + 68B];
+  _121 = (int) _66;
+  _122 = _121 & 8192;
+  if (_122 == 0)
+    goto <bb 54>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  _68 = _47->i_flctx;
+  if (_68 != 0B)
+    goto <bb 13>;
+  else
+    goto <bb 11>;
+
+  <bb 11>:
+  if (type_15(D) == 0)
+    goto <bb 12>;
+  else
+    goto <bb 17>;
+
+  <bb 12>:
+  goto <bb 17>;
+
+  <bb 13>:
+  _72 = mandatory_lock (_47);
+  if (_72 != 0)
+    goto <bb 14>;
+  else
+    goto <bb 11>;
+
+  <bb 14>:
+  if (type_15(D) == 0)
+    goto <bb 15>;
+  else
+    goto <bb 16>;
+
+  <bb 15>:
+
+  <bb 16>:
+  # iftmp.14_76 = PHI <1(15), 2(14)>
+  retval_77 = locks_mandatory_area (iftmp.14_76, _47, file_23(D), pos_52, _22);
+  if (retval_77 < 0)
+    goto <bb 19>;
+  else
+    goto <bb 11>;
+
+  <bb 17>:
+  # iftmp.15_78 = PHI <4(12), 2(11)>
+  retval_79 = security_file_permission (file_23(D), iftmp.15_78);
+  if (retval_79 != 0)
+    goto <bb 19>;
+  else
+    goto <bb 18>;
+
+  <bb 18>:
+  _80 = MIN_EXPR <_22, 2147479552>;
+  _81 = (int) _80;
+
+  <bb 19>:
+  # _82 = PHI <_81(18), retval_77(16), retval_79(17)>
+  ret_26 = (ssize_t) _82;
+  if (ret_26 < 0)
+    goto <bb 43> (out);
+  else
+    goto <bb 20>;
+
+  <bb 20>:
+  if (type_15(D) == 0)
+    goto <bb 21>;
+  else
+    goto <bb 22>;
+
+  <bb 21>:
+  _27 = file_23(D)->f_op;
+  fn_28 = _27->read;
+  iter_fn_29 = _27->read_iter;
+  goto <bb 24>;
+
+  <bb 22>:
+  _30 = file_23(D)->f_op;
+  fn_31 = _30->write;
+  iter_fn_32 = _30->write_iter;
+  _123 = MEM[(const struct file *)file_23(D) + 32B];
+  _124 = _123->i_mode;
+  _125 = _124 & 61440;
+  if (_125 != 32768)
+    goto <bb 24>;
+  else
+    goto <bb 23>;
+
+  <bb 23>:
+  _126 = _123->i_sb;
+  __sb_start_write (_126, 1, 1);
+
+  <bb 24>:
+  # fn_3 = PHI <fn_28(21), fn_31(23), fn_31(22)>
+  # iter_fn_4 = PHI <iter_fn_29(21), iter_fn_32(23), iter_fn_32(22)>
+  if (iter_fn_4 != 0B)
+    goto <bb 26>;
+  else
+    goto <bb 25>;
+
+  <bb 25>:
+  _48 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_48 != 0)
+    goto <bb 32>;
+  else
+    goto <bb 40>;
+
+  <bb 26>:
+  _127 = MEM[(struct file *)file_23(D) + 64B];
+  _128 = _127 & 1024;
+  if (_128 != 0)
+    goto <bb 28>;
+  else
+    goto <bb 27>;
+
+  <bb 27>:
+
+  <bb 28>:
+  # res_132 = PHI <0(27), 2(26)>
+  _129 = _127 & 16384;
+  if (_129 != 0)
+    goto <bb 55>;
+  else
+    goto <bb 29>;
+
+  <bb 29>:
+  # res_134 = PHI <res_132(28), res_133(55)>
+  kiocb = {};
+  kiocb.ki_filp = file_23(D);
+  kiocb.ki_flags = res_134;
+  _83 = *pos_24(D);
+  kiocb.ki_pos = _83;
+  ret_84 = iter_fn_4 (&kiocb, &iter);
+  if (ret_84 == -529)
+    goto <bb 30>;
+  else
+    goto <bb 31>;
+
+  <bb 30>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 665, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 31>:
+  _88 = kiocb.ki_pos;
+  *pos_24(D) = _88;
+  kiocb ={v} {CLOBBER};
+  goto <bb 40>;
+
+  <bb 32>:
+
+  <bb 33>:
+  # ret_102 = PHI <ret_93(37), 0(32)>
+  # _64 = PHI <_95(37), _48(32)>
+  _135 = iter.D.12777.iov;
+  _136 = _135->iov_base;
+  _137 = iter.iov_offset;
+  _138 = _136 + _137;
+  _140 = _135->iov_len;
+  _min2.114_141 = _140 - _137;
+  _142 = MIN_EXPR <_64, _min2.114_141>;
+  ret_91 = fn_3 (file_23(D), _138, _142, pos_24(D));
+  if (ret_91 < 0)
+    goto <bb 34>;
+  else
+    goto <bb 35>;
+
+  <bb 34>:
+  # ret_143 = PHI <ret_102(33)>
+  if (ret_143 == 0)
+    goto <bb 39>;
+  else
+    goto <bb 38>;
+
+  <bb 35>:
+  ret_93 = ret_91 + ret_102;
+  nr.111_94 = (long unsigned int) ret_91;
+  if (nr.111_94 != _142)
+    goto <bb 39>;
+  else
+    goto <bb 36>;
+
+  <bb 36>:
+  iov_iter_advance (&iter, nr.111_94);
+  _95 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_95 != 0)
+    goto <bb 37>;
+  else
+    goto <bb 40>;
+
+  <bb 37>:
+  goto <bb 33>;
+
+  <bb 38>:
+
+  <bb 39>:
+  # ret_98 = PHI <ret_102(38), ret_91(34), ret_93(35)>
+
+  <bb 40>:
+  # ret_1 = PHI <ret_84(31), ret_93(36), ret_98(39), 0(25)>
+  if (type_15(D) != 0)
+    goto <bb 41>;
+  else
+    goto <bb 56>;
+
+  <bb 41>:
+  _144 = MEM[(const struct file *)file_23(D) + 32B];
+  _145 = _144->i_mode;
+  _146 = _145 & 61440;
+  if (_146 != 32768)
+    goto <bb 57>;
+  else
+    goto <bb 42>;
+
+  <bb 42>:
+  _147 = _144->i_sb;
+  __sb_end_write (_147, 1);
+  goto <bb 57>;
+
+  # ret_2 = PHI <ret_19(3), ret_180(54), ret_26(19)>
+out:
+  iov.145_37 = iov;
+  kfree (iov.145_37);
+  _39 = type_15(D) == 0;
+  _40 = (long int) _39;
+  _41 = _40 + ret_2;
+  if (_41 > 0)
+    goto <bb 44>;
+  else
+    goto <bb 53>;
+
+  <bb 44>:
+  if (_39 != 0)
+    goto <bb 45>;
+  else
+    goto <bb 49>;
+
+  <bb 45>:
+  # ret_90 = PHI <ret_2(44), ret_1(56)>
+  _149 = MEM[(const struct file *)file_23(D) + 32B];
+  _150 = _149->i_mode;
+  _151 = _150 & 61440;
+  if (_151 == 16384)
+    goto <bb 47>;
+  else
+    goto <bb 46>;
+
+  <bb 46>:
+
+  <bb 47>:
+  # mask_155 = PHI <1(46), 1073741825(45)>
+  _152 = file_23(D)->f_mode;
+  _153 = _152 & 67108864;
+  if (_153 == 0)
+    goto <bb 48>;
+  else
+    goto <bb 53>;
+
+  <bb 48>:
+  path_148 = &file_23(D)->f_path;
+  dentry_154 = MEM[(struct path *)file_23(D) + 16B].dentry;
+  __fsnotify_parent (path_148, dentry_154, mask_155);
+  fsnotify (_149, mask_155, path_148, 1, 0B, 0);
+  goto <bb 53>;
+
+  <bb 49>:
+  # ret_86 = PHI <ret_2(44), ret_1(57)>
+  _157 = MEM[(const struct file *)file_23(D) + 32B];
+  _158 = _157->i_mode;
+  _159 = _158 & 61440;
+  if (_159 == 16384)
+    goto <bb 51>;
+  else
+    goto <bb 50>;
+
+  <bb 50>:
+
+  <bb 51>:
+  # mask_163 = PHI <2(50), 1073741826(49)>
+  _160 = file_23(D)->f_mode;
+  _161 = _160 & 67108864;
+  if (_161 == 0)
+    goto <bb 52>;
+  else
+    goto <bb 53>;
+
+  <bb 52>:
+  path_156 = &file_23(D)->f_path;
+  dentry_162 = MEM[(struct path *)file_23(D) + 16B].dentry;
+  __fsnotify_parent (path_156, dentry_162, mask_163);
+  fsnotify (_157, mask_163, path_156, 1, 0B, 0);
+
+  <bb 53>:
+  # ret_5 = PHI <ret_19(2), ret_90(48), ret_2(43), ret_86(51), ret_90(47), ret_86(52), ret_1(56), ret_1(57)>
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+  return ret_5;
+
+  <bb 54>:
+  # _96 = PHI <-22(6), -75(7), -22(4), -22(9)>
+  ret_180 = (ssize_t) _96;
+  goto <bb 43> (out);
+
+  <bb 55>:
+  res_133 = res_132 | 4;
+  goto <bb 29>;
+
+  <bb 56>:
+  iov.145_101 = iov;
+  kfree (iov.145_101);
+  _53 = ret_1 + 1;
+  if (_53 > 0)
+    goto <bb 45>;
+  else
+    goto <bb 53>;
+
+  <bb 57>:
+  iov.145_49 = iov;
+  kfree (iov.145_49);
+  if (ret_1 > 0)
+    goto <bb 49>;
+  else
+    goto <bb 53>;
+
+}
+
+
+
+;; Function compat_readv (compat_readv, funcdef_no=2481, decl_uid=35683, cgraph_uid=2492)
+
+compat_readv (struct file * file, const struct compat_iovec * vec, long unsigned int vlen, loff_t * pos)
+{
+  struct task_struct * pfo_ret__;
+  long long unsigned int amt.18;
+  struct task_struct * pfo_ret__;
+  ssize_t ret;
+  size_t prephitmp_1;
+  size_t prephitmp_2;
+  unsigned int _6;
+  unsigned int _7;
+  unsigned int _8;
+  long long unsigned int _18;
+  long long unsigned int _20;
+  long long unsigned int _22;
+  long long unsigned int _23;
+  size_t pretmp_27;
+
+  <bb 2>:
+  _6 = file_5(D)->f_mode;
+  _7 = _6 & 1;
+  if (_7 == 0)
+    goto <bb 8>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _8 = _6 & 131072;
+  if (_8 == 0)
+    goto <bb 8>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  ret_13 = compat_do_readv_writev (0, file_5(D), vec_9(D), vlen_10(D), pos_11(D));
+  if (ret_13 > 0)
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  pretmp_27 = (size_t) ret_13;
+  goto <bb 7>;
+
+  <bb 6>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___17 : "p" &current_task);
+  _18 = pfo_ret___17->ioac.rchar;
+  amt.18_19 = (long long unsigned int) ret_13;
+  _20 = amt.18_19 + _18;
+  pfo_ret___17->ioac.rchar = _20;
+
+  <bb 7>:
+  # prephitmp_2 = PHI <prephitmp_1(8), amt.18_19(6), pretmp_27(5)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___21 : "p" &current_task);
+  _22 = pfo_ret___21->ioac.syscr;
+  _23 = _22 + 1;
+  pfo_ret___21->ioac.syscr = _23;
+  return prephitmp_2;
+
+  <bb 8>:
+  # prephitmp_1 = PHI <18446744073709551594(3), 18446744073709551607(2)>
+  goto <bb 7>;
+
+}
+
+
+
+;; Function __compat_sys_preadv64 (__compat_sys_preadv64, funcdef_no=2484, decl_uid=35716, cgraph_uid=2496)
+
+__compat_sys_preadv64 (long unsigned int fd, const struct compat_iovec * vec, long unsigned int vlen, loff_t pos)
+{
+  ssize_t ret;
+  long long int pos.149;
+  long int _2;
+  unsigned int _8;
+  unsigned int _10;
+  unsigned int _11;
+  long unsigned int _15;
+  long unsigned int _18;
+  long unsigned int _19;
+  struct file * _20;
+  unsigned int _21;
+  unsigned int _23;
+
+  <bb 2>:
+  pos.149_6 = pos;
+  if (pos.149_6 < 0)
+    goto <bb 8>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _8 = (unsigned int) fd_7(D);
+  _18 = __fdget (_8);
+  _19 = _18 & 18446744073709551612;
+  _20 = (struct file *) _19;
+  _21 = (unsigned int) _18;
+  if (_20 == 0B)
+    goto <bb 8>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _10 = _20->f_mode;
+  _11 = _10 & 8;
+  if (_11 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  _15 = compat_readv (_20, vec_12(D), vlen_13(D), &pos);
+  ret_16 = (ssize_t) _15;
+
+  <bb 6>:
+  # ret_1 = PHI <-29(4), ret_16(5)>
+  _23 = _21 & 1;
+  if (_23 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  fput (_20);
+
+  <bb 8>:
+  # _2 = PHI <-22(2), -9(3), ret_1(6), ret_1(7)>
+  return _2;
+
+}
+
+
+
+;; Function compat_writev (compat_writev, funcdef_no=2489, decl_uid=35784, cgraph_uid=2503)
+
+compat_writev (struct file * file, const struct compat_iovec * vec, long unsigned int vlen, loff_t * pos)
+{
+  struct task_struct * pfo_ret__;
+  long long unsigned int amt.19;
+  struct task_struct * pfo_ret__;
+  ssize_t ret;
+  size_t prephitmp_1;
+  size_t prephitmp_2;
+  unsigned int _6;
+  unsigned int _7;
+  unsigned int _8;
+  long long unsigned int _18;
+  long long unsigned int _20;
+  long long unsigned int _22;
+  long long unsigned int _23;
+  size_t pretmp_27;
+
+  <bb 2>:
+  _6 = file_5(D)->f_mode;
+  _7 = _6 & 2;
+  if (_7 == 0)
+    goto <bb 8>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _8 = _6 & 262144;
+  if (_8 == 0)
+    goto <bb 8>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  ret_13 = compat_do_readv_writev (1, file_5(D), vec_9(D), vlen_10(D), pos_11(D));
+  if (ret_13 > 0)
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  pretmp_27 = (size_t) ret_13;
+  goto <bb 7>;
+
+  <bb 6>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___17 : "p" &current_task);
+  _18 = pfo_ret___17->ioac.wchar;
+  amt.19_19 = (long long unsigned int) ret_13;
+  _20 = amt.19_19 + _18;
+  pfo_ret___17->ioac.wchar = _20;
+
+  <bb 7>:
+  # prephitmp_2 = PHI <prephitmp_1(8), amt.19_19(6), pretmp_27(5)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___21 : "p" &current_task);
+  _22 = pfo_ret___21->ioac.syscw;
+  _23 = _22 + 1;
+  pfo_ret___21->ioac.syscw = _23;
+  return prephitmp_2;
+
+  <bb 8>:
+  # prephitmp_1 = PHI <18446744073709551594(3), 18446744073709551607(2)>
+  goto <bb 7>;
+
+}
+
+
+
+;; Function __compat_sys_pwritev64 (__compat_sys_pwritev64, funcdef_no=2492, decl_uid=35817, cgraph_uid=2507)
+
+__compat_sys_pwritev64 (long unsigned int fd, const struct compat_iovec * vec, long unsigned int vlen, loff_t pos)
+{
+  ssize_t ret;
+  long long int pos.158;
+  long int _2;
+  unsigned int _8;
+  unsigned int _10;
+  unsigned int _11;
+  long unsigned int _15;
+  long unsigned int _18;
+  long unsigned int _19;
+  struct file * _20;
+  unsigned int _21;
+  unsigned int _23;
+
+  <bb 2>:
+  pos.158_6 = pos;
+  if (pos.158_6 < 0)
+    goto <bb 8>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _8 = (unsigned int) fd_7(D);
+  _18 = __fdget (_8);
+  _19 = _18 & 18446744073709551612;
+  _20 = (struct file *) _19;
+  _21 = (unsigned int) _18;
+  if (_20 == 0B)
+    goto <bb 8>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _10 = _20->f_mode;
+  _11 = _10 & 16;
+  if (_11 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  _15 = compat_writev (_20, vec_12(D), vlen_13(D), &pos);
+  ret_16 = (ssize_t) _15;
+
+  <bb 6>:
+  # ret_1 = PHI <-29(4), ret_16(5)>
+  _23 = _21 & 1;
+  if (_23 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  fput (_20);
+
+  <bb 8>:
+  # _2 = PHI <-22(2), -9(3), ret_1(6), ret_1(7)>
+  return _2;
+
+}
+
+
+
+;; Function SYSC_preadv.isra.15 (SYSC_preadv.isra.15, funcdef_no=2521, decl_uid=38436, cgraph_uid=2)
+
+SYSC_preadv.isra.15 (long unsigned int fd, const struct iovec * vec, long unsigned int vlen, long unsigned int pos_l)
+{
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  long unsigned int _min2.114;
+  int res;
+  loff_t pos;
+  ssize_t ret;
+  struct iovec * iov.110;
+  struct iovec iovstack[8];
+  struct iovec * iov;
+  struct iov_iter iter;
+  ssize_t (*io_fn_t) (struct file *, char *, size_t, loff_t *) fn;
+  ssize_t (*iter_fn_t) (struct kiocb *, struct iov_iter *) iter_fn;
+  int retval;
+  loff_t pos;
+  long long unsigned int pos.13;
+  long int count.12;
+  struct kiocb kiocb;
+  long unsigned int nr.111;
+  struct task_struct * pfo_ret__;
+  long long unsigned int amt.18;
+  struct task_struct * pfo_ret__;
+  loff_t _2;
+  unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  struct file * _7;
+  unsigned int _8;
+  unsigned int _10;
+  unsigned int _11;
+  unsigned int _12;
+  unsigned int _13;
+  unsigned int _15;
+  int _17;
+  long unsigned int _19;
+  struct inode * _21;
+  long unsigned int _22;
+  unsigned int _31;
+  long long int _33;
+  long long unsigned int _34;
+  long long unsigned int _36;
+  long long int _37;
+  unsigned int _41;
+  struct file_lock_context * _43;
+  int _46;
+  int _47;
+  long unsigned int _53;
+  int _54;
+  int _55;
+  const struct file_operations * _57;
+  long long int _60;
+  long long int _65;
+  long unsigned int _72;
+  long int _76;
+  unsigned int _77;
+  long long unsigned int _80;
+  long long unsigned int _82;
+  long long unsigned int _84;
+  long long unsigned int _85;
+  long int _86;
+  long unsigned int _90;
+  int _131;
+  int _132;
+  int _134;
+  int _135;
+  unsigned int _136;
+  unsigned int _137;
+  unsigned int _138;
+  const struct iovec * _144;
+  void * _145;
+  long unsigned int _146;
+  void * _147;
+  long unsigned int _149;
+  const long unsigned int _151;
+  struct inode * _154;
+  short unsigned int _155;
+  short unsigned int _156;
+  unsigned int _157;
+  unsigned int _158;
+
+  <bb 2>:
+  _2 = (loff_t) pos_l_1(D);
+  pos = _2;
+  if (_2 < 0)
+    goto <bb 48>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _4 = (unsigned int) fd_3(D);
+  _5 = __fdget (_4);
+  _6 = _5 & 18446744073709551612;
+  _7 = (struct file *) _6;
+  _8 = (unsigned int) _5;
+  if (_7 != 0B)
+    goto <bb 4>;
+  else
+    goto <bb 47>;
+
+  <bb 4>:
+  _10 = _7->f_mode;
+  _11 = _10 & 8;
+  if (_11 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 43>;
+
+  <bb 5>:
+  _12 = _10 & 1;
+  if (_12 == 0)
+    goto <bb 43>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _13 = _10 & 131072;
+  if (_13 == 0)
+    goto <bb 43>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  iov = &iovstack;
+  _15 = (unsigned int) vlen_14(D);
+  _17 = import_iovec (0, vec_16(D), _15, 8, &iov, &iter);
+  ret_18 = (ssize_t) _17;
+  if (ret_18 < 0)
+    goto <bb 42>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  _19 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_19 == 0)
+    goto <bb 37> (out);
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  _21 = MEM[(const struct file *)_7 + 32B];
+  count.12_23 = (long int) _19;
+  if (count.12_23 < 0)
+    goto <bb 49>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  pos_27 = pos;
+  if (pos_27 < 0)
+    goto <bb 11>;
+  else
+    goto <bb 13>;
+
+  <bb 11>:
+  _31 = MEM[(struct file *)_7 + 68B];
+  _131 = (int) _31;
+  _132 = _131 & 8192;
+  if (_132 == 0)
+    goto <bb 49>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  _33 = -pos_27;
+  _34 = (long long unsigned int) _33;
+  if (_19 >= _34)
+    goto <bb 49>;
+  else
+    goto <bb 15>;
+
+  <bb 13>:
+  pos.13_35 = (long long unsigned int) pos_27;
+  _36 = pos.13_35 + _19;
+  _37 = (long long int) _36;
+  if (_37 < 0)
+    goto <bb 14>;
+  else
+    goto <bb 15>;
+
+  <bb 14>:
+  _41 = MEM[(struct file *)_7 + 68B];
+  _134 = (int) _41;
+  _135 = _134 & 8192;
+  if (_135 == 0)
+    goto <bb 49>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _43 = _21->i_flctx;
+  if (_43 != 0B)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+  retval_52 = security_file_permission (_7, 4);
+  if (retval_52 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 19>;
+
+  <bb 17>:
+  _47 = mandatory_lock (_21);
+  if (_47 != 0)
+    goto <bb 18>;
+  else
+    goto <bb 16>;
+
+  <bb 18>:
+  retval_51 = locks_mandatory_area (1, _21, _7, pos_27, _19);
+  if (retval_51 < 0)
+    goto <bb 20>;
+  else
+    goto <bb 16>;
+
+  <bb 19>:
+  _53 = MIN_EXPR <_19, 2147479552>;
+  _54 = (int) _53;
+
+  <bb 20>:
+  # _55 = PHI <_54(19), retval_51(18), retval_52(16)>
+  ret_56 = (ssize_t) _55;
+  if (ret_56 < 0)
+    goto <bb 37> (out);
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+  _57 = _7->f_op;
+  fn_58 = _57->read;
+  iter_fn_59 = _57->read_iter;
+  if (iter_fn_59 != 0B)
+    goto <bb 23>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  _90 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_90 != 0)
+    goto <bb 29>;
+  else
+    goto <bb 51>;
+
+  <bb 23>:
+  _136 = MEM[(struct file *)_7 + 64B];
+  _137 = _136 & 1024;
+  if (_137 != 0)
+    goto <bb 25>;
+  else
+    goto <bb 24>;
+
+  <bb 24>:
+
+  <bb 25>:
+  # res_141 = PHI <0(24), 2(23)>
+  _138 = _136 & 16384;
+  if (_138 != 0)
+    goto <bb 50>;
+  else
+    goto <bb 26>;
+
+  <bb 26>:
+  # res_143 = PHI <res_141(25), res_142(50)>
+  kiocb = {};
+  kiocb.ki_filp = _7;
+  kiocb.ki_flags = res_143;
+  _60 = pos;
+  kiocb.ki_pos = _60;
+  ret_61 = iter_fn_59 (&kiocb, &iter);
+  if (ret_61 == -529)
+    goto <bb 27>;
+  else
+    goto <bb 28>;
+
+  <bb 27>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 665, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 28>:
+  _65 = kiocb.ki_pos;
+  pos = _65;
+  kiocb ={v} {CLOBBER};
+  goto <bb 37> (out);
+
+  <bb 29>:
+
+  <bb 30>:
+  # ret_20 = PHI <ret_70(34), 0(29)>
+  # _22 = PHI <_72(34), _90(29)>
+  _144 = iter.D.12777.iov;
+  _145 = _144->iov_base;
+  _146 = iter.iov_offset;
+  _147 = _145 + _146;
+  _149 = _144->iov_len;
+  _min2.114_150 = _149 - _146;
+  _151 = MIN_EXPR <_22, _min2.114_150>;
+  ret_68 = fn_58 (_7, _147, _151, &pos);
+  if (ret_68 < 0)
+    goto <bb 31>;
+  else
+    goto <bb 32>;
+
+  <bb 31>:
+  # ret_167 = PHI <ret_20(30)>
+  if (ret_167 == 0)
+    goto <bb 36>;
+  else
+    goto <bb 35>;
+
+  <bb 32>:
+  ret_70 = ret_68 + ret_20;
+  nr.111_71 = (long unsigned int) ret_68;
+  if (nr.111_71 != _151)
+    goto <bb 36>;
+  else
+    goto <bb 33>;
+
+  <bb 33>:
+  iov_iter_advance (&iter, nr.111_71);
+  _72 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_72 != 0)
+    goto <bb 34>;
+  else
+    goto <bb 37> (out);
+
+  <bb 34>:
+  goto <bb 30>;
+
+  <bb 35>:
+
+  <bb 36>:
+  # ret_88 = PHI <ret_20(35), ret_68(31), ret_70(32)>
+
+  # ret_75 = PHI <ret_18(8), ret_24(49), ret_61(28), ret_88(36), ret_70(33), ret_56(20)>
+out:
+  iov.110_74 = iov;
+  kfree (iov.110_74);
+  _76 = ret_75 + 1;
+  if (_76 > 0)
+    goto <bb 38>;
+  else
+    goto <bb 42>;
+
+  <bb 38>:
+  # ret_50 = PHI <ret_75(37), 0(51)>
+  _154 = MEM[(const struct file *)_7 + 32B];
+  _155 = _154->i_mode;
+  _156 = _155 & 61440;
+  if (_156 == 16384)
+    goto <bb 40>;
+  else
+    goto <bb 39>;
+
+  <bb 39>:
+
+  <bb 40>:
+  # mask_160 = PHI <1(39), 1073741825(38)>
+  _157 = _7->f_mode;
+  _158 = _157 & 67108864;
+  if (_158 == 0)
+    goto <bb 41>;
+  else
+    goto <bb 42>;
+
+  <bb 41>:
+  path_153 = &_7->f_path;
+  dentry_159 = MEM[(struct path *)_7 + 16B].dentry;
+  __fsnotify_parent (path_153, dentry_159, mask_160);
+  fsnotify (_154, mask_160, path_153, 1, 0B, 0);
+
+  <bb 42>:
+  # ret_89 = PHI <ret_18(7), ret_75(37), ret_50(41), ret_50(40)>
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+
+  <bb 43>:
+  # ret_91 = PHI <-29(4), -22(6), -9(5), ret_89(42)>
+  _77 = _8 & 1;
+  if (_77 != 0)
+    goto <bb 44>;
+  else
+    goto <bb 45>;
+
+  <bb 44>:
+  fput (_7);
+
+  <bb 45>:
+  if (ret_91 > 0)
+    goto <bb 46>;
+  else
+    goto <bb 47>;
+
+  <bb 46>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___79 : "p" &current_task);
+  _80 = pfo_ret___79->ioac.rchar;
+  amt.18_81 = (long long unsigned int) ret_91;
+  _82 = amt.18_81 + _80;
+  pfo_ret___79->ioac.rchar = _82;
+
+  <bb 47>:
+  # ret_39 = PHI <-9(3), ret_91(46), ret_91(45)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___83 : "p" &current_task);
+  _84 = pfo_ret___83->ioac.syscr;
+  _85 = _84 + 1;
+  pfo_ret___83->ioac.syscr = _85;
+
+  <bb 48>:
+  # _86 = PHI <-22(2), ret_39(47)>
+  pos ={v} {CLOBBER};
+  return _86;
+
+  <bb 49>:
+  # _46 = PHI <-22(11), -75(12), -22(9), -22(14)>
+  ret_24 = (ssize_t) _46;
+  goto <bb 37> (out);
+
+  <bb 50>:
+  res_142 = res_141 | 4;
+  goto <bb 26>;
+
+  <bb 51>:
+  iov.110_94 = iov;
+  kfree (iov.110_94);
+  goto <bb 38>;
+
+}
+
+
+
+;; Function SYSC_readv (SYSC_readv, funcdef_no=2472, decl_uid=35495, cgraph_uid=2480)
+
+SYSC_readv (long unsigned int fd, const struct iovec * vec, long unsigned int vlen)
+{
+  struct file * f$file;
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  long unsigned int _min2.114;
+  int res;
+  struct task_struct * pfo_ret__;
+  long long unsigned int amt.18;
+  struct task_struct * pfo_ret__;
+  long unsigned int nr.111;
+  struct kiocb kiocb;
+  long int count.12;
+  long long unsigned int pos.13;
+  loff_t pos;
+  int retval;
+  ssize_t (*iter_fn_t) (struct kiocb *, struct iov_iter *) iter_fn;
+  ssize_t (*io_fn_t) (struct file *, char *, size_t, loff_t *) fn;
+  struct iov_iter iter;
+  struct iovec * iov;
+  struct iovec iovstack[8];
+  struct iovec * iov.110;
+  unsigned int fd.2;
+  loff_t pos;
+  ssize_t ret;
+  long long int pos.121;
+  long long int _8;
+  long unsigned int _20;
+  long unsigned int _21;
+  unsigned int _23;
+  unsigned int _25;
+  unsigned int _26;
+  unsigned int _27;
+  unsigned int _28;
+  int _29;
+  long unsigned int _31;
+  struct inode * _33;
+  unsigned int _43;
+  long long int _45;
+  long long unsigned int _46;
+  long long unsigned int _48;
+  long long int _49;
+  unsigned int _53;
+  struct file_lock_context * _55;
+  int _59;
+  long unsigned int _65;
+  int _66;
+  int _67;
+  const struct file_operations * _69;
+  long long int _72;
+  long long int _77;
+  int _79;
+  long unsigned int _84;
+  long int _88;
+  long long unsigned int _93;
+  long long unsigned int _95;
+  long long unsigned int _97;
+  long long unsigned int _98;
+  long unsigned int _127;
+  int _132;
+  int _133;
+  int _135;
+  int _136;
+  unsigned int _137;
+  unsigned int _138;
+  unsigned int _139;
+  const struct iovec * _145;
+  void * _146;
+  long unsigned int _147;
+  void * _148;
+  long unsigned int _150;
+  const long unsigned int _152;
+  struct inode * _155;
+  short unsigned int _156;
+  short unsigned int _157;
+  unsigned int _158;
+  unsigned int _159;
+  unsigned int _164;
+  struct mutex * _165;
+  unsigned int _166;
+  long unsigned int _171;
+
+  <bb 2>:
+  fd.2_19 = (unsigned int) fd_5(D);
+  _20 = __fdget_pos (fd.2_19);
+  _21 = _20 & 18446744073709551612;
+  f$file_22 = (struct file *) _21;
+  _23 = (unsigned int) _20;
+  if (f$file_22 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 48>;
+
+  <bb 3>:
+  _8 = MEM[(struct file *)f$file_22 + 112B];
+  pos = _8;
+  _25 = f$file_22->f_mode;
+  _26 = _25 & 1;
+  if (_26 == 0)
+    goto <bb 51>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _27 = _25 & 131072;
+  if (_27 == 0)
+    goto <bb 51>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  iov = &iovstack;
+  _28 = (unsigned int) vlen_11(D);
+  _29 = import_iovec (0, vec_10(D), _28, 8, &iov, &iter);
+  ret_30 = (ssize_t) _29;
+  if (ret_30 < 0)
+    goto <bb 53>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _31 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_31 == 0)
+    goto <bb 35> (out);
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  _33 = MEM[(const struct file *)f$file_22 + 32B];
+  count.12_35 = (long int) _31;
+  if (count.12_35 < 0)
+    goto <bb 49>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  pos_39 = pos;
+  if (pos_39 < 0)
+    goto <bb 9>;
+  else
+    goto <bb 11>;
+
+  <bb 9>:
+  _43 = MEM[(struct file *)f$file_22 + 68B];
+  _132 = (int) _43;
+  _133 = _132 & 8192;
+  if (_133 == 0)
+    goto <bb 49>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  _45 = -pos_39;
+  _46 = (long long unsigned int) _45;
+  if (_31 >= _46)
+    goto <bb 49>;
+  else
+    goto <bb 13>;
+
+  <bb 11>:
+  pos.13_47 = (long long unsigned int) pos_39;
+  _48 = pos.13_47 + _31;
+  _49 = (long long int) _48;
+  if (_49 < 0)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+  _53 = MEM[(struct file *)f$file_22 + 68B];
+  _135 = (int) _53;
+  _136 = _135 & 8192;
+  if (_136 == 0)
+    goto <bb 49>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  _55 = _33->i_flctx;
+  if (_55 != 0B)
+    goto <bb 15>;
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  retval_64 = security_file_permission (f$file_22, 4);
+  if (retval_64 != 0)
+    goto <bb 18>;
+  else
+    goto <bb 17>;
+
+  <bb 15>:
+  _59 = mandatory_lock (_33);
+  if (_59 != 0)
+    goto <bb 16>;
+  else
+    goto <bb 14>;
+
+  <bb 16>:
+  retval_63 = locks_mandatory_area (1, _33, f$file_22, pos_39, _31);
+  if (retval_63 < 0)
+    goto <bb 18>;
+  else
+    goto <bb 14>;
+
+  <bb 17>:
+  _65 = MIN_EXPR <_31, 2147479552>;
+  _66 = (int) _65;
+
+  <bb 18>:
+  # _67 = PHI <_66(17), retval_63(16), retval_64(14)>
+  ret_68 = (ssize_t) _67;
+  if (ret_68 < 0)
+    goto <bb 35> (out);
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  _69 = f$file_22->f_op;
+  fn_70 = _69->read;
+  iter_fn_71 = _69->read_iter;
+  if (iter_fn_71 != 0B)
+    goto <bb 21>;
+  else
+    goto <bb 20>;
+
+  <bb 20>:
+  _171 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_171 != 0)
+    goto <bb 27>;
+  else
+    goto <bb 52>;
+
+  <bb 21>:
+  _137 = MEM[(struct file *)f$file_22 + 64B];
+  _138 = _137 & 1024;
+  if (_138 != 0)
+    goto <bb 23>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+
+  <bb 23>:
+  # res_142 = PHI <0(22), 2(21)>
+  _139 = _137 & 16384;
+  if (_139 != 0)
+    goto <bb 50>;
+  else
+    goto <bb 24>;
+
+  <bb 24>:
+  # res_144 = PHI <res_142(23), res_143(50)>
+  kiocb = {};
+  kiocb.ki_filp = f$file_22;
+  kiocb.ki_flags = res_144;
+  _72 = pos;
+  kiocb.ki_pos = _72;
+  ret_73 = iter_fn_71 (&kiocb, &iter);
+  if (ret_73 == -529)
+    goto <bb 25>;
+  else
+    goto <bb 26>;
+
+  <bb 25>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 665, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 26>:
+  _77 = kiocb.ki_pos;
+  pos = _77;
+  kiocb ={v} {CLOBBER};
+  goto <bb 35> (out);
+
+  <bb 27>:
+
+  <bb 28>:
+  # ret_131 = PHI <ret_82(32), 0(27)>
+  # _127 = PHI <_84(32), _171(27)>
+  _145 = iter.D.12777.iov;
+  _146 = _145->iov_base;
+  _147 = iter.iov_offset;
+  _148 = _146 + _147;
+  _150 = _145->iov_len;
+  _min2.114_151 = _150 - _147;
+  _152 = MIN_EXPR <_127, _min2.114_151>;
+  ret_80 = fn_70 (f$file_22, _148, _152, &pos);
+  if (ret_80 < 0)
+    goto <bb 29>;
+  else
+    goto <bb 30>;
+
+  <bb 29>:
+  # ret_173 = PHI <ret_131(28)>
+  if (ret_173 == 0)
+    goto <bb 34>;
+  else
+    goto <bb 33>;
+
+  <bb 30>:
+  ret_82 = ret_80 + ret_131;
+  nr.111_83 = (long unsigned int) ret_80;
+  if (nr.111_83 != _152)
+    goto <bb 34>;
+  else
+    goto <bb 31>;
+
+  <bb 31>:
+  iov_iter_advance (&iter, nr.111_83);
+  _84 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_84 != 0)
+    goto <bb 32>;
+  else
+    goto <bb 35> (out);
+
+  <bb 32>:
+  goto <bb 28>;
+
+  <bb 33>:
+
+  <bb 34>:
+  # ret_90 = PHI <ret_131(33), ret_80(29), ret_82(30)>
+
+  # ret_87 = PHI <ret_30(6), ret_172(49), ret_73(26), ret_90(34), ret_82(31), ret_68(18)>
+out:
+  iov.110_86 = iov;
+  kfree (iov.110_86);
+  _88 = ret_87 + 1;
+  if (_88 > 0)
+    goto <bb 36>;
+  else
+    goto <bb 40>;
+
+  <bb 36>:
+  # ret_153 = PHI <ret_87(35), 0(52)>
+  _155 = MEM[(const struct file *)f$file_22 + 32B];
+  _156 = _155->i_mode;
+  _157 = _156 & 61440;
+  if (_157 == 16384)
+    goto <bb 38>;
+  else
+    goto <bb 37>;
+
+  <bb 37>:
+
+  <bb 38>:
+  # mask_161 = PHI <1(37), 1073741825(36)>
+  _158 = f$file_22->f_mode;
+  _159 = _158 & 67108864;
+  if (_159 == 0)
+    goto <bb 39>;
+  else
+    goto <bb 40>;
+
+  <bb 39>:
+  path_154 = &f$file_22->f_path;
+  dentry_160 = MEM[(struct path *)f$file_22 + 16B].dentry;
+  __fsnotify_parent (path_154, dentry_160, mask_161);
+  fsnotify (_155, mask_161, path_154, 1, 0B, 0);
+
+  <bb 40>:
+  # ret_91 = PHI <ret_153(38), ret_87(35), ret_153(39)>
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+  if (ret_91 >= 0)
+    goto <bb 41>;
+  else
+    goto <bb 42>;
+
+  <bb 41>:
+  pos.121_13 = pos;
+  MEM[(loff_t *)f$file_22 + 112B] = pos.121_13;
+
+  <bb 42>:
+  # ret_40 = PHI <ret_38(51), ret_91(41), ret_91(40), ret_30(53)>
+  _164 = _23 & 2;
+  if (_164 != 0)
+    goto <bb 43>;
+  else
+    goto <bb 44>;
+
+  <bb 43>:
+  _165 = &f$file_22->f_pos_lock;
+  mutex_unlock (_165);
+
+  <bb 44>:
+  _166 = _23 & 1;
+  if (_166 != 0)
+    goto <bb 45>;
+  else
+    goto <bb 46>;
+
+  <bb 45>:
+  fput (f$file_22);
+
+  <bb 46>:
+  pos ={v} {CLOBBER};
+  if (ret_40 > 0)
+    goto <bb 47>;
+  else
+    goto <bb 48>;
+
+  <bb 47>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___92 : "p" &current_task);
+  _93 = pfo_ret___92->ioac.rchar;
+  amt.18_94 = (long long unsigned int) ret_40;
+  _95 = amt.18_94 + _93;
+  pfo_ret___92->ioac.rchar = _95;
+
+  <bb 48>:
+  # ret_188 = PHI <-9(2), ret_40(47), ret_40(46)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___96 : "p" &current_task);
+  _97 = pfo_ret___96->ioac.syscr;
+  _98 = _97 + 1;
+  pfo_ret___96->ioac.syscr = _98;
+  return ret_188;
+
+  <bb 49>:
+  # _79 = PHI <-22(9), -75(10), -22(7), -22(12)>
+  ret_172 = (ssize_t) _79;
+  goto <bb 35> (out);
+
+  <bb 50>:
+  res_143 = res_142 | 4;
+  goto <bb 24>;
+
+  <bb 51>:
+  # ret_38 = PHI <-22(4), -9(3)>
+  goto <bb 42>;
+
+  <bb 52>:
+  iov.110_101 = iov;
+  kfree (iov.110_101);
+  goto <bb 36>;
+
+  <bb 53>:
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+  goto <bb 42>;
+
+}
+
+
+
+;; Function do_sendfile (do_sendfile, funcdef_no=2497, decl_uid=35886, cgraph_uid=2514)
+
+do_sendfile (int out_fd, int in_fd, loff_t * ppos, size_t count, loff_t max)
+{
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  struct task_struct * pfo_ret__;
+  long long unsigned int amt.18;
+  struct task_struct * pfo_ret__;
+  long long unsigned int pos.13;
+  int retval;
+  long int count.12;
+  long long unsigned int pos.13;
+  loff_t pos;
+  int retval;
+  loff_t _min2;
+  loff_t _min1;
+  ssize_t retval;
+  loff_t out_pos;
+  loff_t pos;
+  long long int out_pos.177;
+  long long unsigned int max.175;
+  long long unsigned int pos.174;
+  long long int pos.173;
+  long long int out_pos.167;
+  unsigned int out_fd.166;
+  long long int pos.165;
+  long long int pos.164;
+  unsigned int in_fd.163;
+  unsigned int _15;
+  unsigned int _16;
+  unsigned int _22;
+  unsigned int _30;
+  unsigned int _31;
+  struct inode * _32;
+  struct inode * _33;
+  struct super_block * _40;
+  struct super_block * _42;
+  long long unsigned int _47;
+  loff_t pretmp_50;
+  long long int _52;
+  long unsigned int _75;
+  long unsigned int _76;
+  struct file * _77;
+  unsigned int _78;
+  struct inode * _80;
+  long long int _91;
+  long long unsigned int _92;
+  long long unsigned int _94;
+  long long int _95;
+  struct file_lock_context * _100;
+  int _104;
+  loff_t prephitmp_106;
+  long unsigned int _110;
+  int _111;
+  int _112;
+  long unsigned int _113;
+  long unsigned int _114;
+  struct file * _115;
+  unsigned int _116;
+  long long int _126;
+  long long unsigned int _127;
+  long long unsigned int _129;
+  long long int _130;
+  struct file_lock_context * _135;
+  int _139;
+  int _142;
+  long unsigned int _145;
+  int _146;
+  int _147;
+  long long unsigned int _149;
+  long long unsigned int _151;
+  long long unsigned int _153;
+  long long unsigned int _154;
+  long long unsigned int _156;
+  long long unsigned int _157;
+  long long unsigned int _159;
+  long long unsigned int _160;
+  unsigned int _161;
+  unsigned int _162;
+  int _181;
+  int _182;
+  int _184;
+  int _185;
+  int _186;
+  int _188;
+  int _189;
+  int _191;
+  int _192;
+  struct inode * _193;
+  short unsigned int _194;
+  short unsigned int _195;
+  struct super_block * _196;
+  struct inode * _197;
+  short unsigned int _198;
+  short unsigned int _199;
+  struct super_block * _200;
+  struct inode * _202;
+  short unsigned int _203;
+  short unsigned int _204;
+  unsigned int _205;
+  unsigned int _206;
+  struct inode * _210;
+  short unsigned int _211;
+  short unsigned int _212;
+  unsigned int _213;
+  unsigned int _214;
+
+  <bb 2>:
+  in_fd.163_12 = (unsigned int) in_fd_11(D);
+  _75 = __fdget (in_fd.163_12);
+  _76 = _75 & 18446744073709551612;
+  _77 = (struct file *) _76;
+  _78 = (unsigned int) _75;
+  if (_77 == 0B)
+    goto <bb 62> (out);
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _15 = _77->f_mode;
+  _16 = _15 & 1;
+  if (_16 == 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  goto <bb 60> (fput_in);
+
+  <bb 5>:
+  if (ppos_17(D) == 0B)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  pos.164_18 = _77->f_pos;
+  pos = pos.164_18;
+  goto <bb 8>;
+
+  <bb 7>:
+  pos.165_20 = *ppos_17(D);
+  pos = pos.165_20;
+  _22 = _15 & 8;
+  if (_22 == 0)
+    goto <bb 60> (fput_in);
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  _80 = MEM[(const struct file *)_77 + 32B];
+  count.12_82 = (long int) count_23(D);
+  if (count.12_82 < 0)
+    goto <bb 63>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  pos_86 = pos;
+  if (pos_86 < 0)
+    goto <bb 10>;
+  else
+    goto <bb 12>;
+
+  <bb 10>:
+  _181 = (int) _15;
+  _182 = _181 & 8192;
+  if (_182 == 0)
+    goto <bb 63>;
+  else
+    goto <bb 11>;
+
+  <bb 11>:
+  _91 = -pos_86;
+  _92 = (long long unsigned int) _91;
+  if (count_23(D) >= _92)
+    goto <bb 63>;
+  else
+    goto <bb 14>;
+
+  <bb 12>:
+  pos.13_93 = (long long unsigned int) pos_86;
+  _94 = count_23(D) + pos.13_93;
+  _95 = (long long int) _94;
+  if (_95 < 0)
+    goto <bb 13>;
+  else
+    goto <bb 14>;
+
+  <bb 13>:
+  _184 = (int) _15;
+  _185 = _184 & 8192;
+  if (_185 == 0)
+    goto <bb 63>;
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  _100 = _80->i_flctx;
+  if (_100 != 0B)
+    goto <bb 16>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  retval_109 = security_file_permission (_77, 4);
+  if (retval_109 != 0)
+    goto <bb 19>;
+  else
+    goto <bb 18>;
+
+  <bb 16>:
+  _104 = mandatory_lock (_80);
+  if (_104 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 15>;
+
+  <bb 17>:
+  retval_108 = locks_mandatory_area (1, _80, _77, pos_86, count_23(D));
+  if (retval_108 < 0)
+    goto <bb 19>;
+  else
+    goto <bb 15>;
+
+  <bb 18>:
+  _110 = MIN_EXPR <count_23(D), 2147479552>;
+  _111 = (int) _110;
+
+  <bb 19>:
+  # _112 = PHI <_111(18), retval_108(17), retval_109(15)>
+  retval_25 = (ssize_t) _112;
+  if (retval_25 < 0)
+    goto <bb 60> (fput_in);
+  else
+    goto <bb 20>;
+
+  <bb 20>:
+  out_fd.166_28 = (unsigned int) out_fd_27(D);
+  _113 = __fdget (out_fd.166_28);
+  _114 = _113 & 18446744073709551612;
+  _115 = (struct file *) _114;
+  _116 = (unsigned int) _113;
+  if (_115 == 0B)
+    goto <bb 4>;
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+  _30 = _115->f_mode;
+  _31 = _30 & 2;
+  if (_31 == 0)
+    goto <bb 58> (fput_out);
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  _32 = MEM[(const struct file *)_77 + 32B];
+  _33 = MEM[(const struct file *)_115 + 32B];
+  out_pos.167_34 = _115->f_pos;
+  out_pos = out_pos.167_34;
+  if (_112 < 0)
+    goto <bb 64>;
+  else
+    goto <bb 23>;
+
+  <bb 23>:
+  count_26 = (size_t) _112;
+  if (out_pos.167_34 < 0)
+    goto <bb 24>;
+  else
+    goto <bb 26>;
+
+  <bb 24>:
+  _188 = (int) _30;
+  _189 = _188 & 8192;
+  if (_189 == 0)
+    goto <bb 64>;
+  else
+    goto <bb 25>;
+
+  <bb 25>:
+  _126 = -out_pos.167_34;
+  _127 = (long long unsigned int) _126;
+  if (count_26 >= _127)
+    goto <bb 64>;
+  else
+    goto <bb 28>;
+
+  <bb 26>:
+  pos.13_128 = (long long unsigned int) out_pos.167_34;
+  _129 = count_26 + pos.13_128;
+  _130 = (long long int) _129;
+  if (_130 < 0)
+    goto <bb 27>;
+  else
+    goto <bb 28>;
+
+  <bb 27>:
+  _191 = (int) _30;
+  _192 = _191 & 8192;
+  if (_192 == 0)
+    goto <bb 64>;
+  else
+    goto <bb 28>;
+
+  <bb 28>:
+  _135 = _33->i_flctx;
+  if (_135 != 0B)
+    goto <bb 30>;
+  else
+    goto <bb 29>;
+
+  <bb 29>:
+  retval_144 = security_file_permission (_115, 2);
+  if (retval_144 != 0)
+    goto <bb 33>;
+  else
+    goto <bb 32>;
+
+  <bb 30>:
+  _139 = mandatory_lock (_33);
+  if (_139 != 0)
+    goto <bb 31>;
+  else
+    goto <bb 29>;
+
+  <bb 31>:
+  retval_143 = locks_mandatory_area (2, _33, _115, out_pos.167_34, count_26);
+  if (retval_143 < 0)
+    goto <bb 33>;
+  else
+    goto <bb 29>;
+
+  <bb 32>:
+  _145 = MIN_EXPR <count_26, 2147479552>;
+  _146 = (int) _145;
+
+  <bb 33>:
+  # _147 = PHI <_146(32), retval_143(31), retval_144(29)>
+  retval_37 = (ssize_t) _147;
+  if (retval_37 < 0)
+    goto <bb 58> (fput_out);
+  else
+    goto <bb 34>;
+
+  <bb 34>:
+  count_38 = (size_t) _147;
+  if (max_39(D) == 0)
+    goto <bb 35>;
+  else
+    goto <bb 36>;
+
+  <bb 35>:
+  _40 = _32->i_sb;
+  _min1_41 = _40->s_maxbytes;
+  _42 = _33->i_sb;
+  _min2_43 = _42->s_maxbytes;
+  max_44 = MIN_EXPR <_min2_43, _min1_41>;
+
+  <bb 36>:
+  # max_2 = PHI <max_39(D)(34), max_44(35)>
+  pos.173_45 = pos;
+  pos.174_46 = (long long unsigned int) pos.173_45;
+  _47 = count_38 + pos.174_46;
+  max.175_48 = (long long unsigned int) max_2;
+  if (_47 > max.175_48)
+    goto <bb 37>;
+  else
+    goto <bb 39>;
+
+  <bb 37>:
+  if (max_2 <= pos.173_45)
+    goto <bb 58> (fput_out);
+  else
+    goto <bb 38>;
+
+  <bb 38>:
+  _52 = max_2 - pos.173_45;
+  count_53 = (size_t) _52;
+
+  <bb 39>:
+  # count_1 = PHI <count_38(36), count_53(38)>
+  _193 = MEM[(const struct file *)_115 + 32B];
+  _194 = _193->i_mode;
+  _195 = _194 & 61440;
+  if (_195 != 32768)
+    goto <bb 41>;
+  else
+    goto <bb 40>;
+
+  <bb 40>:
+  _196 = _193->i_sb;
+  __sb_start_write (_196, 1, 1);
+
+  <bb 41>:
+  retval_56 = do_splice_direct (_77, &pos, _115, &out_pos, count_1, 0);
+  _197 = MEM[(const struct file *)_115 + 32B];
+  _198 = _197->i_mode;
+  _199 = _198 & 61440;
+  if (_199 != 32768)
+    goto <bb 43>;
+  else
+    goto <bb 42>;
+
+  <bb 42>:
+  _200 = _197->i_sb;
+  __sb_end_write (_200, 1);
+
+  <bb 43>:
+  if (retval_56 > 0)
+    goto <bb 45>;
+  else
+    goto <bb 44>;
+
+  <bb 44>:
+  pretmp_50 = pos;
+  goto <bb 56>;
+
+  <bb 45>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___148 : "p" &current_task);
+  _149 = pfo_ret___148->ioac.rchar;
+  amt.18_150 = (long long unsigned int) retval_56;
+  _151 = amt.18_150 + _149;
+  pfo_ret___148->ioac.rchar = _151;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___152 : "p" &current_task);
+  _153 = pfo_ret___152->ioac.wchar;
+  _154 = amt.18_150 + _153;
+  pfo_ret___152->ioac.wchar = _154;
+  _202 = MEM[(const struct file *)_77 + 32B];
+  _203 = _202->i_mode;
+  _204 = _203 & 61440;
+  if (_204 == 16384)
+    goto <bb 47>;
+  else
+    goto <bb 46>;
+
+  <bb 46>:
+
+  <bb 47>:
+  # mask_208 = PHI <1(46), 1073741825(45)>
+  _205 = _77->f_mode;
+  _206 = _205 & 67108864;
+  if (_206 == 0)
+    goto <bb 48>;
+  else
+    goto <bb 49>;
+
+  <bb 48>:
+  path_201 = &_77->f_path;
+  dentry_207 = MEM[(struct path *)_77 + 16B].dentry;
+  __fsnotify_parent (path_201, dentry_207, mask_208);
+  fsnotify (_202, mask_208, path_201, 1, 0B, 0);
+
+  <bb 49>:
+  _210 = MEM[(const struct file *)_115 + 32B];
+  _211 = _210->i_mode;
+  _212 = _211 & 61440;
+  if (_212 == 16384)
+    goto <bb 51>;
+  else
+    goto <bb 50>;
+
+  <bb 50>:
+
+  <bb 51>:
+  # mask_216 = PHI <2(50), 1073741826(49)>
+  _213 = _115->f_mode;
+  _214 = _213 & 67108864;
+  if (_214 == 0)
+    goto <bb 52>;
+  else
+    goto <bb 53>;
+
+  <bb 52>:
+  path_209 = &_115->f_path;
+  dentry_215 = MEM[(struct path *)_115 + 16B].dentry;
+  __fsnotify_parent (path_209, dentry_215, mask_216);
+  fsnotify (_210, mask_216, path_209, 1, 0B, 0);
+
+  <bb 53>:
+  out_pos.177_62 = out_pos;
+  _115->f_pos = out_pos.177_62;
+  if (ppos_17(D) != 0B)
+    goto <bb 54>;
+  else
+    goto <bb 55>;
+
+  <bb 54>:
+  pos.173_64 = pos;
+  *ppos_17(D) = pos.173_64;
+  goto <bb 56>;
+
+  <bb 55>:
+  pos.173_66 = pos;
+  _77->f_pos = pos.173_66;
+
+  <bb 56>:
+  # prephitmp_106 = PHI <pretmp_50(44), pos.173_64(54), pos.173_66(55)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___155 : "p" &current_task);
+  _156 = pfo_ret___155->ioac.syscr;
+  _157 = _156 + 1;
+  pfo_ret___155->ioac.syscr = _157;
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___158 : "p" &current_task);
+  _159 = pfo_ret___158->ioac.syscw;
+  _160 = _159 + 1;
+  pfo_ret___158->ioac.syscw = _160;
+  if (max_2 < prephitmp_106)
+    goto <bb 58> (fput_out);
+  else
+    goto <bb 57>;
+
+  <bb 57>:
+
+  # retval_3 = PHI <-9(21), retval_140(64), -75(37), retval_56(57), -75(56), retval_37(33)>
+fput_out:
+  _161 = _116 & 1;
+  if (_161 != 0)
+    goto <bb 59>;
+  else
+    goto <bb 60> (fput_in);
+
+  <bb 59>:
+  fput (_115);
+
+  # retval_4 = PHI <-9(4), -29(7), retval_137(63), retval_25(19), retval_3(59), retval_3(58)>
+fput_in:
+  _162 = _78 & 1;
+  if (_162 != 0)
+    goto <bb 61>;
+  else
+    goto <bb 62> (out);
+
+  <bb 61>:
+  fput (_77);
+
+  # retval_5 = PHI <-9(2), retval_4(61), retval_4(60)>
+out:
+  pos ={v} {CLOBBER};
+  out_pos ={v} {CLOBBER};
+  return retval_5;
+
+  <bb 63>:
+  # _186 = PHI <-22(10), -75(11), -22(8), -22(13)>
+  retval_137 = (ssize_t) _186;
+  goto <bb 60> (fput_in);
+
+  <bb 64>:
+  # _142 = PHI <-22(24), -75(25), -22(22), -22(27)>
+  retval_140 = (ssize_t) _142;
+  goto <bb 58> (fput_out);
+
+}
+
+
+
+;; Function SYSC_pwritev.isra.16 (SYSC_pwritev.isra.16, funcdef_no=2522, decl_uid=38608, cgraph_uid=2443)
+
+SYSC_pwritev.isra.16 (long unsigned int fd, const struct iovec * vec, long unsigned int vlen, long unsigned int pos_l)
+{
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  long unsigned int _min2.114;
+  int res;
+  loff_t pos;
+  ssize_t ret;
+  struct iovec * iov.110;
+  struct iovec iovstack[8];
+  struct iovec * iov;
+  struct iov_iter iter;
+  ssize_t (*io_fn_t) (struct file *, char *, size_t, loff_t *) fn;
+  ssize_t (*iter_fn_t) (struct kiocb *, struct iov_iter *) iter_fn;
+  int retval;
+  loff_t pos;
+  long long unsigned int pos.13;
+  long int count.12;
+  struct kiocb kiocb;
+  long unsigned int nr.111;
+  struct task_struct * pfo_ret__;
+  long long unsigned int amt.19;
+  struct task_struct * pfo_ret__;
+  loff_t _2;
+  unsigned int _4;
+  long unsigned int _5;
+  long unsigned int _6;
+  struct file * _7;
+  unsigned int _8;
+  unsigned int _10;
+  unsigned int _11;
+  unsigned int _12;
+  unsigned int _13;
+  unsigned int _15;
+  int _17;
+  long unsigned int _19;
+  struct inode * _21;
+  long unsigned int _22;
+  unsigned int _31;
+  long long int _33;
+  long long unsigned int _34;
+  long long unsigned int _36;
+  long long int _37;
+  int _39;
+  unsigned int _41;
+  struct file_lock_context * _43;
+  int _47;
+  long unsigned int _53;
+  int _54;
+  int _55;
+  const struct file_operations * _57;
+  long long int _60;
+  long long int _65;
+  long unsigned int _72;
+  unsigned int _76;
+  long long unsigned int _79;
+  long long unsigned int _81;
+  long long unsigned int _83;
+  long long unsigned int _84;
+  long int _85;
+  long unsigned int _90;
+  int _134;
+  int _135;
+  int _137;
+  int _138;
+  struct inode * _139;
+  short unsigned int _140;
+  short unsigned int _141;
+  struct super_block * _142;
+  unsigned int _143;
+  unsigned int _144;
+  unsigned int _145;
+  const struct iovec * _151;
+  void * _152;
+  long unsigned int _153;
+  void * _154;
+  long unsigned int _156;
+  const long unsigned int _158;
+  struct inode * _160;
+  short unsigned int _161;
+  short unsigned int _162;
+  struct super_block * _163;
+  struct inode * _165;
+  short unsigned int _166;
+  short unsigned int _167;
+  unsigned int _168;
+  unsigned int _169;
+
+  <bb 2>:
+  _2 = (loff_t) pos_l_1(D);
+  pos = _2;
+  if (_2 < 0)
+    goto <bb 52>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _4 = (unsigned int) fd_3(D);
+  _5 = __fdget (_4);
+  _6 = _5 & 18446744073709551612;
+  _7 = (struct file *) _6;
+  _8 = (unsigned int) _5;
+  if (_7 != 0B)
+    goto <bb 4>;
+  else
+    goto <bb 51>;
+
+  <bb 4>:
+  _10 = _7->f_mode;
+  _11 = _10 & 16;
+  if (_11 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 47>;
+
+  <bb 5>:
+  _12 = _10 & 2;
+  if (_12 == 0)
+    goto <bb 47>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _13 = _10 & 262144;
+  if (_13 == 0)
+    goto <bb 47>;
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  iov = &iovstack;
+  _15 = (unsigned int) vlen_14(D);
+  _17 = import_iovec (1, vec_16(D), _15, 8, &iov, &iter);
+  ret_18 = (ssize_t) _17;
+  if (ret_18 < 0)
+    goto <bb 46>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  _19 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_19 == 0)
+    goto <bb 41> (out);
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  _21 = MEM[(const struct file *)_7 + 32B];
+  count.12_23 = (long int) _19;
+  if (count.12_23 < 0)
+    goto <bb 53>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  pos_27 = pos;
+  if (pos_27 < 0)
+    goto <bb 11>;
+  else
+    goto <bb 13>;
+
+  <bb 11>:
+  _31 = MEM[(struct file *)_7 + 68B];
+  _134 = (int) _31;
+  _135 = _134 & 8192;
+  if (_135 == 0)
+    goto <bb 53>;
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  _33 = -pos_27;
+  _34 = (long long unsigned int) _33;
+  if (_19 >= _34)
+    goto <bb 53>;
+  else
+    goto <bb 15>;
+
+  <bb 13>:
+  pos.13_35 = (long long unsigned int) pos_27;
+  _36 = pos.13_35 + _19;
+  _37 = (long long int) _36;
+  if (_37 < 0)
+    goto <bb 14>;
+  else
+    goto <bb 15>;
+
+  <bb 14>:
+  _41 = MEM[(struct file *)_7 + 68B];
+  _137 = (int) _41;
+  _138 = _137 & 8192;
+  if (_138 == 0)
+    goto <bb 53>;
+  else
+    goto <bb 15>;
+
+  <bb 15>:
+  _43 = _21->i_flctx;
+  if (_43 != 0B)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+  retval_52 = security_file_permission (_7, 2);
+  if (retval_52 != 0)
+    goto <bb 20>;
+  else
+    goto <bb 19>;
+
+  <bb 17>:
+  _47 = mandatory_lock (_21);
+  if (_47 != 0)
+    goto <bb 18>;
+  else
+    goto <bb 16>;
+
+  <bb 18>:
+  retval_51 = locks_mandatory_area (2, _21, _7, pos_27, _19);
+  if (retval_51 < 0)
+    goto <bb 20>;
+  else
+    goto <bb 16>;
+
+  <bb 19>:
+  _53 = MIN_EXPR <_19, 2147479552>;
+  _54 = (int) _53;
+
+  <bb 20>:
+  # _55 = PHI <_54(19), retval_51(18), retval_52(16)>
+  ret_56 = (ssize_t) _55;
+  if (ret_56 < 0)
+    goto <bb 55>;
+  else
+    goto <bb 21>;
+
+  <bb 21>:
+  _57 = _7->f_op;
+  fn_58 = _57->write;
+  iter_fn_59 = _57->write_iter;
+  _139 = MEM[(const struct file *)_7 + 32B];
+  _140 = _139->i_mode;
+  _141 = _140 & 61440;
+  if (_141 != 32768)
+    goto <bb 23>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  _142 = _139->i_sb;
+  __sb_start_write (_142, 1, 1);
+
+  <bb 23>:
+  if (iter_fn_59 != 0B)
+    goto <bb 25>;
+  else
+    goto <bb 24>;
+
+  <bb 24>:
+  _90 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_90 != 0)
+    goto <bb 31>;
+  else
+    goto <bb 39>;
+
+  <bb 25>:
+  _143 = MEM[(struct file *)_7 + 64B];
+  _144 = _143 & 1024;
+  if (_144 != 0)
+    goto <bb 27>;
+  else
+    goto <bb 26>;
+
+  <bb 26>:
+
+  <bb 27>:
+  # res_148 = PHI <0(26), 2(25)>
+  _145 = _143 & 16384;
+  if (_145 != 0)
+    goto <bb 54>;
+  else
+    goto <bb 28>;
+
+  <bb 28>:
+  # res_150 = PHI <res_148(27), res_149(54)>
+  kiocb = {};
+  kiocb.ki_filp = _7;
+  kiocb.ki_flags = res_150;
+  _60 = pos;
+  kiocb.ki_pos = _60;
+  ret_61 = iter_fn_59 (&kiocb, &iter);
+  if (ret_61 == -529)
+    goto <bb 29>;
+  else
+    goto <bb 30>;
+
+  <bb 29>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 665, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 30>:
+  _65 = kiocb.ki_pos;
+  pos = _65;
+  kiocb ={v} {CLOBBER};
+  goto <bb 39>;
+
+  <bb 31>:
+
+  <bb 32>:
+  # ret_20 = PHI <ret_70(36), 0(31)>
+  # _22 = PHI <_72(36), _90(31)>
+  _151 = iter.D.12777.iov;
+  _152 = _151->iov_base;
+  _153 = iter.iov_offset;
+  _154 = _152 + _153;
+  _156 = _151->iov_len;
+  _min2.114_157 = _156 - _153;
+  _158 = MIN_EXPR <_22, _min2.114_157>;
+  ret_68 = fn_58 (_7, _154, _158, &pos);
+  if (ret_68 < 0)
+    goto <bb 33>;
+  else
+    goto <bb 34>;
+
+  <bb 33>:
+  # ret_180 = PHI <ret_20(32)>
+  if (ret_180 == 0)
+    goto <bb 38>;
+  else
+    goto <bb 37>;
+
+  <bb 34>:
+  ret_70 = ret_68 + ret_20;
+  nr.111_71 = (long unsigned int) ret_68;
+  if (nr.111_71 != _158)
+    goto <bb 38>;
+  else
+    goto <bb 35>;
+
+  <bb 35>:
+  iov_iter_advance (&iter, nr.111_71);
+  _72 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_72 != 0)
+    goto <bb 36>;
+  else
+    goto <bb 39>;
+
+  <bb 36>:
+  goto <bb 32>;
+
+  <bb 37>:
+
+  <bb 38>:
+  # ret_87 = PHI <ret_20(37), ret_68(33), ret_70(34)>
+
+  <bb 39>:
+  # ret_88 = PHI <ret_61(30), ret_87(38), ret_70(35), 0(24)>
+  _160 = MEM[(const struct file *)_7 + 32B];
+  _161 = _160->i_mode;
+  _162 = _161 & 61440;
+  if (_162 != 32768)
+    goto <bb 41> (out);
+  else
+    goto <bb 40>;
+
+  <bb 40>:
+  _163 = _160->i_sb;
+  __sb_end_write (_163, 1);
+
+  # ret_75 = PHI <ret_18(8), ret_88(39), ret_88(40)>
+out:
+  iov.110_74 = iov;
+  kfree (iov.110_74);
+  if (ret_75 > 0)
+    goto <bb 42>;
+  else
+    goto <bb 46>;
+
+  <bb 42>:
+  _165 = MEM[(const struct file *)_7 + 32B];
+  _166 = _165->i_mode;
+  _167 = _166 & 61440;
+  if (_167 == 16384)
+    goto <bb 44>;
+  else
+    goto <bb 43>;
+
+  <bb 43>:
+
+  <bb 44>:
+  # mask_171 = PHI <2(43), 1073741826(42)>
+  _168 = _7->f_mode;
+  _169 = _168 & 67108864;
+  if (_169 == 0)
+    goto <bb 45>;
+  else
+    goto <bb 46>;
+
+  <bb 45>:
+  path_164 = &_7->f_path;
+  dentry_170 = MEM[(struct path *)_7 + 16B].dentry;
+  __fsnotify_parent (path_164, dentry_170, mask_171);
+  fsnotify (_165, mask_171, path_164, 1, 0B, 0);
+
+  <bb 46>:
+  # ret_89 = PHI <ret_18(7), ret_25(55), ret_75(45), ret_75(44), ret_75(41)>
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+
+  <bb 47>:
+  # ret_91 = PHI <-29(4), -22(6), -9(5), ret_89(46)>
+  _76 = _8 & 1;
+  if (_76 != 0)
+    goto <bb 48>;
+  else
+    goto <bb 49>;
+
+  <bb 48>:
+  fput (_7);
+
+  <bb 49>:
+  if (ret_91 > 0)
+    goto <bb 50>;
+  else
+    goto <bb 51>;
+
+  <bb 50>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___78 : "p" &current_task);
+  _79 = pfo_ret___78->ioac.wchar;
+  amt.19_80 = (long long unsigned int) ret_91;
+  _81 = amt.19_80 + _79;
+  pfo_ret___78->ioac.wchar = _81;
+
+  <bb 51>:
+  # ret_29 = PHI <-9(3), ret_91(50), ret_91(49)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___82 : "p" &current_task);
+  _83 = pfo_ret___82->ioac.syscw;
+  _84 = _83 + 1;
+  pfo_ret___82->ioac.syscw = _84;
+
+  <bb 52>:
+  # _85 = PHI <-22(2), ret_29(51)>
+  pos ={v} {CLOBBER};
+  return _85;
+
+  <bb 53>:
+  # _39 = PHI <-22(11), -75(12), -22(9), -22(14)>
+  ret_46 = (ssize_t) _39;
+  goto <bb 55>;
+
+  <bb 54>:
+  res_149 = res_148 | 4;
+  goto <bb 28>;
+
+  <bb 55>:
+  # ret_25 = PHI <ret_46(53), ret_56(20)>
+  iov.110_45 = iov;
+  kfree (iov.110_45);
+  goto <bb 46>;
+
+}
+
+
+
+;; Function SYSC_writev (SYSC_writev, funcdef_no=2474, decl_uid=35530, cgraph_uid=2483)
+
+SYSC_writev (long unsigned int fd, const struct iovec * vec, long unsigned int vlen)
+{
+  struct file * f$file;
+  struct path * path;
+  __u32 mask;
+  struct dentry * dentry;
+  long unsigned int _min2.114;
+  int res;
+  struct task_struct * pfo_ret__;
+  long long unsigned int amt.19;
+  struct task_struct * pfo_ret__;
+  long unsigned int nr.111;
+  struct kiocb kiocb;
+  long int count.12;
+  long long unsigned int pos.13;
+  loff_t pos;
+  int retval;
+  ssize_t (*iter_fn_t) (struct kiocb *, struct iov_iter *) iter_fn;
+  ssize_t (*io_fn_t) (struct file *, char *, size_t, loff_t *) fn;
+  struct iov_iter iter;
+  struct iovec * iov;
+  struct iovec iovstack[8];
+  struct iovec * iov.110;
+  unsigned int fd.2;
+  loff_t pos;
+  ssize_t ret;
+  long long int pos.126;
+  long long int _8;
+  long unsigned int _20;
+  long unsigned int _21;
+  unsigned int _23;
+  unsigned int _25;
+  unsigned int _26;
+  unsigned int _27;
+  unsigned int _28;
+  int _29;
+  long unsigned int _31;
+  struct inode * _33;
+  unsigned int _43;
+  long long int _45;
+  long long unsigned int _46;
+  long long unsigned int _48;
+  long long int _49;
+  unsigned int _53;
+  struct file_lock_context * _55;
+  int _59;
+  long unsigned int _65;
+  int _66;
+  int _67;
+  const struct file_operations * _69;
+  long long int _72;
+  long long int _77;
+  int _79;
+  long unsigned int _84;
+  long long unsigned int _93;
+  long long unsigned int _95;
+  long long unsigned int _97;
+  long long unsigned int _98;
+  long unsigned int _130;
+  int _135;
+  int _136;
+  int _138;
+  int _139;
+  struct inode * _140;
+  short unsigned int _141;
+  short unsigned int _142;
+  struct super_block * _143;
+  unsigned int _144;
+  unsigned int _145;
+  unsigned int _146;
+  const struct iovec * _152;
+  void * _153;
+  long unsigned int _154;
+  void * _155;
+  long unsigned int _157;
+  const long unsigned int _159;
+  struct inode * _161;
+  short unsigned int _162;
+  short unsigned int _163;
+  struct super_block * _164;
+  struct inode * _166;
+  short unsigned int _167;
+  short unsigned int _168;
+  unsigned int _169;
+  unsigned int _170;
+  unsigned int _175;
+  struct mutex * _176;
+  unsigned int _177;
+  long unsigned int _183;
+
+  <bb 2>:
+  fd.2_19 = (unsigned int) fd_5(D);
+  _20 = __fdget_pos (fd.2_19);
+  _21 = _20 & 18446744073709551612;
+  f$file_22 = (struct file *) _21;
+  _23 = (unsigned int) _20;
+  if (f$file_22 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 52>;
+
+  <bb 3>:
+  _8 = MEM[(struct file *)f$file_22 + 112B];
+  pos = _8;
+  _25 = f$file_22->f_mode;
+  _26 = _25 & 2;
+  if (_26 == 0)
+    goto <bb 56>;
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  _27 = _25 & 262144;
+  if (_27 == 0)
+    goto <bb 56>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  iov = &iovstack;
+  _28 = (unsigned int) vlen_11(D);
+  _29 = import_iovec (1, vec_10(D), _28, 8, &iov, &iter);
+  ret_30 = (ssize_t) _29;
+  if (ret_30 < 0)
+    goto <bb 58>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+  _31 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_31 == 0)
+    goto <bb 39> (out);
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  _33 = MEM[(const struct file *)f$file_22 + 32B];
+  count.12_35 = (long int) _31;
+  if (count.12_35 < 0)
+    goto <bb 53>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  pos_39 = pos;
+  if (pos_39 < 0)
+    goto <bb 9>;
+  else
+    goto <bb 11>;
+
+  <bb 9>:
+  _43 = MEM[(struct file *)f$file_22 + 68B];
+  _135 = (int) _43;
+  _136 = _135 & 8192;
+  if (_136 == 0)
+    goto <bb 53>;
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  _45 = -pos_39;
+  _46 = (long long unsigned int) _45;
+  if (_31 >= _46)
+    goto <bb 53>;
+  else
+    goto <bb 13>;
+
+  <bb 11>:
+  pos.13_47 = (long long unsigned int) pos_39;
+  _48 = pos.13_47 + _31;
+  _49 = (long long int) _48;
+  if (_49 < 0)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+  _53 = MEM[(struct file *)f$file_22 + 68B];
+  _138 = (int) _53;
+  _139 = _138 & 8192;
+  if (_139 == 0)
+    goto <bb 53>;
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  _55 = _33->i_flctx;
+  if (_55 != 0B)
+    goto <bb 15>;
+  else
+    goto <bb 14>;
+
+  <bb 14>:
+  retval_64 = security_file_permission (f$file_22, 2);
+  if (retval_64 != 0)
+    goto <bb 18>;
+  else
+    goto <bb 17>;
+
+  <bb 15>:
+  _59 = mandatory_lock (_33);
+  if (_59 != 0)
+    goto <bb 16>;
+  else
+    goto <bb 14>;
+
+  <bb 16>:
+  retval_63 = locks_mandatory_area (2, _33, f$file_22, pos_39, _31);
+  if (retval_63 < 0)
+    goto <bb 18>;
+  else
+    goto <bb 14>;
+
+  <bb 17>:
+  _65 = MIN_EXPR <_31, 2147479552>;
+  _66 = (int) _65;
+
+  <bb 18>:
+  # _67 = PHI <_66(17), retval_63(16), retval_64(14)>
+  ret_68 = (ssize_t) _67;
+  if (ret_68 < 0)
+    goto <bb 55>;
+  else
+    goto <bb 19>;
+
+  <bb 19>:
+  _69 = f$file_22->f_op;
+  fn_70 = _69->write;
+  iter_fn_71 = _69->write_iter;
+  _140 = MEM[(const struct file *)f$file_22 + 32B];
+  _141 = _140->i_mode;
+  _142 = _141 & 61440;
+  if (_142 != 32768)
+    goto <bb 21>;
+  else
+    goto <bb 20>;
+
+  <bb 20>:
+  _143 = _140->i_sb;
+  __sb_start_write (_143, 1, 1);
+
+  <bb 21>:
+  if (iter_fn_71 != 0B)
+    goto <bb 23>;
+  else
+    goto <bb 22>;
+
+  <bb 22>:
+  _183 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_183 != 0)
+    goto <bb 29>;
+  else
+    goto <bb 37>;
+
+  <bb 23>:
+  _144 = MEM[(struct file *)f$file_22 + 64B];
+  _145 = _144 & 1024;
+  if (_145 != 0)
+    goto <bb 25>;
+  else
+    goto <bb 24>;
+
+  <bb 24>:
+
+  <bb 25>:
+  # res_149 = PHI <0(24), 2(23)>
+  _146 = _144 & 16384;
+  if (_146 != 0)
+    goto <bb 54>;
+  else
+    goto <bb 26>;
+
+  <bb 26>:
+  # res_151 = PHI <res_149(25), res_150(54)>
+  kiocb = {};
+  kiocb.ki_filp = f$file_22;
+  kiocb.ki_flags = res_151;
+  _72 = pos;
+  kiocb.ki_pos = _72;
+  ret_73 = iter_fn_71 (&kiocb, &iter);
+  if (ret_73 == -529)
+    goto <bb 27>;
+  else
+    goto <bb 28>;
+
+  <bb 27>:
+  __asm__ __volatile__("1:	ud2
+.pushsection __bug_table,"a"
+2:	.long 1b - 2b, %c0 - 2b
+	.word %c1, 0
+	.org 2b+%c2
+.popsection" :  : "i" "fs/read_write.c", "i" 665, "i" 12);
+  __builtin_unreachable ();
+
+  <bb 28>:
+  _77 = kiocb.ki_pos;
+  pos = _77;
+  kiocb ={v} {CLOBBER};
+  goto <bb 37>;
+
+  <bb 29>:
+
+  <bb 30>:
+  # ret_134 = PHI <ret_82(34), 0(29)>
+  # _130 = PHI <_84(34), _183(29)>
+  _152 = iter.D.12777.iov;
+  _153 = _152->iov_base;
+  _154 = iter.iov_offset;
+  _155 = _153 + _154;
+  _157 = _152->iov_len;
+  _min2.114_158 = _157 - _154;
+  _159 = MIN_EXPR <_130, _min2.114_158>;
+  ret_80 = fn_70 (f$file_22, _155, _159, &pos);
+  if (ret_80 < 0)
+    goto <bb 31>;
+  else
+    goto <bb 32>;
+
+  <bb 31>:
+  # ret_188 = PHI <ret_134(30)>
+  if (ret_188 == 0)
+    goto <bb 36>;
+  else
+    goto <bb 35>;
+
+  <bb 32>:
+  ret_82 = ret_80 + ret_134;
+  nr.111_83 = (long unsigned int) ret_80;
+  if (nr.111_83 != _159)
+    goto <bb 36>;
+  else
+    goto <bb 33>;
+
+  <bb 33>:
+  iov_iter_advance (&iter, nr.111_83);
+  _84 = MEM[(struct iov_iter *)&iter + 16B];
+  if (_84 != 0)
+    goto <bb 34>;
+  else
+    goto <bb 37>;
+
+  <bb 34>:
+  goto <bb 30>;
+
+  <bb 35>:
+
+  <bb 36>:
+  # ret_89 = PHI <ret_134(35), ret_80(31), ret_82(32)>
+
+  <bb 37>:
+  # ret_90 = PHI <ret_73(28), ret_89(36), ret_82(33), 0(22)>
+  _161 = MEM[(const struct file *)f$file_22 + 32B];
+  _162 = _161->i_mode;
+  _163 = _162 & 61440;
+  if (_163 != 32768)
+    goto <bb 39> (out);
+  else
+    goto <bb 38>;
+
+  <bb 38>:
+  _164 = _161->i_sb;
+  __sb_end_write (_164, 1);
+
+  # ret_87 = PHI <ret_30(6), ret_90(37), ret_90(38)>
+out:
+  iov.110_86 = iov;
+  kfree (iov.110_86);
+  if (ret_87 > 0)
+    goto <bb 40>;
+  else
+    goto <bb 44>;
+
+  <bb 40>:
+  _166 = MEM[(const struct file *)f$file_22 + 32B];
+  _167 = _166->i_mode;
+  _168 = _167 & 61440;
+  if (_168 == 16384)
+    goto <bb 42>;
+  else
+    goto <bb 41>;
+
+  <bb 41>:
+
+  <bb 42>:
+  # mask_172 = PHI <2(41), 1073741826(40)>
+  _169 = f$file_22->f_mode;
+  _170 = _169 & 67108864;
+  if (_170 == 0)
+    goto <bb 43>;
+  else
+    goto <bb 57>;
+
+  <bb 43>:
+  path_165 = &f$file_22->f_path;
+  dentry_171 = MEM[(struct path *)f$file_22 + 16B].dentry;
+  __fsnotify_parent (path_165, dentry_171, mask_172);
+  fsnotify (_166, mask_172, path_165, 1, 0B, 0);
+  goto <bb 57>;
+
+  <bb 44>:
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+  if (ret_87 == 0)
+    goto <bb 45>;
+  else
+    goto <bb 46>;
+
+  <bb 45>:
+  # ret_160 = PHI <ret_87(44), ret_87(57)>
+  pos.126_13 = pos;
+  MEM[(loff_t *)f$file_22 + 112B] = pos.126_13;
+
+  <bb 46>:
+  # ret_52 = PHI <ret_42(56), ret_160(45), ret_199(55), ret_30(58), ret_87(44)>
+  _175 = _23 & 2;
+  if (_175 != 0)
+    goto <bb 47>;
+  else
+    goto <bb 48>;
+
+  <bb 47>:
+  _176 = &f$file_22->f_pos_lock;
+  mutex_unlock (_176);
+
+  <bb 48>:
+  _177 = _23 & 1;
+  if (_177 != 0)
+    goto <bb 49>;
+  else
+    goto <bb 50>;
+
+  <bb 49>:
+  fput (f$file_22);
+
+  <bb 50>:
+  pos ={v} {CLOBBER};
+  if (ret_52 > 0)
+    goto <bb 51>;
+  else
+    goto <bb 52>;
+
+  <bb 51>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___92 : "p" &current_task);
+  _93 = pfo_ret___92->ioac.wchar;
+  amt.19_94 = (long long unsigned int) ret_52;
+  _95 = amt.19_94 + _93;
+  pfo_ret___92->ioac.wchar = _95;
+
+  <bb 52>:
+  # ret_36 = PHI <-9(2), ret_52(51), ret_52(50)>
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___96 : "p" &current_task);
+  _97 = pfo_ret___96->ioac.syscw;
+  _98 = _97 + 1;
+  pfo_ret___96->ioac.syscw = _98;
+  return ret_36;
+
+  <bb 53>:
+  # _79 = PHI <-22(9), -75(10), -22(7), -22(12)>
+  ret_184 = (ssize_t) _79;
+  goto <bb 55>;
+
+  <bb 54>:
+  res_150 = res_149 | 4;
+  goto <bb 26>;
+
+  <bb 55>:
+  # ret_199 = PHI <ret_184(53), ret_68(18)>
+  iov.110_38 = iov;
+  kfree (iov.110_38);
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+  goto <bb 46>;
+
+  <bb 56>:
+  # ret_42 = PHI <-22(4), -9(3)>
+  goto <bb 46>;
+
+  <bb 57>:
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+  goto <bb 45>;
+
+  <bb 58>:
+  iovstack ={v} {CLOBBER};
+  iov ={v} {CLOBBER};
+  iter ={v} {CLOBBER};
+  goto <bb 46>;
+
+}
+
+
+
+;; Function SyS_lseek (SyS_lseek, funcdef_no=2438, decl_uid=34993, cgraph_uid=2439)
+
+SyS_lseek (long int fd, long int offset, long int whence)
+{
+  struct file * f$file;
+  int whence.1;
+  off_t retval;
+  loff_t (*<T26db>) (struct file *, loff_t, int) fn;
+  unsigned int _2;
+  unsigned int _4;
+  long unsigned int _9;
+  long unsigned int _10;
+  unsigned int _12;
+  unsigned int _15;
+  unsigned int _16;
+  const struct file_operations * _17;
+  long int _21;
+  unsigned int _25;
+  struct mutex * _26;
+  unsigned int _27;
+
+  <bb 2>:
+  _2 = (unsigned int) whence_1(D);
+  _4 = (unsigned int) fd_3(D);
+  _9 = __fdget_pos (_4);
+  _10 = _9 & 18446744073709551612;
+  f$file_11 = (struct file *) _10;
+  _12 = (unsigned int) _9;
+  if (f$file_11 == 0B)
+    goto <bb 12>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  if (_2 <= 4)
+    goto <bb 4>;
+  else
+    goto <bb 8>;
+
+  <bb 4>:
+  whence.1_14 = (int) whence_1(D);
+  _15 = f$file_11->f_mode;
+  _16 = _15 & 4;
+  if (_16 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 7>;
+
+  <bb 5>:
+  _17 = f$file_11->f_op;
+  fn_18 = _17->llseek;
+  if (fn_18 != 0B)
+    goto <bb 7>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+
+  <bb 7>:
+  # fn_19 = PHI <no_llseek(4), no_llseek(6), fn_18(5)>
+  retval_20 = fn_19 (f$file_11, offset_6(D), whence.1_14);
+
+  <bb 8>:
+  # retval_22 = PHI <-22(3), retval_20(7)>
+  _25 = _12 & 2;
+  if (_25 != 0)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  _26 = &f$file_11->f_pos_lock;
+  mutex_unlock (_26);
+
+  <bb 10>:
+  _27 = _12 & 1;
+  if (_27 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  fput (f$file_11);
+
+  <bb 12>:
+  # _21 = PHI <-9(2), retval_22(11), retval_22(10)>
+  return _21;
+
+}
+
+
+
+;; Function compat_SyS_lseek (compat_SyS_lseek, funcdef_no=2440, decl_uid=35028, cgraph_uid=2442)
+
+compat_SyS_lseek (long int fd, long int offset, long int whence)
+{
+  struct file * f$file;
+  int whence.1;
+  off_t retval;
+  loff_t (*<T26db>) (struct file *, loff_t, int) fn;
+  unsigned int _2;
+  int _4;
+  unsigned int _6;
+  long int _9;
+  long unsigned int _12;
+  long unsigned int _13;
+  unsigned int _15;
+  unsigned int _18;
+  unsigned int _19;
+  const struct file_operations * _20;
+  long int _24;
+  unsigned int _28;
+  struct mutex * _29;
+  unsigned int _30;
+
+  <bb 2>:
+  _2 = (unsigned int) whence_1(D);
+  _6 = (unsigned int) fd_5(D);
+  _12 = __fdget_pos (_6);
+  _13 = _12 & 18446744073709551612;
+  f$file_14 = (struct file *) _13;
+  _15 = (unsigned int) _12;
+  if (f$file_14 == 0B)
+    goto <bb 12>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  if (_2 <= 4)
+    goto <bb 4>;
+  else
+    goto <bb 8>;
+
+  <bb 4>:
+  whence.1_17 = (int) whence_1(D);
+  _18 = f$file_14->f_mode;
+  _19 = _18 & 4;
+  if (_19 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 7>;
+
+  <bb 5>:
+  _20 = f$file_14->f_op;
+  fn_21 = _20->llseek;
+  if (fn_21 != 0B)
+    goto <bb 7>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+
+  <bb 7>:
+  # fn_22 = PHI <no_llseek(4), no_llseek(6), fn_21(5)>
+  _4 = (int) offset_3(D);
+  _9 = (long int) _4;
+  retval_23 = fn_22 (f$file_14, _9, whence.1_17);
+
+  <bb 8>:
+  # retval_25 = PHI <-22(3), retval_23(7)>
+  _28 = _15 & 2;
+  if (_28 != 0)
+    goto <bb 9>;
+  else
+    goto <bb 10>;
+
+  <bb 9>:
+  _29 = &f$file_14->f_pos_lock;
+  mutex_unlock (_29);
+
+  <bb 10>:
+  _30 = _15 & 1;
+  if (_30 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 12>;
+
+  <bb 11>:
+  fput (f$file_14);
+
+  <bb 12>:
+  # _24 = PHI <-9(2), retval_25(11), retval_25(10)>
+  return _24;
+
+}
+
+
+
+;; Function SyS_llseek (SyS_llseek, funcdef_no=2442, decl_uid=35056, cgraph_uid=2445)
+
+SyS_llseek (long int fd, long int offset_high, long int offset_low, long int result, long int whence)
+{
+  struct file * f$file;
+  int whence.7;
+  int retval;
+  loff_t offset;
+  loff_t (*<T26db>) (struct file *, loff_t, int) fn;
+  long unsigned int n;
+  long unsigned int offset_low.4;
+  loff_t * result.3;
+  unsigned int _2;
+  unsigned int _10;
+  long unsigned int _14;
+  long unsigned int _15;
+  unsigned int _17;
+  long int pretmp_18;
+  long long int _21;
+  long long unsigned int _22;
+  long long unsigned int _23;
+  long long int _24;
+  unsigned int _25;
+  unsigned int _26;
+  const struct file_operations * _27;
+  loff_t _30;
+  long int _35;
+  long int prephitmp_36;
+  unsigned int _38;
+  struct mutex * _39;
+  unsigned int _40;
+
+  <bb 2>:
+  _2 = (unsigned int) whence_1(D);
+  _10 = (unsigned int) fd_9(D);
+  _14 = __fdget_pos (_10);
+  _15 = _14 & 18446744073709551612;
+  f$file_16 = (struct file *) _15;
+  _17 = (unsigned int) _14;
+  if (f$file_16 == 0B)
+    goto <bb 16>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  if (_2 > 4)
+    goto <bb 11> (out_putf);
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  whence.7_19 = (int) whence_1(D);
+  _21 = offset_high_7(D) << 32;
+  _22 = (long long unsigned int) _21;
+  offset_low.4_6 = (long unsigned int) offset_low_5(D);
+  _23 = _22 | offset_low.4_6;
+  _24 = (long long int) _23;
+  _25 = f$file_16->f_mode;
+  _26 = _25 & 4;
+  if (_26 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 7>;
+
+  <bb 5>:
+  _27 = f$file_16->f_op;
+  fn_28 = _27->llseek;
+  if (fn_28 != 0B)
+    goto <bb 7>;
+  else
+    goto <bb 6>;
+
+  <bb 6>:
+
+  <bb 7>:
+  # fn_29 = PHI <no_llseek(4), no_llseek(6), fn_28(5)>
+  _30 = fn_29 (f$file_16, _24, whence.7_19);
+  offset = _30;
+  if (_30 >= 0)
+    goto <bb 9>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  retval_31 = (int) _30;
+  pretmp_18 = (long int) retval_31;
+  goto <bb 11> (out_putf);
+
+  <bb 9>:
+  result.3_4 = (loff_t *) result_3(D);
+  n_32 = _copy_to_user (result.3_4, &offset, 8);
+  if (n_32 == 0)
+    goto <bb 11> (out_putf);
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+
+  # prephitmp_36 = PHI <-22(3), pretmp_18(8), -14(10), 0(9)>
+out_putf:
+  _38 = _17 & 2;
+  if (_38 != 0)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+  _39 = &f$file_16->f_pos_lock;
+  mutex_unlock (_39);
+
+  <bb 13>:
+  _40 = _17 & 1;
+  if (_40 != 0)
+    goto <bb 14>;
+  else
+    goto <bb 15>;
+
+  <bb 14>:
+  fput (f$file_16);
+
+  <bb 15>:
+
+  <bb 16>:
+  # _35 = PHI <-9(2), prephitmp_36(15)>
+  offset ={v} {CLOBBER};
+  return _35;
+
+}
+
+
+
+;; Function rw_verify_area (rw_verify_area, funcdef_no=2446, decl_uid=34829, cgraph_uid=2449)
+
+rw_verify_area (int read_write, struct file * file, const loff_t * ppos, size_t count)
+{
+  int retval;
+  loff_t pos;
+  int iftmp.15;
+  int iftmp.14;
+  long long unsigned int pos.13;
+  long int count.12;
+  int _1;
+  struct inode * _8;
+  unsigned int _20;
+  long long int _22;
+  long long unsigned int _23;
+  long long unsigned int _25;
+  long long int _26;
+  unsigned int _30;
+  struct file_lock_context * _32;
+  int _36;
+  long unsigned int _45;
+  int _46;
+  int _49;
+  int _50;
+  int _52;
+  int _53;
+
+  <bb 2>:
+  _8 = MEM[(const struct file *)file_7(D) + 32B];
+  count.12_11 = (long int) count_10(D);
+  if (count.12_11 < 0)
+    goto <bb 17>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  pos_16 = *ppos_15(D);
+  if (pos_16 < 0)
+    goto <bb 4>;
+  else
+    goto <bb 6>;
+
+  <bb 4>:
+  _20 = MEM[(struct file *)file_7(D) + 68B];
+  _49 = (int) _20;
+  _50 = _49 & 8192;
+  if (_50 == 0)
+    goto <bb 17>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  _22 = -pos_16;
+  _23 = (long long unsigned int) _22;
+  if (count_10(D) >= _23)
+    goto <bb 17>;
+  else
+    goto <bb 8>;
+
+  <bb 6>:
+  pos.13_24 = (long long unsigned int) pos_16;
+  _25 = pos.13_24 + count_10(D);
+  _26 = (long long int) _25;
+  if (_26 < 0)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  _30 = MEM[(struct file *)file_7(D) + 68B];
+  _52 = (int) _30;
+  _53 = _52 & 8192;
+  if (_53 == 0)
+    goto <bb 17>;
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  _32 = _8->i_flctx;
+  if (_32 != 0B)
+    goto <bb 10>;
+  else
+    goto <bb 9>;
+
+  <bb 9>:
+  if (read_write_40(D) == 0)
+    goto <bb 14>;
+  else
+    goto <bb 15>;
+
+  <bb 10>:
+  _36 = mandatory_lock (_8);
+  if (_36 != 0)
+    goto <bb 11>;
+  else
+    goto <bb 9>;
+
+  <bb 11>:
+  if (read_write_40(D) == 0)
+    goto <bb 12>;
+  else
+    goto <bb 13>;
+
+  <bb 12>:
+
+  <bb 13>:
+  # iftmp.14_2 = PHI <1(12), 2(11)>
+  retval_42 = locks_mandatory_area (iftmp.14_2, _8, file_7(D), pos_16, count_10(D));
+  if (retval_42 < 0)
+    goto <bb 17>;
+  else
+    goto <bb 9>;
+
+  <bb 14>:
+
+  <bb 15>:
+  # iftmp.15_3 = PHI <4(14), 2(9)>
+  retval_44 = security_file_permission (file_7(D), iftmp.15_3);
+  if (retval_44 != 0)
+    goto <bb 17>;
+  else
+    goto <bb 16>;
+
+  <bb 16>:
+  _45 = MIN_EXPR <count_10(D), 2147479552>;
+  _46 = (int) _45;
+
+  <bb 17>:
+  # _1 = PHI <-22(4), _46(16), -75(5), retval_44(15), retval_42(13), -22(2), -22(7)>
+  return _1;
+
+}
+
+
+
+;; Function SyS_read (SyS_read, funcdef_no=2456, decl_uid=35244, cgraph_uid=2460)
+
+SyS_read (long int fd, long int buf, long int count)
+{
+  struct file * f$file;
+  long long int pos.25;
+  loff_t pos;
+  long int ret;
+  char * buf.22;
+  long unsigned int count.21;
+  unsigned int _6;
+  long unsigned int _10;
+  long unsigned int _11;
+  unsigned int _13;
+  long long int _15;
+  unsigned int _21;
+  struct mutex * _22;
+  unsigned int _23;
+
+  <bb 2>:
+  count.21_2 = (long unsigned int) count_1(D);
+  buf.22_4 = (char *) buf_3(D);
+  _6 = (unsigned int) fd_5(D);
+  _10 = __fdget_pos (_6);
+  _11 = _10 & 18446744073709551612;
+  f$file_12 = (struct file *) _11;
+  _13 = (unsigned int) _10;
+  if (f$file_12 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 10>;
+
+  <bb 3>:
+  _15 = MEM[(struct file *)f$file_12 + 112B];
+  pos = _15;
+  ret_16 = vfs_read (f$file_12, buf.22_4, count.21_2, &pos);
+  if (ret_16 >= 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  pos.25_17 = pos;
+  MEM[(loff_t *)f$file_12 + 112B] = pos.25_17;
+
+  <bb 5>:
+  _21 = _13 & 2;
+  if (_21 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _22 = &f$file_12->f_pos_lock;
+  mutex_unlock (_22);
+
+  <bb 7>:
+  _23 = _13 & 1;
+  if (_23 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  fput (f$file_12);
+
+  <bb 9>:
+  pos ={v} {CLOBBER};
+
+  <bb 10>:
+  # ret_18 = PHI <-9(2), ret_16(9)>
+  return ret_18;
+
+}
+
+
+
+;; Function SyS_write (SyS_write, funcdef_no=2458, decl_uid=35279, cgraph_uid=2463)
+
+SyS_write (long int fd, long int buf, long int count)
+{
+  struct file * f$file;
+  long long int pos.30;
+  loff_t pos;
+  long int ret;
+  const char * buf.27;
+  long unsigned int count.26;
+  unsigned int _6;
+  long unsigned int _10;
+  long unsigned int _11;
+  unsigned int _13;
+  long long int _15;
+  unsigned int _21;
+  struct mutex * _22;
+  unsigned int _23;
+
+  <bb 2>:
+  count.26_2 = (long unsigned int) count_1(D);
+  buf.27_4 = (const char *) buf_3(D);
+  _6 = (unsigned int) fd_5(D);
+  _10 = __fdget_pos (_6);
+  _11 = _10 & 18446744073709551612;
+  f$file_12 = (struct file *) _11;
+  _13 = (unsigned int) _10;
+  if (f$file_12 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 10>;
+
+  <bb 3>:
+  _15 = MEM[(struct file *)f$file_12 + 112B];
+  pos = _15;
+  ret_16 = vfs_write (f$file_12, buf.27_4, count.26_2, &pos);
+  if (ret_16 >= 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  pos.30_17 = pos;
+  MEM[(loff_t *)f$file_12 + 112B] = pos.30_17;
+
+  <bb 5>:
+  _21 = _13 & 2;
+  if (_21 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _22 = &f$file_12->f_pos_lock;
+  mutex_unlock (_22);
+
+  <bb 7>:
+  _23 = _13 & 1;
+  if (_23 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  fput (f$file_12);
+
+  <bb 9>:
+  pos ={v} {CLOBBER};
+
+  <bb 10>:
+  # ret_18 = PHI <-9(2), ret_16(9)>
+  return ret_18;
+
+}
+
+
+
+;; Function SyS_pread64 (SyS_pread64, funcdef_no=2460, decl_uid=35317, cgraph_uid=2466)
+
+SyS_pread64 (long int fd, long int buf, long int count, long long int pos)
+{
+  ssize_t ret;
+  loff_t pos;
+  char * buf.32;
+  long unsigned int count.31;
+  unsigned int _6;
+  long unsigned int _12;
+  long unsigned int _13;
+  struct file * _14;
+  unsigned int _15;
+  unsigned int _17;
+  unsigned int _18;
+  unsigned int _20;
+  long int _21;
+
+  <bb 2>:
+  _6 = (unsigned int) fd_5(D);
+  pos = pos_8(D);
+  if (pos_8(D) < 0)
+    goto <bb 8>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _12 = __fdget (_6);
+  _13 = _12 & 18446744073709551612;
+  _14 = (struct file *) _13;
+  _15 = (unsigned int) _12;
+  if (_14 != 0B)
+    goto <bb 4>;
+  else
+    goto <bb 8>;
+
+  <bb 4>:
+  _17 = _14->f_mode;
+  _18 = _17 & 8;
+  if (_18 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  buf.32_4 = (char *) buf_3(D);
+  count.31_2 = (long unsigned int) count_1(D);
+  ret_19 = vfs_read (_14, buf.32_4, count.31_2, &pos);
+
+  <bb 6>:
+  # ret_22 = PHI <-29(4), ret_19(5)>
+  _20 = _15 & 1;
+  if (_20 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  fput (_14);
+
+  <bb 8>:
+  # _21 = PHI <-22(2), ret_22(6), -9(3), ret_22(7)>
+  return _21;
+
+}
+
+
+
+;; Function SyS_pwrite64 (SyS_pwrite64, funcdef_no=2462, decl_uid=35359, cgraph_uid=2469)
+
+SyS_pwrite64 (long int fd, long int buf, long int count, long long int pos)
+{
+  ssize_t ret;
+  loff_t pos;
+  const char * buf.35;
+  long unsigned int count.34;
+  unsigned int _6;
+  long unsigned int _12;
+  long unsigned int _13;
+  struct file * _14;
+  unsigned int _15;
+  unsigned int _17;
+  unsigned int _18;
+  unsigned int _20;
+  long int _21;
+
+  <bb 2>:
+  _6 = (unsigned int) fd_5(D);
+  pos = pos_8(D);
+  if (pos_8(D) < 0)
+    goto <bb 8>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  _12 = __fdget (_6);
+  _13 = _12 & 18446744073709551612;
+  _14 = (struct file *) _13;
+  _15 = (unsigned int) _12;
+  if (_14 != 0B)
+    goto <bb 4>;
+  else
+    goto <bb 8>;
+
+  <bb 4>:
+  _17 = _14->f_mode;
+  _18 = _17 & 16;
+  if (_18 != 0)
+    goto <bb 5>;
+  else
+    goto <bb 6>;
+
+  <bb 5>:
+  buf.35_4 = (const char *) buf_3(D);
+  count.34_2 = (long unsigned int) count_1(D);
+  ret_19 = vfs_write (_14, buf.35_4, count.34_2, &pos);
+
+  <bb 6>:
+  # ret_22 = PHI <-29(4), ret_19(5)>
+  _20 = _15 & 1;
+  if (_20 != 0)
+    goto <bb 7>;
+  else
+    goto <bb 8>;
+
+  <bb 7>:
+  fput (_14);
+
+  <bb 8>:
+  # _21 = PHI <-22(2), ret_22(6), -9(3), ret_22(7)>
+  return _21;
+
+}
+
+
+
+;; Function rw_copy_check_uvector (rw_copy_check_uvector, funcdef_no=2467, decl_uid=15889, cgraph_uid=2474)
+
+rw_copy_check_uvector (int type, const struct iovec * uvector, long unsigned int nr_segs, long unsigned int fast_segs, struct iovec * fast_pointer, struct iovec * * ret_pointer)
+{
+  unsigned long ivtmp.534;
+  long unsigned int addr;
+  u64 pfo_ret__;
+  long unsigned int n;
+  ssize_t len;
+  void * buf;
+  ssize_t ret;
+  long unsigned int ret.39;
+  long unsigned int buf.38;
+  long unsigned int _15;
+  long unsigned int _23;
+  long unsigned int _26;
+  long unsigned int _32;
+  void * _107;
+  long unsigned int prephitmp_117;
+  unsigned int _118;
+  long unsigned int _121;
+  struct thread_info * _122;
+  unsigned long _125;
+  unsigned long _128;
+  long unsigned int pretmp_129;
+
+  <bb 2>:
+  if (nr_segs_12(D) == 0)
+    goto <bb 17> (out);
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  if (nr_segs_12(D) > 1024)
+    goto <bb 17> (out);
+  else
+    goto <bb 4>;
+
+  <bb 4>:
+  if (nr_segs_12(D) > fast_segs_14(D))
+    goto <bb 6>;
+  else
+    goto <bb 5>;
+
+  <bb 5>:
+  pretmp_129 = nr_segs_12(D) * 16;
+  goto <bb 7>;
+
+  <bb 6>:
+  _15 = nr_segs_12(D) * 16;
+  fast_pointer_116 = __kmalloc (_15, 208);
+  if (fast_pointer_116 == 0B)
+    goto <bb 17> (out);
+  else
+    goto <bb 7>;
+
+  <bb 7>:
+  # fast_pointer_4 = PHI <fast_pointer_11(D)(5), fast_pointer_116(6)>
+  # prephitmp_117 = PHI <pretmp_129(5), _15(6)>
+  _118 = (unsigned int) prephitmp_117;
+  n_119 = _copy_from_user (fast_pointer_4, uvector_18(D), _118);
+  if (n_119 != 0)
+    goto <bb 17> (out);
+  else
+    goto <bb 8>;
+
+  <bb 8>:
+  ivtmp.534_123 = (unsigned long) fast_pointer_4;
+  _128 = nr_segs_12(D) * 16;
+  _125 = ivtmp.534_123 + _128;
+
+  <bb 9>:
+  # ret_323 = PHI <ret_36(16), 0(8)>
+  # ivtmp.534_17 = PHI <ivtmp.534_127(16), ivtmp.534_123(8)>
+  _107 = (void *) ivtmp.534_17;
+  buf_22 = MEM[base: _107, offset: 0B];
+  _23 = MEM[base: _107, offset: 8B];
+  len_24 = (ssize_t) _23;
+  if (len_24 < 0)
+    goto <bb 17> (out);
+  else
+    goto <bb 10>;
+
+  <bb 10>:
+  if (type_25(D) >= 0)
+    goto <bb 11>;
+  else
+    goto <bb 13>;
+
+  <bb 11>:
+  __asm__("movq %%gs:%P1,%0" : "=r" pfo_ret___120 : "p" &cpu_tss.x86_tss.sp0);
+  _121 = pfo_ret___120 + 18446744073709535232;
+  _122 = (struct thread_info *) _121;
+  _26 = _122->addr_limit.seg;
+  buf.38_27 = (long unsigned int) buf_22;
+  addr_126 = buf.38_27 + _23;
+  if (_23 > addr_126)
+    goto <bb 17> (out);
+  else
+    goto <bb 12>;
+
+  <bb 12>:
+  if (_26 < addr_126)
+    goto <bb 17> (out);
+  else
+    goto <bb 13>;
+
+  <bb 13>:
+  ret.39_31 = (long unsigned int) ret_323;
+  _32 = 2147479552 - ret.39_31;
+  if (_23 > _32)
+    goto <bb 14>;
+  else
+    goto <bb 15>;
+
+  <bb 14>:
+  len_34 = (ssize_t) _32;
+  MEM[base: _107, offset: 8B] = _32;
+
+  <bb 15>:
+  # len_6 = PHI <len_24(13), len_34(14)>
+  ret_36 = ret_323 + len_6;
+  ivtmp.534_127 = ivtmp.534_17 + 16;
+  if (ivtmp.534_127 != _125)
+    goto <bb 16>;
+  else
+    goto <bb 17> (out);
+
+  <bb 16>:
+  goto <bb 9>;
+
+  # ret_3 = PHI <0(2), -22(3), -12(6), -14(7), -22(9), -14(12), ret_36(15), -14(11)>
+  # fast_pointer_5 = PHI <fast_pointer_11(D)(2), fast_pointer_11(D)(3), fast_pointer_116(6), fast_pointer_4(7), fast_pointer_4(9), fast_pointer_4(12), fast_pointer_4(15), fast_pointer_4(11)>
+out:
+  *ret_pointer_38(D) = fast_pointer_5;
+  return ret_3;
+
+}
+
+
+
+;; Function SyS_readv (SyS_readv, funcdef_no=2471, decl_uid=35499, cgraph_uid=2479)
+
+SyS_readv (long int fd, long int vec, long int vlen)
+{
+  long int ret;
+  long unsigned int fd.119;
+  const struct iovec * vec.118;
+  long unsigned int vlen.117;
+
+  <bb 2>:
+  vlen.117_2 = (long unsigned int) vlen_1(D);
+  vec.118_4 = (const struct iovec *) vec_3(D);
+  fd.119_6 = (long unsigned int) fd_5(D);
+  ret_9 = SYSC_readv (fd.119_6, vec.118_4, vlen.117_2);
+  return ret_9;
+
+}
+
+
+
+;; Function SyS_writev (SyS_writev, funcdef_no=2473, decl_uid=35534, cgraph_uid=2482)
+
+SyS_writev (long int fd, long int vec, long int vlen)
+{
+  long int ret;
+  long unsigned int fd.124;
+  const struct iovec * vec.123;
+  long unsigned int vlen.122;
+
+  <bb 2>:
+  vlen.122_2 = (long unsigned int) vlen_1(D);
+  vec.123_4 = (const struct iovec *) vec_3(D);
+  fd.124_6 = (long unsigned int) fd_5(D);
+  ret_9 = SYSC_writev (fd.124_6, vec.123_4, vlen.122_2);
+  return ret_9;
+
+}
+
+
+
+;; Function SyS_preadv (SyS_preadv, funcdef_no=2476, decl_uid=35579, cgraph_uid=2486)
+
+SyS_preadv (long int fd, long int vec, long int vlen, long int pos_l, long int pos_h)
+{
+  long int ret;
+  long unsigned int fd.131;
+  const struct iovec * vec.130;
+  long unsigned int vlen.129;
+  long unsigned int pos_l.128;
+
+  <bb 2>:
+  pos_l.128_3 = (long unsigned int) pos_l_2(D);
+  vlen.129_5 = (long unsigned int) vlen_4(D);
+  vec.130_7 = (const struct iovec *) vec_6(D);
+  fd.131_9 = (long unsigned int) fd_8(D);
+  ret_12 = SYSC_preadv.isra.15 (fd.131_9, vec.130_7, vlen.129_5, pos_l.128_3);
+  return ret_12;
+
+}
+
+
+
+;; Function SyS_pwritev (SyS_pwritev, funcdef_no=2478, decl_uid=35630, cgraph_uid=2489)
+
+SyS_pwritev (long int fd, long int vec, long int vlen, long int pos_l, long int pos_h)
+{
+  long int ret;
+  long unsigned int fd.138;
+  const struct iovec * vec.137;
+  long unsigned int vlen.136;
+  long unsigned int pos_l.135;
+
+  <bb 2>:
+  pos_l.135_3 = (long unsigned int) pos_l_2(D);
+  vlen.136_5 = (long unsigned int) vlen_4(D);
+  vec.137_7 = (const struct iovec *) vec_6(D);
+  fd.138_9 = (long unsigned int) fd_8(D);
+  ret_12 = SYSC_pwritev.isra.16 (fd.138_9, vec.137_7, vlen.136_5, pos_l.135_3);
+  return ret_12;
+
+}
+
+
+
+;; Function compat_SyS_readv (compat_SyS_readv, funcdef_no=2482, decl_uid=35698, cgraph_uid=2494)
+
+compat_SyS_readv (long int fd, long int vec, long int vlen)
+{
+  struct file * f$file;
+  long long int pos.143;
+  long long int pos.144;
+  ssize_t ret;
+  loff_t pos;
+  const struct compat_iovec * vec.141;
+  unsigned int _6;
+  long unsigned int _10;
+  long unsigned int _11;
+  unsigned int _13;
+  long unsigned int _16;
+  long unsigned int _17;
+  long int _20;
+  unsigned int _23;
+  struct mutex * _24;
+  unsigned int _25;
+  long int _37;
+
+  <bb 2>:
+  vec.141_4 = (const struct compat_iovec *) vec_3(D);
+  _6 = (unsigned int) fd_5(D);
+  _10 = __fdget_pos (_6);
+  _11 = _10 & 18446744073709551612;
+  f$file_12 = (struct file *) _11;
+  _13 = (unsigned int) _10;
+  if (f$file_12 == 0B)
+    goto <bb 9>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  pos.143_15 = f$file_12->f_pos;
+  pos = pos.143_15;
+  _37 = vlen_1(D) & 4294967295;
+  _16 = (long unsigned int) _37;
+  _17 = compat_readv (f$file_12, vec.141_4, _16, &pos);
+  ret_18 = (ssize_t) _17;
+  if (ret_18 >= 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  pos.144_19 = pos;
+  f$file_12->f_pos = pos.144_19;
+
+  <bb 5>:
+  _23 = _13 & 2;
+  if (_23 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _24 = &f$file_12->f_pos_lock;
+  mutex_unlock (_24);
+
+  <bb 7>:
+  _25 = _13 & 1;
+  if (_25 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  fput (f$file_12);
+
+  <bb 9>:
+  # _20 = PHI <-9(2), ret_18(8), ret_18(7)>
+  pos ={v} {CLOBBER};
+  return _20;
+
+}
+
+
+
+;; Function compat_SyS_preadv64 (compat_SyS_preadv64, funcdef_no=2485, decl_uid=35734, cgraph_uid=2498)
+
+compat_SyS_preadv64 (long int fd, long int vec, long int vlen, long long int pos)
+{
+  long unsigned int fd.148;
+  const struct compat_iovec * vec.147;
+  long unsigned int vlen.146;
+  long int _10;
+
+  <bb 2>:
+  vlen.146_2 = (long unsigned int) vlen_1(D);
+  vec.147_4 = (const struct compat_iovec *) vec_3(D);
+  fd.148_6 = (long unsigned int) fd_5(D);
+  _10 = __compat_sys_preadv64 (fd.148_6, vec.147_4, vlen.146_2, pos_8(D));
+  return _10;
+
+}
+
+
+
+;; Function compat_SyS_preadv (compat_SyS_preadv, funcdef_no=2487, decl_uid=35764, cgraph_uid=2501)
+
+compat_SyS_preadv (long int fd, long int vec, long int vlen, long int pos_low, long int pos_high)
+{
+  loff_t pos;
+  const struct compat_iovec * vec.150;
+  long long int _9;
+  long long int _10;
+  long long int _11;
+  long unsigned int _13;
+  long unsigned int _14;
+  long int _15;
+  long int _17;
+  long int _18;
+
+  <bb 2>:
+  vec.150_5 = (const struct compat_iovec *) vec_4(D);
+  _9 = pos_high_1(D) & 4294967295;
+  _10 = _9 << 32;
+  _11 = pos_low_2(D) & 4294967295;
+  pos_12 = _10 | _11;
+  _17 = vlen_3(D) & 4294967295;
+  _13 = (long unsigned int) _17;
+  _18 = fd_6(D) & 4294967295;
+  _14 = (long unsigned int) _18;
+  _15 = __compat_sys_preadv64 (_14, vec.150_5, _13, pos_12);
+  return _15;
+
+}
+
+
+
+;; Function compat_SyS_writev (compat_SyS_writev, funcdef_no=2490, decl_uid=35799, cgraph_uid=2505)
+
+compat_SyS_writev (long int fd, long int vec, long int vlen)
+{
+  struct file * f$file;
+  long long int pos.153;
+  long long int pos.154;
+  ssize_t ret;
+  loff_t pos;
+  const struct compat_iovec * vec.151;
+  unsigned int _6;
+  long unsigned int _10;
+  long unsigned int _11;
+  unsigned int _13;
+  long unsigned int _16;
+  long unsigned int _17;
+  long int _20;
+  unsigned int _23;
+  struct mutex * _24;
+  unsigned int _25;
+  long int _37;
+
+  <bb 2>:
+  vec.151_4 = (const struct compat_iovec *) vec_3(D);
+  _6 = (unsigned int) fd_5(D);
+  _10 = __fdget_pos (_6);
+  _11 = _10 & 18446744073709551612;
+  f$file_12 = (struct file *) _11;
+  _13 = (unsigned int) _10;
+  if (f$file_12 == 0B)
+    goto <bb 9>;
+  else
+    goto <bb 3>;
+
+  <bb 3>:
+  pos.153_15 = f$file_12->f_pos;
+  pos = pos.153_15;
+  _37 = vlen_1(D) & 4294967295;
+  _16 = (long unsigned int) _37;
+  _17 = compat_writev (f$file_12, vec.151_4, _16, &pos);
+  ret_18 = (ssize_t) _17;
+  if (ret_18 >= 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  pos.154_19 = pos;
+  f$file_12->f_pos = pos.154_19;
+
+  <bb 5>:
+  _23 = _13 & 2;
+  if (_23 != 0)
+    goto <bb 6>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _24 = &f$file_12->f_pos_lock;
+  mutex_unlock (_24);
+
+  <bb 7>:
+  _25 = _13 & 1;
+  if (_25 != 0)
+    goto <bb 8>;
+  else
+    goto <bb 9>;
+
+  <bb 8>:
+  fput (f$file_12);
+
+  <bb 9>:
+  # _20 = PHI <-9(2), ret_18(8), ret_18(7)>
+  pos ={v} {CLOBBER};
+  return _20;
+
+}
+
+
+
+;; Function compat_SyS_pwritev64 (compat_SyS_pwritev64, funcdef_no=2493, decl_uid=35835, cgraph_uid=2509)
+
+compat_SyS_pwritev64 (long int fd, long int vec, long int vlen, long long int pos)
+{
+  long unsigned int fd.157;
+  const struct compat_iovec * vec.156;
+  long unsigned int vlen.155;
+  long int _10;
+
+  <bb 2>:
+  vlen.155_2 = (long unsigned int) vlen_1(D);
+  vec.156_4 = (const struct compat_iovec *) vec_3(D);
+  fd.157_6 = (long unsigned int) fd_5(D);
+  _10 = __compat_sys_pwritev64 (fd.157_6, vec.156_4, vlen.155_2, pos_8(D));
+  return _10;
+
+}
+
+
+
+;; Function compat_SyS_pwritev (compat_SyS_pwritev, funcdef_no=2495, decl_uid=35865, cgraph_uid=2512)
+
+compat_SyS_pwritev (long int fd, long int vec, long int vlen, long int pos_low, long int pos_high)
+{
+  loff_t pos;
+  const struct compat_iovec * vec.159;
+  long long int _9;
+  long long int _10;
+  long long int _11;
+  long unsigned int _13;
+  long unsigned int _14;
+  long int _15;
+  long int _17;
+  long int _18;
+
+  <bb 2>:
+  vec.159_5 = (const struct compat_iovec *) vec_4(D);
+  _9 = pos_high_1(D) & 4294967295;
+  _10 = _9 << 32;
+  _11 = pos_low_2(D) & 4294967295;
+  pos_12 = _10 | _11;
+  _17 = vlen_3(D) & 4294967295;
+  _13 = (long unsigned int) _17;
+  _18 = fd_6(D) & 4294967295;
+  _14 = (long unsigned int) _18;
+  _15 = __compat_sys_pwritev64 (_14, vec.159_5, _13, pos_12);
+  return _15;
+
+}
+
+
+
+;; Function SyS_sendfile (SyS_sendfile, funcdef_no=2498, decl_uid=35916, cgraph_uid=2516)
+
+SyS_sendfile (long int out_fd, long int in_fd, long int offset, long int count)
+{
+  long unsigned int __val_gu.162;
+  loff_t pos;
+  off_t off;
+  ssize_t ret;
+  int __ret_gu;
+  register long unsigned int __val_gu __asm__ (*%rdx);
+  int __ret_pu;
+  off_t __pu_val;
+  off_t * offset.161;
+  long unsigned int count.160;
+  int _6;
+  int _8;
+  long int _24;
+  long int _25;
+
+  <bb 2>:
+  count.160_2 = (long unsigned int) count_1(D);
+  offset.161_4 = (off_t *) offset_3(D);
+  _6 = (int) in_fd_5(D);
+  _8 = (int) out_fd_7(D);
+  if (offset.161_4 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 6>;
+
+  <bb 3>:
+  __asm__ __volatile__("call __get_user_%P3" : "=a" __ret_gu_12, "=r" __val_gu : "0" offset.161_4, "i" 8);
+  __val_gu.162_13 = __val_gu;
+  off_14 = (off_t) __val_gu.162_13;
+  if (__ret_gu_12 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  goto <bb 7>;
+
+  <bb 5>:
+  pos = off_14;
+  ret_18 = do_sendfile (_8, _6, &pos, count.160_2, 2147483647);
+  __pu_val_19 = pos;
+  __asm__ __volatile__("call __put_user_8" : "=a" __ret_pu_20 : "0" __pu_val_19, "c" offset.161_4 : "ebx");
+  if (__ret_pu_20 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _24 = do_sendfile (_8, _6, 0B, count.160_2, 0);
+
+  <bb 7>:
+  # _25 = PHI <-14(4), _24(6), ret_18(5)>
+  pos ={v} {CLOBBER};
+  return _25;
+
+}
+
+
+
+;; Function SyS_sendfile64 (SyS_sendfile64, funcdef_no=2500, decl_uid=35971, cgraph_uid=2519)
+
+SyS_sendfile64 (long int out_fd, long int in_fd, long int offset, long int count)
+{
+  loff_t pos;
+  ssize_t ret;
+  int __ret_pu;
+  loff_t __pu_val;
+  long unsigned int n;
+  loff_t * offset.179;
+  long unsigned int count.178;
+  int _6;
+  int _8;
+  long int _22;
+  long int _23;
+
+  <bb 2>:
+  count.178_2 = (long unsigned int) count_1(D);
+  offset.179_4 = (loff_t *) offset_3(D);
+  _6 = (int) in_fd_5(D);
+  _8 = (int) out_fd_7(D);
+  if (offset.179_4 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 6>;
+
+  <bb 3>:
+  n_12 = _copy_from_user (&pos, offset.179_4, 8);
+  if (n_12 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  goto <bb 7>;
+
+  <bb 5>:
+  ret_16 = do_sendfile (_8, _6, &pos, count.178_2, 0);
+  __pu_val_17 = pos;
+  __asm__ __volatile__("call __put_user_8" : "=a" __ret_pu_18 : "0" __pu_val_17, "c" offset.179_4 : "ebx");
+  if (__ret_pu_18 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _22 = do_sendfile (_8, _6, 0B, count.178_2, 0);
+
+  <bb 7>:
+  # _23 = PHI <-14(4), _22(6), ret_16(5)>
+  pos ={v} {CLOBBER};
+  return _23;
+
+}
+
+
+
+;; Function compat_SyS_sendfile (compat_SyS_sendfile, funcdef_no=2502, decl_uid=36022, cgraph_uid=2522)
+
+compat_SyS_sendfile (long int out_fd, long int in_fd, long int offset, long int count)
+{
+  long unsigned int __val_gu.181;
+  long long int pos.182;
+  loff_t pos;
+  off_t off;
+  ssize_t ret;
+  int __ret_gu;
+  register long unsigned int __val_gu __asm__ (*%rdx);
+  int __ret_pu;
+  compat_off_t __pu_val;
+  compat_off_t * offset.180;
+  int _6;
+  int _8;
+  int _14;
+  long int _16;
+  long unsigned int _19;
+  long int _24;
+  long unsigned int _27;
+  long int _28;
+  long int _29;
+
+  <bb 2>:
+  offset.180_4 = (compat_off_t *) offset_3(D);
+  _6 = (int) in_fd_5(D);
+  _8 = (int) out_fd_7(D);
+  if (offset.180_4 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 6>;
+
+  <bb 3>:
+  __asm__ __volatile__("call __get_user_%P3" : "=a" __ret_gu_12, "=r" __val_gu : "0" offset.180_4, "i" 4);
+  __val_gu.181_13 = __val_gu;
+  _14 = (int) __val_gu.181_13;
+  off_15 = (off_t) _14;
+  if (__ret_gu_12 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  goto <bb 7>;
+
+  <bb 5>:
+  pos = off_15;
+  _16 = count_1(D) & 4294967295;
+  _19 = (long unsigned int) _16;
+  ret_20 = do_sendfile (_8, _6, &pos, _19, 2147483647);
+  pos.182_21 = pos;
+  __pu_val_22 = (compat_off_t) pos.182_21;
+  __asm__ __volatile__("call __put_user_4" : "=a" __ret_pu_23 : "0" __pu_val_22, "c" offset.180_4 : "ebx");
+  if (__ret_pu_23 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _24 = count_1(D) & 4294967295;
+  _27 = (long unsigned int) _24;
+  _28 = do_sendfile (_8, _6, 0B, _27, 0);
+
+  <bb 7>:
+  # _29 = PHI <-14(4), _28(6), ret_20(5)>
+  pos ={v} {CLOBBER};
+  return _29;
+
+}
+
+
+
+;; Function compat_SyS_sendfile64 (compat_SyS_sendfile64, funcdef_no=2504, decl_uid=36064, cgraph_uid=2525)
+
+compat_SyS_sendfile64 (long int out_fd, long int in_fd, long int offset, long int count)
+{
+  loff_t pos;
+  ssize_t ret;
+  int __ret_pu;
+  compat_loff_t __pu_val;
+  long unsigned int n;
+  compat_loff_t * offset.183;
+  int _6;
+  int _8;
+  long int _13;
+  long unsigned int _16;
+  long int _20;
+  long unsigned int _23;
+  long int _24;
+  long int _25;
+
+  <bb 2>:
+  offset.183_4 = (compat_loff_t *) offset_3(D);
+  _6 = (int) in_fd_5(D);
+  _8 = (int) out_fd_7(D);
+  if (offset.183_4 != 0B)
+    goto <bb 3>;
+  else
+    goto <bb 6>;
+
+  <bb 3>:
+  n_12 = _copy_from_user (&pos, offset.183_4, 8);
+  if (n_12 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 5>;
+
+  <bb 4>:
+  goto <bb 7>;
+
+  <bb 5>:
+  _13 = count_1(D) & 4294967295;
+  _16 = (long unsigned int) _13;
+  ret_17 = do_sendfile (_8, _6, &pos, _16, 0);
+  __pu_val_18 = pos;
+  __asm__ __volatile__("call __put_user_8" : "=a" __ret_pu_19 : "0" __pu_val_18, "c" offset.183_4 : "ebx");
+  if (__ret_pu_19 != 0)
+    goto <bb 4>;
+  else
+    goto <bb 7>;
+
+  <bb 6>:
+  _20 = count_1(D) & 4294967295;
+  _23 = (long unsigned int) _20;
+  _24 = do_sendfile (_8, _6, 0B, _23, 0);
+
+  <bb 7>:
+  # _25 = PHI <-14(4), _24(6), ret_17(5)>
+  pos ={v} {CLOBBER};
+  return _25;
+
+}
+
+
