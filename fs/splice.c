@@ -34,6 +34,24 @@
 #include <linux/compat.h>
 #include "internal.h"
 
+#include <linux/slab.h> 
+#include <linux/stat.h>
+#include <linux/fcntl.h>
+#include <linux/file.h>
+#include <linux/uio.h>
+#include <linux/fsnotify.h>
+#include <linux/security.h>
+#include <linux/export.h>
+#include <linux/syscalls.h>
+#include <linux/pagemap.h>
+#include <linux/splice.h>
+#include <linux/compat.h>
+
+#include <asm/uaccess.h>
+#include <asm/unistd.h>
+
+void kayrebt_FlowNodeMarker(void);
+
 /*
  * Attempt to steal a page from a pipe buffer. This should perhaps go into
  * a vm helper function, it's already simplified quite a bit by the
@@ -1102,7 +1120,7 @@ EXPORT_SYMBOL(generic_splice_sendpage);
 /*
  * Attempt to initiate a splice from pipe to file.
  */
-static long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
+__attribute__((always_inline)) static long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
 			   loff_t *ppos, size_t len, unsigned int flags)
 {
 	ssize_t (*splice_write)(struct pipe_inode_info *, struct file *,
@@ -1119,7 +1137,7 @@ static long do_splice_from(struct pipe_inode_info *pipe, struct file *out,
 /*
  * Attempt to initiate a splice from a file to a pipe.
  */
-static long do_splice_to(struct file *in, loff_t *ppos,
+__attribute__((always_inline)) static long do_splice_to(struct file *in, loff_t *ppos,
 			 struct pipe_inode_info *pipe, size_t len,
 			 unsigned int flags)
 {
@@ -1334,10 +1352,52 @@ static int splice_pipe_to_pipe(struct pipe_inode_info *ipipe,
 			       struct pipe_inode_info *opipe,
 			       size_t len, unsigned int flags);
 
+static inline int unsigned_offsets(struct file *file)
+{
+	return file->f_mode & FMODE_UNSIGNED_OFFSET;
+}
+/*
+ * rw_verify_area doesn't like huge counts. We limit
+ * them to something that fits in "int" so that others
+ * won't have to do range checks all the time.
+ */
+__attribute__((always_inline)) int rw_verify_area(int read_write, struct file *file, const loff_t *ppos, size_t count)
+{
+	struct inode *inode;
+	loff_t pos;
+	int retval = -EINVAL;
+
+	inode = file_inode(file);
+	if (unlikely((ssize_t) count < 0))
+		return retval;
+	pos = *ppos;
+	if (unlikely(pos < 0)) {
+		if (!unsigned_offsets(file))
+			return retval;
+		if (count >= -pos) /* both values are in 0..LLONG_MAX */
+			return -EOVERFLOW;
+	} else if (unlikely((loff_t) (pos + count) < 0)) {
+		if (!unsigned_offsets(file))
+			return retval;
+	}
+
+	if (unlikely(inode->i_flctx && mandatory_lock(inode))) {
+		retval = locks_mandatory_area(
+			read_write == READ ? FLOCK_VERIFY_READ : FLOCK_VERIFY_WRITE,
+			inode, file, pos, count);
+		if (retval < 0)
+			return retval;
+	}
+	retval = security_file_permission(file,
+				read_write == READ ? MAY_READ : MAY_WRITE);
+	if (retval)
+		return retval;
+	return count > MAX_RW_COUNT ? MAX_RW_COUNT : count;
+}
 /*
  * Determine where to splice to/from.
  */
-static long do_splice(struct file *in, loff_t __user *off_in,
+__attribute__((always_inline)) static long do_splice(struct file *in, loff_t __user *off_in,
 		      struct file *out, loff_t __user *off_out,
 		      size_t len, unsigned int flags)
 {
@@ -1363,6 +1423,7 @@ static long do_splice(struct file *in, loff_t __user *off_in,
 		if (ipipe == opipe)
 			return -EINVAL;
 
+		kayrebt_FlowNodeMarker();
 		return splice_pipe_to_pipe(ipipe, opipe, len, flags);
 	}
 
@@ -1389,6 +1450,7 @@ static long do_splice(struct file *in, loff_t __user *off_in,
 			return ret;
 
 		file_start_write(out);
+		kayrebt_FlowNodeMarker();
 		ret = do_splice_from(ipipe, out, &offset, len, flags);
 		file_end_write(out);
 
@@ -1412,6 +1474,7 @@ static long do_splice(struct file *in, loff_t __user *off_in,
 			offset = in->f_pos;
 		}
 
+		kayrebt_FlowNodeMarker();
 		ret = do_splice_to(in, &offset, opipe, len, flags);
 
 		if (!off_in)
