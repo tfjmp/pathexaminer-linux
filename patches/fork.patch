@@ -1,0 +1,87 @@
+diff --git a/linux/config b/linux/config
+new file mode 100644
+index 0000000..0d4106c
+--- /dev/null
++++ b/linux/config
+@@ -0,0 +1,8 @@
++general:
++  url:
++    dbfile: ./linux-v4.3.db
++    dbname: global_symbols
++  greedy: 0
++
++kernel/fork.c:
++  functions: [SYSC_clone, sys_fork, sys_vfork]
+diff --git a/linux/include/linux/err.h b/linux/include/linux/err.h
+index a729120..59e3c88 100644
+--- a/linux/include/linux/err.h
++++ b/linux/include/linux/err.h
+@@ -20,22 +20,22 @@
+ 
+ #define IS_ERR_VALUE(x) unlikely((x) >= (unsigned long)-MAX_ERRNO)
+ 
+-static inline void * __must_check ERR_PTR(long error)
++__attribute__((always_inline)) static inline void * __must_check ERR_PTR(long error)
+ {
+ 	return (void *) error;
+ }
+ 
+-static inline long __must_check PTR_ERR(__force const void *ptr)
++__attribute__((always_inline)) static inline long __must_check PTR_ERR(__force const void *ptr)
+ {
+ 	return (long) ptr;
+ }
+ 
+-static inline bool __must_check IS_ERR(__force const void *ptr)
++__attribute__((always_inline)) static inline bool __must_check IS_ERR(__force const void *ptr)
+ {
+ 	return IS_ERR_VALUE((unsigned long)ptr);
+ }
+ 
+-static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
++__attribute__((always_inline)) static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
+ {
+ 	return !ptr || IS_ERR_VALUE((unsigned long)ptr);
+ }
+@@ -47,13 +47,13 @@ static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
+  * Explicitly cast an error-valued pointer to another pointer type in such a
+  * way as to make it clear that's what's going on.
+  */
+-static inline void * __must_check ERR_CAST(__force const void *ptr)
++__attribute__((always_inline)) static inline void * __must_check ERR_CAST(__force const void *ptr)
+ {
+ 	/* cast away the const */
+ 	return (void *) ptr;
+ }
+ 
+-static inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
++__attribute__((always_inline)) static inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
+ {
+ 	if (IS_ERR(ptr))
+ 		return PTR_ERR(ptr);
+diff --git a/linux/kernel/fork.c b/linux/kernel/fork.c
+index 2845623..b3f3841 100644
+--- a/linux/kernel/fork.c
++++ b/linux/kernel/fork.c
+@@ -1241,7 +1241,7 @@ init_task_pid(struct task_struct *task, enum pid_type type, struct pid *pid)
+  * parts of the process environment (as per the clone
+  * flags). The actual kick-off is left to the caller.
+  */
+-static struct task_struct *copy_process(unsigned long clone_flags,
++__attribute__((always_inline)) static struct task_struct *copy_process(unsigned long clone_flags,
+ 					unsigned long stack_start,
+ 					unsigned long stack_size,
+ 					int __user *child_tidptr,
+@@ -1694,7 +1694,7 @@ struct task_struct *fork_idle(int cpu)
+  * It copies the process, and if successful kick-starts
+  * it and waits for it to finish using the VM if required.
+  */
+-long _do_fork(unsigned long clone_flags,
++__attribute__((always_inline)) long _do_fork(unsigned long clone_flags,
+ 	      unsigned long stack_start,
+ 	      unsigned long stack_size,
+ 	      int __user *parent_tidptr,
+diff --git a/linux/linux-v4.3.db b/linux/linux-v4.3.db
+new file mode 100644
+index 0000000..9e3a3f3
+Binary files /dev/null and b/linux/linux-v4.3.db differ

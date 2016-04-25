@@ -1,0 +1,174 @@
+diff --git a/linux/config b/linux/config
+new file mode 100644
+index 0000000..dcfe008
+--- /dev/null
++++ b/linux/config
+@@ -0,0 +1,8 @@
++general:
++  url:
++    dbfile: ./linux-v4.3.db
++    dbname: global_symbols
++  greedy: 0
++
++net/socket.c:
++  functions: [SYSC_recvmsg]
+diff --git a/linux/include/linux/err.h b/linux/include/linux/err.h
+index a729120..59e3c88 100644
+--- a/linux/include/linux/err.h
++++ b/linux/include/linux/err.h
+@@ -20,22 +20,22 @@
+ 
+ #define IS_ERR_VALUE(x) unlikely((x) >= (unsigned long)-MAX_ERRNO)
+ 
+-static inline void * __must_check ERR_PTR(long error)
++__attribute__((always_inline)) static inline void * __must_check ERR_PTR(long error)
+ {
+ 	return (void *) error;
+ }
+ 
+-static inline long __must_check PTR_ERR(__force const void *ptr)
++__attribute__((always_inline)) static inline long __must_check PTR_ERR(__force const void *ptr)
+ {
+ 	return (long) ptr;
+ }
+ 
+-static inline bool __must_check IS_ERR(__force const void *ptr)
++__attribute__((always_inline)) static inline bool __must_check IS_ERR(__force const void *ptr)
+ {
+ 	return IS_ERR_VALUE((unsigned long)ptr);
+ }
+ 
+-static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
++__attribute__((always_inline)) static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
+ {
+ 	return !ptr || IS_ERR_VALUE((unsigned long)ptr);
+ }
+@@ -47,13 +47,13 @@ static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
+  * Explicitly cast an error-valued pointer to another pointer type in such a
+  * way as to make it clear that's what's going on.
+  */
+-static inline void * __must_check ERR_CAST(__force const void *ptr)
++__attribute__((always_inline)) static inline void * __must_check ERR_CAST(__force const void *ptr)
+ {
+ 	/* cast away the const */
+ 	return (void *) ptr;
+ }
+ 
+-static inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
++__attribute__((always_inline)) static inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
+ {
+ 	if (IS_ERR(ptr))
+ 		return PTR_ERR(ptr);
+diff --git a/linux/linux-v4.3.db b/linux/linux-v4.3.db
+new file mode 100644
+index 0000000..9e3a3f3
+Binary files /dev/null and b/linux/linux-v4.3.db differ
+diff --git a/linux/net/socket.c b/linux/net/socket.c
+index 9963a0b..732e2be 100644
+--- a/linux/net/socket.c
++++ b/linux/net/socket.c
+@@ -605,14 +605,14 @@ void __sock_tx_timestamp(const struct sock *sk, __u8 *tx_flags)
+ }
+ EXPORT_SYMBOL(__sock_tx_timestamp);
+ 
+-static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
++__attribute__((always_inline)) static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
+ {
+ 	int ret = sock->ops->sendmsg(sock, msg, msg_data_left(msg));
+ 	BUG_ON(ret == -EIOCBQUEUED);
+ 	return ret;
+ }
+ 
+-int sock_sendmsg(struct socket *sock, struct msghdr *msg)
++__attribute__((always_inline)) int sock_sendmsg(struct socket *sock, struct msghdr *msg)
+ {
+ 	int err = security_socket_sendmsg(sock, msg,
+ 					  msg_data_left(msg));
+@@ -706,13 +706,13 @@ void __sock_recv_ts_and_drops(struct msghdr *msg, struct sock *sk,
+ }
+ EXPORT_SYMBOL_GPL(__sock_recv_ts_and_drops);
+ 
+-static inline int sock_recvmsg_nosec(struct socket *sock, struct msghdr *msg,
++__attribute__((always_inline)) static inline int sock_recvmsg_nosec(struct socket *sock, struct msghdr *msg,
+ 				     size_t size, int flags)
+ {
+ 	return sock->ops->recvmsg(sock, msg, size, flags);
+ }
+ 
+-int sock_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
++__attribute__((always_inline)) int sock_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
+ 		 int flags)
+ {
+ 	int err = security_socket_recvmsg(sock, msg, size, flags);
+@@ -1622,9 +1622,7 @@ SYSCALL_DEFINE3(getpeername, int, fd, struct sockaddr __user *, usockaddr,
+  *	the protocol.
+  */
+ 
+-SYSCALL_DEFINE6(sendto, int, fd, void __user *, buff, size_t, len,
+-		unsigned int, flags, struct sockaddr __user *, addr,
+-		int, addr_len)
++__attribute__((always_inline)) long sys_sendto(int fd, void* buff, size_t len, unsigned int flags, struct sockaddr* addr, int addr_len)
+ {
+ 	struct socket *sock;
+ 	struct sockaddr_storage address;
+@@ -1678,9 +1676,12 @@ SYSCALL_DEFINE4(send, int, fd, void __user *, buff, size_t, len,
+  *	sender address from kernel to user space.
+  */
+ 
+-SYSCALL_DEFINE6(recvfrom, int, fd, void __user *, ubuf, size_t, size,
+-		unsigned int, flags, struct sockaddr __user *, addr,
+-		int __user *, addr_len)
++__attribute__((always_inline)) long sys_recvfrom(int fd, void __user* ubuf, size_t size,
++		unsigned int flags, struct sockaddr __user * addr,
++		int __user * addr_len)
++//SYSCALL_DEFINE6(recvfrom, int, fd, void __user *, ubuf, size_t, size,
++//		unsigned int, flags, struct sockaddr __user *, addr,
++//		int __user *, addr_len)
+ {
+ 	struct socket *sock;
+ 	struct iovec iov;
+@@ -1877,7 +1878,7 @@ static int copy_msghdr_from_user(struct msghdr *kmsg,
+ 			    UIO_FASTIOV, iov, &kmsg->msg_iter);
+ }
+ 
+-static int ___sys_sendmsg(struct socket *sock, struct user_msghdr __user *msg,
++__attribute__((always_inline)) static int ___sys_sendmsg(struct socket *sock, struct user_msghdr __user *msg,
+ 			 struct msghdr *msg_sys, unsigned int flags,
+ 			 struct used_address *used_address)
+ {
+@@ -1973,7 +1974,7 @@ out_freeiov:
+  *	BSD sendmsg interface
+  */
+ 
+-long __sys_sendmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
++__attribute__((always_inline)) long __sys_sendmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
+ {
+ 	int fput_needed, err;
+ 	struct msghdr msg_sys;
+@@ -2001,7 +2002,7 @@ SYSCALL_DEFINE3(sendmsg, int, fd, struct user_msghdr __user *, msg, unsigned int
+  *	Linux sendmmsg interface
+  */
+ 
+-int __sys_sendmmsg(int fd, struct mmsghdr __user *mmsg, unsigned int vlen,
++__attribute__((always_inline)) int __sys_sendmmsg(int fd, struct mmsghdr __user *mmsg, unsigned int vlen,
+ 		   unsigned int flags)
+ {
+ 	int fput_needed, err, datagrams;
+@@ -2065,7 +2066,7 @@ SYSCALL_DEFINE4(sendmmsg, int, fd, struct mmsghdr __user *, mmsg,
+ 	return __sys_sendmmsg(fd, mmsg, vlen, flags);
+ }
+ 
+-static int ___sys_recvmsg(struct socket *sock, struct user_msghdr __user *msg,
++__attribute__((always_inline)) static int ___sys_recvmsg(struct socket *sock, struct user_msghdr __user *msg,
+ 			 struct msghdr *msg_sys, unsigned int flags, int nosec)
+ {
+ 	struct compat_msghdr __user *msg_compat =
+@@ -2137,7 +2138,7 @@ out_freeiov:
+  *	BSD recvmsg interface
+  */
+ 
+-long __sys_recvmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
++__attribute__((always_inline)) long __sys_recvmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
+ {
+ 	int fput_needed, err;
+ 	struct msghdr msg_sys;

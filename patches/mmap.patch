@@ -1,0 +1,150 @@
+diff --git a/linux/config b/linux/config
+new file mode 100644
+index 0000000..a71cc43
+--- /dev/null
++++ b/linux/config
+@@ -0,0 +1,8 @@
++general:
++  url:
++    dbfile: ./linux-v4.3.db
++    dbname: global_symbols
++  greedy: 0
++
++mm/mmap.c:
++  functions: [SYSC_mmap_pgoff]
+diff --git a/linux/include/linux/err.h b/linux/include/linux/err.h
+index a729120..59e3c88 100644
+--- a/linux/include/linux/err.h
++++ b/linux/include/linux/err.h
+@@ -20,22 +20,22 @@
+ 
+ #define IS_ERR_VALUE(x) unlikely((x) >= (unsigned long)-MAX_ERRNO)
+ 
+-static inline void * __must_check ERR_PTR(long error)
++__attribute__((always_inline)) static inline void * __must_check ERR_PTR(long error)
+ {
+ 	return (void *) error;
+ }
+ 
+-static inline long __must_check PTR_ERR(__force const void *ptr)
++__attribute__((always_inline)) static inline long __must_check PTR_ERR(__force const void *ptr)
+ {
+ 	return (long) ptr;
+ }
+ 
+-static inline bool __must_check IS_ERR(__force const void *ptr)
++__attribute__((always_inline)) static inline bool __must_check IS_ERR(__force const void *ptr)
+ {
+ 	return IS_ERR_VALUE((unsigned long)ptr);
+ }
+ 
+-static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
++__attribute__((always_inline)) static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
+ {
+ 	return !ptr || IS_ERR_VALUE((unsigned long)ptr);
+ }
+@@ -47,13 +47,13 @@ static inline bool __must_check IS_ERR_OR_NULL(__force const void *ptr)
+  * Explicitly cast an error-valued pointer to another pointer type in such a
+  * way as to make it clear that's what's going on.
+  */
+-static inline void * __must_check ERR_CAST(__force const void *ptr)
++__attribute__((always_inline)) static inline void * __must_check ERR_CAST(__force const void *ptr)
+ {
+ 	/* cast away the const */
+ 	return (void *) ptr;
+ }
+ 
+-static inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
++__attribute__((always_inline)) static inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
+ {
+ 	if (IS_ERR(ptr))
+ 		return PTR_ERR(ptr);
+diff --git a/linux/include/linux/mm.h b/linux/include/linux/mm.h
+index 80001de..2b19e5e 100644
+--- a/linux/include/linux/mm.h
++++ b/linux/include/linux/mm.h
+@@ -1943,7 +1943,7 @@ extern unsigned long do_mmap(struct file *file, unsigned long addr,
+ 	vm_flags_t vm_flags, unsigned long pgoff, unsigned long *populate);
+ extern int do_munmap(struct mm_struct *, unsigned long, size_t);
+ 
+-static inline unsigned long
++__attribute__((always_inline)) static inline unsigned long
+ do_mmap_pgoff(struct file *file, unsigned long addr,
+ 	unsigned long len, unsigned long prot, unsigned long flags,
+ 	unsigned long pgoff, unsigned long *populate)
+diff --git a/linux/linux-v4.3.db b/linux/linux-v4.3.db
+new file mode 100644
+index 0000000..9e3a3f3
+Binary files /dev/null and b/linux/linux-v4.3.db differ
+diff --git a/linux/mm/mmap.c b/linux/mm/mmap.c
+index 79bcc9f..aad9f94 100644
+--- a/linux/mm/mmap.c
++++ b/linux/mm/mmap.c
+@@ -50,6 +50,23 @@
+ 
+ #include "internal.h"
+ 
++#include <linux/mm.h>
++#include <linux/slab.h>
++#include <linux/string.h>
++#include <linux/compiler.h>
++#include <linux/export.h>
++#include <linux/err.h>
++#include <linux/sched.h>
++#include <linux/security.h>
++#include <linux/swap.h>
++#include <linux/swapops.h>
++#include <linux/mman.h>
++#include <linux/hugetlb.h>
++#include <linux/vmalloc.h>
++
++#include <asm/sections.h>
++#include <asm/uaccess.h>
++
+ #ifndef arch_mmap_check
+ #define arch_mmap_check(addr, len, flags)	(0)
+ #endif
+@@ -1260,7 +1277,7 @@ static inline int mlock_future_check(struct mm_struct *mm,
+ /*
+  * The caller must hold down_write(&current->mm->mmap_sem).
+  */
+-unsigned long do_mmap(struct file *file, unsigned long addr,
++__attribute__((always_inline)) unsigned long do_mmap(struct file *file, unsigned long addr,
+ 			unsigned long len, unsigned long prot,
+ 			unsigned long flags, vm_flags_t vm_flags,
+ 			unsigned long pgoff, unsigned long *populate)
+@@ -1407,6 +1424,25 @@ unsigned long do_mmap(struct file *file, unsigned long addr,
+ 	return addr;
+ }
+ 
++__attribute((always_inline)) unsigned long vm_mmap_pgoff(struct file *file, unsigned long addr,
++	unsigned long len, unsigned long prot,
++	unsigned long flag, unsigned long pgoff)
++{
++	unsigned long ret;
++	struct mm_struct *mm = current->mm;
++	unsigned long populate;
++
++	ret = security_mmap_file(file, prot, flag);
++	if (!ret) {
++		down_write(&mm->mmap_sem);
++		ret = do_mmap_pgoff(file, addr, len, prot, flag, pgoff,
++				    &populate);
++		up_write(&mm->mmap_sem);
++		if (populate)
++			mm_populate(ret, populate);
++	}
++	return ret;
++}
+ SYSCALL_DEFINE6(mmap_pgoff, unsigned long, addr, unsigned long, len,
+ 		unsigned long, prot, unsigned long, flags,
+ 		unsigned long, fd, unsigned long, pgoff)
+@@ -1535,7 +1571,7 @@ static inline int accountable_mapping(struct file *file, vm_flags_t vm_flags)
+ 	return (vm_flags & (VM_NORESERVE | VM_SHARED | VM_WRITE)) == VM_WRITE;
+ }
+ 
+-unsigned long mmap_region(struct file *file, unsigned long addr,
++__attribute__((always_inline)) unsigned long mmap_region(struct file *file, unsigned long addr,
+ 		unsigned long len, vm_flags_t vm_flags, unsigned long pgoff)
+ {
+ 	struct mm_struct *mm = current->mm;
