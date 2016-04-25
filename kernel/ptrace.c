@@ -202,7 +202,7 @@ __attribute__((always_inline)) long arch_ptrace(struct task_struct *child,
  *
  * Must be called with the tasklist lock write-held.
  */
-void __ptrace_link(struct task_struct *child, struct task_struct *new_parent)
+__attribute__((always_inline)) void __ptrace_link(struct task_struct *child, struct task_struct *new_parent)
 {
 	BUG_ON(!list_empty(&child->ptrace_entry));
 	kayrebt_FlowNodeMarker();
@@ -978,7 +978,7 @@ static int ptrace_regset(struct task_struct *task, int req, unsigned int type,
 EXPORT_SYMBOL_GPL(task_user_regset_view);
 #endif
 
-int ptrace_request(struct task_struct *child, long request,
+__attribute__((always_inline)) int ptrace_request(struct task_struct *child, long request,
 		   unsigned long addr, unsigned long data)
 {
 	bool seized = child->ptrace & PT_SEIZED;
