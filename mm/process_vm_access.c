@@ -23,6 +23,178 @@ void kayrebt_FlowNodeMarker(void);
 #include <linux/compat.h>
 #endif
 
+#include <linux/mutex.h>
+#include <linux/ww_mutex.h>
+#include <linux/sched.h>
+#include <linux/sched/rt.h>
+#include <linux/export.h>
+#include <linux/spinlock.h>
+#include <linux/interrupt.h>
+#include <linux/debug_locks.h>
+#include <linux/osq_lock.h>
+
+/*
+ * In the DEBUG case we are using the "NULL fastpath" for mutexes,
+ * which forces all calls into the slowpath:
+ */
+#ifdef CONFIG_DEBUG_MUTEXES
+# include "../kernel/locking/mutex-debug.h"
+# include <asm-generic/mutex-null.h>
+
+
+
+
+/*
+ * Must be 0 for the debug case so we do not do the unlock outside of the
+ * wait_lock region. debug_mutex_unlock() will do the actual unlock in this
+ * case.
+ */
+# undef __mutex_slowpath_needs_to_unlock
+# define  __mutex_slowpath_needs_to_unlock()	0
+#else
+# include "../kernel/locking/mutex.h"
+# include <asm/mutex.h>
+#endif
+
+bool mutex_optimistic_spin(struct mutex *lock, struct ww_acquire_ctx *ww_ctx,
+		const bool use_ww_ctx);
+void ww_mutex_set_context_slowpath(struct ww_mutex *lock,
+		struct ww_acquire_ctx *ctx);
+__attribute__((always_inline)) inline int __sched
+__ww_mutex_lock_check_stamp(struct mutex *lock, struct ww_acquire_ctx *ctx)
+{
+	struct ww_mutex *ww = container_of(lock, struct ww_mutex, base);
+	struct ww_acquire_ctx *hold_ctx = READ_ONCE(ww->ctx);
+
+	if (!hold_ctx)
+		return 0;
+
+	if (unlikely(ctx == hold_ctx))
+		return -EALREADY;
+
+	if (ctx->stamp - hold_ctx->stamp <= LONG_MAX &&
+	    (ctx->stamp != hold_ctx->stamp || ctx > hold_ctx)) {
+		return -EDEADLK;
+	}
+
+	return 0;
+}
+
+/*
+ * Lock a mutex (possibly interruptible), slowpath:
+ */
+static __always_inline int __sched
+__mutex_lock_common(struct mutex *lock, long state, unsigned int subclass,
+		    struct lockdep_map *nest_lock, unsigned long ip,
+		    struct ww_acquire_ctx *ww_ctx, const bool use_ww_ctx)
+{
+	struct task_struct *task = current;
+	struct mutex_waiter waiter;
+	unsigned long flags;
+	int ret;
+
+	preempt_disable();
+	mutex_acquire_nest(&lock->dep_map, subclass, 0, nest_lock, ip);
+
+	if (mutex_optimistic_spin(lock, ww_ctx, use_ww_ctx)) {
+		/* got the lock, yay! */
+		preempt_enable();
+		return 0;
+	}
+
+	spin_lock_mutex(&lock->wait_lock, flags);
+
+	/*
+	 * Once more, try to acquire the lock. Only try-lock the mutex if
+	 * it is unlocked to reduce unnecessary xchg() operations.
+	 */
+	if (!mutex_is_locked(lock) && (atomic_xchg(&lock->count, 0) == 1))
+		goto skip_wait;
+
+	debug_mutex_lock_common(lock, &waiter);
+	debug_mutex_add_waiter(lock, &waiter, task_thread_info(task));
+
+	/* add waiting tasks to the end of the waitqueue (FIFO): */
+	list_add_tail(&waiter.list, &lock->wait_list);
+	waiter.task = task;
+
+	lock_contended(&lock->dep_map, ip);
+
+	for (;;) {
+		/*
+		 * Lets try to take the lock again - this is needed even if
+		 * we get here for the first time (shortly after failing to
+		 * acquire the lock), to make sure that we get a wakeup once
+		 * it's unlocked. Later on, if we sleep, this is the
+		 * operation that gives us the lock. We xchg it to -1, so
+		 * that when we release the lock, we properly wake up the
+		 * other waiters. We only attempt the xchg if the count is
+		 * non-negative in order to avoid unnecessary xchg operations:
+		 */
+		if (atomic_read(&lock->count) >= 0 &&
+		    (atomic_xchg(&lock->count, -1) == 1))
+			break;
+
+		/*
+		 * got a signal? (This code gets eliminated in the
+		 * TASK_UNINTERRUPTIBLE case.)
+		 */
+		if (unlikely(signal_pending_state(state, task))) {
+			ret = -EINTR;
+			goto err;
+		}
+
+		if (use_ww_ctx && ww_ctx->acquired > 0) {
+			ret = __ww_mutex_lock_check_stamp(lock, ww_ctx);
+			if (ret)
+				goto err;
+		}
+
+		__set_task_state(task, state);
+
+		/* didn't get the lock, go to sleep: */
+		spin_unlock_mutex(&lock->wait_lock, flags);
+		schedule_preempt_disabled();
+		spin_lock_mutex(&lock->wait_lock, flags);
+	}
+	__set_task_state(task, TASK_RUNNING);
+
+	mutex_remove_waiter(lock, &waiter, current_thread_info());
+	/* set it to 0 if there are no waiters left: */
+	if (likely(list_empty(&lock->wait_list)))
+		atomic_set(&lock->count, 0);
+	debug_mutex_free_waiter(&waiter);
+
+skip_wait:
+	/* got the lock - cleanup and rejoice! */
+	lock_acquired(&lock->dep_map, ip);
+	mutex_set_owner(lock);
+
+	if (use_ww_ctx) {
+		struct ww_mutex *ww = container_of(lock, struct ww_mutex, base);
+		ww_mutex_set_context_slowpath(ww, ww_ctx);
+	}
+
+	spin_unlock_mutex(&lock->wait_lock, flags);
+	preempt_enable();
+	return 0;
+
+err:
+	mutex_remove_waiter(lock, &waiter, task_thread_info(task));
+	spin_unlock_mutex(&lock->wait_lock, flags);
+	debug_mutex_free_waiter(&waiter);
+	mutex_release(&lock->dep_map, 1, ip);
+	preempt_enable();
+	return ret;
+}
+
+__attribute__((always_inline)) int
+mutex_lock_killable_nested(struct mutex *lock, unsigned int subclass)
+{
+	might_sleep();
+	return __mutex_lock_common(lock, TASK_KILLABLE, 0, NULL, _RET_IP_, NULL, 0);
+}
+
 /**
  * process_vm_rw_pages - read/write pages from task specified
  * @pages: array of pointers to pages we want to copy
