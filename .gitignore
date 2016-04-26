@@ -38,6 +38,8 @@ Module.symvers
 *.dwo
 *.su
 
+# GCC's artefacts
+*.c.*.*
 #
 # Top-level generic files
 #
