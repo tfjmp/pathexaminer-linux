@@ -32,6 +32,7 @@
 #include <linux/gfp.h>
 #include <linux/socket.h>
 #include <linux/compat.h>
+#include <linux/security.h>
 #include "internal.h"
 
 /*
@@ -1363,6 +1364,10 @@ static long do_splice(struct file *in, loff_t __user *off_in,
 		if (ipipe == opipe)
 			return -EINVAL;
 
+		ret = security_file_splice_pipe_to_pipe(in, out);
+		if (ret)
+			return ret;
+
 		return splice_pipe_to_pipe(ipipe, opipe, len, flags);
 	}
 
@@ -1552,6 +1557,10 @@ static long vmsplice_to_user(struct file *file, const struct iovec __user *uiov,
 	if (!pipe)
 		return -EBADF;
 
+	ret = security_file_permission(file, MAY_READ);
+	if (ret)
+		return ret;
+
 	ret = import_iovec(READ, uiov, nr_segs,
 			   ARRAY_SIZE(iovstack), &iov, &iter);
 	if (ret < 0)
@@ -1597,6 +1606,10 @@ static long vmsplice_to_pipe(struct file *file, const struct iovec __user *iov,
 	pipe = get_pipe_info(file);
 	if (!pipe)
 		return -EBADF;
+
+	ret = security_file_permission(file, MAY_WRITE);
+	if (ret)
+		return ret;
 
 	if (splice_grow_spd(pipe, &spd))
 		return -ENOMEM;
@@ -1993,18 +2006,22 @@ static long do_tee(struct file *in, struct file *out, size_t len,
 	 * copying the data.
 	 */
 	if (ipipe && opipe && ipipe != opipe) {
+		ret = security_file_splice_pipe_to_pipe(in, out);
+		if (ret)
+			goto out;
 		/*
 		 * Keep going, unless we encounter an error. The ipipe/opipe
 		 * ordering doesn't really matter.
 		 */
 		ret = ipipe_prep(ipipe, flags);
-		if (!ret) {
-			ret = opipe_prep(opipe, flags);
-			if (!ret)
-				ret = link_pipe(ipipe, opipe, len, flags);
-		}
+		if (ret)
+			goto out;
+		ret = opipe_prep(opipe, flags);
+		if (ret)
+			goto out;
+		ret = link_pipe(ipipe, opipe, len, flags);
 	}
-
+out:
 	return ret;
 }
 
