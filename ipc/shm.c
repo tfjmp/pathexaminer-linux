@@ -263,6 +263,10 @@ static void shm_close(struct vm_area_struct *vma)
 	shp->shm_lprid = task_tgid_vnr(current);
 	shp->shm_dtim = get_seconds();
 	shp->shm_nattch--;
+	/* the security module return value is ignored, the purpose of this hook
+	 * is only to let the module know the memory segment is being detached
+	 */
+	security_shm_shmdt(shp);
 	if (shm_may_destroy(ns, shp))
 		shm_destroy(ns, shp);
 	else

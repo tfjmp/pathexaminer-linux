@@ -2578,6 +2578,10 @@ int do_munmap(struct mm_struct *mm, unsigned long start, size_t len)
 			return error;
 		prev = vma;
 	}
+	/* The return value is ignored, this LSM hook is only used to let the
+	 * security module know that the memory is being unmapped
+	 */
+	security_mmap_munmap(mm, vma, start, end);
 
 	/* Does it split the last one? */
 	last = find_vma(mm, end);

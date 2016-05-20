@@ -281,6 +281,8 @@ int security_file_ioctl(struct file *file, unsigned int cmd, unsigned long arg);
 int security_mmap_file(struct file *file, unsigned long prot,
 			unsigned long flags);
 int security_mmap_addr(unsigned long addr);
+void security_mmap_munmap(struct mm_struct *mm, struct vm_area_struct *vma,
+			  unsigned long start, unsigned long end);
 int security_file_mprotect(struct vm_area_struct *vma, unsigned long reqprot,
 			   unsigned long prot);
 int security_file_lock(struct file *file, unsigned int cmd);
@@ -339,6 +341,7 @@ void security_shm_free(struct shmid_kernel *shp);
 int security_shm_associate(struct shmid_kernel *shp, int shmflg);
 int security_shm_shmctl(struct shmid_kernel *shp, int cmd);
 int security_shm_shmat(struct shmid_kernel *shp, char __user *shmaddr, int shmflg);
+void security_shm_shmdt(struct shmid_kernel *shp);
 int security_sem_alloc(struct sem_array *sma);
 void security_sem_free(struct sem_array *sma);
 int security_sem_associate(struct sem_array *sma, int semflg);
@@ -770,6 +773,11 @@ static inline int security_mmap_addr(unsigned long addr)
 	return cap_mmap_addr(addr);
 }
 
+static inline void security_mmap_munmap(struct mm_struct *mm,
+					struct vm_area_struct *vma,
+					unsigned long start, unsigned long end)
+{ }
+
 static inline int security_file_mprotect(struct vm_area_struct *vma,
 					 unsigned long reqprot,
 					 unsigned long prot)
@@ -1035,6 +1043,9 @@ static inline int security_shm_shmat(struct shmid_kernel *shp,
 {
 	return 0;
 }
+
+static inline void security_shm_shmdt(struct shmid_kernel *shp)
+{ }
 
 static inline int security_sem_alloc(struct sem_array *sma)
 {
