@@ -1936,30 +1936,8 @@ static int ___sys_sendmsg(struct socket *sock, struct user_msghdr __user *msg,
 
 	if (sock->file->f_flags & O_NONBLOCK)
 		msg_sys->msg_flags |= MSG_DONTWAIT;
-	/*
-	 * If this is sendmmsg() and current destination address is same as
-	 * previously succeeded address, omit asking LSM's decision.
-	 * used_address->name_len is initialized to UINT_MAX so that the first
-	 * destination address never matches.
-	 */
-	if (used_address && msg_sys->msg_name &&
-	    used_address->name_len == msg_sys->msg_namelen &&
-	    !memcmp(&used_address->name, msg_sys->msg_name,
-		    used_address->name_len)) {
-		err = sock_sendmsg_nosec(sock, msg_sys);
-		goto out_freectl;
-	}
+
 	err = sock_sendmsg(sock, msg_sys);
-	/*
-	 * If this is sendmmsg() and sending to current destination address was
-	 * successful, remember it.
-	 */
-	if (used_address && err >= 0) {
-		used_address->name_len = msg_sys->msg_namelen;
-		if (msg_sys->msg_name)
-			memcpy(&used_address->name, msg_sys->msg_name,
-			       used_address->name_len);
-	}
 
 out_freectl:
 	if (ctl_buf != ctl)
@@ -2195,13 +2173,10 @@ int __sys_recvmmsg(int fd, struct mmsghdr __user *mmsg, unsigned int vlen,
 	compat_entry = (struct compat_mmsghdr __user *)mmsg;
 
 	while (datagrams < vlen) {
-		/*
-		 * No need to ask LSM for more than the first datagram.
-		 */
 		if (MSG_CMSG_COMPAT & flags) {
 			err = ___sys_recvmsg(sock, (struct user_msghdr __user *)compat_entry,
 					     &msg_sys, flags & ~MSG_WAITFORONE,
-					     datagrams);
+					     0);
 			if (err < 0)
 				break;
 			err = __put_user(err, &compat_entry->msg_len);
@@ -2210,7 +2185,7 @@ int __sys_recvmmsg(int fd, struct mmsghdr __user *mmsg, unsigned int vlen,
 			err = ___sys_recvmsg(sock,
 					     (struct user_msghdr __user *)entry,
 					     &msg_sys, flags & ~MSG_WAITFORONE,
-					     datagrams);
+					     0);
 			if (err < 0)
 				break;
 			err = put_user(err, &entry->msg_len);
