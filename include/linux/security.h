@@ -336,6 +336,10 @@ int security_msg_queue_msgsnd(struct msg_queue *msq,
 			      struct msg_msg *msg, int msqflg);
 int security_msg_queue_msgrcv(struct msg_queue *msq, struct msg_msg *msg,
 			      struct task_struct *target, long type, int mode);
+int security_mq_timedsend(struct file *mq, size_t msg_len,
+		          unsigned long msg_prio, struct timespec *ts);
+int security_mq_timedreceive(struct file *mq, size_t msg_len,
+		             struct timespec *ts);
 int security_shm_alloc(struct shmid_kernel *shp);
 void security_shm_free(struct shmid_kernel *shp);
 int security_shm_associate(struct shmid_kernel *shp, int shmflg);
@@ -1015,6 +1019,18 @@ static inline int security_msg_queue_msgrcv(struct msg_queue *msq,
 					    struct msg_msg *msg,
 					    struct task_struct *target,
 					    long type, int mode)
+{
+	return 0;
+}
+
+static inline int security_mq_timedsend(struct file *mq, size_t msg_len,
+					unsigned long msg_prio,
+					struct timespec *ts)
+{
+	return 0;
+}
+static inline int security_mq_timedreceive(struct file *mq, size_t msg_len,
+					   struct timespec *ts)
 {
 	return 0;
 }

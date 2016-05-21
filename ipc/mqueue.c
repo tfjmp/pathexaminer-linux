@@ -1002,6 +1002,11 @@ SYSCALL_DEFINE5(mq_timedsend, mqd_t, mqdes, const char __user *, u_msg_ptr,
 		goto out_fput;
 	}
 
+	ret = security_mq_timedsend(f.file, msg_len, msg_prio,
+			timeout ? &ts : NULL);
+	if (ret)
+		goto out_fput;
+
 	if (unlikely(msg_len > info->attr.mq_msgsize)) {
 		ret = -EMSGSIZE;
 		goto out_fput;
@@ -1117,6 +1122,10 @@ SYSCALL_DEFINE5(mq_timedreceive, mqd_t, mqdes, char __user *, u_msg_ptr,
 		ret = -EBADF;
 		goto out_fput;
 	}
+
+	ret = security_mq_timedreceive(f.file, msg_len, timeout ? &ts : NULL);
+	if (ret)
+		goto out_fput;
 
 	/* checks if buffer is big enough */
 	if (unlikely(msg_len < info->attr.mq_msgsize)) {
