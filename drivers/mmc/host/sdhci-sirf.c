@@ -50,7 +50,8 @@ static u32 sdhci_sirf_readl_le(struct sdhci_host *host, int reg)
 	if (unlikely((reg == SDHCI_CAPABILITIES_1) &&
 			(host->mmc->caps & MMC_CAP_UHS_SDR50))) {
 		/* fake CAP_1 register */
-		val = SDHCI_SUPPORT_SDR50 | SDHCI_USE_SDR50_TUNING;
+		val = SDHCI_SUPPORT_DDR50 |
+			SDHCI_SUPPORT_SDR50 | SDHCI_USE_SDR50_TUNING;
 	}
 
 	if (unlikely(reg == SDHCI_SLOT_INT_STATUS)) {
@@ -97,7 +98,7 @@ retry:
 			clock_setting | phase,
 			SDHCI_CLK_DELAY_SETTING);
 
-		if (!mmc_send_tuning(mmc)) {
+		if (!mmc_send_tuning(mmc, opcode, NULL)) {
 			/* Tuning is successful at this tuning point */
 			tuned_phase_cnt++;
 			dev_dbg(mmc_dev(mmc), "%s: Found good phase = %d\n",
@@ -145,7 +146,7 @@ retry:
 	return rc;
 }
 
-static struct sdhci_ops sdhci_sirf_ops = {
+static const struct sdhci_ops sdhci_sirf_ops = {
 	.read_l = sdhci_sirf_readl_le,
 	.read_w = sdhci_sirf_readw_le,
 	.platform_execute_tuning = sdhci_sirf_execute_tuning,
@@ -156,7 +157,7 @@ static struct sdhci_ops sdhci_sirf_ops = {
 	.set_uhs_signaling = sdhci_set_uhs_signaling,
 };
 
-static struct sdhci_pltfm_data sdhci_sirf_pdata = {
+static const struct sdhci_pltfm_data sdhci_sirf_pdata = {
 	.ops = &sdhci_sirf_ops,
 	.quirks = SDHCI_QUIRK_BROKEN_TIMEOUT_VAL |
 		SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK |
@@ -229,40 +230,6 @@ err_clk_prepare:
 	return ret;
 }
 
-#ifdef CONFIG_PM_SLEEP
-static int sdhci_sirf_suspend(struct device *dev)
-{
-	struct sdhci_host *host = dev_get_drvdata(dev);
-	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-	int ret;
-
-	ret = sdhci_suspend_host(host);
-	if (ret)
-		return ret;
-
-	clk_disable(pltfm_host->clk);
-
-	return 0;
-}
-
-static int sdhci_sirf_resume(struct device *dev)
-{
-	struct sdhci_host *host = dev_get_drvdata(dev);
-	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-	int ret;
-
-	ret = clk_enable(pltfm_host->clk);
-	if (ret) {
-		dev_dbg(dev, "Resume: Error enabling clock\n");
-		return ret;
-	}
-
-	return sdhci_resume_host(host);
-}
-
-static SIMPLE_DEV_PM_OPS(sdhci_sirf_pm_ops, sdhci_sirf_suspend, sdhci_sirf_resume);
-#endif
-
 static const struct of_device_id sdhci_sirf_of_match[] = {
 	{ .compatible = "sirf,prima2-sdhc" },
 	{ }
@@ -273,9 +240,7 @@ static struct platform_driver sdhci_sirf_driver = {
 	.driver		= {
 		.name	= "sdhci-sirf",
 		.of_match_table = sdhci_sirf_of_match,
-#ifdef CONFIG_PM_SLEEP
-		.pm	= &sdhci_sirf_pm_ops,
-#endif
+		.pm	= &sdhci_pltfm_pmops,
 	},
 	.probe		= sdhci_sirf_probe,
 	.remove		= sdhci_pltfm_unregister,

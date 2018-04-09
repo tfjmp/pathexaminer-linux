@@ -1,0 +1,29 @@
+config SECURITY_PROVENANCE
+         bool "CamFlow - Provenance"
+         depends on SECURITY
+         select RELAY
+         select SECURITYFS
+         select NETFILTER
+         select CRYPTO_SHA256
+         default y
+         help
+          This selects CamFlow provenance modules. It captures provenance through
+          a Linux Security Module.
+
+config SECURITY_PROVENANCE_WHOLE_SYSTEM
+	bool "CamFlow - Whole system provenance"
+	depends on SECURITY_PROVENANCE
+	default n
+	help
+	  This option activate whole system provenance capture from boot.
+
+	  If you are unsure how to answer this question, answer N.
+
+config SECURITY_PROVENANCE_PERSISTENCE
+	bool "CamFlow - Persistence"
+	depends on SECURITY_PROVENANCE
+	default n
+	help
+	  This option persist inode provenance state across reboot.
+
+	  If you are unsure how to answer this question, answer N.

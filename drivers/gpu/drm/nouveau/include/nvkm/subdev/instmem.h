@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 #ifndef __NVKM_INSTMEM_H__
 #define __NVKM_INSTMEM_H__
 #include <core/subdev.h>
@@ -7,6 +8,7 @@ struct nvkm_instmem {
 	const struct nvkm_instmem_func *func;
 	struct nvkm_subdev subdev;
 
+	spinlock_t lock;
 	struct list_head list;
 	u32 reserved;
 

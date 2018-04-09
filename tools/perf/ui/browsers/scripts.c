@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-2.0
 #include <elf.h>
 #include <inttypes.h>
 #include <sys/ttydefaults.h>
@@ -89,7 +90,7 @@ static int script_browser__run(struct perf_script_browser *browser)
 	int key;
 
 	if (ui_browser__show(&browser->b, browser->script_name,
-			     "Press <- or ESC to exit") < 0)
+			     "Press ESC to exit") < 0)
 		return -1;
 
 	while (1) {

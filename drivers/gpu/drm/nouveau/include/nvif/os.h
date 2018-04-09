@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 #ifndef __NOUVEAU_OS_H__
 #define __NOUVEAU_OS_H__
 
@@ -27,6 +28,7 @@
 #include <linux/agp_backend.h>
 #include <linux/reset.h>
 #include <linux/iommu.h>
+#include <linux/of_device.h>
 
 #include <asm/unaligned.h>
 

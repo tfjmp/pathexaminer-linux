@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-2.0
 /* System call table for x86-64. */
 
 #include <linux/linkage.h>
@@ -6,21 +7,13 @@
 #include <asm/asm-offsets.h>
 #include <asm/syscall.h>
 
-#define __SYSCALL_COMMON(nr, sym, compat) __SYSCALL_64(nr, sym, compat)
-
-#ifdef CONFIG_X86_X32_ABI
-# define __SYSCALL_X32(nr, sym, compat) __SYSCALL_64(nr, sym, compat)
-#else
-# define __SYSCALL_X32(nr, sym, compat) /* nothing */
-#endif
-
-#define __SYSCALL_64(nr, sym, compat) extern asmlinkage void sym(void) ;
+#define __SYSCALL_64(nr, sym, qual) extern asmlinkage long sym(unsigned long, unsigned long, unsigned long, unsigned long, unsigned long, unsigned long);
 #include <asm/syscalls_64.h>
 #undef __SYSCALL_64
 
-#define __SYSCALL_64(nr, sym, compat) [nr] = sym,
+#define __SYSCALL_64(nr, sym, qual) [nr] = sym,
 
-extern void sys_ni_syscall(void);
+extern long sys_ni_syscall(unsigned long, unsigned long, unsigned long, unsigned long, unsigned long, unsigned long);
 
 asmlinkage const sys_call_ptr_t sys_call_table[__NR_syscall_max+1] = {
 	/*
