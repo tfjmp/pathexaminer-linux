@@ -91,7 +91,7 @@
 #include <linux/livepatch.h>
 #include <linux/thread_info.h>
 
-// #include <../kernel/cred.c>
+#include <../kernel/cred.c>
 
 #include <asm/pgtable.h>
 #include <asm/pgalloc.h>
