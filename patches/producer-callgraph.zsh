@@ -11,6 +11,7 @@ while read -A line; do
 #	patch -f -p2 < patches/$syscall.patch
 	rm ${file/%.c/.o}
 	make CC=gcc HOSTCC=gcc EXTRA_CFLAGS="-fdump-tree-optimized -fplugin=kayrebt_callgraphs -fplugin-arg-kayrebt_callgraphs-dbfile=db.sqlite"  ${file/%.c/.o} 
+#	make CC=gcc HOSTCC=gcc EXTRA_CFLAGS="-fdump-tree-optimized -fplugin=kayrebt_callgraphs -fplugin-arg-kayrebt_callgraphs-dbfile=db.sqlite"  kernel/fork.o kernel/cred.o
 #	patch -f -p2 -R < patches/$syscall.patch
 #	git checkout -f master
 done
