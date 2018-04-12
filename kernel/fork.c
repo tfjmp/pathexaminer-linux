@@ -91,6 +91,8 @@
 #include <linux/livepatch.h>
 #include <linux/thread_info.h>
 
+// #include <../kernel/cred.c>
+
 #include <asm/pgtable.h>
 #include <asm/pgalloc.h>
 #include <linux/uaccess.h>
@@ -99,6 +101,8 @@
 #include <asm/tlbflush.h>
 
 #include <trace/events/sched.h>
+
+void kayrebt_FlowNodeMarker(void);
 
 #define CREATE_TRACE_POINTS
 #include <trace/events/task.h>
@@ -1535,7 +1539,7 @@ static inline void rcu_copy_process(struct task_struct *p)
  * parts of the process environment (as per the clone
  * flags). The actual kick-off is left to the caller.
  */
-static __latent_entropy struct task_struct *copy_process(
+__attribute__((always_inline)) static __latent_entropy struct task_struct *copy_process(
 					unsigned long clone_flags,
 					unsigned long stack_start,
 					unsigned long stack_size,
@@ -2016,7 +2020,7 @@ struct task_struct *fork_idle(int cpu)
  * It copies the process, and if successful kick-starts
  * it and waits for it to finish using the VM if required.
  */
-long _do_fork(unsigned long clone_flags,
+__attribute__((always_inline)) long _do_fork(unsigned long clone_flags,
 	      unsigned long stack_start,
 	      unsigned long stack_size,
 	      int __user *parent_tidptr,
@@ -2044,7 +2048,7 @@ long _do_fork(unsigned long clone_flags,
 		if (likely(!ptrace_event_enabled(current, trace)))
 			trace = 0;
 	}
-
+	kayrebt_FlowNodeMarker();
 	p = copy_process(clone_flags, stack_start, stack_size,
 			 child_tidptr, NULL, trace, tls, NUMA_NO_NODE);
 	add_latent_entropy();
@@ -2069,7 +2073,8 @@ long _do_fork(unsigned long clone_flags,
 			init_completion(&vfork);
 			get_task_struct(p);
 		}
-
+		
+		// kayrebt_FlowNodeMarker();
 		wake_up_new_task(p);
 
 		/* forking complete and child started to run, tell ptracer */

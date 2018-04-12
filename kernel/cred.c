@@ -241,7 +241,7 @@ error:
  *
  * Call commit_creds() or abort_creds() to clean up.
  */
-struct cred *prepare_creds(void)
+__attribute__((always_inline)) struct cred *prepare_creds(void)
 {
 	struct task_struct *task = current;
 	const struct cred *old;
@@ -320,7 +320,7 @@ struct cred *prepare_exec_creds(void)
  * The new process gets the current process's subjective credentials as its
  * objective and subjective credentials
  */
-int copy_creds(struct task_struct *p, unsigned long clone_flags)
+__attribute__((always_inline)) int copy_creds(struct task_struct *p, unsigned long clone_flags)
 {
 	struct cred *new;
 	int ret;
